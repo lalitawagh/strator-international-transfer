@@ -1,0 +1,46 @@
+{
+    "name": "kanexy/international-transfer",
+    "description": "This is my package InternationalTransfer",
+    "keywords": [
+        "kanexy",
+        "laravel",
+        "international-transfer"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kanexy",
+            "email": "team@kanexy.co",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kanexy\\InternationalTransfer\\": "src",
+            "Kanexy\\InternationalTransfer\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kanexy\\InternationalTransfer\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "./vendor/bin/testbench package:test --parallel --no-coverage",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kanexy\\InternationalTransfer\\InternationalTransferServiceProvider"
+            ]
+
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

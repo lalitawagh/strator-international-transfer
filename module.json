@@ -1,0 +1,13 @@
+{
+    "name": "InternationalTransfer",
+    "alias": "international-transfer",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Kanexy\\InternationalTransfer\\InternationalTransferServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
