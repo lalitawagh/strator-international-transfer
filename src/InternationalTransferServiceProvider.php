@@ -3,6 +3,7 @@
 namespace Kanexy\InternationalTransfer;
 
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -52,5 +53,6 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
     {
         parent::packageBooted();
 
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
     }
 }
