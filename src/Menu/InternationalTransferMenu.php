@@ -8,7 +8,7 @@ use Kanexy\Cms\Menu\MenuItem;
 
 class InternationalTransferMenu extends Item
 {
-    public int $priority = 10002;
+    public int $priority = 9999;
 
     protected string $label = 'International Transfer';
 
