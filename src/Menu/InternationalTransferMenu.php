@@ -30,8 +30,8 @@ class InternationalTransferMenu extends Item
             ];
         }
 
-        // return [
-        //     new MenuItem('Configuration', 'activity',url:route('dashboard.international-transfer.transfer-type-fee.index')),
-        // ];
+        return [
+            new MenuItem('Configuration', 'activity',url:route('dashboard.international-transfer.transfer-type-fee.index')),
+        ];
     }
 }
