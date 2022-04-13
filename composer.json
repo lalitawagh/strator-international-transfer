@@ -22,12 +22,6 @@
     },
     "require": {
         "php": "^8.0",
-        "amrshawky/laravel-currency": "^4.0",
-        "cknow/laravel-money": "^6.1",
-        "dcblogdev/laravel-companies-house": "^2.0",
-        "illuminate/contracts": "^8.37",
-        "rinvex/laravel-subscriptions": "^5.0",
-        "spatie/laravel-package-tools": "^1.4.3",
         "kanexy/cms":"dev-dev"
     },
     "require-dev": {
