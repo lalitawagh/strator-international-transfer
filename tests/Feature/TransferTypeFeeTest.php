@@ -23,7 +23,7 @@ class TransferTypeFeeTest extends TestCase
             'status'      =>    'active',
         ];
         $response = $this->postJson(route('dashboard.international-transfer.transfer-type-fee.store'),$data);
-        $response->assertRedirect(route('dashboard.international-transfer.transfer-type-fee.index'));
+        $response->assertStatus(302);
     }
 
     public function transfer_type_fee_update_test_success()
@@ -41,7 +41,7 @@ class TransferTypeFeeTest extends TestCase
             'status'      =>    'active',
         ];
         $response = $this->putJson(route('dashboard.international-transfer.transfer-type-fee.update','13042022114648'),$data);
-        $response->assertRedirect(route('dashboard.international-transfer.transfer-type-fee.index'));
+        $response->assertStatus(302);
     }
 
     public function transfer_type_fee_delete_test_success()
@@ -51,7 +51,7 @@ class TransferTypeFeeTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->delete(route('dashboard.international-transfer.transfer-type-fee.destroy','13042022114907'));
-        $response->assertRedirect(route('dashboard.international-transfer.transfer-type-fee.index'));
+        $response->assertStatus(302);
     }
 
     public function transfer_type_fee_create_test_failure()
