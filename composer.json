@@ -16,12 +16,18 @@
     ],
     "repositories": {
         "kanexy/cms": {
-            "path": "git",
-            "url": "kanexy/cms"
+            "type": "git",
+            "url": "https://sttipuclmnau2ebdqt4metexs3seba2ujz2hefnl3qimrvjwdkaa@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
         }
     },
     "require": {
         "php": "^8.0",
+        "amrshawky/laravel-currency": "^4.0",
+        "cknow/laravel-money": "^6.1",
+        "dcblogdev/laravel-companies-house": "^2.0",
+        "illuminate/contracts": "^8.37",
+        "rinvex/laravel-subscriptions": "^5.0",
+        "spatie/laravel-package-tools": "^1.4.3",
         "kanexy/cms":"dev-dev"
     },
     "require-dev": {
@@ -55,8 +61,10 @@
         "laravel": {
             "providers": [
                 "Kanexy\\InternationalTransfer\\InternationalTransferServiceProvider"
-            ]
-
+            ],
+            "aliases": {
+                "InternationalTransfer": "Kanexy\\InternationalTransfer\\InternationalTransferFacade"
+            }
         }
     },
     "minimum-stability": "dev",
