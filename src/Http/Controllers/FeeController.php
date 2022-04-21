@@ -15,7 +15,7 @@ class FeeController extends Controller
 {
     public function index()
     {
-        // $this->authorize(FeePolicy::VIEW, FeeConfiguration::class);
+        $this->authorize(FeePolicy::VIEW, FeeConfiguration::class);
 
         $fee_types = Fee::toArray();
         $fees = Helper::paginate(collect(Setting::getValue('money_transfer_fees',[])));
@@ -25,7 +25,7 @@ class FeeController extends Controller
 
     public function create()
     {
-        // $this->authorize(FeePolicy::CREATE, FeeConfiguration::class);
+        $this->authorize(FeePolicy::CREATE, FeeConfiguration::class);
 
         $fee_types = Fee::toArray();
         $statuses = Status::toArray();
@@ -50,7 +50,7 @@ class FeeController extends Controller
 
     public function edit($id)
     {
-        // $this->authorize(FeePolicy::EDIT, FeeConfiguration::class);
+        $this->authorize(FeePolicy::EDIT, FeeConfiguration::class);
 
         $statuses = Status::toArray();
         $fee = collect(Setting::getValue('money_transfer_fees',[]))->firstWhere('id', $id);
@@ -86,7 +86,7 @@ class FeeController extends Controller
 
     public function destroy($id)
     {
-        // $this->authorize(FeePolicy::DELETE, FeeConfiguration::class);
+        $this->authorize(FeePolicy::DELETE, FeeConfiguration::class);
 
         $settings = collect(Setting::getValue('money_transfer_fees', []))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {
