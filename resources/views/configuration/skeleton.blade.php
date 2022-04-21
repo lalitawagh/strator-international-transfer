@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0);" class="side-menu">
+                            <a href="{{ route('dashboard.international-transfer.transfer-reason.index') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Transfer Reason </div>
                             </a>
