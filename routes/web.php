@@ -1,9 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
-use Kanexy\Cms\Middleware\ValidateRegistrationCompletedMiddleware;
-use Kanexy\InternationalTransfer\Http\Controllers\InternationalTransferController;
-use Kanexy\MarketPlace\Http\Controllers\RegistrationServiceController;
+use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +16,8 @@ use Kanexy\MarketPlace\Http\Controllers\RegistrationServiceController;
 */
 
 Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], function () {
-    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
-        Route::get('international-transfers',[InternationalTransferController::class,'index']);
+    Route::group(['prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
+        Route::resource("transfer-type-fee",TransferTypeFeeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     });
 });
 

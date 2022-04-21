@@ -31,7 +31,7 @@ class InternationalTransferMenu extends Item
         }
 
         return [
-            new MenuItem('Configuration', 'activity'),
+            new MenuItem('Configuration', 'activity',url:route('dashboard.international-transfer.transfer-type-fee.index')),
         ];
     }
 }
