@@ -10,8 +10,7 @@ class StoreCollectionAccountRequest extends FormRequest
 {
     public function authorize()
     {
-        // return $this->user()->can(CollectionAccountPolicy::CREATE, CollectionAccountConfiguration::class);
-        return true;
+        return $this->user()->can(CollectionAccountPolicy::CREATE, CollectionAccountConfiguration::class);
     }
 
     public function rules()
