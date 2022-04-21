@@ -4,10 +4,10 @@ namespace Kanexy\InternationalTransfer;
 
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
-use Kanexy\InternationalTransfer\Contracts\CollectionAccountConfiguration;
+use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
-use Kanexy\InternationalTransfer\Policies\CollectionAccountPolicy;
+use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -27,7 +27,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
     private array $policies = [
         TransferTypeFeeConfiguration::class => TransferTypeFeePolicy::class,
-        CollectionAccountConfiguration::class => CollectionAccountPolicy::class,
+        MasterAccountConfiguration::class => MasterAccountPolicy::class,
     ];
 
     public function registerDefaultPolicies()

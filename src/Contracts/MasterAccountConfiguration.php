@@ -4,7 +4,7 @@ namespace Kanexy\InternationalTransfer\Contracts;
 
 use Kanexy\Cms\Setting\Models\Setting;
 
-abstract class CollectionAccountConfiguration implements Setting
+abstract class MasterAccountConfiguration implements Setting
 {
 
 }

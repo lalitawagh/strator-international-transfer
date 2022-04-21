@@ -4,7 +4,7 @@
 
 @section('config-content')
     <div class="p-5">
-        <form action="{{ route('dashboard.international-transfer.collection-account.store') }}" method="POST"
+        <form action="{{ route('dashboard.international-transfer.master-account.store') }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-12 md:gap-10 mt-0">

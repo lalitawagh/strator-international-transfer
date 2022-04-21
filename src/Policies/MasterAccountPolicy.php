@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Kanexy\InternationalTransfer\Enums\Permission;
 
-class CollectionAccountPolicy
+class MasterAccountPolicy
 {
     use HandlesAuthorization;
 
