@@ -2,7 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Tests;
 
-use Illuminate\Foundation\Auth\User;
+use Kanexy\Cms\Models\User;
 use Kanexy\InternationalTransfer\Tests\TestCase;
 
 class FeeTest extends TestCase
@@ -27,6 +27,7 @@ class FeeTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /** @test */
     public function fee_update_test_success()
     {
         $user = User::find(1);
@@ -46,6 +47,7 @@ class FeeTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /** @test */
     public function fee_delete_test_success()
     {
         $user = User::find(1);
@@ -56,11 +58,12 @@ class FeeTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /** @test */
     public function fee_create_test_failure()
     {
         $user = User::find(1);
 
-        $this->actingAs($user);
+        $xx = $this->actingAs($user);
 
         $data = [
             'type'        =>    'transfer_type',
@@ -74,6 +77,7 @@ class FeeTest extends TestCase
         $response->assertStatus(422);
     }
 
+    /** @test */
     public function fee_update_test_failure()
     {
         $user = User::find(1);
@@ -88,6 +92,7 @@ class FeeTest extends TestCase
             'percentage'  =>    7,
             'status'      =>    'active',
         ];
+
         $response = $this->putJson(route('dashboard.international-transfer.fee.update','13042022114648'),$data);
         $response->assertStatus(422);
     }
