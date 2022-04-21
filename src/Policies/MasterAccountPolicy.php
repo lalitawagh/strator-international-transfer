@@ -26,11 +26,11 @@ class MasterAccountPolicy
 
     public function view(User $user)
     {
-        return $user->hasPermissionTo(Permission::COLLECTION_ACCOUNT_VIEW);
+        return $user->hasPermissionTo(Permission::MASTER_ACCOUNT_VIEW);
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo(Permission::COLLECTION_ACCOUNT_CREATE);
+        return $user->hasPermissionTo(Permission::MASTER_ACCOUNT_CREATE);
     }
 }

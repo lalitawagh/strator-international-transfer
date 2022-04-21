@@ -10,6 +10,6 @@ class Permission
     public const TRANSFER_TYPE_FEE_DELETE = 'international-transfer::transfer_type_fee.delete';
 
 
-    public const COLLECTION_ACCOUNT_VIEW   = 'international-transfer::collection_account.view';
-    public const COLLECTION_ACCOUNT_CREATE = 'international-transfer::collection_create.create';
+    public const MASTER_ACCOUNT_VIEW   = 'international-transfer::master_account.view';
+    public const MASTER_ACCOUNT_CREATE = 'international-transfer::master_account.create';
 }
