@@ -9,13 +9,10 @@
     <div class="grid grid-cols-12 gap-0 mt-0">
         <div class="col-span-12 lg:col-span-12 xxl:col-span-12">
             <div class="grid grid-cols-12 gap-1 mt-0.5">
-
                 <div class="intro-y col-span-12 lg:col-span-12">
                     <div class="tab-content">
                         <div id="RequestCard" class="tab-pane grid grid-cols-12 gap-3 mt-0 active" role="tabpanel"
-                            aria-labelledby="RequestCard-tab" x-data="app()" x-cloak>
-
-
+                            aria-labelledby="RequestCard-tab">
                             <div class="intro-y col-span-12 md:col-span-12 mt-0">
                                 <!-- BEGIN: Wizard Layout -->
                                 <div class="intro-y box py-10 sm:py-0 mt-0">
@@ -41,53 +38,38 @@
 
                                     <div class="wizard flex flex-col lg:flex-row justify-center px-5 pt-4 sm:px-20">
                                         <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
-                                            <button class="w-10 h-10 rounded-full btn"
-                                                :class="{ 'btn-primary': step >= 1 }">1</button>
+                                            <button class="w-10 h-10 rounded-full btn">1</button>
                                             <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Amount</div>
                                         </div>
 
                                         <div
                                             class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                                            <button
-                                                :class="{ 'btn-primary': step === 2 , 'bg-gray-200' : step !== 2 , 'text-gray-600' : step != 2}"
-                                                class="w-10 h-10 rounded-full btn text-gray-600 dark:bg-dark-1">2</button>
-                                            <div
-                                                class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
+                                            <button class="w-10 h-10 rounded-full btn text-gray-600 dark:bg-dark-1">2</button>
+                                            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
                                                 Beneficiary</div>
                                         </div>
 
                                         <div
                                             class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                                            <button
-                                                :class="{ 'btn-primary': step === 3 , 'bg-gray-200' : step !== 3, 'text-gray-600' : step != 3}"
-                                                class="w-10 h-10 rounded-full btn text-gray-600 bg-gray-200 dark:bg-dark-1">3</button>
-                                            <div
-                                                class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
+                                            <button class="w-10 h-10 rounded-full btn text-gray-600 bg-gray-200 dark:bg-dark-1">3</button>
+                                            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
                                                 Payment</div>
                                         </div>
 
                                         <div
                                             class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                                            <button
-                                                :class="{ 'btn-primary': step === 4 , 'bg-gray-200' : step !== 4, 'text-gray-600' : step != 4}"
-                                                class="w-10 h-10 rounded-full btn text-gray-600 bg-gray-200 dark:bg-dark-1">4</button>
-                                            <div
-                                                class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
+                                            <button class="w-10 h-10 rounded-full btn text-gray-600 bg-gray-200 dark:bg-dark-1">4</button>
+                                            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
                                                 Preview</div>
                                         </div>
 
                                         <div
                                             class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                                            <button
-                                                :class="{ 'btn-primary': step === 5 , 'bg-gray-200' : step !== 5, 'text-gray-600' : step != 5}"
-                                                class="w-10 h-10 rounded-full btn text-gray-600 bg-gray-200 dark:bg-dark-1"
+                                            <button class="w-10 h-10 rounded-full btn text-gray-600 bg-gray-200 dark:bg-dark-1"
                                                 data-target="#copy-button-modal">5</button>
-                                            <div
-                                                class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
+                                            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-gray-700 dark:text-gray-600">
                                                 Finish</div>
                                         </div>
-
-
 
                                         <div
                                             class="wizard__line hidden lg:block w-2/3 bg-gray-200 dark:bg-dark-1 absolute mt-5">
@@ -99,8 +81,6 @@
                                 </div>
                                 <!-- END: Wizard Layout -->
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -706,7 +686,7 @@
                         All activity
                     </h2>
                     <div class="text-right btn-sm mt-0 py-1 p-0">
-                        <button class="btn btn-primary" @click="step++">Cancel transfer</button>
+                        <button class="btn btn-primary" >Cancel transfer</button>
                     </div>
                 </div>
                 <div class="modal-body">
@@ -818,44 +798,5 @@
         </div>
     </div>
 
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
-    @endpush
-
-    <script>
-        function app() {
-            return {
-                step: 1,
-
-            }
-        }
-    </script>
-    <script>
-        var toggleInputContainer = function(input) {
-            if (input.value != "") {
-                input.classList.add('filled');
-            } else {
-                input.classList.remove('filled');
-            }
-        }
-
-        var labels = document.querySelectorAll('.label');
-        for (var i = 0; i < labels.length; i++) {
-            labels[i].addEventListener('click', function() {
-                this.previousElementSibling.focus();
-            });
-        }
-
-        window.addEventListener("load", function() {
-            var inputs = document.getElementsByClassName("input");
-            for (var i = 0; i < inputs.length; i++) {
-                console.log('looped');
-                inputs[i].addEventListener('keyup', function() {
-                    toggleInputContainer(this);
-                });
-                toggleInputContainer(inputs[i]);
-            }
-        });
-    </script>
 @endsection
 
