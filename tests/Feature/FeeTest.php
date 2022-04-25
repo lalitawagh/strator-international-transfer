@@ -2,8 +2,10 @@
 
 namespace Kanexy\InternationalTransfer\Tests;
 
-use Illuminate\Foundation\Auth\User;
+use Kanexy\Cms\Enums\Role;
+use Kanexy\Cms\Models\User;
 use Kanexy\InternationalTransfer\Tests\TestCase;
+use Spatie\Permission\Models\Role as ModelsRole;
 
 class FeeTest extends TestCase
 {
@@ -56,6 +58,66 @@ class FeeTest extends TestCase
 
         $response = $this->delete(route('dashboard.international-transfer.fee.destroy','21042022044216'));
         $response->assertStatus(302);
+    }
+
+    /** @test */
+    public function fee_create_test_min_amount_negative_failure()
+    {
+        $user = User::find(1);
+
+        $this->actingAs($user);
+
+        $data = [
+            'type'        =>    'transfer_type',
+            'payment_type'=>    'paypal',
+            'min_amount'  =>    -5,
+            'max_amount'  =>    1000,
+            'amount'      =>    1880,
+            'percentage'  =>    7,
+            'status'      =>    'active',
+        ];
+        $response = $this->postJson(route('dashboard.international-transfer.fee.store'),$data);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function fee_create_test_max_amount_greater_than_min_failure()
+    {
+        $user = User::find(1);
+
+        $this->actingAs($user);
+
+        $data = [
+            'type'        =>    'transfer_type',
+            'payment_type'=>    'paypal',
+            'min_amount'  =>    5,
+            'max_amount'  =>    4,
+            'amount'      =>    1880,
+            'percentage'  =>    7,
+            'status'      =>    'active',
+        ];
+        $response = $this->postJson(route('dashboard.international-transfer.fee.store'),$data);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function fee_create_test_percentage_negative_failure()
+    {
+        $user = User::find(1);
+
+        $this->actingAs($user);
+
+        $data = [
+            'type'        =>    'transfer_type',
+            'payment_type'=>    'paypal',
+            'min_amount'  =>    5,
+            'max_amount'  =>    4,
+            'amount'      =>    1880,
+            'percentage'  =>    -2,
+            'status'      =>    'active',
+        ];
+        $response = $this->postJson(route('dashboard.international-transfer.fee.store'),$data);
+        $response->assertStatus(422);
     }
 
     /** @test */

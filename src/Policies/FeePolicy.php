@@ -2,8 +2,9 @@
 
 namespace Kanexy\InternationalTransfer\Policies;
 
-use App\Models\User;
+
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User;
 use Kanexy\InternationalTransfer\Enums\Permission;
 
 class FeePolicy
@@ -30,21 +31,21 @@ class FeePolicy
 
     public function view(User $user)
     {
-        return $user->hasPermissionTo(Permission::TRANSFER_TYPE_FEE_VIEW);
+        return $user->hasPermissionTo(Permission::FEE_VIEW);
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo(Permission::TRANSFER_TYPE_FEE_CREATE);
+        return $user->hasPermissionTo(Permission::FEE_CREATE);
     }
 
     public function edit(User $user)
     {
-        return $user->hasPermissionTo(Permission::TRANSFER_TYPE_FEE_EDIT);
+        return $user->hasPermissionTo(Permission::FEE_EDIT);
     }
 
     public function delete(User $user)
     {
-        return $user->hasPermissionTo(Permission::TRANSFER_TYPE_FEE_DELETE);
+        return $user->hasPermissionTo(Permission::FEE_DELETE);
     }
 }
