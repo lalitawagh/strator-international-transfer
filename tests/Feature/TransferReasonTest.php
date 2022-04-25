@@ -2,7 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Tests;
 
-use Illuminate\Foundation\Auth\User;
+use Kanexy\Cms\Models\User;
 use Kanexy\InternationalTransfer\Tests\TestCase;
 
 class TransferReasonTest extends TestCase
