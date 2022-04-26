@@ -5,8 +5,10 @@ namespace Kanexy\InternationalTransfer;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
+use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -69,5 +71,6 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
+        Livewire::component('initial-process', InitialProcess::class);
     }
 }
