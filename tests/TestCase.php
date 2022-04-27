@@ -2,6 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Tests;
 
+use AmrShawky\LaravelCurrency\CurrencyServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Kanexy\Cms\CmsServiceProvider;
 use Kanexy\InternationalTransfer\InternationalTransferServiceProvider;
@@ -28,6 +29,7 @@ class TestCase extends Orchestra
             InternationalTransferServiceProvider::class,
             CmsServiceProvider::class,
             LivewireServiceProvider::class,
+            CurrencyServiceProvider::class,
             PermissionServiceProvider::class
         ];
     }
