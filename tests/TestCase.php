@@ -3,8 +3,6 @@
 namespace Kanexy\InternationalTransfer\Tests;
 
 use AmrShawky\LaravelCurrency\CurrencyServiceProvider;
-use AmrShawky\LaravelCurrency\Facade\Currency;
-use App\Providers\AppServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Kanexy\Cms\CmsServiceProvider;
 use Kanexy\InternationalTransfer\InternationalTransferServiceProvider;
