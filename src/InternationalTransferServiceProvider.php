@@ -4,8 +4,10 @@ namespace Kanexy\InternationalTransfer;
 
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
+use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -24,7 +26,8 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
     protected array $migrationsWithPresetDateTime = [];
 
     private array $policies = [
-        TransferTypeFeeConfiguration::class => TransferTypeFeePolicy::class
+        TransferTypeFeeConfiguration::class => TransferTypeFeePolicy::class,
+        FeeConfiguration::class => FeePolicy::class
     ];
 
     public function registerDefaultPolicies()
@@ -53,6 +56,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasRoute('web')
             ->hasRoute('api')
+            ->hasTranslations()
             ->hasMigrations($this->migrationsWithoutPresetDateTime);
 
         $this->publishMigrationsWithPresetDateTime($this->migrationsWithPresetDateTime);

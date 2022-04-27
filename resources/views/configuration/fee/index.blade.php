@@ -1,10 +1,10 @@
 @extends("international-transfer::configuration.skeleton")
 
-@section('title', 'Transfer Type Fee')
+@section('title', 'Fee')
 
 @section('create-button')
-    <a href="{{ route('dashboard.international-transfer.transfer-type-fee.create') }}"
-        class="btn btn-sm btn-primary shadow-md">Create New</a>
+    <a href="{{ route('dashboard.international-transfer.fee.create') }}" class="btn btn-sm btn-primary shadow-md">Create
+        New</a>
 @endsection
 
 @section('config-content')
@@ -101,15 +101,16 @@
                         @php
                             $i = 1;
                         @endphp
-                        @foreach ($transfer_type_fees as $index => $transfer_type_fee)
+                        @foreach ($fees as $index => $fee)
                             <tr>
                                 <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['type'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['min_amount'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['max_amount'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['amount'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['percentage'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ ucfirst($transfer_type_fee['status']) }}</td>
+                                <td class="border-b dark:border-dark-5">
+                                    {{ trans('international-transfer::configuration.' . $fee['type']) }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $fee['min_amount'] }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $fee['max_amount'] }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $fee['amount'] }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $fee['percentage'] }}</td>
+                                <td class="border-b dark:border-dark-5">{{ ucfirst($fee['status']) }}</td>
 
                                 <td class="border-b dark:border-dark-5">
                                     <div class="dropdown">
@@ -119,12 +120,12 @@
 
                                         <div class="dropdown-menu w-48">
                                             <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                <a href="{{ route('dashboard.international-transfer.transfer-type-fee.edit', $transfer_type_fee['id']) }}"
+                                                <a href="{{ route('dashboard.international-transfer.fee.edit', $fee['id']) }}"
                                                     class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                     <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                 </a>
                                                 <form
-                                                    action="{{ route('dashboard.international-transfer.transfer-type-fee.destroy', $transfer_type_fee['id']) }}"
+                                                    action="{{ route('dashboard.international-transfer.fee.destroy', $fee['id']) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -152,7 +153,7 @@
     </div>
     </div>
     <div class="my-2">
-        {{ $transfer_type_fees->links() }}
+        {{ $fees->links() }}
     </div>
     </div>
     </div>
