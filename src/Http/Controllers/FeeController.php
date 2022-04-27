@@ -3,6 +3,7 @@
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Enums\Fee;
@@ -29,8 +30,9 @@ class FeeController extends Controller
 
         $fee_types = Fee::toArray();
         $statuses = Status::toArray();
+        $countries = Country::get();
 
-        return view("international-transfer::configuration.fee.create",compact('statuses', 'fee_types'));
+        return view("international-transfer::configuration.fee.create",compact('statuses', 'fee_types', 'countries'));
     }
 
     public function store(StoreFeeRequest $request)
@@ -55,8 +57,9 @@ class FeeController extends Controller
         $statuses = Status::toArray();
         $fee = collect(Setting::getValue('money_transfer_fees',[]))->firstWhere('id', $id);
         $fee_types = Fee::toArray();
+        $countries = Country::get();
 
-        return view("international-transfer::configuration.fee.edit", compact('fee', 'statuses', 'fee_types'));
+        return view("international-transfer::configuration.fee.edit", compact('fee', 'statuses', 'fee_types', 'countries'));
     }
 
     public function update(StoreFeeRequest $request, $id)

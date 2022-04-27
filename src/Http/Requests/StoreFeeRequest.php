@@ -16,6 +16,7 @@ class StoreFeeRequest extends FormRequest
     public function rules()
     {
         return [
+            'country'        =>    ['required','string'],
             'type'           =>    ['required','string'],
             'payment_type'   =>    ['nullable','string'],
             'transfer_type'  =>    ['nullable','string'],

@@ -10,6 +10,21 @@
             @method('PUT')
             <div class="grid grid-cols-12 md:gap-10 mt-0">
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                    <label for="country" class="form-label sm:w-30">Country <span class="text-theme-6">*</span></label>
+                    <div class="sm:w-5/6">
+                        <select name="country" id="country" class="tail-select w-full @error('country') border-theme-6 @enderror" required>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->code }}" @if($fee['country'] == $country->code) selected @endif> {{  $country->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('country')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="type" id="type" onchange="getType(this)" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
@@ -19,21 +34,6 @@
                         </select>
 
                         @error('type')
-                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                    <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6">
-                        <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
-                            @foreach ($statuses as $status)
-                                <option value="{{ $status }}" @if($fee['status'] == $status) selected @endif> {{ ucfirst($status) }} </option>
-                            @endforeach
-                        </select>
-
-                        @error('status')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
@@ -107,6 +107,23 @@
                         </div>
 
                         @error('percentage')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 md:gap-10 mt-0">
+                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                    <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
+                    <div class="sm:w-5/6">
+                        <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
+                            @foreach ($statuses as $status)
+                                <option value="{{ $status }}" @if($fee['status'] == $status) selected @endif> {{ ucfirst($status) }} </option>
+                            @endforeach
+                        </select>
+
+                        @error('status')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
