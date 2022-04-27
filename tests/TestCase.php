@@ -3,14 +3,12 @@
 namespace Kanexy\InternationalTransfer\Tests;
 
 use AmrShawky\LaravelCurrency\CurrencyServiceProvider;
-use AmrShawky\LaravelCurrency\Facade\Currency;
-use App\Providers\AppServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Kanexy\Cms\CmsServiceProvider;
 use Kanexy\InternationalTransfer\InternationalTransferServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-
+use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -21,6 +19,8 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Kanexy\\InternationalTransfer\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
+
+        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
     }
 
     protected function getPackageProviders($app)
@@ -29,7 +29,8 @@ class TestCase extends Orchestra
             InternationalTransferServiceProvider::class,
             CmsServiceProvider::class,
             LivewireServiceProvider::class,
-            CurrencyServiceProvider::class
+            CurrencyServiceProvider::class,
+            PermissionServiceProvider::class
         ];
     }
 
