@@ -8,6 +8,10 @@ use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
+use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
+use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
+use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
+use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -27,7 +31,9 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
     private array $policies = [
         TransferTypeFeeConfiguration::class => TransferTypeFeePolicy::class,
-        TransferReasonConfiguration::class => TransferReasonPolicy::class
+        TransferReasonConfiguration::class => TransferReasonPolicy::class,
+        MasterAccountConfiguration::class => MasterAccountPolicy::class,
+        FeeConfiguration::class => FeePolicy::class
     ];
 
     public function registerDefaultPolicies()
@@ -56,6 +62,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasRoute('web')
             ->hasRoute('api')
+            ->hasTranslations()
             ->hasMigrations($this->migrationsWithoutPresetDateTime);
 
         $this->publishMigrationsWithPresetDateTime($this->migrationsWithPresetDateTime);

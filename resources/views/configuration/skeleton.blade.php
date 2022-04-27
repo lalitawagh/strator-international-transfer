@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0);" class="side-menu">
+                            <a href="{{ route('dashboard.international-transfer.fee.index') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Fee Setup </div>
                             </a>
@@ -35,7 +35,7 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);" class="side-menu">
+                            <a href="{{ route('dashboard.international-transfer.master-account.index') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> MTC Account </div>
                             </a>
