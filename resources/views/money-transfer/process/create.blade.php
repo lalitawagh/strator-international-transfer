@@ -31,18 +31,5 @@
             $('#tabcuntery-selection2 option').attr("disabled", false);
             $('#tabcuntery-selection2 option[value="'+ event.detail.currency +'"]').attr("disabled", true);
         });
-        function getFlagImgFrom(the) {
-            var countryId = $(the).val();
-            var img = $('option:selected', the).attr('data-source');
-            $('#fromCountry').html('<img src="' + img + '">');
-            $('#tabcuntery-selection2 option').attr("disabled", false);
-            $('#tabcuntery-selection2 option[value="'+ countryId +'"]').attr("disabled", true);
-
-        }
-
-        function getFlagImgTo(the) {
-            var img = $('option:selected', the).attr('data-source');
-            $('#toCountry').html('<img src="' + img + '">');
-        }
     </script>
 @endpush
