@@ -60,6 +60,7 @@ class InitialProcess extends Component
         $this->fee_charge = $value;
         $this->fee_deduction_amount = $this->actual_amount - $this->fee_charge;
         $this->recipient_amount = $this->fee_deduction_amount * $this->guaranteed_rate;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
     public function changeAmount($value)
@@ -80,6 +81,5 @@ class InitialProcess extends Component
     {
         return view('international-transfer::livewire.initial-process');
     }
-
 
 }
