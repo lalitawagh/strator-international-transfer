@@ -11,7 +11,7 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="currency" class="form-label sm:w-30">Currency <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select name="currency" id="currency" class="tail-select w-full @error('currency') border-theme-6 @enderror" required>
+                        <select name="currency" id="currency"  data-search="true" class="tail-select w-full @error('currency') border-theme-6 @enderror" required>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}" @if(old('currency',$transfer_type_fee['currency']) == $country->id) selected @endif> {{  $country->currency }} ({{ $country->code }})</option>
                             @endforeach
@@ -26,7 +26,7 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select name="type" id="type" onchange="getType(this)" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
+                        <select name="type" id="type" onchange="getType(this)" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($fee_types as $fee_type)
                                 @if($fee_type == 'payment_type' || $fee_type == 'transfer_type')
                                     <option value="{{ $fee_type }}" @if(old('type',$transfer_type_fee['type']) == $fee_type) selected @endif> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
@@ -106,6 +106,7 @@
                         <div class="input-group">
                             <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage') }}">
                             <div id="input-group-percentage" class="input-group-text">%</div>
+
                         </div>
 
                         @error('percentage')
