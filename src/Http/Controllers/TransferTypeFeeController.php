@@ -3,8 +3,10 @@
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
+use Kanexy\InternationalTransfer\Enums\Fee;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Http\Requests\StoreTransferTypeFeeRequest;
@@ -24,8 +26,11 @@ class TransferTypeFeeController extends Controller
     {
         $this->authorize(TransferTypeFeePolicy::CREATE, TransferTypeFeeConfiguration::class);
 
+        $fee_types = Fee::toArray();
         $statuses = Status::toArray();
-        return view("international-transfer::configuration.transfer-type.create",compact('statuses'));
+        $countries = Country::get();
+
+        return view("international-transfer::configuration.transfer-type.create",compact('statuses', 'fee_types', 'countries'));
     }
 
     public function store(StoreTransferTypeFeeRequest $request)
@@ -49,8 +54,10 @@ class TransferTypeFeeController extends Controller
 
         $statuses = Status::toArray();
         $transfer_type_fee = collect(Setting::getValue('money_transfer_type_fees',[]))->firstWhere('id', $id);
+        $countries = Country::get();
+        $fee_types = Fee::toArray();
 
-        return view("international-transfer::configuration.transfer-type.edit", compact('transfer_type_fee', 'statuses'));
+        return view("international-transfer::configuration.transfer-type.edit", compact('transfer_type_fee', 'statuses', 'countries', 'fee_types'));
     }
 
     public function update(StoreTransferTypeFeeRequest $request,$id)

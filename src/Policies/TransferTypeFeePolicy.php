@@ -2,8 +2,8 @@
 
 namespace Kanexy\InternationalTransfer\Policies;
 
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User;
 use Kanexy\InternationalTransfer\Enums\Permission;
 
 class TransferTypeFeePolicy

@@ -16,12 +16,24 @@ class StoreTransferTypeFeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'type'        =>    ['required','string'],
-            'min_amount'  =>    ['required','numeric'],
-            'max_amount'  =>    ['required','numeric'],
-            'amount'      =>    ['nullable','numeric'],
-            'percentage'  =>    ['nullable','numeric'],
-            'status'      =>    ['required','string'],
+            'currency'       =>    ['required','string'],
+            'type'           =>    ['required','string'],
+            'payment_type'   =>    ['required_if:type,==,payment_type'],
+            'transfer_type'  =>    ['required_if:type,==,transfer_type'],
+            'min_amount'     =>    ['required','numeric'],
+            'max_amount'     =>    ['required','numeric'],
+            'amount'         =>    ['nullable','numeric'],
+            'percentage'     =>    ['nullable','numeric'],
+            'status'         =>    ['required','string'],
+            'description'    =>    ['nullable','string'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'payment_type.required_if' => 'The payment type field is required',
+            'transfer_type.required_if' => 'The transfer type field is required',
         ];
     }
 }
