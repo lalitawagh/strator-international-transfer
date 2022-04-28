@@ -8,10 +8,10 @@
                     <h3 class="text-2x1 font-black mb-4">How Much Would you like to transfer?</h3>
                     @livewire('initial-process',['countries' => $countries, 'defaultCountry' => $defaultCountry])
 
-                    <p class="py-3">
+                    {{-- <p class="py-3">
                         You could save up to <strong>20.59 GBP</strong> vs tha average bank
                         should arrive in <strong>4 hours</strong>
-                    </p>
+                    </p> --}}
 
                     <div class="text-right mt-5 py-4">
                         <a data-toggle="modal" data-target="#large-slide-over-size-preview"

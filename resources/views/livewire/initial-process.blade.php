@@ -6,7 +6,7 @@
     <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
         <span id="fromCountry">@foreach ($countries as $country)
             @isset($currency_from)
-                @if ($country->currency == $currency_from)
+                @if ($country->id == $currency_from)
                     <img src="{{ $country->flag }}">
                 @endif
             @else
@@ -14,12 +14,13 @@
                     <img src="{{ $country->flag }}">
                 @endif
             @endisset
-        @endforeach</span>
+        @endforeach
+        </span>
         <select id='tabcuntery-selection1' style='width: 105px;' wire:change="changeFromCurrency($event.target.value)"  class="" name="currency_code_from">
             @foreach ($countries as $country)
-                <option data-source="{{ $country->flag }}" value="{{ $country->currency }}"
+                <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                     @isset($currency_from)
-                        @if ($country->currency == $currency_from)
+                        @if ($country->id == $currency_from)
                             selected
                         @endif
                     @else
@@ -27,7 +28,7 @@
                             selected
                         @endif
                     @endisset>
-                    {{ $country->currency }}
+                    {{ $country->currency }} ({{ $country->code }})
                 </option>
             @endforeach
 
@@ -41,14 +42,14 @@
 
         <li>
             <span class="sequence-icon tw-calculator-breakdown__icon">–</span>
-            <span class="tw-calculator-breakdown-item__left"><strong>4.35  GBP</strong></span>
+            <span class="tw-calculator-breakdown-item__left"><strong>@isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
             <span class="tw-calculator-breakdown-item__right">
                 <span class="m-r-1" data-tracking-id="calculator-payment-select">
                     <div class="tw-select btn-group dropdown">
                         <div class="dropdown-toggle notification cursor-pointer" role="button"
                             aria-expanded="false">
                             <button class="btn btn-sm btn-secondary mr-4 mb-0">
-                                Fast & Easy Transfer
+                                @isset($fees) {{ trans('international-transfer::configuration.'.@$fees[0]['type']) }} @endisset
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -57,75 +58,39 @@
                         </div>
                         <div class="notification-content pt-2 dropdown-menu">
                             <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
-                                <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
-                                    <div class="ml-0 overflow-hidden">
-                                        <div class="flex items-center">
-                                            <h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                Fast % easy transfer -4.39 GBP fee</h4>
-                                            <div class="text-xs text-gray-500 ml-auto whitespace-nowrap text-right float-right">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                </svg>
+                                @isset($fees)
+                                @foreach ($fees as $key => $fee)
+                                    @isset($recipient_amount)
+                                        @php
+                                            $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount['amount'] * ($fee['percentage']/100);
+                                        @endphp
+                                    @else
+                                        @php
+                                            $amount = 0;
+                                        @endphp
+                                    @endisset
+                                    @php
+                                        $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
+                                    @endphp
+
+                                    <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
+                                        <div class="ml-0 overflow-hidden">
+                                            <div class="flex flex-col sm:flex-row mt-2 m-2">
+                                                <div class="form-check mr-2">
+                                                    <input id="radio-switch-{{ $key }}" wire:change="changeToMethod($event.target.value)" class="form-check-input" type="radio" name="horizontal_radio_button" value="{{ $amount }}">
+                                                    <label class="form-check-label" for="radio-switch-4"><h4 href="javascript:;" class="font-medium truncate mr-5">
+                                                        @if($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $amount }} {{ $country->currency }} fee</h4></label>
+                                                </div>
+                                            </div>
+
+                                            <div class="w-full truncate text-gray-600 mt-0.5">
+                                                Send money from your debit or credit card
                                             </div>
                                         </div>
-                                        <div class="w-full truncate text-gray-600 mt-0.5">
-                                            Send money from your debit or credit card</div>
                                     </div>
-                                </div>
-                                <hr class="pb-3 mt-2">
-                                <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
-                                    <div class="ml-0 overflow-hidden">
-                                        <div class="flex items-center">
-                                            <h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                Fast % easy transfer -4.39 GBP fee</h4>
-                                            <div
-                                                class="text-xs text-gray-500 ml-auto whitespace-nowrap text-right float-right">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="w-full truncate text-gray-600 mt-0.5">
-                                            Send money from your debit or credit card
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="pb-3 mt-2">
-                                <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
-                                    <div class="ml-0 overflow-hidden">
-                                        <div class="flex items-center">
-                                            <h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                Fast % easy transfer -4.39 GBP fee</h4>
-                                            <div class="text-xs text-gray-500 ml-auto whitespace-nowrap text-right float-right">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="w-full truncate text-gray-600 mt-0.5">
-                                            Send money from your debitor credit card
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="pb-3 mt-2">
-                                <div
-                                    class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
-                                    <div class="ml-0 overflow-hidden">
-                                        <div class="flex items-center">
-                                            <h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                Fast % easy transfer -4.39 GBP fee</h4>
-                                            <div
-                                                class="text-xs text-gray-500 ml-auto whitespace-nowrap text-right float-right">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="w-full truncate text-gray-600 mt-0.5">
-                                            Send money from your debit or credit card
-                                        </div>
-                                    </div>
-                                </div>
+                                    <hr>
+                                @endforeach
+                                @endisset
                             </div>
                         </div>
                     </div>
@@ -135,17 +100,17 @@
 
         </li>
         <li><span class="sequence-icon tw-calculator-breakdown__icon">=</span>
-            <span class="tw-calculator-breakdown-item__left">993.33 INR</span>
+            <span class="tw-calculator-breakdown-item__left">{{ $fee_deduction_amount }} {{ $from }}</span>
             <span class="tw-calculator-breakdown-item__right">Amount we'll convert</span>
         </li>
         <li>
             <span class="sequence-icon tw-calculator-breakdown__icon">x</span>
             <span class="tw-calculator-breakdown-item__left">{{ $guaranteed_rate }}</span>
-            <span class="px-3 border-2 cursor-pointer border-dashed dark:border-dark-5 rounded-md tw-calculator-breakdown-item__right tooltip"
+            {{-- <span class="px-3 border-2 cursor-pointer border-dashed dark:border-dark-5 rounded-md tw-calculator-breakdown-item__right tooltip"
                 data-theme="light" data-tooltip-content="#custom-content-tooltip" data-trigger="click"
                 title="This is awesome tooltip example!">
                 Guaranteed Rate
-            </span>
+            </span> --}}
 
             <!-- BEGIN: Custom Tooltip Content -->
             <div class="tooltip-content">
@@ -170,39 +135,39 @@
     <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
         <span id="toCountry">@foreach ($countries as $country)
             @isset($currency_to)
-                @if ($country->currency == $currency_to)
+                @if ($country->id == $currency_to)
                     <img src="{{ $country->flag }}">
                 @endif
             @else
-                @if ($country->id == $defaultCountry->id)
+                @if ($country->id == '1')
                     <img src="{{ $country->flag }}">
                 @endif
             @endisset
         @endforeach</span>
         <select id='tabcuntery-selection2' style='width: 105px;'  wire:change="changeToCurrency($event.target.value)"  class="" name="currency_code_to">
             @foreach ($countries as $country)
-                <option data-source="{{ $country->flag }}" value="{{ $country->currency }}"
+                <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                     @isset($currency_to)
-                        @if ($country->currency == $currency_to)
+                        @if ($country->id == $currency_to)
                             selected
                         @endif
                     @else
-                        @if ($country->id == $defaultCountry->id)
+                        @if ($country->id == '1')
                             selected
                         @endif
                     @endisset>
-                    {{ $country->currency }}
+                    {{ $country->currency }} ({{ $country->code }})
                 </option>
             @endforeach
 
         </select>
     </div>
-    <span class="lock-amount tooltip" data-theme="light" data-tooltip-content="#custom-content-tooltip1"
+    {{-- <span class="lock-amount tooltip" data-theme="light" data-tooltip-content="#custom-content-tooltip1"
         data-trigger="click" title="This is awesome tooltip example!">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
-    </span>
+    </span> --}}
     <!-- BEGIN: Custom Tooltip Content -->
     <div class="tooltip-content">
         <div id="custom-content-tooltip1" class="relative flex items-center py-1">
