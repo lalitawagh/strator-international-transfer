@@ -116,7 +116,7 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="amount" class="form-label sm:w-30">Description </label>
                     <div class="sm:w-5/6">
-                        <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                        <textarea name="description" rows="3" class="form-control resize-none">{{ old('description') }}</textarea>
 
                         @error('description')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>

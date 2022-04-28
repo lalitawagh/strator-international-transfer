@@ -2,7 +2,7 @@
     <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0" role="tabpanel" aria-labelledby="1-tab">
         <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
 
-            <div class="intro-y lg:overflow-visible mt-3 sm:mt-0">
+            <div class="intro-y mt-3 sm:mt-0">
 
                 <div class="sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
                     <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
