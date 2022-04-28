@@ -7,8 +7,8 @@
         <form action="{{ route('dashboard.international-transfer.transfer-reason.store') }}" method="POST"
             enctype="multipart/form-data">
             @csrf
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="reason" class="form-label sm:w-24">Reason <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="reason" name="reason" type="text" class="form-control @error('reason') border-theme-6 @enderror" value="{{ old('reason') }}" required>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-24">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
