@@ -4,15 +4,15 @@ namespace Kanexy\InternationalTransfer;
 
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
+use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
-use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
-use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
-use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
-use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
+use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
+use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -35,7 +35,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         TransferTypeFeeConfiguration::class => TransferTypeFeePolicy::class,
         TransferReasonConfiguration::class => TransferReasonPolicy::class,
         MasterAccountConfiguration::class => MasterAccountPolicy::class,
-        FeeConfiguration::class => FeePolicy::class
+        FeeConfiguration::class => FeePolicy::class,
     ];
 
     public function registerDefaultPolicies()
@@ -59,7 +59,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
-         $package
+        $package
             ->name('international-transfer')
             ->hasViews()
             ->hasRoute('web')

@@ -79,7 +79,7 @@
                                                 <div class="form-check mr-2">
                                                     <input id="radio-switch-{{ $key }}" wire:change="changeToMethod($event.target.value)" class="form-check-input" type="radio" name="horizontal_radio_button" value="{{ $amount }}">
                                                     <label class="form-check-label" for="radio-switch-4"><h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                        @if($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $amount }} {{ $country->currency }} fee</h4></label>
+                                                        @if ($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $amount }} {{ $country->currency }} fee</h4></label>
                                                 </div>
                                             </div>
 

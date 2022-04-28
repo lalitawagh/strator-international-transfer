@@ -30,7 +30,7 @@ class TestCase extends Orchestra
             CmsServiceProvider::class,
             LivewireServiceProvider::class,
             CurrencyServiceProvider::class,
-            PermissionServiceProvider::class
+            PermissionServiceProvider::class,
         ];
     }
 

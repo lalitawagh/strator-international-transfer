@@ -15,7 +15,7 @@
                     <div class="sm:w-5/6">
                         <select name="currency" id="currency" class="tail-select w-full @error('currency') border-theme-6 @enderror" required>
                             @foreach ($countries as $country)
-                                <option value="{{ $country->id }}" @if($fee['currency'] == $country->id) selected @endif> {{ $country->currency }} ({{ $country->code }})</option>
+                                <option value="{{ $country->id }}" @if ($fee['currency'] == $country->id) selected @endif> {{ $country->currency }} ({{ $country->code }})</option>
                             @endforeach
                         </select>
 
@@ -30,7 +30,7 @@
                     <div class="sm:w-5/6">
                         <select name="type" id="type" onchange="getType(this)" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($fee_types as $fee_type)
-                                <option value="{{ $fee_type }}" @if($fee['type'] == $fee_type) selected @endif> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
+                                <option value="{{ $fee_type }}" @if ($fee['type'] == $fee_type) selected @endif> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
                             @endforeach
                         </select>
 
@@ -120,7 +120,7 @@
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
-                                <option value="{{ $status }}" @if($fee['status'] == $status) selected @endif> {{ ucfirst($status) }} </option>
+                                <option value="{{ $status }}" @if ($fee['status'] == $status) selected @endif> {{ ucfirst($status) }} </option>
                             @endforeach
                         </select>
 

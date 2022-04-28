@@ -2,10 +2,8 @@
 
 namespace Kanexy\InternationalTransfer\Tests;
 
-use Kanexy\Cms\Enums\Role;
 use Kanexy\Cms\Models\User;
 use Kanexy\InternationalTransfer\Tests\TestCase;
-use Spatie\Permission\Models\Role as ModelsRole;
 
 class FeeTest extends TestCase
 {

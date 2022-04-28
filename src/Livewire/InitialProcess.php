@@ -2,7 +2,6 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
-use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Http\Helper;

@@ -24,7 +24,7 @@
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
-                                <option value="{{ $status }}" @if($transfer_type_fee['status'] == $status) selected @endif> {{ ucfirst($status) }} </option>
+                                <option value="{{ $status }}" @if ($transfer_type_fee['status'] == $status) selected @endif> {{ ucfirst($status) }} </option>
                             @endforeach
                         </select>
 

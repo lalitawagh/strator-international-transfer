@@ -1,12 +1,11 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
+use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
+use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferReasonController;
-use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
-use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
-
 
 /*
 |--------------------------------------------------------------------------
