@@ -15,6 +15,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'paypal',
             'min_amount'  =>    0,
@@ -35,6 +36,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'stripe',
             'min_amount'  =>    0,
@@ -66,6 +68,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'paypal',
             'min_amount'  =>    -5,
@@ -86,6 +89,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'paypal',
             'min_amount'  =>    5,
@@ -106,6 +110,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'paypal',
             'min_amount'  =>    5,
@@ -126,6 +131,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'stripe',
             'min_amount'  =>    0,
@@ -145,6 +151,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
+            'currency'    =>    '231',
             'type'        =>    'transfer_type',
             'payment_type'=>    'stripe',
             'min_amount'  =>    0,
