@@ -103,7 +103,10 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="percentage" class="form-label sm:w-30">Percentage </label>
                     <div class="sm:w-5/6">
-                        <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage',$transfer_type_fee['percentage']) }}">
+                        <div class="input-group">
+                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage') }}">
+                            <div id="input-group-percentage" class="input-group-text">%</div>
+                        </div>
 
                         @error('percentage')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
