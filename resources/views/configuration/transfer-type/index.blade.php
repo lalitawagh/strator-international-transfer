@@ -23,6 +23,21 @@
                                 </div>
                             </th>
 
+                            <th class="whitespace-nowrap text-left">Currency
+                                <span class="flex short-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-6 up" fill="#c1c4c9"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                    </svg>
+                                </span>
+                            </th>
+
                             <th class="whitespace-nowrap text-left">Type
                                 <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-6 up" fill="#c1c4c9"
@@ -102,9 +117,13 @@
                             $i = 1;
                         @endphp
                         @foreach ($transfer_type_fees as $index => $transfer_type_fee)
+                            @php
+                                $currency = \Kanexy\Cms\I18N\Models\Country::find($transfer_type_fee['currency']);
+                            @endphp
                             <tr>
-                                <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['type'] }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $i }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $currency->currency }}</td>
+                                <td class="border-b dark:border-dark-5">{{ trans('international-transfer::configuration.'.$transfer_type_fee['type']) }}</td>
                                 <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['min_amount'] }}</td>
                                 <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['max_amount'] }}</td>
                                 <td class="border-b dark:border-dark-5">{{ $transfer_type_fee['amount'] }}</td>
