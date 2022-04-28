@@ -30,9 +30,8 @@ class FeeController extends Controller
 
         $fee_types = Fee::toArray();
         $statuses = Status::toArray();
-        $countries = Country::get();
 
-        return view("international-transfer::configuration.fee.create",compact('statuses', 'fee_types', 'countries'));
+        return view("international-transfer::configuration.fee.create",compact('statuses', 'fee_types'));
     }
 
     public function store(StoreFeeRequest $request)
@@ -57,9 +56,8 @@ class FeeController extends Controller
         $statuses = Status::toArray();
         $fee = collect(Setting::getValue('money_transfer_fees',[]))->firstWhere('id', $id);
         $fee_types = Fee::toArray();
-        $countries = Country::get();
 
-        return view("international-transfer::configuration.fee.edit", compact('fee', 'statuses', 'fee_types', 'countries'));
+        return view("international-transfer::configuration.fee.edit", compact('fee', 'statuses', 'fee_types'));
     }
 
     public function update(StoreFeeRequest $request, $id)

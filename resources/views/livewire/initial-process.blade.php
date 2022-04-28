@@ -48,8 +48,14 @@
                     <div class="tw-select btn-group dropdown">
                         <div class="dropdown-toggle notification cursor-pointer" role="button"
                             aria-expanded="false">
-                            <button class="btn btn-sm btn-secondary mr-4 mb-0">
-                                @isset($fees) {{ trans('international-transfer::configuration.'.@$fees[0]['type']) }} @endisset
+                            <button  class="btn btn-sm btn-secondary mr-4 mb-0">
+                                @isset($fees)
+                                    @if(array_search('payment_type',array_column($fees,'type')) === 0)
+                                        {{ trans('international-transfer::configuration.payment_type') }}
+                                    @else
+                                        {{ trans('international-transfer::configuration.transfer_type') }}
+                                    @endif
+                                @endisset
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -83,8 +89,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="w-full truncate text-gray-600 mt-0.5">
-                                                Send money from your debit or credit card
+                                            <div class="w-full truncate text-gray-600 mt-2 m-2">
+                                                {{ $fee['description'] }}
                                             </div>
                                         </div>
                                     </div>

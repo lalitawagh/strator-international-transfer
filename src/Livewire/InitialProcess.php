@@ -43,7 +43,7 @@ class InitialProcess extends Component
     public function changeFromCurrency($value)
     {
         $this->currency_from = $value;
-        $this->fees =  collect(Setting::getValue('money_transfer_fees',[]))->where('currency', $value)->all();
+        $this->fees =  collect(Setting::getValue('money_transfer_type_fees',[]))->where('currency', $value)->all();
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $this->dispatchBrowserEvent('disabledSelectedCountry', ['currency' => $value]);
     }
