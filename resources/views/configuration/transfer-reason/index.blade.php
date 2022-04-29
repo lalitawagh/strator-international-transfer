@@ -9,9 +9,9 @@
 @section("config-content")
 <div class="grid grid-cols-12 gap-3">
     @include('international-transfer::list-component')
-    <div class="intro-y box p-3 mt-0">
-        <div class="overflow-x-auto overflow-y-hidden">
-            <table id="tableID" class="shroting display table table-report -mt-2" style="width:100%">
+    <div class="intro-y box p-3 mt-0 overflow-x-auto overflow-y-hidden">
+        
+            <table id="tableID" class="shroting table -mt-2">
                 <thead class="short-wrp">
                     <tr>
                         <th class="w-16 whitespace-nowrap text-left">
@@ -84,7 +84,7 @@
                 </tbody>
             </table>
 
-        </div>
+        
     </div>
 </div>
 </div>
