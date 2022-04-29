@@ -104,7 +104,7 @@
                     <label for="percentage" class="form-label sm:w-30">Percentage </label>
                     <div class="sm:w-5/6">
                         <div class="input-group">
-                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage') }}">
+                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage',$transfer_type_fee['percentage']) }}">
                             <div id="input-group-percentage" class="input-group-text">%</div>
 
                         </div>
