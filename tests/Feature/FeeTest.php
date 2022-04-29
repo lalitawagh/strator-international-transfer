@@ -2,10 +2,8 @@
 
 namespace Kanexy\InternationalTransfer\Tests;
 
-use Kanexy\Cms\Enums\Role;
 use Kanexy\Cms\Models\User;
 use Kanexy\InternationalTransfer\Tests\TestCase;
-use Spatie\Permission\Models\Role as ModelsRole;
 
 class FeeTest extends TestCase
 {
@@ -17,8 +15,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'paypal',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    0,
             'max_amount'  =>    1000,
             'amount'      =>    1880,
@@ -37,8 +34,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'stripe',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    0,
             'max_amount'  =>    1000,
             'amount'      =>    1880,
@@ -68,8 +64,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'paypal',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    -5,
             'max_amount'  =>    1000,
             'amount'      =>    1880,
@@ -88,8 +83,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'paypal',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    5,
             'max_amount'  =>    4,
             'amount'      =>    1880,
@@ -108,8 +102,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'paypal',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    5,
             'max_amount'  =>    4,
             'amount'      =>    1880,
@@ -128,8 +121,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'stripe',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    0,
             'amount'      =>    1880,
             'percentage'  =>    7,
@@ -147,8 +139,7 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'type'        =>    'transfer_type',
-            'payment_type'=>    'stripe',
+            'type'        =>    'exchange_fees',
             'min_amount'  =>    0,
             'amount'      =>    1880,
             'percentage'  =>    7,

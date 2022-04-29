@@ -16,8 +16,8 @@
     ],
     "repositories": {
         "kanexy/cms": {
-            "type": "git",
-            "url": "https://sttipuclmnau2ebdqt4metexs3seba2ujz2hefnl3qimrvjwdkaa@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
+            "type": "path",
+            "url": "../cms"
         }
     },
     "require": {
@@ -30,7 +30,8 @@
         "orchestra/testbench": "^6.15",
         "phpunit/phpunit": "^9.3",
         "spatie/laravel-ray": "^1.9",
-        "vimeo/psalm": "^4.4"
+        "vimeo/psalm": "^4.4",
+        "amrshawky/laravel-currency": "^4.0"
     },
     "autoload": {
         "psr-4": {
