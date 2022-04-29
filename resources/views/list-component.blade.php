@@ -12,7 +12,7 @@
                     </div>
                     <div class="flex items-center md:ml-auto mb-2">
                         <div
-                            class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search hidden sm:block mr-2 ml-auto">
+                            class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search sm:block mr-2 ml-auto">
                             <input list="browsers" name="browser" id="browser" placeholder="Search"
                                 class="search__input form-control border-transparent placeholder-theme-13">
                             <i data-feather="search" class="search__icon dark:text-gray-300"></i>
