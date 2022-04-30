@@ -3,6 +3,8 @@
 @section('money-transfer-content')
     <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
+            <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.store') }}">
+            @csrf
             <div class="intro-y mt-0 p-3">
                 <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0">
                     <h3 class="text-2x1 font-black mb-4">How Much Would you like to transfer?</h3>
@@ -17,10 +19,11 @@
                         <a data-toggle="modal" data-target="#large-slide-over-size-preview"
                             class="btn btn-secondary">Compare Price</a>
 
-                        <button class="btn btn-primary w-24 ml-2" @click="step++">Continue</button>
+                        <button class="btn btn-primary w-24 ml-2" >Continue</button>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 @endsection

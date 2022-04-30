@@ -20,11 +20,13 @@ use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
 
 Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], function () {
     Route::group(['prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
-        Route::resource("money-transfer",MoneyTransferController::class);
         Route::resource("transfer-reason",TransferReasonController::class);
         Route::resource("master-account",MasterAccountController::class)->only(['index', 'store']);
         Route::resource("transfer-type-fee",TransferTypeFeeController::class);
         Route::resource("fee",FeeController::class);
+        Route::resource("money-transfer",MoneyTransferController::class)->only(['index', 'store', 'create']);
+        Route::get("money-transfer/beneficiary",[MoneyTransferController::class, 'showBeneficiary'])->name('money-transfer.beneficiary');
+
     });
 });
 

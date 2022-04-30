@@ -9,6 +9,8 @@ use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
+use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
+use Kanexy\InternationalTransfer\Livewire\OtpVerification;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
@@ -82,5 +84,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
         Livewire::component('initial-process', InitialProcess::class);
+        Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
+        Livewire::component('otp-verification', OtpVerification::class);
     }
 }
