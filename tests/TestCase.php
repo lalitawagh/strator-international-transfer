@@ -38,7 +38,7 @@ class TestCase extends Orchestra
     {
 
         $app['config']->set('view.paths', [
-            __DIR__.'/views',
+            __DIR__ . '/views',
             resource_path('views'),
         ]);
 
@@ -50,7 +50,7 @@ class TestCase extends Orchestra
             'prefix'   => '',
             'host' => '127.0.0.1',
             'username'=> 'root',
-            'password' => ''
+            'password' => '',
         ]);
     }
 }
