@@ -16,8 +16,8 @@
     ],
     "repositories": {
         "kanexy/cms": {
-            "type": "path",
-            "url": "../cms"
+            "type": "git",
+            "url": "https://sttipuclmnau2ebdqt4metexs3seba2ujz2hefnl3qimrvjwdkaa@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
         }
     },
     "require": {
