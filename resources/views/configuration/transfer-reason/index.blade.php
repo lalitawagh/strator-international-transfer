@@ -9,12 +9,12 @@
 @section("config-content")
 <div class="grid grid-cols-12 gap-3">
     @include('international-transfer::list-component')
-    <div class="intro-y box p-3 mt-0">
-        <div class=" overflow-auto lg:overflow-visible">
-            <table id="tableID" class="shroting display table table-report -mt-2" style="width:100%">
+    <div class="intro-y box p-3 mt-0 overflow-x-auto overflow-y-hidden">
+        
+            <table id="tableID" class="shroting table -mt-2">
                 <thead class="short-wrp">
                     <tr>
-                        <th>
+                        <th class="w-16 whitespace-nowrap text-left">
                             <div class="form-check mt-1 border-gray-400">
                                 <input id="checkbox-switch-1" class="form-check-input" type="checkbox" value="">
                                 <label class="form-check-label" for="checkbox-switch-1"></label>
@@ -36,7 +36,7 @@
                             </span>
                         </th>
                         <th class="whitespace-nowrap text-left">Status</th>
-                        <th class="flex" style="width:40px;">Action</th>
+                        <th class="w-20" style="width:40px;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,11 +45,11 @@
                     @endphp
                     @foreach ($money_transfer_reasons as $index => $money_transfer_reason)
                         <tr>
-                            <td class="border-b dark:border-dark-5">{{ $i }}</td>
-                            <td class="border-b dark:border-dark-5">{{ $money_transfer_reason['reason'] }}</td>
-                            <td class="border-b dark:border-dark-5">{{ ucfirst($money_transfer_reason['status']) }}</td>
+                            <td class="whitespace-nowrap text-left">{{ $i }}</td>
+                            <td class="whitespace-nowrap text-left">{{ $money_transfer_reason['reason'] }}</td>
+                            <td class="whitespace-nowrap text-left">{{ ucfirst($money_transfer_reason['status']) }}</td>
 
-                            <td class="border-b dark:border-dark-5">
+                            <td class="whitespace-nowrap text-left">
                                 <div class="dropdown">
                                     <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
                                         <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
@@ -84,7 +84,7 @@
                 </tbody>
             </table>
 
-        </div>
+        
     </div>
 </div>
 </div>

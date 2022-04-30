@@ -7,11 +7,13 @@
         <form action="{{ route('dashboard.international-transfer.transfer-type-fee.update',$transfer_type_fee['id']) }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="currency" class="form-label sm:w-30">Currency <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select name="currency" id="currency" class="tail-select w-full @error('currency') border-theme-6 @enderror" required>
+
+                        <select name="currency" id="currency"  data-search="true" class="tail-select w-full @error('currency') border-theme-6 @enderror" required>
+
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}" @if(old('currency',$transfer_type_fee['currency']) == $country->id) selected @endif> {{  $country->currency }} ({{ $country->code }})</option>
                             @endforeach
@@ -23,10 +25,12 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select name="type" id="type" onchange="getType(this)" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
+
+                        <select name="type" id="type" onchange="getType(this)" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
+
                             @foreach ($fee_types as $fee_type)
                                 @if($fee_type == 'payment_type' || $fee_type == 'transfer_type')
                                     <option value="{{ $fee_type }}" @if(old('type',$transfer_type_fee['type']) == $fee_type) selected @endif> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
@@ -42,8 +46,8 @@
 
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2 paymentType" @if(old('type',$transfer_type_fee['type']) == 'payment_type') style="display: flex;" @else style="display: none;" @endif>
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 paymentType" @if(old('type',$transfer_type_fee['type']) == 'payment_type') style="display: flex;" @else style="display: none;" @endif>
                     <label for="payment_type" class="form-label sm:w-30">Payment Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="payment_type" id="payment_type" class="form-control" value="{{ old('payment_type',@$transfer_type_fee['payment_type']) }}">
@@ -54,7 +58,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-6 form-inline mt-2 transferType" @if(old('type',$transfer_type_fee['type']) == 'transfer_type') style="display: flex;" @else style="display: none;" @endif>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 transferType" @if(old('type',$transfer_type_fee['type']) == 'transfer_type') style="display: flex;" @else style="display: none;" @endif>
                     <label for="transfer_type" class="form-label sm:w-30">Transfer Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="transfer_type" id="transfer_type" class="form-control"  value="{{ old('transfer_type',@$transfer_type_fee['transfer_type']) }}">
@@ -66,8 +70,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="min_amount" class="form-label sm:w-30">Min Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="min_amount" name="min_amount" type="text" class="form-control @error('min_amount') border-theme-6 @enderror" value="{{ old('min_amount',$transfer_type_fee['min_amount']) }}" required>
@@ -77,7 +81,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="max_amount" class="form-label sm:w-30">Max Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="max_amount" name="max_amount" type="text" class="form-control @error('max_amount') border-theme-6 @enderror" value="{{ old('max_amount',$transfer_type_fee['max_amount']) }}" required>
@@ -89,8 +93,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="amount" class="form-label sm:w-30">Amount </label>
                     <div class="sm:w-5/6">
                         <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror" value="{{ old('amount',$transfer_type_fee['amount']) }}">
@@ -100,10 +104,14 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="percentage" class="form-label sm:w-30">Percentage </label>
                     <div class="sm:w-5/6">
-                        <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage',$transfer_type_fee['percentage']) }}">
+                        <div class="input-group">
+                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage',$transfer_type_fee['percentage']) }}">
+                            <div id="input-group-percentage" class="input-group-text">%</div>
+
+                        </div>
 
                         @error('percentage')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -112,8 +120,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" style="align-items: inherit;">
                     <label for="amount" class="form-label sm:w-30">Description </label>
                     <div class="sm:w-5/6">
                         <textarea name="description" class="form-control">{{ old('description',$transfer_type_fee['description']) }}</textarea>
@@ -123,7 +131,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
