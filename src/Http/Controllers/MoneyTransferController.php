@@ -52,4 +52,15 @@ class MoneyTransferController extends Controller
 
         return view('international-transfer::money-transfer.process.beneficiary', compact('user', 'account', 'countries', 'defaultCountry', 'workspace'));
     }
+
+    public function showPaymentMethod()
+    {
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
+        $account = Account::forHolder($workspace)->first();
+        $countries = Country::get();
+        $defaultCountry = Country::find(Setting::getValue("default_country"));
+
+        return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace'));
+    }
 }

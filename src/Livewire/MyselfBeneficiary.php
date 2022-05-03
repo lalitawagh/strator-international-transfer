@@ -2,14 +2,12 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Rules\MobileNumber;
-use Kanexy\PartnerFoundation\Banking\Enums\ContactType;
+use Kanexy\InternationalTransfer\Enums\Beneficiary;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -27,74 +25,121 @@ class MyselfBeneficiary extends Component
 
     public $account;
 
-    public  $first_name;
+    public $first_name;
 
-    public  $middle_name;
+    public $middle_name;
 
-    public  $last_name;
+    public $last_name;
 
-    public  $company_name;
+    public $company_name;
 
-    public  $country;
+    public $country;
 
-    public  $email;
+    public $email;
 
-    public  $mobile;
+    public $mobile;
 
-    public  $phone;
+    public $landline;
 
-    public  $bank_account_name;
+    public $bank_account_name;
 
-    public  $iban_number;
+    public $iban_number;
 
-    public  $account_number;
+    public $account_number;
 
-    public  $swift_code;
+    public $swift_code;
 
-    public  $note;
+    public $sort_no;
 
-    public  $avatar;
+    public $note;
 
-    public  $type;
+    public $avatar;
+
+    public $type;
 
     public $classification = ['beneficiary'];
 
+    public $beneficiary_created;
 
-    public function mount($countries, $defaultCountry, $user, $account, $workspace)
+    public $oneTimePassword;
+
+    public $beneficiaryType;
+
+    public $contact;
+
+    public $meta;
+
+    protected function rules()
+    {
+        return  [
+            'email' => ['required','email'],
+            'mobile' => ['required',new MobileNumber],
+            'first_name' => ['required_if:type,personal', 'nullable', new AlphaSpaces, 'string','max:40'],
+            'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
+            'last_name' =>  ['required_if:type,personal', 'nullable', new AlphaSpaces, 'string','max:40'],
+            'landline' => ['nullable', 'string', new LandlineNumber],
+            'avatar' => ['nullable', 'max:5120', 'mimes:png,jpg,jpeg', 'file'],
+            'note' => ['nullable'],
+            'meta' => ['required', 'array'],
+            'meta.swift_code' => ['required'],
+            'meta.iban_number' => ['required'],
+            'meta.bank_account_name' => ['required', 'string'],
+            'meta.account_number' => ['required', 'string', 'numeric', 'digits:8'],
+            'meta.sort_no' => ['required', 'string', 'numeric', 'digits:6'],
+            'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
+            'type' => ['required', 'string'],
+        ];
+    }
+
+    protected $validationAttributes = [
+        'first_name' => 'first name',
+        'middle_name' => 'middle name',
+        'last_name' => 'last name',
+        'email' => 'email',
+        'mobile' => 'mobile',
+        'bank_account_name' => 'account holder name',
+        'company_name' => 'company',
+        'meta.account_number' => 'bank account number',
+        'meta.sort_no' => 'bank sort code',
+        'meta.bank_account_name' => 'bank account name',
+        'meta.iban_number' => 'IBAN Number',
+    ];
+
+
+    public function mount($countries, $defaultCountry, $user, $account, $workspace, $beneficiaryType)
     {
         $this->countries = $countries;
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
         $this->account = $account;
         $this->workspace_id = $workspace->id;
+        $this->beneficiaryType = $beneficiaryType;
+        $this->type = ($beneficiaryType == Beneficiary::MYSELF || $beneficiaryType == Beneficiary::SOMEONE_ELSE) ? 'personal': 'business';
+        if(($beneficiaryType == Beneficiary::MYSELF))
+        {
+            $this->first_name =  $user->first_name;
+            $this->middle_name =  $user->middle_name;
+            $this->last_name =  $user->last_name;
+            $this->email =  $user->email;
+            $this->mobile = !is_null(session('mobile')) ? session('mobile') : $user->phone;
+        }
+
     }
 
     public function createBeneficiary()
     {
-        $data = $this->validate([
-            'first_name' => ['required_if:type,==,personal' ,new AlphaSpaces, 'string','max:40'],
-            'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
-            'last_name' => ['required_if:type,==,personal',new AlphaSpaces, 'string','max:40'],
-            'email' => ['required','email'],
-            'mobile' => ['required',new MobileNumber],
-            'phone' => ['nullable',new LandlineNumber],
-            'avatar' => ['nullable','image'],
-            'swift_code' => 'required',
-            'iban_number' => 'nullable',
-            'bank_account_name' => 'required',
-            'account_number' => 'required',
-            'company_name'   => 'required_if:type,==,company',
-            'type' => ['required', 'string', Rule::in(ContactType::toArray())],
+        $data =  $this->validate();
 
-        ]);
-
-        if($data['type'] == 'company'){
+        if($data['type'] == 'business'){
             $data['display_name'] = $data['company_name'];
         }else{
             $data['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
         }
 
-        $data['avatar'] = $this->avatar->store('Images', 'azure');
+        if(!is_null($this->avatar))
+        {
+            $data['avatar'] = $this->avatar->store('Images', 'azure');
+        }
 
 
         $data['mobile'] = Helper::normalizePhone($data['mobile']);
@@ -115,10 +160,13 @@ class MyselfBeneficiary extends Component
         $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
         // $contact->generateOtp("sms");
         $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-        //$user->generateOtp("sms");
 
+        session(['contact' => $contact, 'mobile' => $data['mobile'], 'oneTimePassword' => $this->oneTimePassword]);
+
+        //$user->generateOtp("sms");
         $this->beneficiary_created = true;
-        $this->dispatchBrowserEvent('showOtpModel');
+
+        $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
 
     }
 

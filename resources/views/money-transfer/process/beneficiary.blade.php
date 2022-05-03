@@ -15,13 +15,13 @@
                             class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Myself</div>
                 </a>
-                <a
+                <a data-toggle="modal" data-target="#someone-else-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                     <div class="font-medium text-base text-base"><i data-feather="inbox"
                             class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Someone else</div>
                 </a>
-                <a
+                <a data-toggle="modal" data-target="#business-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                     <div class="font-medium text-base"><i data-feather="activity"
                             class="block w-12 h-12 mb-2 mx-auto"></i></div>
@@ -134,30 +134,13 @@
         </div>
     </div>
 
-    <!-- BEGIN: Myself Modal -->
-    <div id="myself-modal" class="modal modal-slide-over myself-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header p-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Send to myself
-                    </h2>
-                    <div class="items-center justify-center mt-0">
-                        {{-- <a data-toggle="modal" data-target="#review-transfer"
-                            class="btn-sm bg-indigo-600 btn-primary text-white font-bold py-3 px-6 rounded">Confirm</a> --}}
-                    </div>
-                </div>
-                <div class="modal-body">
-                    @livewire('myself-beneficiary',['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'account' => $account, 'workspace' => $workspace])
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END: Myself Modal -->
+    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'myself']);
+    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'someone-else']);
+    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'business']);
 
-    <!-- BEGIN: Myself Modal -->
+    <!-- BEGIN: OTP Modal -->
     <div id="otp-modal" class="modal modal-slide-over otp-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header p-5">
                     <h2 class="font-medium text-base mr-auto">
@@ -168,22 +151,26 @@
                             class="btn-sm bg-indigo-600 btn-primary text-white font-bold py-3 px-6 rounded">Confirm</a> --}}
                     </div>
                 </div>
-                <div class="modal-body">
-                    @livewire('otp-verification',['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'account' => $account, 'workspace' => $workspace])
-                </div>
+                @livewire('otp-verification',['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'account' => $account, 'workspace' => $workspace])
             </div>
         </div>
     </div>
-    <!-- END: Myself Modal -->
+    <!-- END: OTP Modal -->
+
+
 @endsection
 
 @push('scripts')
     <script>
         window.addEventListener('showOtpModel', event => {
-            $('.myself-modal').removeClass("show");
-            $('.myself-modal').addClass("hide");
-            $('#otp-modal').addClass('invisible');
-            $('#otp-modal').attr('aria-hidden','false');
+            cash("#"+event.detail.modalType+"-modal").modal("hide");
+            cash("#otp-modal").modal("show");
         });
+
+        function getFlagImg(the,type) {
+            var img = $('option:selected', the).attr('data-source');
+            alert(img);
+            $('#countryWithPhoneFlagImgTransfer'+type).html('<img src="' + img + '">');
+        }
     </script>
 @endpush
