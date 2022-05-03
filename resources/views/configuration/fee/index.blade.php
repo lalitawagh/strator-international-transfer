@@ -103,7 +103,7 @@
                         @endphp
                         @foreach ($fees as $index => $fee)
                             <tr>
-                                <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                <td class="border-b dark:border-dark-5">{{ $i }}</td>
                                 <td class="border-b dark:border-dark-5">
                                     {{ trans('international-transfer::configuration.' . $fee['type']) }}</td>
                                 <td class="border-b dark:border-dark-5">{{ $fee['min_amount'] }}</td>

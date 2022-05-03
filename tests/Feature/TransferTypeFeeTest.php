@@ -23,7 +23,7 @@ class TransferTypeFeeTest extends TestCase
             'amount'      =>   1880,
             'percentage'  =>    7,
             'status'      =>    'active',
-            'description' =>    'xyz'
+            'description' =>    'xyz',
         ];
         $response = $this->postJson(route('dashboard.international-transfer.transfer-type-fee.store'),$data);
         $response->assertStatus(302);
@@ -45,7 +45,7 @@ class TransferTypeFeeTest extends TestCase
             'amount'      =>   1880,
             'percentage'  =>    7,
             'status'      =>    'active',
-            'description' =>    'xyz'
+            'description' =>    'xyz',
         ];
         $response = $this->putJson(route('dashboard.international-transfer.transfer-type-fee.update','13042022114648'),$data);
         $response->assertStatus(302);
@@ -78,7 +78,7 @@ class TransferTypeFeeTest extends TestCase
             'amount'      =>   1880,
             'percentage'  =>    7,
             'status'      =>    'active',
-            'description' =>    'xyz'
+            'description' =>    'xyz',
         ];
         $response = $this->postJson(route('dashboard.international-transfer.transfer-type-fee.store'),$data);
         $response->assertStatus(422);
@@ -100,7 +100,7 @@ class TransferTypeFeeTest extends TestCase
             'amount'      =>   1880,
             'percentage'  =>    7,
             'status'      =>    'active',
-            'description' =>    'xyz'
+            'description' =>    'xyz',
         ];
         $response = $this->putJson(route('dashboard.international-transfer.transfer-type-fee.update','13042022114648'),$data);
         $response->assertStatus(422);

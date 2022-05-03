@@ -26,7 +26,7 @@ class InternationalTransferMenu extends Item
 
         if($user->isSubscriber()) {
             return [
-            new MenuItem('Money transfer', 'activity'),
+            new MenuItem('Money transfer', 'activity', url:route('dashboard.international-transfer.money-transfer.index')),
             ];
         }
 

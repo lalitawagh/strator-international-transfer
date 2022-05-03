@@ -17,8 +17,6 @@ class StoreFeeRequest extends FormRequest
     {
         return [
             'type'           =>    ['required','string'],
-            'payment_type'   =>    ['nullable','string'],
-            'transfer_type'  =>    ['nullable','string'],
             'min_amount'     =>    ['required','numeric','min:0'],
             'max_amount'     =>    ['required','numeric','gt:min_amount'],
             'amount'         =>    ['nullable','numeric','min:0'],

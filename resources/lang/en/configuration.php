@@ -14,7 +14,7 @@ return [
     */
 
     'threshold_limit'     => 'Threshold Limit',
-    'payment_type'        => 'Payment Type',
+    'payment_type'        => 'Payment Method',
     'sending_anchor'      => 'Sending Anchor',
     'receiving_anchor'    => 'Receiving Anchor',
     'exchange_fees'       => 'Exchange Fees',
