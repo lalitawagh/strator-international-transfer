@@ -2,7 +2,6 @@
     <div class="p-0" x-data="{ selectedDiv: 'personal' }">
 
         <form>
-
           <div class="grid grid-cols-12 md:gap-10 mt-0 mb-3">
             <div class="col-span-12 md:col-span-6 form-inline mt-2">
               <label class="form-label sm:w-30">Contact Type <span class="text-theme-6">*</span></label>
