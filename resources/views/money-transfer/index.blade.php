@@ -25,15 +25,15 @@
                                         <div class="intro-y  overflow-x-auto overflow-y-hidden  mt-3 sm:mt-0">
 
                                             <div
-                                                class="sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                class="flex-wrap sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                 <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                                                     <a id="work-in-progress-mobile-new-tab" data-toggle="tab"
                                                         data-target="#work-in-progress-new" href="javascript:;"
                                                         class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
                                                 </div>
-                                                <div class="flex items-center md:ml-auto mb-2">
+                                                <div class="flex flex-wrap gap-2 items-center md:ml-auto mb-2">
                                                     <div
-                                                        class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search hidden sm:block mr-2 ml-auto">
+                                                        class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search  sm:block lg:mr-2 lg:ml-auto">
                                                         <input list="browsers" name="browser" id="browser"
                                                             placeholder="Search"
                                                             class="search__input form-control border-transparent placeholder-theme-13">
@@ -51,7 +51,7 @@
                                                             <polyline points="15 18 9 12 15 6"></polyline>
                                                         </svg> </a>
                                                     <a href="javascript:;"
-                                                        class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
+                                                        class="w-5 h-5 lg:mr-2 flex items-center justify-center dark:text-gray-300">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                             stroke-width="1.5" stroke-linecap="round"
@@ -74,7 +74,7 @@
 
                                                 </div>
 
-                                                <div class="flex sm:flex mt-5 sm:mt-0 mb-2" style="margin-top:-6px;">
+                                                <div class="dr-btn flex sm:flex mt-5 sm:mt-0 mb-2" style="margin-top:-6px;">
 
                                                     <div class="dropdown sm:w-auto mr-2">
                                                         <button

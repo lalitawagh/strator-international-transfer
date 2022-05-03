@@ -12,7 +12,7 @@
     <div class="grid grid-cols-12 gap-3">
         @include('international-transfer::list-component')
         <div class="intro-y box p-3 mt-0">
-            <div class=" overflow-auto lg:overflow-visible">
+            <div class="mt-0 overflow-x-auto overflow-y-hidden">
                 <table id="tableID" class="shroting display table table-report -mt-2" style="width:100%">
                     <thead class="short-wrp">
                         <tr>
@@ -103,16 +103,16 @@
                         @endphp
                         @foreach ($fees as $index => $fee)
                             <tr>
-                                <td class="border-b dark:border-dark-5">{{ $i }}</td>
-                                <td class="border-b dark:border-dark-5">
+                                <td class="whitespace-nowrap text-left">{{ $i }}</td>
+                                <td class="whitespace-nowrap text-left">
                                     {{ trans('international-transfer::configuration.' . $fee['type']) }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $fee['min_amount'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $fee['max_amount'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $fee['amount'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ $fee['percentage'] }}</td>
-                                <td class="border-b dark:border-dark-5">{{ ucfirst($fee['status']) }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $fee['min_amount'] }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $fee['max_amount'] }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $fee['amount'] }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $fee['percentage'] }}</td>
+                                <td class="whitespace-nowrap text-left">{{ ucfirst($fee['status']) }}</td>
 
-                                <td class="border-b dark:border-dark-5">
+                                <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
                                         <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
                                             <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>

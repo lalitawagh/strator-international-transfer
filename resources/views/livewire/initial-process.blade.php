@@ -28,7 +28,7 @@
                             selected
                         @endif
                     @endisset>
-                    {{ $country->currency }} ({{ $country->code }})
+                    {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
                 </option>
             @endforeach
 
@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div class="mb-4 relative">
+<div class="mb-4 relative mt-center">
     <ul class="sequence sequence-top sequence-bottom tw-calculator-breakdown tw-calculator-breakdown--detailed sequence-inverse tw-calculator-breakdown--inverse">
 
 
@@ -162,7 +162,7 @@
                             selected
                         @endif
                     @endisset>
-                    {{ $country->currency }} ({{ $country->code }})
+                    {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
                 </option>
             @endforeach
 
@@ -175,7 +175,7 @@
         </svg>
     </span> --}}
     <!-- BEGIN: Custom Tooltip Content -->
-    <div class="tooltip-content">
+    {{-- <div class="tooltip-content">
         <div id="custom-content-tooltip1" class="relative flex items-center py-1">
             <div class="ml-4 mr-auto">
                 <div class="text-gray-600">
@@ -185,7 +185,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- END: Custom Tooltip Content -->
 </div>
 </div>
