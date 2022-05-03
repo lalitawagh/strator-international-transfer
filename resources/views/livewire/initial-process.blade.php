@@ -69,7 +69,7 @@
                                     @foreach ($fees as $key => $fee)
                                         @isset($recipient_amount)
                                             @php
-                                                $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount['amount'] * ($fee['percentage']/100);
+                                                $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount * ($fee['percentage']/100);
                                             @endphp
                                         @else
                                             @php

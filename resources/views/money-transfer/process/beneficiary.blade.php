@@ -3,7 +3,7 @@
 @section('money-transfer-content')
     <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
-            <h3 class="text-2xl font-black mb-4 text-center py-4">To whom would you like to beneficiary?</h3>
+            <h3 class="text-2xl font-black mb-4 text-center py-4">Select or create beneficiary</h3>
             <!-- BEGIN: Horizontal Form -->
             <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5">
                 <div
@@ -11,119 +11,23 @@
                     New Beneficiary</div>
                 <a data-toggle="modal" data-target="#myself-modal"
                     class="border-2 border-theme-1 dark:border-theme-1 col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
-                    <div class="font-medium text-base"><i data-feather="box"
-                            class="block w-12 h-12 mb-2 mx-auto"></i></div>
+                    <div class="font-medium text-base"><i data-feather="user" class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Myself</div>
                 </a>
                 <a data-toggle="modal" data-target="#someone-else-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
-                    <div class="font-medium text-base text-base"><i data-feather="inbox"
-                            class="block w-12 h-12 mb-2 mx-auto"></i></div>
+                    <div class="font-medium text-base text-base"><i data-feather="users" class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Someone else</div>
                 </a>
                 <a data-toggle="modal" data-target="#business-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
-                    <div class="font-medium text-base"><i data-feather="activity"
-                            class="block w-12 h-12 mb-2 mx-auto"></i></div>
+                    <div class="font-medium text-base"><i data-feather="home"  class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Business or charity
                     </div>
                 </a>
             </div>
 
-            <div
-                class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5 mt-5 pt-3">
-                <div
-                    class="font-medium text-base col-span-12 sm:col-span-12 xxl:col-span-12 py-3">
-                    Existing Beneficiary</div>
-                <div class="intro-y col-span-12 lg:col-span-12">
-                    <div class="relative flex items-center py-2 border-t border-gray-200">
-                        <div
-                            class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
-                            <i data-feather="home"
-                                class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-0"></i>
-                        </div>
-                        <div class="ml-4 mr-auto">
-                            <a href="" class="font-medium">Manully transfer the money
-                                form your bank</a>
-                            <div
-                                class="w-full flex-column text-gray-600 text-xs sm:text-sm">
-                                <div class="mr-2"> 0.79 CHF in total fess </div>
-                                <div class="mr-2"> Manually transfer the money to
-                                    Kanexy using your bank should arrive by may 19 </div>
-                            </div>
-                        </div>
-                        <div class="font-medium text-gray-700 dark:text-gray-500">
-                            <a href="javascript:;"
-                                class="w-5 h-5 ml-5 flex items-center justify-center"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24px"
-                                    height="24px" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-chevron-right w-4 h-4 w-4 h-4">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg></a>
-                        </div>
-                    </div>
-
-                    <div class="relative flex items-center py-2 border-t border-gray-200">
-                        <div
-                            class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
-                            <i data-feather="credit-card"
-                                class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-0"></i>
-                        </div>
-                        <div class="ml-4 mr-auto">
-                            <a href="" class="font-medium">Debit Card</a>
-                            <div
-                                class="w-full flex-column text-gray-600 text-xs sm:text-sm">
-                                <div class="mr-2"> 1.01 CHF In total fess. should
-                                    arrive in second</div>
-                            </div>
-                        </div>
-                        <div class="font-medium text-gray-700 dark:text-gray-500">
-                            <a href="javascript:;"
-                                class="w-5 h-5 ml-5 flex items-center justify-center"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24px"
-                                    height="24px" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-chevron-right w-4 h-4 w-4 h-4">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg></a>
-                        </div>
-                    </div>
-
-                    <div class="relative flex items-center py-2 border-t border-gray-200">
-                        <div
-                            class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
-                            <i data-feather="credit-card"
-                                class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-0"></i>
-                        </div>
-                        <div class="ml-4 mr-auto">
-                            <a href="" class="font-medium">Credit Card</a>
-                            <div
-                                class="w-full flex-column text-gray-600 text-xs sm:text-sm">
-                                <div class="mr-2"> 1.01 CHF In total fess. should
-                                    arrive in second </div>
-                            </div>
-                        </div>
-                        <div class="font-medium text-gray-700 dark:text-gray-500">
-                            <a href="javascript:;"
-                                class="w-5 h-5 ml-5 flex items-center justify-center"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24px"
-                                    height="24px" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-chevron-right w-4 h-4 w-4 h-4">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="intro-y col-span-12 lg:col-span-12 m-auto">
-                    <button class="btn btn-primary w-24 mb-10">Load More</button>
-                </div>
-
-            </div>
+            @livewire('existing-beneficiary',['workspace' => $workspace])
 
 
         </div>
@@ -134,9 +38,9 @@
         </div>
     </div>
 
-    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'myself']);
-    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'someone-else']);
-    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'business']);
+    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'myself'])
+    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'someone-else'])
+    @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'business'])
 
     <!-- BEGIN: OTP Modal -->
     <div id="otp-modal" class="modal modal-slide-over otp-modal" tabindex="-1" aria-hidden="true">
@@ -165,6 +69,10 @@
         window.addEventListener('showOtpModel', event => {
             cash("#"+event.detail.modalType+"-modal").modal("hide");
             cash("#otp-modal").modal("show");
+        });
+
+        window.addEventListener('confirmBeneficiary', event => {
+            cash("#confirm-beneficiary-modal-preview").modal("show");
         });
 
         function getFlagImg(the,type) {

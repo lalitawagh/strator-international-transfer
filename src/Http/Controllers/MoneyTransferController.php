@@ -8,6 +8,7 @@ use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
+use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 
 class MoneyTransferController extends Controller
 {
@@ -49,8 +50,9 @@ class MoneyTransferController extends Controller
         $account = Account::forHolder($workspace)->first();
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
+        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('money_transfer')->latest()->take(5)->get();
 
-        return view('international-transfer::money-transfer.process.beneficiary', compact('user', 'account', 'countries', 'defaultCountry', 'workspace'));
+        return view('international-transfer::money-transfer.process.beneficiary', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'beneficiaries'));
     }
 
     public function showPaymentMethod()

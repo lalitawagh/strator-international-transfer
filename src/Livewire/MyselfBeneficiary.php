@@ -141,11 +141,16 @@ class MyselfBeneficiary extends Component
             $data['avatar'] = $this->avatar->store('Images', 'azure');
         }
 
+        $currencyDetails = [
+            'sending_currency' => session('money_transfer_request.currency_code_from'),
+            'receiving_currency' => session('money_transfer_request.currency_code_to'),
+        ];
 
         $data['mobile'] = Helper::normalizePhone($data['mobile']);
         $data['workspace_id'] = $this->workspace_id;
         $data['ref_type'] = 'money_transfer';
         $data['classification'] = $this->classification;
+        $data['meta'] = array_merge($data['meta'],$currencyDetails);
         $data['status'] = 'active';
 
          /** @var Contact $contact */
