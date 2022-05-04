@@ -5,6 +5,7 @@
         <div class="intro-y col-span-12 lg:col-span-12">
             <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.store') }}">
             @csrf
+            <input type="hidden" name="workspace_id" value="{{ $workspace->id }}">
             <div class="intro-y mt-0 p-3">
                 <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
                     <div class="col-span-12 md:col-span-8 mony-transfer m-auto">

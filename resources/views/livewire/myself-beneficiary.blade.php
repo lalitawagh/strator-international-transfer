@@ -208,7 +208,6 @@
           </div>
 
           <div class="text-right mt-5">
-            <a href="" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
             <button wire:click="createBeneficiary" type="button" class="btn btn-primary w-24">Create</button>
           </div>
         </form>

@@ -72,7 +72,7 @@ class OtpVerification extends Component
         }else{
             $oneTimePassword->update(['verified_at' => now()]);
 
-            return redirect()->route('dashboard.international-transfer.money-transfer.payment')->with([
+            return redirect()->route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $this->workspace_id]])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);

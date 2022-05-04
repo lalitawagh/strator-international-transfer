@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
+use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
@@ -15,6 +16,7 @@ use Kanexy\InternationalTransfer\Livewire\OtpVerification;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
+use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Livewire\Livewire;
@@ -39,6 +41,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         TransferReasonConfiguration::class => TransferReasonPolicy::class,
         MasterAccountConfiguration::class => MasterAccountPolicy::class,
         FeeConfiguration::class => FeePolicy::class,
+        MoneyTransfer::class => MoneyTransferPolicy::class,
     ];
 
     public function registerDefaultPolicies()
