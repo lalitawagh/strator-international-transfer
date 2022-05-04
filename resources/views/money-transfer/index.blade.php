@@ -382,7 +382,7 @@
                                                                 <td class="whitespace-nowrap text-left">Accepted</td>
                                                                 <td class="whitespace-nowrap text-left">g to u 10</td>
                                                                 <td class="table-report__action" style="box-shadow: none;">
-                                                                    <div class="absolute top-0 mt-2 dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
+                                                                    <div class="dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
                                                                         <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <x-feathericon-settings class="w-5 h-5 text-gray-600" /> </a>
                                                                         <div class="dropdown-menu w-40">
                                                                             <div class="dropdown-menu__content box p-2">
