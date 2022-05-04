@@ -121,7 +121,7 @@
                 </span> --}}
 
                 <!-- BEGIN: Custom Tooltip Content -->
-                <div class="tooltip-content">
+                {{-- <div class="tooltip-content">
                     <div id="custom-content-tooltip" class="relative flex items-center py-1">
                         <div class="ml-4 mr-auto">
                             <div class="text-gray-600">You'll get this rate
@@ -130,7 +130,7 @@
                             <a href="" class="btn btn-secondary btn-sm block w-40 mx-auto mt-3">Learn More</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- END: Custom Tooltip Content -->
 
             </li>

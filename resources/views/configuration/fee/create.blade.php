@@ -13,7 +13,7 @@
                     <div class="sm:w-5/6">
                         <select name="type" id="type" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($fee_types as $fee_type)
-                                @if($fee_type != \Kanexy\InternationalTransfer\Enums\Fee::PAYMENT_TYPE && $fee_type != \Kanexy\InternationalTransfer\Enums\Fee::TRANSFER_TYPE)
+                                @if ($fee_type != \Kanexy\InternationalTransfer\Enums\Fee::PAYMENT_TYPE && $fee_type != \Kanexy\InternationalTransfer\Enums\Fee::TRANSFER_TYPE)
                                     <option value="{{ $fee_type }}"> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
                                 @endif
                             @endforeach
