@@ -33,7 +33,7 @@
                         <div class="sm:w-5/6">
                             <select id="{{ $beneficiaryType }}_country_id" name="country" data-search="true" wire:model.defer="country" class="tail-select w-full ">
                                 @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}" @if($country->id == $user->country_id) selected @endif>{{ $country->name }}</option>
+                                    <option value="{{ $country->id }}" @if ($country->id == $user->country_id) selected @endif>{{ $country->name }}</option>
                                 @endforeach
                             </select>
                             @error('country')

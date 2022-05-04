@@ -1,6 +1,6 @@
 <div>
     <div class="modal-body">
-        @if($sent_resend_otp == true)
+        @if ($sent_resend_otp == true)
             <h4 class="text-theme-9 mb-2">OTP Resend Successfully</h4>
         @endif
         <div class="p-0">

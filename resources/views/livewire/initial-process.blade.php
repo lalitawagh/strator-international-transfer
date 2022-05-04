@@ -50,8 +50,8 @@
                             <div class="dropdown-toggle notification cursor-pointer" role="button"
                                 aria-expanded="false" >
                                 <button  class="btn btn-sm btn-secondary mr-4 mb-0" type="button">
-                                    @isset($fees)
-                                        @if(array_search('payment_type',array_column($fees,'type')) === 0)
+                                    @isset ($fees)
+                                        @if (array_search('payment_type',array_column($fees,'type')) === 0)
                                             {{ trans('international-transfer::configuration.payment_type') }}
                                         @else
                                             {{ trans('international-transfer::configuration.transfer_type') }}
@@ -65,9 +65,9 @@
                             </div>
                             <div class="notification-content pt-2 dropdown-menu">
                                 <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
-                                    @isset($fees)
+                                    @isset ($fees)
                                     @foreach ($fees as $key => $fee)
-                                        @isset($recipient_amount)
+                                        @isset ($recipient_amount)
                                             @php
                                                 $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount * ($fee['percentage']/100);
                                             @endphp
@@ -143,7 +143,7 @@
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
             <span id="toCountry">
                 @foreach ($countries as $country)
-                    @isset($currency_to)
+                    @isset ($currency_to)
                         @if ($country->id == $currency_to)
                             <img src="{{ $country->flag }}">
                         @endif
@@ -157,7 +157,7 @@
             <select id='tabcuntery-selection2' style='width: 105px;'  wire:change="changeToCurrency($event.target.value)"  class="" name="currency_code_to">
                 @foreach ($countries as $country)
                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                        @isset($currency_to)
+                        @isset ($currency_to)
                             @if ($country->id == $currency_to)
                                 selected
                             @endif

@@ -121,7 +121,7 @@ class MyselfBeneficiary extends Component
             $this->middle_name =  $user->middle_name;
             $this->last_name =  $user->last_name;
             $this->email =  $user->email;
-            $this->mobile = !is_null(session('mobile')) ? session('mobile') : $user->phone;
+            $this->mobile = ! is_null(session('mobile')) ? session('mobile') : $user->phone;
         }
 
     }
@@ -136,7 +136,7 @@ class MyselfBeneficiary extends Component
             $data['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
         }
 
-        if(!is_null($this->avatar))
+        if(! is_null($this->avatar))
         {
             $data['avatar'] = $this->avatar->store('Images', 'azure');
         }

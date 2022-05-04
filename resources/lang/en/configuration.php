@@ -21,5 +21,5 @@ return [
     'transfer_type'       => 'Transfer Type',
     'myself'              => 'Myself',
     'someone-else'        => 'Someone Else',
-    'business'            => 'Business or charity'
+    'business'            => 'Business or charity',
 ];

@@ -30,7 +30,7 @@ class BeneficiaryTest extends TestCase
             'iban_number' => 'AERP78452A',
             'bank_account_name' => 'Lalita',
             'account_number' => '78451245',
-            'sort_no' => '784512'
+            'sort_no' => '784512',
         ];
 
         $response = Livewire::test(MyselfBeneficiary::class,['countries' => $countries,'defaultCountry' => $defaultCountry,'user' => $user, 'account' => $account, 'workspace' => $workspace, 'beneficiaryType' => $beneficiaryType])
@@ -62,7 +62,7 @@ class BeneficiaryTest extends TestCase
             'iban_number' => 'AERP78452A',
             'bank_account_name' => 'Lalita',
             'account_number' => '7845124578',
-            'sort_no' => '78451278'
+            'sort_no' => '78451278',
         ];
 
         $response = Livewire::test(MyselfBeneficiary::class,['countries' => $countries,'defaultCountry' => $defaultCountry,'user' => $user, 'account' => $account, 'workspace' => $workspace, 'beneficiaryType' => $beneficiaryType])
