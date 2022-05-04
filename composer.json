@@ -16,13 +16,18 @@
     ],
     "repositories": {
         "kanexy/cms": {
-            "type": "path",
-            "url": "../cms"
+            "type": "git",
+            "url": "https://Kanexy@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
+        },
+        "kanexy/partner-foundation": {
+            "type": "git",
+            "url": "https://Kanexy@dev.azure.com/Kanexy/Kanexy%20Platform/_git/partner-foundation"
         }
     },
     "require": {
         "php": "^8.0",
-        "kanexy/cms":"dev-dev"
+        "kanexy/cms":"dev-dev",
+        "kanexy/partner-foundation":"dev-dev"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",

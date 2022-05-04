@@ -9,7 +9,7 @@ class ExistingBeneficiary extends Component
 {
     public $count = 5;
 
-    public $beneficiary;
+    public $beneficiaryDetail;
 
     public function mount($workspace)
     {
@@ -30,7 +30,7 @@ class ExistingBeneficiary extends Component
 
     public function getBeneficiary($value)
     {
-        $this->beneficiary = Contact::find($value);
+        $this->beneficiaryDetail = Contact::find($value);
         $this->dispatchBrowserEvent('confirmBeneficiary');
     }
 }

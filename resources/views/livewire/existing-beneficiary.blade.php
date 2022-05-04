@@ -40,41 +40,59 @@
 
     </div>
 
-    <!-- BEGIN: Modal Content -->
-    <div id="confirm-beneficiary-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="relative flex items-center py-2 border-t border-gray-200 text-cente" wire:click="getBeneficiary({{ $beneficiary->id }})">
-                        <div
-                            class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
-                            @isset($beneficiary->first_name) {{  ucfirst(substr($beneficiary->first_name,0,1)) }}{{  ucfirst(substr($beneficiary->last_name,0,1)) }}  @else {{ ucfirst(substr($beneficiary->display_name,0,1)) }} @endif
-                        </div>
-                        <div class="ml-4 mr-auto">
-                            <div class="font-medium">@isset($beneficiary->display_name) {{ $beneficiary->display_name }} @else {{ $beneficiary->first_name }} {{ $beneficiary->last_name }} @endif</div>
-                            <div
-                                class="w-full flex-column text-gray-600 text-xs sm:text-sm">
-                                <div class="mr-2"> <b></div>
+    @isset($beneficiaryDetail)
+        <!-- BEGIN: Modal Content -->
+        <div id="confirm-beneficiary-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="p-5 text-center">
+                            <div class="relative flex items-center p-6">
+                                <div
+                                    class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                                    @isset($beneficiaryDetail->first_name) {{  ucfirst(substr($beneficiaryDetail->first_name,0,1)) }}{{  ucfirst(substr($beneficiaryDetail->last_name,0,1)) }}  @else {{ ucfirst(substr($beneficiaryDetail->display_name,0,1)) }} @endif
+                                </div>
+                                <div class="ml-4 mr-auto">
+                                    <div class="font-medium">@isset($beneficiaryDetail->display_name) {{ $beneficiaryDetail->display_name }} @else {{ $beneficiaryDetail->first_name }} {{ $beneficiaryDetail->last_name }} @endif</div>
+                                    <div
+                                        class="w-full flex-column text-gray-600 text-xs sm:text-sm">
+                                        <div class="mr-2"> <b></div>
+
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
-
-                    </div>
-                    <div class="p-5 text-center">
-                        <i data-lucide="x-circle" class="w-16 h-16 text-warning mx-auto mt-3"></i>
-                        <div class="text-3xl mt-5">Oops...</div>
-                        <div class="text-slate-500 mt-2">Something went wrong!</div>
-                    </div>
-                    <div class="px-5 pb-8 text-center">
-                        <button type="button" data-tw-dismiss="modal" class="btn w-24 btn-primary">Ok</button>
-                    </div>
-                    <div class="p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
-                        <a href="" class="text-primary">Why do I have this issue?</a>
+                        <div class="px-5 pb-8 text-center">
+                            <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
+                                <label for="type" class="form-label sm:w-48 font-small">Email </label>
+                                <div class="sm:w-4/6">
+                                    <span>{{ @$beneficiaryDetail->email }}</span>
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
+                                <label for="type" class="form-label sm:w-48 font-small">Sort Code / IFSC Code </label>
+                                <div class="sm:w-4/6">
+                                    <span>{{ @$beneficiaryDetail->meta['sort_no'] }}</span>
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
+                                <label for="type" class="form-label sm:w-48">Account Number </label>
+                                <div class="sm:w-4/6">
+                                    <span>{{ @$beneficiaryDetail->meta['account_number'] }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
+                            <a data-dismiss="modal" class="text-primary">Select another receipient</a>
+                            <br>
+                            <a href="{{ route('dashboard.international-transfer.money-transfer.payment') }}" class="btn w-24 mt-3 btn-primary">Continue</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- END: Modal Content -->
+        <!-- END: Modal Content -->
+    @endisset
 
 </div>
