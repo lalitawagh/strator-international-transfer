@@ -1,6 +1,6 @@
 @extends("international-transfer::configuration.skeleton")
 
-@section('title', 'Fee')
+@section('title', 'Fee Setup')
 
 @section('create-button')
     <a href="{{ route('dashboard.international-transfer.fee.create') }}" class="btn btn-sm btn-primary shadow-md">Create
@@ -37,7 +37,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Min Amount
+                            <th class="whitespace-nowrap text-right">Min Amount
                                 <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -51,7 +51,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Max Amount
+                            <th class="whitespace-nowrap text-right">Max Amount
                                 <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -65,7 +65,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Amount
+                            <th class="whitespace-nowrap text-right">Amount
                                 <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -79,7 +79,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Percentage
+                            <th class="whitespace-nowrap text-right">Percentage
                                 <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -106,10 +106,10 @@
                                 <td class="whitespace-nowrap text-left">{{ $i }}</td>
                                 <td class="whitespace-nowrap text-left">
                                     {{ trans('international-transfer::configuration.' . $fee['type']) }}</td>
-                                <td class="whitespace-nowrap text-left">{{ $fee['min_amount'] }}</td>
-                                <td class="whitespace-nowrap text-left">{{ $fee['max_amount'] }}</td>
-                                <td class="whitespace-nowrap text-left">{{ $fee['amount'] }}</td>
-                                <td class="whitespace-nowrap text-left">{{ $fee['percentage'] }}</td>
+                                <td class="whitespace-nowrap text-right">{{ $fee['min_amount'] }}</td>
+                                <td class="whitespace-nowrap text-right">{{ $fee['max_amount'] }}</td>
+                                <td class="whitespace-nowrap text-right">{{ $fee['amount'] }}</td>
+                                <td class="whitespace-nowrap text-right">{{ $fee['percentage'] }}</td>
                                 <td class="whitespace-nowrap text-left">{{ ucfirst($fee['status']) }}</td>
 
                                 <td class="whitespace-nowrap text-left">

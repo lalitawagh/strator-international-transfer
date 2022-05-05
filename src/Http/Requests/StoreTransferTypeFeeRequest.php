@@ -3,6 +3,7 @@
 namespace Kanexy\InternationalTransfer\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 
@@ -17,7 +18,7 @@ class StoreTransferTypeFeeRequest extends FormRequest
     {
         return [
             'currency'       =>    ['required','string'],
-            'type'           =>    ['required','string'],
+            'type'           =>    ['required','string',Rule::in(['payment_type', 'transfer_type'])],
             'payment_type'   =>    ['required_if:type,==,payment_type'],
             'transfer_type'  =>    ['required_if:type,==,transfer_type'],
             'min_amount'     =>    ['required','numeric'],
@@ -34,6 +35,7 @@ class StoreTransferTypeFeeRequest extends FormRequest
         return [
             'payment_type.required_if' => 'The payment type field is required',
             'transfer_type.required_if' => 'The transfer type field is required',
+            'type.in' => 'The type field is required',
         ];
     }
 }

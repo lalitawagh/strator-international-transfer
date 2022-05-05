@@ -52,7 +52,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Min Amount
+                            <th class="whitespace-nowrap text-right">Min Amount
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +66,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Max Amount
+                            <th class="whitespace-nowrap text-right">Max Amount
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +80,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Amount
+                            <th class="whitespace-nowrap text-right">Amount
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -94,7 +94,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Percentage
+                            <th class="whitespace-nowrap text-right">Percentage
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
