@@ -1,6 +1,6 @@
 <div>
 <div class="mb-4 relative">
-    <input wire:change="changeAmount($event.target.value)" class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600" type="text" autofocus>
+    <input wire:change="changeAmount($event.target.value)" wire:model="amount" class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600" type="text" autofocus>
     <label class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">You Send</label>
 
     <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
@@ -42,7 +42,7 @@
 
         <li>
             <span class="sequence-icon tw-calculator-breakdown__icon">–</span>
-            <span class="tw-calculator-breakdown-item__left"><strong>@isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
+            <span class="tw-calculator-breakdown-item__left"><strong> @isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
             <span class="tw-calculator-breakdown-item__right">
                 <span class="m-r-1" data-tracking-id="calculator-payment-select">
                     <div class="tw-select btn-group dropdown">
@@ -66,42 +66,45 @@
                             <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
                                 @isset($fees)
                                 @foreach ($fees as $key => $fee)
-                                    @isset($recipient_amount)
-                                        @php
-                                            $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount * ($fee['percentage']/100);
-                                        @endphp
-                                    @else
-                                        @php
-                                            $amount = 0;
-                                        @endphp
-                                    @endisset
-                                    @php
-                                        $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
-                                    @endphp
+                                    @if ($fee['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
 
-                                    <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
-                                        <div class="ml-0 overflow-hidden">
-                                            <div class="flex flex-col sm:flex-row mt-2 m-2">
-                                                <div class="form-check mr-2">
-                                                    <input id="radio-switch-{{ $key }}" wire:change="changeToMethod($event.target.value)" class="form-check-input" type="radio" name="horizontal_radio_button" value="{{ $amount }}">
-                                                    <label class="form-check-label" for="radio-switch-4"><h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                        @if ($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $amount }} {{ $country->currency }} fee</h4></label>
+                                        @isset($amount)
+                                            @php
+                                                $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $amount * ($fee['percentage']/100);
+                                            @endphp
+                                        @else
+                                            @php
+                                                $amount = 0;
+                                            @endphp
+                                        @endisset
+                                        @php
+                                            $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
+                                        @endphp
+
+                                        <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
+                                            <div class="ml-0 overflow-hidden">
+                                                <div class="flex flex-col sm:flex-row mt-2 m-2">
+                                                    <div class="form-check mr-2">
+                                                        <input id="radio-switch-{{ $key }}" wire:change="changeToMethod({{ $amount }})" class="form-check-input" type="radio" name="horizontal_radio_button"  @if ($key == 0) value="1" @endif>
+                                                        <label class="form-check-label" for="radio-switch-4"><h4 href="javascript:;" class="font-medium truncate mr-5">
+                                                            @if ($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $fee_charge }} {{ $country->currency }} Fee</h4></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="w-full truncate text-gray-600 mt-2 m-2">
+                                                    {{ $fee['description'] }}
                                                 </div>
                                             </div>
-
-                                            <div class="w-full truncate text-gray-600 mt-2 m-2">
-                                                {{ $fee['description'] }}
-                                            </div>
                                         </div>
-                                    </div>
-                                    <hr>
+                                        <hr>
+                                    @endif
                                 @endforeach
                                 @endisset
                             </div>
                         </div>
                     </div>
                 </span>
-                <span style="text-transform:none">Fees</span>
+                <span style="text-transform:none">Fee</span>
             </span>
 
         </li>
@@ -119,7 +122,7 @@
             </span> --}}
 
             <!-- BEGIN: Custom Tooltip Content -->
-            <div class="tooltip-content">
+            {{-- <div class="tooltip-content">
                 <div id="custom-content-tooltip" class="relative flex items-center py-1">
                     <div class="ml-4 mr-auto">
                         <div class="text-gray-600">You'll get this rate
@@ -128,7 +131,7 @@
                         <a href="" class="btn btn-secondary btn-sm block w-40 mx-auto mt-3">Learn More</a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- END: Custom Tooltip Content -->
 
         </li>
