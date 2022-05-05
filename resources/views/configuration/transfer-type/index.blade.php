@@ -24,7 +24,7 @@
                             </th>
 
                             <th class="whitespace-nowrap text-left">Currency
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -39,7 +39,7 @@
                             </th>
 
                             <th class="whitespace-nowrap text-left">Type
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -53,7 +53,7 @@
                                 </span>
                             </th>
                             <th class="whitespace-nowrap text-left">Min Amount
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -67,7 +67,7 @@
                                 </span>
                             </th>
                             <th class="whitespace-nowrap text-left">Max Amount
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -81,7 +81,7 @@
                                 </span>
                             </th>
                             <th class="whitespace-nowrap text-left">Amount
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -95,7 +95,7 @@
                                 </span>
                             </th>
                             <th class="whitespace-nowrap text-left">Percentage
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
