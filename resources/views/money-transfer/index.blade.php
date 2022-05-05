@@ -177,16 +177,37 @@
                                                                 </th>
 
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Transaction ID
+                                                                    Transaction ID
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
+                                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round"
+                                                                                stroke-linejoin="round" stroke-width="2"
+                                                                                d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
+
+                                                                </th>
+                                                                <th class="whitespace-nowrap text-left">
+                                                                    Date & Time
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
+                                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round"
+                                                                                stroke-linejoin="round" stroke-width="2"
+                                                                                d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -195,16 +216,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Date & Time
+                                                                    Sender Name
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -213,16 +235,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Sender Name
+                                                                    Receiver Name
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -231,16 +254,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Receiver Name
+                                                                    Wallet
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -249,16 +273,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Wallet
+                                                                    Debit
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -267,16 +292,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Debit
+                                                                    Credit
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -285,16 +311,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Credit
+                                                                    Balance
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -303,16 +330,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Balance
+                                                                    Status
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -321,34 +349,17 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Status
+                                                                    Reference
+                                                                    <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 up" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
                                                                                 d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                         </svg>
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </th>
-                                                                <th class="whitespace-nowrap text-left">
-                                                                    <span class="flex short-icon">Reference
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4" fill="#c1c4c9"
+                                                                            class="h-4 w-4 down" fill="#c1c4c9"
                                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
@@ -382,7 +393,7 @@
                                                                 <td class="whitespace-nowrap text-left">Accepted</td>
                                                                 <td class="whitespace-nowrap text-left">g to u 10</td>
                                                                 <td class="table-report__action" style="box-shadow: none;">
-                                                                    <div class="absolute top-0 mt-2 dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
+                                                                    <div class="dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
                                                                         <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <x-feathericon-settings class="w-5 h-5 text-gray-600" /> </a>
                                                                         <div class="dropdown-menu w-40">
                                                                             <div class="dropdown-menu__content box p-2">

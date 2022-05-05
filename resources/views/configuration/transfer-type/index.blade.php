@@ -12,7 +12,7 @@
     <div class="grid grid-cols-12 gap-3">
         @include('international-transfer::list-component')
         <div class="intro-y box p-3 mt-0 overflow-x-auto overflow-y-hidden">
-            
+
                 <table id="tableID" class="shroting display table table-report -mt-2">
                     <thead class="short-wrp">
                         <tr>
@@ -25,7 +25,7 @@
 
                             <th class="whitespace-nowrap text-left">Currency
                                 <span class="flex short-icon large-short-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-6 up" fill="#c1c4c9"
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8 7l4-4m0 0l4 4m-4-4v18" />
@@ -40,7 +40,7 @@
 
                             <th class="whitespace-nowrap text-left">Type
                                 <span class="flex short-icon large-short-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-6 up" fill="#c1c4c9"
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8 7l4-4m0 0l4 4m-4-4v18" />
@@ -165,7 +165,7 @@
                     </tbody>
                 </table>
 
-            
+
         </div>
     </div>
     </div>

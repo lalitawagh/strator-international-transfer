@@ -9,7 +9,7 @@
             <div class="intro-y mt-0 p-3">
                 <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
                     <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
-                        <h3 class="text-2x1 font-black mb-4">How Much Would you like to transfer?</h3>
+                        <h3 class="text-2x1 font-black mb-4">How Much Would You Like To Transfer?</h3>
                         @livewire('initial-process',['countries' => $countries, 'defaultCountry' => $defaultCountry])
 
                         {{-- <p class="py-3">
