@@ -27,7 +27,10 @@ Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], functi
         Route::resource("money-transfer",MoneyTransferController::class)->only(['index', 'store', 'create']);
         Route::get("money-transfer/beneficiary",[MoneyTransferController::class, 'showBeneficiary'])->name('money-transfer.beneficiary');
         Route::get("money-transfer/payment",[MoneyTransferController::class, 'showPaymentMethod'])->name('money-transfer.payment');
-
+        Route::post("money-transfer/transaction-detail",[MoneyTransferController::class, 'transactionDetail'])->name('money-transfer.transactionDetail');
+        Route::get("money-transfer/preview",[MoneyTransferController::class, 'preview'])->name('money-transfer.preview');
+        Route::get("money-transfer/cancel-transfer/{id}",[MoneyTransferController::class, 'cancel'])->name('money-transfer.cancelTransfer');
+        Route::get("money-transfer/final",[MoneyTransferController::class, 'final'])->name('money-transfer.final');
     });
 });
 

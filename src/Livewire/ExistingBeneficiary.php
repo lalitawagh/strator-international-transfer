@@ -31,6 +31,12 @@ class ExistingBeneficiary extends Component
     public function getBeneficiary($value)
     {
         $this->beneficiaryDetail = Contact::find($value);
+
+        $requestTransfer = session('money_transfer_request');
+        $requestTransfer['beneficiary_id'] = $this->beneficiaryDetail->id;
+
+        session(['money_transfer_request' => $requestTransfer]);
+
         $this->dispatchBrowserEvent('confirmBeneficiary');
     }
 }
