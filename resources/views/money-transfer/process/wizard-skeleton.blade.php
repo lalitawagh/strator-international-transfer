@@ -15,7 +15,7 @@
                             aria-labelledby="RequestCard-tab">
                             <div class="intro-y col-span-12 md:col-span-12 mt-0">
                                 <!-- BEGIN: Wizard Layout -->
-                                <div class="intro-y box py-10 sm:py-0 mt-0">
+                                <div class="intro-y box sm:py-10 sm:py-0 mt-0">
                                     <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                                         <h2 class="font-medium text-base mr-auto">
                                             Money Transfer
