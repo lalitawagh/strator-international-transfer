@@ -28,7 +28,7 @@
                     <div class="sm:w-5/6">
 
                         <select name="type" id="type" onchange="getType(this)" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
-                                <option>Select Type</option>
+                            <option>Select Type</option>
                             @foreach ($fee_types as $fee_type)
                                 @if ($fee_type == 'payment_type' || $fee_type == 'transfer_type')
                                     <option value="{{ $fee_type }}" @if (old('type') == $fee_type) selected @endif> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
