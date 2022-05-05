@@ -11,7 +11,7 @@
     @include('international-transfer::list-component')
     <div class="intro-y box p-3 mt-0 overflow-x-auto overflow-y-hidden">
 
-            <table id="tableID" class="shroting table -mt-2">
+            <table id="tableID" class="shroting display table table-report -mt-2">
                 <thead class="short-wrp">
                     <tr>
                         <th class="w-16 whitespace-nowrap text-left">
