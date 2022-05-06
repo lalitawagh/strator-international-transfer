@@ -155,7 +155,7 @@
                                                     </div>
 
                                                 </div>
-                                                <a href="{{ route('dashboard.international-transfer.money-transfer.create') }}" class="btn btn-sm btn-primary sm:ml-2 -mt-1 mb-2">Money Transfer</a>
+                                                <a href="{{ route('dashboard.international-transfer.money-transfer.create',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}" class="btn btn-sm btn-primary sm:ml-2 -mt-1 mb-2">Money Transfer</a>
                                             </div>
                                             <!-- BEGIN: HTML Table Data -->
                                             <div class="intro-y p-3 mt-0">
