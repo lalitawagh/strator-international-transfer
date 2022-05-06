@@ -68,7 +68,7 @@
                                 @foreach ($fees as $key => $fee)
                                     @if ($fee['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
 
-                                        @isset($amount)
+                                        @if(!empty($amount))
                                             @php
                                                 $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $amount * ($fee['percentage']/100);
                                             @endphp
@@ -76,7 +76,7 @@
                                             @php
                                                 $amount = 0;
                                             @endphp
-                                        @endisset
+                                        @endif
                                         @php
                                             $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                         @endphp

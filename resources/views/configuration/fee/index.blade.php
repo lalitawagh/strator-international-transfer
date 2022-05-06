@@ -99,11 +99,11 @@
                     </thead>
                     <tbody>
                         @php
-                            $i = 1;
+                            $i = 0;
                         @endphp
                         @foreach ($fees as $index => $fee)
                             <tr>
-                                <td class="whitespace-nowrap text-left">{{ $i }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $fees->firstItem() + $i }}</td>
                                 <td class="whitespace-nowrap text-left">
                                     {{ trans('international-transfer::configuration.' . $fee['type']) }}</td>
                                 <td class="whitespace-nowrap text-right">{{ $fee['min_amount'] }}</td>
