@@ -39,35 +39,35 @@
     <div class="mb-4 relative">
         <ul class="sequence sequence-top sequence-bottom tw-calculator-breakdown tw-calculator-breakdown--detailed sequence-inverse tw-calculator-breakdown--inverse">
 
+        <li>
+            <span class="sequence-icon tw-calculator-breakdown__icon">–</span>
+            <span class="tw-calculator-breakdown-item__left"><strong> @isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
+            <span class="tw-calculator-breakdown-item__right">
+                <span class="m-r-1" data-tracking-id="calculator-payment-select">
+                    <div class="tw-select btn-group dropdown">
+                        <div class="dropdown-toggle notification cursor-pointer" role="button"
+                            aria-expanded="false">
+                            <button  class="btn btn-sm btn-secondary mr-4 mb-0">
+                                @isset ($fees)
+                                    @if(array_search('payment_type',array_column($fees,'type')) === 0)
+                                        {{ trans('international-transfer::configuration.payment_methods') }}
+                                    @else
+                                        {{ trans('international-transfer::configuration.transfer_types') }}
+                                    @endif
+                                @endisset
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="notification-content pt-2 dropdown-menu">
+                            <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
+                                @isset($fees)
+                                @foreach ($fees as $key => $fee)
+                                    @if ($fee['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
 
-            <li>
-                <input type="hidden" name="fee_charge" value="@isset($fee_charge) {{ $fee_charge }} @endisset">
-                <span class="sequence-icon tw-calculator-breakdown__icon">–</span>
-                <span class="tw-calculator-breakdown-item__left"><strong>@isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
-                <span class="tw-calculator-breakdown-item__right">
-                    <span class="m-r-1" data-tracking-id="calculator-payment-select">
-                        <div class="tw-select btn-group dropdown">
-                            <div class="dropdown-toggle notification cursor-pointer" role="button"
-                                aria-expanded="false" >
-                                <button  class="btn btn-sm btn-secondary mr-4 mb-0" type="button">
-                                    @isset ($fees)
-                                        @if (array_search('payment_type',array_column($fees,'type')) === 0)
-                                            {{ trans('international-transfer::configuration.payment_type') }}
-                                        @else
-                                            {{ trans('international-transfer::configuration.transfer_type') }}
-                                        @endif
-                                    @endisset
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="notification-content pt-2 dropdown-menu">
-                                <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
-                                    @isset ($fees)
-                                    @foreach ($fees as $key => $fee)
-                                        @isset ($recipient_amount)
+                                        @if(!empty($amount))
                                             @php
                                                 $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount * ($fee['percentage']/100);
                                             @endphp
@@ -75,7 +75,7 @@
                                             @php
                                                 $amount = 0;
                                             @endphp
-                                        @endisset
+                                        @endif
                                         @php
                                             $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                         @endphp

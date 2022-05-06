@@ -1,7 +1,7 @@
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
-    <div class="px-5 sm:px-10 mt-10 pt-10 border-t border-gray-200">
+    <div class="px-5 mt-3 sm:px-10 sm:mt-10 sm:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
             <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.store') }}">
             @csrf

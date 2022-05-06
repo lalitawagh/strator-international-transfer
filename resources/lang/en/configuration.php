@@ -22,4 +22,6 @@ return [
     'myself'              => 'Myself',
     'someone-else'        => 'Someone Else',
     'business'            => 'Business or charity',
+    'payment_methods'     => 'Payment methods',
+    'transfer_types'     => 'Transfer types',
 ];

@@ -11,7 +11,7 @@
     @include('international-transfer::list-component')
     <div class="intro-y box p-3 mt-0 overflow-x-auto overflow-y-hidden">
 
-            <table id="tableID" class="shroting table -mt-2">
+            <table id="tableID" class="shroting display table table-report -mt-2">
                 <thead class="short-wrp">
                     <tr>
                         <th class="w-16 whitespace-nowrap text-left">
@@ -41,11 +41,11 @@
                 </thead>
                 <tbody>
                     @php
-                        $i = 1;
+                        $i = 0;
                     @endphp
                     @foreach ($money_transfer_reasons as $index => $money_transfer_reason)
                         <tr>
-                            <td class="whitespace-nowrap text-left">{{ $i }}</td>
+                            <td class="whitespace-nowrap text-left">{{ $money_transfer_reasons->firstItem() + $i }}</td>
                             <td class="whitespace-nowrap text-left">{{ $money_transfer_reason['reason'] }}</td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($money_transfer_reason['status']) }}</td>
 

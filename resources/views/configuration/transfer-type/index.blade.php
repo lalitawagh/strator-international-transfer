@@ -24,7 +24,7 @@
                             </th>
 
                             <th class="whitespace-nowrap text-left">Currency
-                                <span class="flex short-icon large-short-icon">
+                                <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -39,6 +39,20 @@
                             </th>
 
                             <th class="whitespace-nowrap text-left">Type
+                                <span class="flex short-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th class="whitespace-nowrap text-right">Min Amount
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -52,7 +66,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Min Amount
+                            <th class="whitespace-nowrap text-right">Max Amount
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +80,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Max Amount
+                            <th class="whitespace-nowrap text-right">Amount
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -80,21 +94,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th class="whitespace-nowrap text-left">Amount
-                                <span class="flex short-icon large-short-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                    </svg>
-                                </span>
-                            </th>
-                            <th class="whitespace-nowrap text-left">Percentage
+                            <th class="whitespace-nowrap text-right">Percentage
                                 <span class="flex short-icon large-short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -114,14 +114,14 @@
                     </thead>
                     <tbody>
                         @php
-                            $i = 1;
+                            $i = 0;
                         @endphp
                         @foreach ($transfer_type_fees as $index => $transfer_type_fee)
                             @php
                                 $currency = \Kanexy\Cms\I18N\Models\Country::find($transfer_type_fee['currency']);
                             @endphp
                             <tr>
-                                <td class="whitespace-nowrap text-left">{{ $i }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $transfer_type_fees->firstItem() + $i }}</td>
                                 <td class="whitespace-nowrap text-left">{{ $currency->currency }}</td>
                                 <td class="whitespace-nowrap text-left">{{ trans('international-transfer::configuration.'.$transfer_type_fee['type']) }}</td>
                                 <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['min_amount'] }}</td>
