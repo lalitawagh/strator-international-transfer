@@ -166,10 +166,7 @@ class MoneyTransferController extends Controller
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         session()->forget('card_request');
 
-        // return redirect()->route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $workspace->id]])->with([
-        //     'status' => 'success',
-        //     'message' => 'A money transfer request has been successfully created.',
-        // ]);
+        return view('international-transfer::money-transfer.process.preview');
     }
 
 }
