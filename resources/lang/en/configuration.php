@@ -19,4 +19,6 @@ return [
     'receiving_anchor'    => 'Receiving Anchor',
     'exchange_fees'       => 'Exchange Fees',
     'transfer_type'       => 'Transfer Type',
+    'payment_methods'     => 'Payment methods',
+    'transfer_types'     => 'Transfer types',
 ];

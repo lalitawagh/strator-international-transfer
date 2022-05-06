@@ -51,9 +51,9 @@
                             <button  class="btn btn-sm btn-secondary mr-4 mb-0">
                                 @isset ($fees)
                                     @if(array_search('payment_type',array_column($fees,'type')) === 0)
-                                        {{ trans('international-transfer::configuration.payment_type') }}
+                                        {{ trans('international-transfer::configuration.payment_methods') }}
                                     @else
-                                        {{ trans('international-transfer::configuration.transfer_type') }}
+                                        {{ trans('international-transfer::configuration.transfer_types') }}
                                     @endif
                                 @endisset
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

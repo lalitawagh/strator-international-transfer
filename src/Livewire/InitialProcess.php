@@ -74,6 +74,7 @@ class InitialProcess extends Component
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchange_rate;
         $this->guaranteed_rate = number_format((float) $this->guaranteed_rate, 2, '.', '');
+        $this->initial_fee = collect(Setting::getValue('money_transfer_type_fees',[]))->firstWhere('currency', $value);
 
         $this->fee_charge = ( $this->initial_fee['percentage'] == 0) ?  $this->initial_fee['amount'] : $this->amount * ( $this->initial_fee['percentage']/100);
         $this->fee_deduction_amount = $this->amount - $this->fee_charge;

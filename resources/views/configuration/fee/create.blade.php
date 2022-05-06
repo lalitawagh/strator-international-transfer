@@ -1,6 +1,6 @@
 @extends("international-transfer::configuration.skeleton")
 
-@section('title', 'Create Fee')
+@section('title', 'Create Fee Setup')
 
 @section('config-content')
     <div class="p-5">
