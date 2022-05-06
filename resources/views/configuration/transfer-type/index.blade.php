@@ -114,14 +114,14 @@
                     </thead>
                     <tbody>
                         @php
-                            $i = 1;
+                            $i = 0;
                         @endphp
                         @foreach ($transfer_type_fees as $index => $transfer_type_fee)
                             @php
                                 $currency = \Kanexy\Cms\I18N\Models\Country::find($transfer_type_fee['currency']);
                             @endphp
                             <tr>
-                                <td class="whitespace-nowrap text-left">{{ $i }}</td>
+                                <td class="whitespace-nowrap text-left">{{ $transfer_type_fees->firstItem() + $i }}</td>
                                 <td class="whitespace-nowrap text-left">{{ $currency->currency }}</td>
                                 <td class="whitespace-nowrap text-left">{{ trans('international-transfer::configuration.'.$transfer_type_fee['type']) }}</td>
                                 <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['min_amount'] }}</td>

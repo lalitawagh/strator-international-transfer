@@ -28,7 +28,7 @@
                                 selected
                             @endif
                         @endisset>
-                        {{ $country->currency }} ({{ $country->code }})
+                        {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
                     </option>
                 @endforeach
 
@@ -36,25 +36,24 @@
         </div>
     </div>
 
-    <div class="mb-4 relative">
+    <div class="mb-4 relative mt-center">
         <ul class="sequence sequence-top sequence-bottom tw-calculator-breakdown tw-calculator-breakdown--detailed sequence-inverse tw-calculator-breakdown--inverse">
-
+            <input type="hidden" name="fee_charge" value="@isset($fee_charge) {{ $fee_charge }} @endisset">
 
             <li>
-                <input type="hidden" name="fee_charge" value="@isset($fee_charge) {{ $fee_charge }} @endisset">
                 <span class="sequence-icon tw-calculator-breakdown__icon">–</span>
-                <span class="tw-calculator-breakdown-item__left"><strong>@isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
+                <span class="tw-calculator-breakdown-item__left"><strong> @isset($fee_charge) {{ $fee_charge }} @endisset  {{ $from }}</strong></span>
                 <span class="tw-calculator-breakdown-item__right">
                     <span class="m-r-1" data-tracking-id="calculator-payment-select">
                         <div class="tw-select btn-group dropdown">
                             <div class="dropdown-toggle notification cursor-pointer" role="button"
-                                aria-expanded="false" >
-                                <button  class="btn btn-sm btn-secondary mr-4 mb-0" type="button">
+                                aria-expanded="false">
+                                <button type="button" class="btn btn-sm btn-secondary mr-4 mb-0">
                                     @isset ($fees)
-                                        @if (array_search('payment_type',array_column($fees,'type')) === 0)
-                                            {{ trans('international-transfer::configuration.payment_type') }}
+                                        @if(array_search('payment_type',array_column($fees,'type')) === 0)
+                                            {{ trans('international-transfer::configuration.payment_methods') }}
                                         @else
-                                            {{ trans('international-transfer::configuration.transfer_type') }}
+                                            {{ trans('international-transfer::configuration.transfer_types') }}
                                         @endif
                                     @endisset
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -65,44 +64,47 @@
                             </div>
                             <div class="notification-content pt-2 dropdown-menu">
                                 <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
-                                    @isset ($fees)
+                                    @isset($fees)
                                     @foreach ($fees as $key => $fee)
-                                        @isset ($recipient_amount)
-                                            @php
-                                                $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $recipient_amount * ($fee['percentage']/100);
-                                            @endphp
-                                        @else
-                                            @php
-                                                $amount = 0;
-                                            @endphp
-                                        @endisset
-                                        @php
-                                            $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
-                                        @endphp
+                                        @if ($fee['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
 
-                                        <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
-                                            <div class="ml-0 overflow-hidden">
-                                                <div class="flex flex-col sm:flex-row mt-2 m-2">
-                                                    <div class="form-check mr-2">
-                                                        <input id="radio-switch-{{ $key }}" wire:change="changeToMethod($event.target.value)" class="form-check-input" type="radio" name="horizontal_radio_button" value="{{ $amount }}">
-                                                        <label class="form-check-label" for="radio-switch-4"><h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                            @if ($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $amount }} {{ $country->currency }} fee</h4></label>
+                                            @if(!empty($amount))
+                                                @php
+                                                    $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $amount * ($fee['percentage']/100);
+                                                @endphp
+                                            @else
+                                                @php
+                                                    $amount = 0;
+                                                @endphp
+                                            @endif
+                                            @php
+                                                $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
+                                            @endphp
+
+                                            <div class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
+                                                <div class="ml-0 overflow-hidden">
+                                                    <div class="flex flex-col sm:flex-row mt-2 m-2">
+                                                        <div class="form-check mr-2">
+                                                            <input id="radio-switch-{{ $key }}" wire:change="changeToMethod({{ $amount }})" class="form-check-input" type="radio" name="horizontal_radio_button"  @if ($key == 0) value="1" @endif>
+                                                            <label class="form-check-label" for="radio-switch-4"><h4 href="javascript:;" class="font-medium truncate mr-5">
+                                                                @if ($fee['type'] == 'payment_type') {{ $fee['payment_type'] }} @elseif ($fee['type'] == 'transfer_type') {{ $fee['transfer_type'] }} @endif -{{ $fee_charge }} {{ $country->currency }} Fee</h4></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="w-full truncate text-gray-600 mt-2 m-2">
+                                                        {{ $fee['description'] }}
                                                     </div>
                                                 </div>
-
-                                                <div class="w-full truncate text-gray-600 mt-2 m-2">
-                                                    {{ $fee['description'] }}
-                                                </div>
                                             </div>
-                                        </div>
-                                        <hr>
+                                            <hr>
+                                        @endif
                                     @endforeach
                                     @endisset
                                 </div>
                             </div>
                         </div>
                     </span>
-                    <span style="text-transform:none">Fees</span>
+                    <span style="text-transform:none">Fee</span>
                 </span>
 
             </li>
@@ -141,23 +143,21 @@
         <label class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Recipient Gets</label>
 
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
-            <span id="toCountry">
-                @foreach ($countries as $country)
-                    @isset ($currency_to)
-                        @if ($country->id == $currency_to)
-                            <img src="{{ $country->flag }}">
-                        @endif
-                    @else
-                        @if ($country->id == '1')
-                            <img src="{{ $country->flag }}">
-                        @endif
-                    @endisset
-                @endforeach
-            </span>
+            <span id="toCountry">@foreach ($countries as $country)
+                @isset($currency_to)
+                    @if ($country->id == $currency_to)
+                        <img src="{{ $country->flag }}">
+                    @endif
+                @else
+                    @if ($country->id == '1')
+                        <img src="{{ $country->flag }}">
+                    @endif
+                @endisset
+            @endforeach</span>
             <select id='tabcuntery-selection2' style='width: 105px;'  wire:change="changeToCurrency($event.target.value)"  class="" name="currency_code_to">
                 @foreach ($countries as $country)
                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                        @isset ($currency_to)
+                        @isset($currency_to)
                             @if ($country->id == $currency_to)
                                 selected
                             @endif
@@ -166,11 +166,30 @@
                                 selected
                             @endif
                         @endisset>
-                        {{ $country->currency }} ({{ $country->code }})
+                        {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
                     </option>
                 @endforeach
 
             </select>
         </div>
+        {{-- <span class="lock-amount tooltip" data-theme="light" data-tooltip-content="#custom-content-tooltip1"
+            data-trigger="click" title="This is awesome tooltip example!">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </span> --}}
+        <!-- BEGIN: Custom Tooltip Content -->
+        {{-- <div class="tooltip-content">
+            <div id="custom-content-tooltip1" class="relative flex items-center py-1">
+                <div class="ml-4 mr-auto">
+                    <div class="text-gray-600">
+                        If you need more than 2 houre to pay, click the cock
+                        to make sure your recipient gets exactly
+                        <strong>1.162.03 GBP</strong>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        <!-- END: Custom Tooltip Content -->
     </div>
-</div>
+    </div>

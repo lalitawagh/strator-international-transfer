@@ -48,7 +48,7 @@
             <div class="modal-content">
                 <div class="modal-header p-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Otp Verification
+                        OTP Verification
                     </h2>
                     <div class="items-center justify-center mt-0">
                         {{-- <a data-toggle="modal" data-target="#review-transfer"
@@ -77,8 +77,12 @@
 
         function getFlagImg(the,type) {
             var img = $('option:selected', the).attr('data-source');
-            alert(img);
             $('#countryWithPhoneFlagImgTransfer'+type).html('<img src="' + img + '">');
+        }
+
+        function getFlagImgLandline(the,type) {
+            var img = $('option:selected', the).attr('data-source');
+            $('#countryWithLandlineFlagImgTransfer'+type).html('<img src="' + img + '">');
         }
     </script>
 @endpush

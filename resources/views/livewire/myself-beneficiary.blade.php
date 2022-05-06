@@ -111,7 +111,7 @@
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
-                                            {{ $country->name }} ({{ $country->phone }})
+                                            ({{ $country->phone }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -127,7 +127,36 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="landline" class="form-label sm:w-30">Phone </label>
                     <div class="sm:w-5/6">
-                        <input id="landline" wire:model.defer="landline" name="landline" type="text" class="form-control" value="">
+                        <div class="input-group flex flex-col sm:flex-row mb-2 mt-2">
+                            <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
+                                style="padding: 0 5px;">
+
+                                <span id="countryWithLandlineFlagImgTransfer{{ $beneficiaryType }}" style="display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            align-self: center;margin-right:10px;">
+                                    @foreach ($countries as $country)
+                                        @if ($country->id == old('country_code', $defaultCountry->id))
+                                            <img src="{{ $country->flag }}">
+                                        @endif
+                                    @endforeach
+                                </span>
+
+                                <select id="countryWithPhone" name="country_code"
+                                    onchange="getFlagImgLandline(this,'{{ $beneficiaryType }}')" data-search="true"
+                                    class="tail-select" style="width:20%">
+                                    @foreach ($countries as $country)
+                                        <option data-source="{{ $country->flag }}"
+                                            value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
+                                            ({{ $country->phone }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <input id="landline" wire:model.defer="landline" name="landline" type="text" class="form-control" value="">
+
+                        </div>
+
                         @error('landline')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
@@ -157,7 +186,7 @@
                 </div>
 
                 <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    <label for="sort_no" class="form-label sm:w-30">Sort No / IFSC Code <span class="text-theme-6">*</span></label>
+                    <label for="sort_no" class="form-label sm:w-30">Sort No <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="sort_no" wire:model.defer="meta.sort_no" name="sort_no" type="text" class="form-control" value="{{ $account->bank_code }}" required="required">
                         @error('meta.sort_no')
@@ -167,7 +196,7 @@
                 </div>
 
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                    <label for="iban_number" class="form-label sm:w-30">IBAN <span class="text-theme-6">*</span></label>
+                    <label for="iban_number" class="form-label sm:w-30">IFSC Code / IBAN <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number" type="text" class="form-control" value="{{ $account->iban_number }}" required="required">
                         @error('meta.iban_number')
