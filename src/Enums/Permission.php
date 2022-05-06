@@ -21,4 +21,7 @@ class Permission
     public const FEE_CREATE = 'international-transfer::fee.create';
     public const FEE_EDIT   = 'international-transfer::fee.edit';
     public const FEE_DELETE = 'international-transfer::fee.delete';
+
+    public const MONEY_TRANSFER_VIEW   = 'international-transfer::money_transfer.view';
+    public const MONEY_TRANSFER_CREATE = 'international-transfer::money_transfer.create';
 }

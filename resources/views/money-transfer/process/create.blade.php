@@ -3,6 +3,9 @@
 @section('money-transfer-content')
     <div class="px-5 mt-3 sm:px-10 sm:mt-10 sm:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
+            <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.store') }}">
+            @csrf
+            <input type="hidden" name="workspace_id" value="{{ $workspace->id }}">
             <div class="intro-y mt-0 p-3">
                 <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
                     <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
@@ -18,11 +21,11 @@
                             <a data-toggle="modal" data-target="#large-slide-over-size-preview"
                                 class="btn btn-secondary">Compare Price</a>
 
-                            <button class="btn btn-primary w-24 ml-2" @click="step++">Continue</button>
-                        </div>
+                        <button class="btn btn-primary w-24 ml-2" >Continue</button>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 @endsection
