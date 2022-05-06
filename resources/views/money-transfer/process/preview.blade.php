@@ -2,8 +2,9 @@
 
 @section('money-transfer-content')
 <div  class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200">
+
     <form method="GET" action="{{ route('dashboard.international-transfer.money-transfer.final',['filter' => ['workspace_id' => $workspace->id]]) }}">
-        @csrf
+
         <div class="intro-y col-span-12 lg:col-span-12">
             <!-- BEGIN: Horizontal Form -->
             <div class="intro-y box mt-0 clearfix">
