@@ -72,8 +72,9 @@ class MyselfBeneficiary extends Component
     protected function rules()
     {
         return  [
-            'email' => ['required','email'],
-            'mobile' => ['required',new MobileNumber],
+            'type' => ['required', 'string'],
+            'email' => ['nullable','email'],
+            'mobile' => ['nullable',new MobileNumber],
             'first_name' => ['required_if:type,personal', 'nullable', new AlphaSpaces, 'string','max:40'],
             'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
             'last_name' =>  ['required_if:type,personal', 'nullable', new AlphaSpaces, 'string','max:40'],
@@ -87,7 +88,6 @@ class MyselfBeneficiary extends Component
             'meta.account_number' => ['required', 'string', 'numeric', 'digits:8'],
             'meta.sort_no' => ['required', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
-            'type' => ['required', 'string'],
         ];
     }
 
@@ -146,7 +146,11 @@ class MyselfBeneficiary extends Component
             'receiving_currency' => session('money_transfer_request.currency_code_to'),
         ];
 
-        $data['mobile'] = Helper::normalizePhone($data['mobile']);
+        if(!is_null($data['mobile']))
+        {
+            $data['mobile'] = Helper::normalizePhone($data['mobile']);
+        }
+
         $data['workspace_id'] = $this->workspace_id;
         $data['ref_type'] = 'money_transfer';
         $data['classification'] = $this->classification;
@@ -166,7 +170,7 @@ class MyselfBeneficiary extends Component
         // $contact->generateOtp("sms");
         $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
 
-        session(['contact' => $contact, 'mobile' => $data['mobile'], 'oneTimePassword' => $this->oneTimePassword]);
+        session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
 
         //$user->generateOtp("sms");
         $this->beneficiary_created = true;
