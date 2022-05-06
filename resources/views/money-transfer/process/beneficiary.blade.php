@@ -1,26 +1,26 @@
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
-    <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200">
+    <div class="px-5 sm:px-5 mt-3 sm:pt-3 lg:mt-10 lg:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
-            <h3 class="text-2xl font-black mb-4 text-center py-4">Select or create beneficiary</h3>
+            <h3 class="text-2xl font-black sm:mb-4 text-center py-4">Select or create beneficiary</h3>
             <!-- BEGIN: Horizontal Form -->
             <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5">
                 <div
                     class="font-medium text-base col-span-12 sm:col-span-12 xxl:col-span-12 py-3">
                     New Beneficiary</div>
                 <a data-toggle="modal" data-target="#myself-modal"
-                    class="border-2 border-theme-1 dark:border-theme-1 col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
+                    class="border-2 border-theme-1 dark:border-theme-1 col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                     <div class="font-medium text-base"><i data-feather="user" class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Myself</div>
                 </a>
                 <a data-toggle="modal" data-target="#someone-else-modal"
-                    class="col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
+                    class="col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                     <div class="font-medium text-base text-base"><i data-feather="users" class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Someone else</div>
                 </a>
                 <a data-toggle="modal" data-target="#business-modal"
-                    class="col-span-12 sm:col-span-4 xxl:col-span-3 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
+                    class="col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                     <div class="font-medium text-base"><i data-feather="home"  class="block w-12 h-12 mb-2 mx-auto"></i></div>
                     <div class="font-medium text-center text-base mt-3">Business or charity
                     </div>
