@@ -29,18 +29,18 @@
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
-                                            {{ $country->name }} ({{ $country->phone }})
+                                            ({{ $country->phone }})
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            <input name="mobile" value="{{ session('mobile') }}" type="number" class="form-control @error('phone') border-theme-6 @enderror" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);" disabled>
+                            <input name="mobile" value="{{ $user->phone }}" type="number" class="form-control @error('phone') border-theme-6 @enderror" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);" disabled>
 
                         </div>
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 mb-2">
-                    <label for="code" class="form-label sm:w-24">Otp <span class="text-theme-6">*</span></label>
+                    <label for="code" class="form-label sm:w-24">OTP <span class="text-theme-6">*</span></label>
                     <div class="sm:w-4/6">
                     <input id="code" wire:model.defer="code" name="code" type="text" class="form-control" required="required">
                     @error('code')
