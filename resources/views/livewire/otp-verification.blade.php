@@ -4,10 +4,10 @@
             <h4 class="text-theme-9 mb-2">OTP Resend Successfully</h4>
         @endif
         <div class="p-0">
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 mb-2">
-                    <label for="mobile" class="form-label sm:w-24">Mobile <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-4/6">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 md:col-span-12 form-inline">
+                    <label for="mobile" class="form-label sm:w-16">Mobile <span class="text-theme-6">*</span></label>
+                    <div class="sm:w-5/6">
                         <div class="input-group flex flex-col sm:flex-row mb-2 mt-2">
                             <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
                                 style="padding: 0 5px;">
@@ -39,9 +39,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 mb-2">
-                    <label for="code" class="form-label sm:w-24">OTP <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-4/6">
+                <div class="col-span-12 md:col-span-12 form-inline">
+                    <label for="code" class="form-label sm:w-16">OTP <span class="text-theme-6">*</span></label>
+                    <div class="sm:w-5/6">
                     <input id="code" wire:model.defer="code" name="code" type="text" class="form-control" required="required">
                     @error('code')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
