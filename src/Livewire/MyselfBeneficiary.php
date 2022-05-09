@@ -154,8 +154,6 @@ class MyselfBeneficiary extends Component
         }
 
         $data['workspace_id'] = $this->workspace_id;
-        /* TODO: Ask To that which id need to pass*/
-        $data['ref_id'] = '1';
         $data['ref_type'] = 'money_transfer';
         $data['classification'] = $this->classification;
         $data['meta'] = array_merge($data['meta'],$currencyDetails);
