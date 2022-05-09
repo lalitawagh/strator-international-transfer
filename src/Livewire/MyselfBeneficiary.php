@@ -148,7 +148,7 @@ class MyselfBeneficiary extends Component
             'bank_code_type' => BankEnum::SORTCODE,
         ];
 
-        if(!is_null($data['mobile']))
+        if(! is_null($data['mobile']))
         {
             $data['mobile'] = Helper::normalizePhone($data['mobile']);
         }

@@ -36,7 +36,7 @@ $data =  [
         'heading' => 'Stripe charges will be applied',
         'description' => 'Easy and faster stripe payment.',
         'image' => asset('dist/images/CardPay-Debit.png'),
-    ]
+    ],
 ];
 
 return $data;

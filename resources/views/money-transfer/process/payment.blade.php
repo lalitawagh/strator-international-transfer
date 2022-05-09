@@ -22,7 +22,7 @@
                                         <div id="basic-accordion" class="p-5">
                                             <div class="preview">
                                                 <div id="faq-accordion-1" class="accordion">
-                                                    @foreach(trans('international-transfer::payment') as $key => $payment)
+                                                    @foreach (trans('international-transfer::payment') as $key => $payment)
                                                         <div class="accordion-item">
                                                             <div id="faq-accordion-content-{{ $key }}" class="accordion-header">
                                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-1" aria-expanded="true" aria-controls="faq-accordion-collapse-1">
@@ -125,7 +125,7 @@
                                             <div class="sm:w-5/6">
                                                 <select name="transfer_reason" data-search="true" class="tail-select w-full">
                                                     @foreach ($reasons as $reason)
-                                                        @if($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
+                                                        @if ($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
                                                             <option value="{{ $reason['id'] }}">{{ $reason['reason'] }}</option>
                                                         @endif
                                                     @endforeach

@@ -50,7 +50,7 @@
                                 aria-expanded="false">
                                 <button type="button" class="btn btn-sm btn-secondary mr-4 mb-0">
                                     @isset ($fees)
-                                        @if(array_search('payment_type',array_column($fees,'type')) === 0)
+                                        @if (array_search('payment_type',array_column($fees,'type')) === 0)
                                             {{ trans('international-transfer::configuration.payment_methods') }}
                                         @else
                                             {{ trans('international-transfer::configuration.transfer_types') }}
@@ -68,7 +68,7 @@
                                     @foreach ($fees as $key => $fee)
                                         @if ($fee['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
 
-                                            @if(!empty($amount))
+                                            @if (!empty($amount))
                                                 @php
                                                     $amount = ($fee['percentage'] == 0) ? $fee['amount'] : $amount * ($fee['percentage']/100);
                                                 @endphp

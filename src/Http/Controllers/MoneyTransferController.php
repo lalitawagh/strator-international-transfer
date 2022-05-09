@@ -238,11 +238,11 @@ class MoneyTransferController extends Controller
 
         $transferDetails = session('money_transfer_request.transaction');
         $stripe =  Stripe\stripe::setApiKey(config('services.stripe.secret'));
-        $data = Stripe\Charge::create ([
-                "amount" => $request->input('amount') * 100,
-                "currency" => $transferDetails->settled_currency,
-                "source" => $request->input('stripeToken'),
-                "description" => session('money_transfer_request.transfer_reason'),
+        $data = Stripe\Charge::create([
+            "amount" => $request->input('amount') * 100,
+            "currency" => $transferDetails->settled_currency,
+            "source" => $request->input('stripeToken'),
+            "description" => session('money_transfer_request.transfer_reason'),
         ]);
 
         return response()->json(['status' => 'success','data' => $data]);
