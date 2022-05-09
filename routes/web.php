@@ -32,7 +32,10 @@ Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], functi
         Route::get("money-transfer/cancel-transfer/{id}",[MoneyTransferController::class, 'cancel'])->name('money-transfer.cancelTransfer');
         Route::get("money-transfer/final-detail",[MoneyTransferController::class, 'final'])->name('money-transfer.final');
         Route::get("money-transfer/final",[MoneyTransferController::class, 'showFinal'])->name('money-transfer.showFinal');
-
+        Route::get("money-transfer/verify",[MoneyTransferController::class, 'verify'])->name('money-transfer.verify');
+        Route::get("money-transfer/stripe",[MoneyTransferController::class, 'stripe'])->name('money-transfer.stripe');
+        Route::post("money-transfer/stripe-initialize",[MoneyTransferController::class, 'stripeInitialize'])->name('money-transfer.stripeInitialize');
+        Route::post("money-transfer/stripe-payment",[MoneyTransferController::class, 'storeStripePaymentDetails'])->name('money-transfer.stripePayment');
     });
 });
 

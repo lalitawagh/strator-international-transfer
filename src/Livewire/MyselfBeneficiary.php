@@ -8,6 +8,7 @@ use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
+use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -85,8 +86,8 @@ class MyselfBeneficiary extends Component
             'meta.swift_code' => ['required'],
             'meta.iban_number' => ['required'],
             'meta.bank_account_name' => ['required', 'string'],
-            'meta.account_number' => ['required', 'string', 'numeric', 'digits:8'],
-            'meta.sort_no' => ['required', 'string', 'numeric', 'digits:6'],
+            'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits:8'],
+            'meta.bank_code' => ['required', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
         ];
     }
@@ -99,8 +100,8 @@ class MyselfBeneficiary extends Component
         'mobile' => 'mobile',
         'bank_account_name' => 'account holder name',
         'company_name' => 'company',
-        'meta.account_number' => 'bank account number',
-        'meta.sort_no' => 'bank sort code',
+        'meta.bank_account_number' => 'bank account number',
+        'meta.bank_code' => 'bank sort code',
         'meta.bank_account_name' => 'bank account name',
         'meta.iban_number' => 'IBAN Number',
     ];
@@ -144,6 +145,7 @@ class MyselfBeneficiary extends Component
         $currencyDetails = [
             'sending_currency' => session('money_transfer_request.currency_code_from'),
             'receiving_currency' => session('money_transfer_request.currency_code_to'),
+            'bank_code_type' => BankEnum::SORTCODE,
         ];
 
         if(!is_null($data['mobile']))
@@ -152,6 +154,8 @@ class MyselfBeneficiary extends Component
         }
 
         $data['workspace_id'] = $this->workspace_id;
+        /* TODO: Ask To that which id need to pass*/
+        $data['ref_id'] = '1';
         $data['ref_type'] = 'money_transfer';
         $data['classification'] = $this->classification;
         $data['meta'] = array_merge($data['meta'],$currencyDetails);

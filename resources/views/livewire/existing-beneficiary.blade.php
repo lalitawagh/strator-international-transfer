@@ -25,7 +25,7 @@
                     </div>
                     <div class="w-full flex-column text-gray-600 text-xs sm:text-sm">
                         <div class="mr-2"> <b>{{ @$receiver->currency }} </b> account ending in
-                            {{ substr(@$beneficiary->meta['account_number'], 4) }}</div>
+                            {{ substr(@$beneficiary->meta['bank_account_number'], 4) }}</div>
 
                     </div>
                 </div>
@@ -85,13 +85,13 @@
                                 <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
                                     <label for="type" class="form-label sm:w-48 font-small">Sort Code / IFSC Code </label>
                                     <div class="sm:w-4/6">
-                                        <span>{{ @$beneficiaryDetail->meta['sort_no'] }}</span>
+                                        <span>{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
                                     </div>
                                 </div>
                                 <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
                                     <label for="type" class="form-label sm:w-48">Account Number </label>
                                     <div class="sm:w-4/6">
-                                        <span>{{ @$beneficiaryDetail->meta['account_number'] }}</span>
+                                        <span>{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
                                     </div>
                                 </div>
                             </div>
