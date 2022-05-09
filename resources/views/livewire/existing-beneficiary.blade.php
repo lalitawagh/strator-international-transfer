@@ -1,7 +1,7 @@
 <div>
     <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5 mt-5 pt-3">
         <div class="font-medium text-base col-span-12 sm:col-span-12 xxl:col-span-12 py-3"> Existing Beneficiary</div>
-        <div class="intro-y col-span-12 lg:col-span-12" style="max-height:400px;overflow-y:auto;">
+        <div class="intro-y col-span-12 lg:col-span-12" style="max-height:410px;overflow-y:auto;">
             @foreach ($beneficiaries as $beneficiary)
                 @php
                     $sender = \Kanexy\Cms\I18N\Models\Country::find(@$beneficiary->meta['sending_currency']);
@@ -44,68 +44,71 @@
             <button type="button" wire:click="load" class="btn btn-primary w-24 mb-10">Load More</button>
         </div>
 
-    </div>
+        </div>
 
-    @isset($beneficiaryDetail)
-        <!-- BEGIN: Modal Content -->
+        @isset($beneficiaryDetail)
+            <!-- BEGIN: Modal Content -->
             <div id="confirm-beneficiary-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
+
                         <div class="modal-body p-0">
                             <div class="p-5 text-center">
-                                <div class="relative flex items-center p-6">
-                                    <div class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                                <div class="relative flex items-center p-0">
+                                    <div
+                                        class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                                         @isset($beneficiaryDetail->first_name)
                                             {{ ucfirst(substr($beneficiaryDetail->first_name, 0, 1)) }}{{ ucfirst(substr($beneficiaryDetail->last_name, 0, 1)) }}
                                         @else
                                             {{ ucfirst(substr($beneficiaryDetail->display_name, 0, 1)) }}
-                                        @endif
-                                    </div>
-                                    <div class="ml-4 mr-auto">
-                                        <div class="font-medium">
-                                            @isset($beneficiaryDetail->display_name)
-                                                {{ $beneficiaryDetail->display_name }}
-                                            @else
-                                                {{ $beneficiaryDetail->first_name }} {{ $beneficiaryDetail->last_name }}
                                             @endif
                                         </div>
-                                        <div class="w-full flex-column text-gray-600 text-xs sm:text-sm">
-                                            <div class="mr-2"> </div>
+                                        <div class="ml-4 mr-auto">
+                                            <div class="font-medium">
+                                                @isset($beneficiaryDetail->display_name)
+                                                    {{ $beneficiaryDetail->display_name }}
+                                                @else
+                                                    {{ $beneficiaryDetail->first_name }} {{ $beneficiaryDetail->last_name }}
+                                                    @endif
+                                                </div>
+                                                <div class="w-full flex-column text-gray-600 text-xs sm:text-sm">
+                                                    <div class="mr-2"> </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="px-5 pb-8 text-center">
-                                <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
-                                    <label for="type" class="form-label sm:w-48 font-small">Email </label>
-                                    <div class="sm:w-4/6">
-                                        <span>{{ @$beneficiaryDetail->email }}</span>
+                                    <div class="px-5 pb-8 text-center">
+                                        <div class="sm:w-52 sm:w-auto mx-auto mt-0">
+                                            <div class="flex items-start text-left">
+
+                                                <span class="font-medium w-2/4 truncate">Email</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ $beneficiaryDetail->email }}</span>
+                                            </div>
+
+                                            <div class="flex items-start text-left mt-4">
+
+                                                <span class="font-medium w-2/4 truncate">Sort Code / IFSC Code</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
+                                            </div>
+
+                                            <div class="flex items-start text-left mt-4">
+
+                                                <span class="font-medium w-2/4 truncate">Account Number</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
+                                        <a style="color: #70297d;" data-dismiss="modal" class="text-primary pt-3">Select another receipient</a>
+                                        <br>
+                                        <a href="{{ route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $workspace->id]]) }}"
+                                            class="btn w-24 mt-0 btn-primary ml-auto">Continue</a>
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
-                                    <label for="type" class="form-label sm:w-48 font-small">Sort Code / IFSC Code </label>
-                                    <div class="sm:w-4/6">
-                                        <span>{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
-                                    <label for="type" class="form-label sm:w-48">Account Number </label>
-                                    <div class="sm:w-4/6">
-                                        <span>{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
-                                <a data-dismiss="modal" class="text-primary">Select another receipient</a>
-                                <br>
-                                <a href="{{ route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
-                                    class="btn w-24 mt-3 btn-primary">Continue</a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        <!-- END: Modal Content -->
-    @endisset
+                    <!-- END: Modal Content -->
+                @endisset
 
-</div>
+                </div>
