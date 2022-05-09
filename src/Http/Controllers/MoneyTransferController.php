@@ -100,6 +100,8 @@ class MoneyTransferController extends Controller
 
     public function transactionDetail(Request $request)
     {
+        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
+
         $data = $request->validate([
             'transfer_reason' => ['required', 'string'],
             'payment_method'  => ['required', 'string'],
@@ -183,6 +185,8 @@ class MoneyTransferController extends Controller
 
     public function final()
     {
+        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
+
         $transferDetails = session('money_transfer_request');
 
         if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT)
@@ -204,6 +208,8 @@ class MoneyTransferController extends Controller
 
     public function verify(Request $request)
     {
+        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
+
         $transaction=Transaction::find($request->query('id'));
         $sender = Account::findOrFail($transaction->meta['sender_id']);
 
@@ -228,6 +234,8 @@ class MoneyTransferController extends Controller
 
     public function stripe()
     {
+        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
+
         $details = session('money_transfer_request.transaction');
 
         return view('international-transfer::money-transfer.process.stripe', compact('details'));
@@ -251,6 +259,7 @@ class MoneyTransferController extends Controller
 
     public function storeStripePaymentDetails(Request $request)
     {
+        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         $transferDetails = session('money_transfer_request.transaction');
         $response = $request->all();
@@ -277,6 +286,8 @@ class MoneyTransferController extends Controller
 
     public function showFinal()
     {
+        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
+
         return view('international-transfer::money-transfer.process.final');
     }
 
