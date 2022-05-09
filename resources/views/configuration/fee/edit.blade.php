@@ -10,7 +10,7 @@
             @method('PUT')
 
             <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="type" id="type" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="min_amount" class="form-label sm:w-30">Min Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="min_amount" name="min_amount" type="text" class="form-control @error('min_amount') border-theme-6 @enderror" value="{{ old('min_amount',$fee['min_amount']) }}" required>
@@ -54,7 +54,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="max_amount" class="form-label sm:w-30">Max Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="max_amount" name="max_amount" type="text" class="form-control @error('max_amount') border-theme-6 @enderror" value="{{ old('max_amount',$fee['max_amount']) }}" required>
@@ -66,22 +66,35 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                    <label for="amount" class="form-label sm:w-30">Amount </label>
+            <div class="grid grid-cols-12 md:gap-10 mt-0" @if (old('fee_type',$fee['fee_type']) == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type',$fee['fee_type']) == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                    <label for="amount" class="form-label sm:w-30">Fee </label>
+                    <div class="sm:w-5/6" >
+                        <div class="form-check mr-2">
+                            <input id="radio-switch-1" class="form-check-input" type="radio" x-on:click="selected = '1'" name="fee_type" value="amount" @if (old('fee_type',$fee['fee_type']) == 'amount') checked @endif>
+                            <label class="form-check-label" for="radio-switch-1"><h4 href="javascript:;" class="font-medium truncate mr-5 " >
+                                <h4>Amount</h4></label>
+                            <input id="radio-switch-2" class="form-check-input ml-3" type="radio"   x-on:click="selected = '0'" name="fee_type" value="percentage" @if (old('fee_type',$fee['fee_type']) == 'percentage') checked @endif>
+                            <label class="form-check-label" for="radio-switch-2"><h4 href="javascript:;" class="font-medium truncate mr-5">
+                                <h4>Percentage</h4></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '1'" >
+                    <label for="amount" class="form-label sm:w-30">Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror" value="{{ old('amount',$fee['amount']) }}">
+                        <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror amount" value="{{ old('amount',$fee['amount']) }}">
 
                         @error('amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                    <label for="percentage" class="form-label sm:w-30">Percentage </label>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+                    <label for="percentage" class="form-label sm:w-30">Percentage <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <div class="input-group">
-                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage',$fee['percentage']) }}">
+                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror percentage" value="{{ old('percentage',$fee['percentage']) }}">
                             <div id="input-group-percentage" class="input-group-text">%</div>
                         </div>
 

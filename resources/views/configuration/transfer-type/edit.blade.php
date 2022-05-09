@@ -47,7 +47,7 @@
             </div>
 
             <div class="grid grid-cols-12 md:gap-3 mt-0">
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 paymentType" @if (old('type',$transfer_type_fee['type']) == 'payment_type') style="display: flex;" @else style="display: none;" @endif>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 paymentType @if (old('type',$transfer_type_fee['type']) == 'payment_type') active @else hidden @endif " >
                     <label for="payment_type" class="form-label sm:w-30">Payment Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="payment_type" id="payment_type" class="form-control" value="{{ old('payment_type',@$transfer_type_fee['payment_type']) }}">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 transferType" @if (old('type',$transfer_type_fee['type']) == 'transfer_type') style="display: flex;" @else style="display: none;" @endif>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 transferType @if (old('type',$transfer_type_fee['type']) == 'transfer_type') active @else hidden @endif" >
                     <label for="transfer_type" class="form-label sm:w-30">Transfer Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="transfer_type" id="transfer_type" class="form-control"  value="{{ old('transfer_type',@$transfer_type_fee['transfer_type']) }}">
@@ -93,24 +93,36 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-3 mt-0">
+            <div class="grid grid-cols-12 md:gap-3 mt-0" @if (old('fee_type',$transfer_type_fee['fee_type']) == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type',$transfer_type_fee['fee_type']) == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
-                    <label for="amount" class="form-label sm:w-30">Amount </label>
+                    <label for="amount" class="form-label sm:w-30">Fee </label>
+                    <div class="sm:w-5/6" >
+                        <div class="form-check mr-2">
+                            <input id="radio-switch-1" class="form-check-input" type="radio" x-on:click="selected = '1'" name="fee_type" value="amount" @if (old('fee_type',$transfer_type_fee['fee_type']) == 'amount') checked @endif>
+                            <label class="form-check-label" for="radio-switch-1"><h4 href="javascript:;" class="font-medium truncate mr-5 " >
+                                <h4>Amount</h4></label>
+                            <input id="radio-switch-2" class="form-check-input ml-3" type="radio"   x-on:click="selected = '0'" name="fee_type" value="percentage" @if (old('fee_type',$transfer_type_fee['fee_type']) == 'percentage') checked @endif>
+                            <label class="form-check-label" for="radio-switch-2"><h4 href="javascript:;" class="font-medium truncate mr-5">
+                                <h4>Percentage</h4></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '1'" >
+                    <label for="amount" class="form-label sm:w-30">Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror" value="{{ old('amount',$transfer_type_fee['amount']) }}">
+                        <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror amount" value="{{ old('amount',$transfer_type_fee['amount']) }}">
 
                         @error('amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
-                    <label for="percentage" class="form-label sm:w-30">Percentage </label>
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+                    <label for="percentage" class="form-label sm:w-30">Percentage <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <div class="input-group">
-                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror" value="{{ old('percentage',$transfer_type_fee['percentage']) }}">
+                            <input id="percentage" name="percentage" type="text" class="form-control @error('percentage') border-theme-6 @enderror percentage" value="{{ old('percentage',$transfer_type_fee['percentage']) }}">
                             <div id="input-group-percentage" class="input-group-text">%</div>
-
                         </div>
 
                         @error('percentage')
@@ -155,3 +167,27 @@
         </form>
     </div>
 @endsection
+
+
+@push('scripts')
+    <script>
+        function getType(the)
+        {
+            var type = $(the).val();
+            if(type == 'payment_type')
+            {
+                $('.paymentType').addClass('active');
+                $('.transferType').addClass('hidden');
+                $('.transferType').removeClass('active');
+                $('.paymentType').removeClass('hidden');
+            }
+            else if(type == 'transfer_type')
+            {
+                $('.paymentType').addClass('hidden');
+                $('.paymentType').removeClass('active');
+                $('.transferType').removeClass('hidden');
+                $('.transferType').addClass('active');
+            }
+        }
+    </script>
+@endpush
