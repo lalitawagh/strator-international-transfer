@@ -98,7 +98,7 @@
                             <div class="p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
                                 <a data-dismiss="modal" class="text-primary">Select another receipient</a>
                                 <br>
-                                <a href="{{ route('dashboard.international-transfer.money-transfer.payment') }}"
+                                <a href="{{ route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $workspace->id]]) }}"
                                     class="btn w-24 mt-3 btn-primary">Continue</a>
                             </div>
                         </div>
