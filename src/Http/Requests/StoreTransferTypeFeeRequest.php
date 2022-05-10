@@ -34,15 +34,15 @@ class StoreTransferTypeFeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'payment_type.required_if' => 'The payment type field is required',
-            'transfer_type.required_if' => 'The transfer type field is required',
-            'type.in' => 'The type field is required',
-            'amount.required_if' => 'The amount field is required',
-            'percentage.required_if' => 'The percentage field is required',
-            'min_amount.min'        => 'The min amount should not be negative',
+            'payment_type.required_if' => 'The payment type field is required.',
+            'transfer_type.required_if' => 'The transfer type field is required.',
+            'type.in' => 'The type field is required.',
+            'amount.required_if' => 'The amount field is required.',
+            'percentage.required_if' => 'The percentage field is required.',
+            'min_amount.min'        => 'The min amount should not be a negative value.',
             'max_amount.gt'         => 'The max amount must be greater than min amount.',
-            'amount.min'            => 'The amount should not be negative',
-            'percentage.between'    => 'The percentage must be between 0 and 100',
+            'amount.min'            => 'The amount should not be a negative value.',
+            'percentage.between'    => 'The percentage must be between 0 and 100.',
         ];
     }
 }

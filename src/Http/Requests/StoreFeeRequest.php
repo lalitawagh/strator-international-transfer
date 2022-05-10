@@ -29,12 +29,12 @@ class StoreFeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'min_amount.min'        => 'The min amount should not be negative',
+            'min_amount.min'        => 'The min amount should not be a negative value.',
             'max_amount.gt'         => 'The max amount must be greater than min amount.',
-            'amount.min'            => 'The amount should not be negative',
-            'percentage.between'    => 'The percentage must be between 0 and 100',
-            'amount.required_if' => 'The amount field is required',
-            'percentage.required_if' => 'The percentage field is required',
+            'amount.min'            => 'The amount should not be a negative value.',
+            'percentage.between'    => 'The percentage must be between 0 and 100.',
+            'amount.required_if' => 'The amount field is required.',
+            'percentage.required_if' => 'The percentage field is required.',
         ];
     }
 }
