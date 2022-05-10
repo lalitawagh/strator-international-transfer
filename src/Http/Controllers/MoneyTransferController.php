@@ -11,8 +11,8 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
-use Kanexy\InternationalTransfer\Enums\PaymentStatus;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
+use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
@@ -130,7 +130,7 @@ class MoneyTransferController extends Controller
                 'settled_currency' => $sender['currency'],
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
-                'status' => PaymentStatus::DRAFT,
+                'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $user->id,

@@ -26,7 +26,7 @@ class InternationalTransferMenu extends Item
 
         if($user->isSubscriber()) {
             return [
-            new MenuItem('Money transfer', 'activity', url:route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]])),
+            new MenuItem('Money Transfer', 'activity', url:route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]])),
             ];
         }
 
