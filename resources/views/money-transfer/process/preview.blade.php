@@ -23,7 +23,7 @@
                             </a>
                         </div>
                     </div>
-                    @if ($transferDetails['transaction']->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUALLY_TRANSFER)
+                    @if ($transferDetails['transaction']->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                     <div class="px-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                         <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                             <div class="text-base text-gray-600 mr-2">Payee name</div>

@@ -24,7 +24,7 @@ $data =  [
         'image' => asset('dist/images/Yzer-Bank.png'),
     ],
     [
-        'method' => PaymentMethod::MANUALLY_TRANSFER,
+        'method' => PaymentMethod::MANUAL_TRANSFER,
         'title' => 'Manually Transfer',
         'heading' => 'Bank charges will be applied for manually payment',
         'description' => 'Easily transfer manually through reference number.',

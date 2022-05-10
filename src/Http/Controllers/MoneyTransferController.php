@@ -91,9 +91,9 @@ class MoneyTransferController extends Controller
         $defaultCountry = Country::find(Setting::getValue("default_country"));
 
         $transferDetails = session('money_transfer_request');
-        $sender = Country::find($transferDetails['currency_code_from']) ?? null;
-        $receiver = Country::find($transferDetails['currency_code_to']) ?? null;
-        $totalAmount =  ! is_null($transferDetails) ? $transferDetails['amount'] - $transferDetails['fee_charge'] : 0;
+        $sender =  $transferDetails ? Country::find($transferDetails['currency_code_from']) : null;
+        $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
+        $totalAmount =  $transferDetails ? ($transferDetails['amount'] - $transferDetails['fee_charge']) : 0;
         $reasons = collect(Setting::getValue('money_transfer_reasons',[]));
 
         return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons'));
@@ -109,10 +109,10 @@ class MoneyTransferController extends Controller
         ]);
 
         $transferDetails = session('money_transfer_request');
-        $sender = Country::find($transferDetails['currency_code_from']) ?? null;
-        $receiver = Country::find($transferDetails['currency_code_to']) ?? null;
+        $sender =  $transferDetails ? Country::find($transferDetails['currency_code_from']) : null;
+        $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
         $user = Auth::user();
-        $workspace = Workspace::find($transferDetails['workspace_id']);
+        $workspace = $transferDetails ? Workspace::find($transferDetails['workspace_id']) : $request->input('filter.workspace_id');
         $account = Account::forHolder($workspace)->first();
 
         if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER || $data['payment_method'] == PaymentMethod::STRIPE)
@@ -175,7 +175,7 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $transferDetails = session('money_transfer_request');
-        $beneficiary = ! is_null($transferDetails) ? Contact::find($transferDetails['transaction']->meta['beneficiary_id']) : null;
+        $beneficiary = $transferDetails ? Contact::find($transferDetails['transaction']->meta['beneficiary_id']) : null;
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
 
@@ -184,10 +184,7 @@ class MoneyTransferController extends Controller
 
     public function finalizeTransfer()
     {
-        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
-
         $transferDetails = session('money_transfer_request');
-
 
         if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT)
         {
@@ -209,8 +206,6 @@ class MoneyTransferController extends Controller
 
     public function verify(Request $request)
     {
-        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
-
         $transaction=Transaction::find($request->query('id'));
         $sender = Account::findOrFail($transaction->meta['sender_id']);
 
