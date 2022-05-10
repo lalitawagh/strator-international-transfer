@@ -114,6 +114,7 @@ class MoneyTransferController extends Controller
         $user = Auth::user();
         $workspace = $transferDetails ? Workspace::find($transferDetails['workspace_id']) : $request->input('filter.workspace_id');
         $account = Account::forHolder($workspace)->first();
+        $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
         if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER || $data['payment_method'] == PaymentMethod::STRIPE)
         {
@@ -161,11 +162,11 @@ class MoneyTransferController extends Controller
             $transaction = $this->payoutService->initialize($sender, $beneficiary, $info);
 
             $secondaryBeneficiary = [
-                'second_beneficiary_id' => $beneficiary?->id,
-                'second_beneficiary_name' => $beneficiary?->meta['bank_account_name'],
-                'second_beneficiary_bank_code' => $beneficiary?->meta['bank_code'],
-                'second_beneficiary_bank_code_type' => $beneficiary?->meta['bank_code_type'],
-                'second_beneficiary_bank_account_number' => $beneficiary?->meta['bank_account_number'],
+                'second_beneficiary_id' => $secondBeneficiary?->id,
+                'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
+                'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
             ];
 
             $meta = array_merge($transaction->meta,$secondaryBeneficiary);
