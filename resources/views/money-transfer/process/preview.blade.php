@@ -56,34 +56,36 @@
                                 <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $masterAccount['sort_code'] }}</div>
                             </div>
                         </div>
-                    @else
+                    @endif
+                    {{ dd($transaction) }}
+                    @if ($transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::BANK_ACCOUNT)
                         <div class="px-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                             <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                                 <div class="text-base text-gray-600 mr-2">Recipient Name</div>
-                                <div class="text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">{{ $beneficiary->display_name }}</div>
+                                <div class="text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">{{ $transaction->meta['second_beneficiary_name'] }}</div>
                             </div>
                             <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                                 <div class="text-base text-gray-600  mr-2">Recipient Account Number </div>
-                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ @$transferDetails['transaction']->meta['reference_no'] }}</div>
+                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $transaction->meta['second_beneficiary_bank_account_number'] }}</div>
                             </div>
                             <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                                 <div class="text-base text-gray-600  mr-2">Recipient Sort Number </div>
-                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}</div>
+                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $transaction->meta['second_beneficiary_bank_code'] }}</div>
                             </div>
                         </div>
 
                         <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                             <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                                 <div class="text-base text-gray-600  mr-2">Amount To Send  </div>
-                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $masterAccount['account_holder_name'] }}</div>
+                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $transaction->amount }} {{ $transaction->settled_currency }}</div>
                             </div>
                             <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                                 <div class="text-base text-gray-600  mr-2">Payment Method </div>
-                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $masterAccount['account_number'] }}</div>
+                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $transaction->payment_method }}</div>
                             </div>
                             <div class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
                                 <div class="text-base text-gray-600  mr-2">Transfer Reason </div>
-                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $masterAccount['sort_code'] }}</div>
+                                <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0"> {{ $transaction->meta['reason'] }}</div>
                             </div>
                         </div>
                     @endif
