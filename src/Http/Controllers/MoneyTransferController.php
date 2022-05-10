@@ -141,6 +141,11 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
+                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
+                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'reason' =>  $data['transfer_reason'],
                 ],
             ]);
         }else if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT){
@@ -192,8 +197,9 @@ class MoneyTransferController extends Controller
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transaction = $transferDetails['transaction'];
+        $transferReason = isset($transaction->meta['reference']) ? collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reference']) : collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reason']);
 
-        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction'));
+        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason'));
     }
 
     public function finalizeTransfer()

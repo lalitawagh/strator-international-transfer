@@ -65,9 +65,9 @@
 
                                         <div
                                             class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                                            <button class="w-10 h-10 rounded-full btn {{ request()->routeIs('dashboard.international-transfer.money-transfer.final') ? 'btn-primary' : 'text-gray-600 bg-gray-200 dark:bg-dark-1' }}"
+                                            <button class="w-10 h-10 rounded-full btn {{ request()->routeIs('dashboard.international-transfer.money-transfer.showFinal') ? 'btn-primary' : 'text-gray-600 bg-gray-200 dark:bg-dark-1' }}"
                                                 data-target="#copy-button-modal">5</button>
-                                            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto {{ request()->routeIs('dashboard.international-transfer.money-transfer.final') ? 'font-bold' : 'text-gray-700 dark:text-gray-600' }}">
+                                            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto {{ request()->routeIs('dashboard.international-transfer.money-transfer.showFinal') ? 'font-bold' : 'text-gray-700 dark:text-gray-600' }}">
                                                 Finish</div>
                                         </div>
 
