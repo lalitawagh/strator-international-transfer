@@ -150,9 +150,6 @@
                     <div class="my-5 px-3 text-right">
                         <a href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
                             class="btn btn-primary text-center mr-1 mb-2 ml-auto">Cancel this transfer</a>
-                        <a href="javascript:;" data-toggle="modal" data-target="#superlarge-slide-over-size-preview"
-                            class="btn btn-secondary mb-2 mr-1">I've made my bank transfer</a>
-                        <button class="btn btn-secondary mb-2">I'll transfer my money later</button>
                     </div>
 
                 </div>

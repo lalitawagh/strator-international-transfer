@@ -33,6 +33,8 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
+        session()->forget('money_transfer_request');
+
         return view('international-transfer::money-transfer.index');
     }
 
@@ -219,7 +221,6 @@ class MoneyTransferController extends Controller
         }
 
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
-        session()->forget('money_transfer_request');
 
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal',['filter' => ['workspace_id' => $workspace->id]]);
     }
@@ -303,7 +304,10 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
-        return view('international-transfer::money-transfer.process.final');
+        $transferDetails = session('money_transfer_request.transaction');
+        $transaction = $transferDetails ? Transaction::find($transferDetails->id) : null;
+
+        return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
 
 
