@@ -167,26 +167,26 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="bank_account_name" class="form-label sm:w-40"> Account Name <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="bank_account_name" wire:model.defer="meta.bank_account_name" name="bank_account_name" type="text" class="form-control" value="{{ $account?->name }}" required="">
+                        <input id="bank_account_name" wire:model.defer="meta.bank_account_name" name="bank_account_name" type="text" class="form-control" required="">
                         @error('meta.bank_account_name')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    <label for="account_number" class="form-label sm:w-40">Account No <span class="text-theme-6">*</span></label>
+                    <label for="bank_account_number" class="form-label sm:w-30">Account No <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="account_number" wire:model.defer="meta.account_number" name="account_number" type="text" class="form-control" value="{{ $account?->account_number }}" required="required">
-                        @error('meta.account_number')
+                        <input id="bank_account_number" wire:model.defer="meta.bank_account_number" name="bank_account_number" type="text" class="form-control" required="required">
+                        @error('meta.bank_account_number')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    <label for="sort_no" class="form-label sm:w-40">Sort No <span class="text-theme-6">*</span></label>
+                    <label for="bank_code" class="form-label sm:w-30">Sort No <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="sort_no" wire:model.defer="meta.sort_no" name="sort_no" type="text" class="form-control" value="{{ $account?->bank_code }}" required="required">
-                        @error('meta.sort_no')
+                        <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code" type="text" class="form-control"  required="required">
+                        @error('meta.bank_code')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>

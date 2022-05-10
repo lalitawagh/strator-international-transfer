@@ -36,7 +36,8 @@
         "phpunit/phpunit": "^9.3",
         "spatie/laravel-ray": "^1.9",
         "vimeo/psalm": "^4.4",
-        "amrshawky/laravel-currency": "^4.0"
+        "amrshawky/laravel-currency": "^4.0",
+        "stripe/stripe-php": "^7.110"
     },
     "autoload": {
         "psr-4": {

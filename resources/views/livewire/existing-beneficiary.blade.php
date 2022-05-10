@@ -25,7 +25,7 @@
                     </div>
                     <div class="w-full flex-column text-gray-600 text-xs sm:text-sm">
                         <div class="mr-2"> <b>{{ @$receiver->currency }} </b> account ending in
-                            {{ substr(@$beneficiary->meta['account_number'], 4) }}</div>
+                            {{ substr(@$beneficiary->meta['bank_account_number'], 4) }}</div>
 
                     </div>
                 </div>
@@ -82,46 +82,26 @@
                                             <div class="flex items-start text-left">
 
                                                 <span class="font-medium w-2/4 truncate">Email</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->email }}</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ $beneficiaryDetail->email }}</span>
                                             </div>
 
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">Sort Code / IFSC Code</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['sort_no'] }}</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
                                             </div>
 
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">Account Number</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['account_number'] }}</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
                                             </div>
                                         </div>
-
-
-                                        {{-- <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
-                                            <label for="type" class="form-label sm:w-48 font-small">Email </label>
-                                            <div class="sm:w-4/6">
-                                                <span>{{ @$beneficiaryDetail->email }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
-                                            <label for="type" class="form-label sm:w-48 font-small">Sort Code / IFSC Code </label>
-                                            <div class="sm:w-4/6">
-                                                <span>{{ @$beneficiaryDetail->meta['sort_no'] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-span-12 md:col-span-6 form-inline pl-6 pr-6 ">
-                                            <label for="type" class="form-label sm:w-48">Account Number </label>
-                                            <div class="sm:w-4/6">
-                                                <span>{{ @$beneficiaryDetail->meta['account_number'] }}</span>
-                                            </div>
-                                        </div>--}}
                                     </div>
                                     <div class="flex p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
                                         <a style="color: #70297d;" data-dismiss="modal" class="text-primary pt-3">Select another receipient</a>
                                         <br>
-                                        <a href="{{ route('dashboard.international-transfer.money-transfer.payment') }}"
+                                        <a href="{{ route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $workspace->id]]) }}"
                                             class="btn w-24 mt-0 btn-primary ml-auto">Continue</a>
                                     </div>
                                 </div>

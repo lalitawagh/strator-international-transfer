@@ -54,6 +54,19 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                    <label for="beneficiary_id" class="form-label sm:w-60">Beneficiary Id <span class="text-theme-6">*</span></label>
+                    <div class="sm:w-5/6">
+                        <input id="beneficiary_id" name="beneficiary_id" type="text" class="form-control @error('beneficiary_id') border-theme-6 @enderror" value="{{ old('beneficiary_id',@$account_details['beneficiary_id']) }}" required>
+
+                        @error('beneficiary_id')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
             <div class="text-right mt-5">
                 <button type="submit" class="btn btn-primary w-24">Update</button>
             </div>
