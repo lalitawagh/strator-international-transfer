@@ -178,8 +178,9 @@ class MoneyTransferController extends Controller
         $beneficiary = $transferDetails ? Contact::find($transferDetails['transaction']->meta['beneficiary_id']) : null;
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
+        $transaction = $transferDetails['transaction'];
 
-        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace'));
+        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction'));
     }
 
     public function finalizeTransfer()
@@ -207,7 +208,8 @@ class MoneyTransferController extends Controller
     public function verify(Request $request)
     {
         $transaction=Transaction::find($request->query('id'));
-        $sender = Account::findOrFail($transaction->meta['sender_id']);
+        $transferDetails = session('money_transfer_request');
+        $beneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
         try {
             $this->payoutService->process($transaction);
@@ -221,6 +223,18 @@ class MoneyTransferController extends Controller
 
             throw $exception;
         }
+
+        $secondaryBeneficiary = [
+            'second_beneficiary_id' => $beneficiary?->id,
+            'second_beneficiary_name' => $beneficiary?->meta['bank_account_name'],
+            'second_beneficiary_bank_code' => $beneficiary?->meta['bank_code'],
+            'second_beneficiary_bank_code_type' => $beneficiary?->meta['bank_code_type'],
+            'second_beneficiary_bank_account_number' => $beneficiary?->meta['bank_account_number'],
+        ];
+
+        $meta = array_merge($transaction->meta,$secondaryBeneficiary);
+        $transaction->meta = $meta;
+        $transaction->update();
 
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal',['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
