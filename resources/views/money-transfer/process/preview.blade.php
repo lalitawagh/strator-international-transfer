@@ -73,9 +73,7 @@
                                         {{ $masterAccount['sort_code'] }}</div>
                                 </div>
                             </div>
-                        @endif
-
-                        @if ($transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::BANK_ACCOUNT || $transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE)
+                        @else
                             @if ($transferDetails['payment_method'] == 'bank_account')
                                 @php
                                     $payment = 'Bank';
