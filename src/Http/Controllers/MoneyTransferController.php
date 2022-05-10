@@ -11,6 +11,7 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
+use Kanexy\InternationalTransfer\Enums\PaymentStatus;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
@@ -90,9 +91,9 @@ class MoneyTransferController extends Controller
         $defaultCountry = Country::find(Setting::getValue("default_country"));
 
         $transferDetails = session('money_transfer_request');
-        $sender = Country::find($transferDetails['currency_code_from']);
-        $receiver = Country::find($transferDetails['currency_code_to']);
-        $totalAmount = $transferDetails['amount'] - $transferDetails['fee_charge'];
+        $sender = Country::find($transferDetails['currency_code_from']) ?? null;
+        $receiver = Country::find($transferDetails['currency_code_to']) ?? null;
+        $totalAmount =  ! is_null($transferDetails) ? $transferDetails['amount'] - $transferDetails['fee_charge'] : 0;
         $reasons = collect(Setting::getValue('money_transfer_reasons',[]));
 
         return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons'));
@@ -108,13 +109,13 @@ class MoneyTransferController extends Controller
         ]);
 
         $transferDetails = session('money_transfer_request');
-        $sender = Country::find($transferDetails['currency_code_from']);
-        $receiver = Country::find($transferDetails['currency_code_to']);
+        $sender = Country::find($transferDetails['currency_code_from']) ?? null;
+        $receiver = Country::find($transferDetails['currency_code_to']) ?? null;
         $user = Auth::user();
         $workspace = Workspace::find($transferDetails['workspace_id']);
         $account = Account::forHolder($workspace)->first();
 
-        if($data['payment_method'] == PaymentMethod::MANUALLY_TRANSFER || $data['payment_method'] == PaymentMethod::STRIPE)
+        if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER || $data['payment_method'] == PaymentMethod::STRIPE)
         {
             $transaction = Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -128,9 +129,8 @@ class MoneyTransferController extends Controller
                 'settled_amount' => $transferDetails['amount'],
                 'settled_currency' => $sender['currency'],
                 'settlement_date' => date('Y-m-d'),
-                'settled_at' => now(),
                 'transaction_fee' => $transferDetails['fee_charge'],
-                'status' => 'draft',
+                'status' => PaymentStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $user->id,
@@ -143,11 +143,10 @@ class MoneyTransferController extends Controller
                 ],
             ]);
         }else if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT){
-            TODO:
-            /* Need to add creation of beneficiary for admin account from setting side */
+            $masterAccountDetails = Setting::getValue('money_transfer_master_account_details');
 
             /** @var Contact $beneficiary */
-            $beneficiary = Contact::findOrFail(261);
+            $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
 
             /** @var Account $sender */
             $sender = Account::findOrFail($account->id);
@@ -176,23 +175,25 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $transferDetails = session('money_transfer_request');
-        $beneficiary = Contact::find($transferDetails['transaction']->meta['beneficiary_id']);
+        $beneficiary = ! is_null($transferDetails) ? Contact::find($transferDetails['transaction']->meta['beneficiary_id']) : null;
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
 
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace'));
     }
 
-    public function final()
+    public function finalizeTransfer()
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         $transferDetails = session('money_transfer_request');
 
+
         if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT)
         {
             $transaction = $transferDetails['transaction'];
             $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+            // $transaction->generateOtp("sms");
 
             return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30),["id"=>$transaction->id]), 'sms');
         }else if($transferDetails['payment_method'] == PaymentMethod::STRIPE)
@@ -243,14 +244,13 @@ class MoneyTransferController extends Controller
 
     public function stripeInitialize(Request $request)
     {
-
         $transferDetails = session('money_transfer_request.transaction');
-        $stripe =  Stripe\stripe::setApiKey(config('services.stripe.secret'));
+        $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $data = Stripe\Charge::create([
             "amount" => $request->input('amount') * 100,
             "currency" => $transferDetails->settled_currency,
             "source" => $request->input('stripeToken'),
-            "description" => session('money_transfer_request.transfer_reason'),
+            "description" => session('money_transfer_request.transfer_reason') ? session('money_transfer_request.transfer_reason') : null,
         ]);
 
         return response()->json(['status' => 'success','data' => $data]);
@@ -263,6 +263,7 @@ class MoneyTransferController extends Controller
 
         $transferDetails = session('money_transfer_request.transaction');
         $response = $request->all();
+
 
         if($response['data']['status'] == 'succeeded')
         {
@@ -284,7 +285,7 @@ class MoneyTransferController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function showFinal()
+    public function showFinalizeTransfer()
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 

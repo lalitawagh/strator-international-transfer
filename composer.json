@@ -16,12 +16,12 @@
     ],
     "repositories": {
         "kanexy/cms": {
-            "type": "git",
-            "url": "https://Kanexy@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
+            "type": "path",
+            "url": "../cms"
         },
         "kanexy/partner-foundation": {
-            "type": "git",
-            "url": "https://Kanexy@dev.azure.com/Kanexy/Kanexy%20Platform/_git/partner-foundation"
+            "type": "path",
+            "url": "../partner-foundation"
         }
     },
     "require": {
@@ -36,7 +36,8 @@
         "phpunit/phpunit": "^9.3",
         "spatie/laravel-ray": "^1.9",
         "vimeo/psalm": "^4.4",
-        "amrshawky/laravel-currency": "^4.0"
+        "amrshawky/laravel-currency": "^4.0",
+        "stripe/stripe-php": "^7.110"
     },
     "autoload": {
         "psr-4": {
