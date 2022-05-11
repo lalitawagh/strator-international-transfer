@@ -312,7 +312,7 @@ class MoneyTransferController extends Controller
         {
             $stripeDetails = [
                 'sender_payment_id' => $response['data']['id'],
-                'sender_name' => $response['data']['source']['name'],
+                'sender_card_name' => $response['data']['source']['name'],
                 'sender_card_id' => $response['data']['payment_method'],
                 'sender_card_fingerprint' => $response['data']['source']['fingerprint'],
                 'stripe_balance_transaction' => $response['data']['balance_transaction'],
