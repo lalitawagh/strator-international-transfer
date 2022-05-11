@@ -1,7 +1,7 @@
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
-    <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200">
+    <div class="px-5 sm:px-20 mt-5 pt-5 border-t border-gray-200">
 
         <form method="GET"
             action="{{ route('dashboard.international-transfer.money-transfer.final', ['filter' => ['workspace_id' => $workspace->id]]) }}">
@@ -11,9 +11,9 @@
                 <div class="intro-y box mt-0 clearfix">
                     <div class="border-2 border-dashed shadow-sm border-gray-200 dark:border-dark-5 rounded-md sm:p-5 m-3">
                         @if ($transferDetails['transaction']->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
-                            <div class="sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-2">
-                                <h3 class="mr-auto mb-3">Bank Transfer Details</h3>
-                                <div class="text-xs text-right sm:ml-auto flex mb-3">
+                            <div class=" p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
+                                <h3 class="mr-auto mb-0">Bank Transfer Details</h3>
+                                <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manually transfer Account Detail&body= Beneficiary :- {{ $beneficiary->display_name }} %0D%0A Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
                                             %0D%0A Bank Account Name:- {{ $masterAccount['account_holder_name'] }} %0D%0A Account Number :- {{ $masterAccount['account_number'] }} %0D%0A Sort Code :- {{ $masterAccount['sort_code'] }}  ">
                                         <i data-feather="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
@@ -30,19 +30,19 @@
 
                             <div class="px-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                                 <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
+                                    class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
                                     <div class="text-base text-gray-600 mr-2">Payee name</div>
                                     <div class="text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">
                                         {{ $beneficiary->display_name }}</div>
                                 </div>
                                 <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
+                                    class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
                                     <div class="text-base text-gray-600  mr-2">Payment reference </div>
                                     <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
                                         {{ @$transferDetails['transaction']->meta['reference_no'] }}</div>
                                 </div>
                                 <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
+                                    class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
                                     <div class="text-base text-gray-600  mr-2">Amount to send </div>
                                     <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
                                         {{ $transferDetails['transaction']->amount }}
@@ -50,24 +50,24 @@
                                 </div>
                             </div>
 
-                            <div class="sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-10">
-                                <h3 class="mr-auto mb-3">Bank account details for manually transfer</h3>
+                            <div class="p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-3">
+                                <h3 class="mr-auto mb-0">Bank account details for manually transfer</h3>
                             </div>
                             <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                                 <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
+                                    class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
                                     <div class="text-base text-gray-600  mr-2">Bank Account Name </div>
                                     <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
                                         {{ $masterAccount['account_holder_name'] }}</div>
                                 </div>
                                 <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
+                                    class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
                                     <div class="text-base text-gray-600  mr-2">Bank Account Number </div>
                                     <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
                                         {{ $masterAccount['account_number'] }}</div>
                                 </div>
                                 <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
+                                    class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
                                     <div class="text-base text-gray-600  mr-2">Bank Account Sort Code </div>
                                     <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
                                         {{ $masterAccount['sort_code'] }}</div>
@@ -83,11 +83,11 @@
                                     $payment = 'Stripe';
                                 @endphp
                             @endif
-                            <div class="sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-2">
-                                <h3 class="mr-auto mb-3">
+                            <div class="p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                <h3 class="mr-auto mb-0">
                                     {{ $payment }} Transfer Details
                                 </h3>
-                                <div class="text-xs text-right sm:ml-auto flex mb-3">
+                                <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject={{ $payment }} transfer Account Detail&body= Recipient Name :- {{ $transaction->meta['second_beneficiary_name'] }} %0D%0A Recipient Account Number :- {{ $transaction->meta['second_beneficiary_bank_account_number'] }} %0D%0A Recipient Sort Number:- {{ $transaction->meta['second_beneficiary_bank_code'] }}
                                             %0D%0A Amount To Send:- {{ $transaction->amount }} {{ $transaction->settled_currency }} %0D%0A Payment Method :- {{ $transaction->payment_method }} %0D%0A Transfer Reason :- {{ @$transferReason['reason'] }}  ">
                                         <i data-feather="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
@@ -102,47 +102,57 @@
                                 </div>
                             </div>
 
-                            <div class="px-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
-                                <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
-                                    <div class="text-base text-gray-600 mr-2">Recipient Name</div>
-                                    <div class="text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">
-                                        {{ $transaction->meta['second_beneficiary_name'] }}</div>
+                            <div class="grid grid-cols-12">
+                                <div class="col-span-12 sm:col-span-12 md:col-span-6 xl:col-span-6">
+                                    <div class="border-b border-gray-200 dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                        <div
+                                            class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
+                                            <div class="text-base text-gray-600 mr-2">Recipient Name</div>
+                                            <div class="text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                                {{ $transaction->meta['second_beneficiary_name'] }}</div>
+                                        </div>
+                                        <div
+                                            class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
+                                            <div class="text-base text-gray-600  mr-2">Recipient Account Number </div>
+                                            <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                                {{ $transaction->meta['second_beneficiary_bank_account_number'] }}</div>
+                                        </div>
+                                        <div
+                                            class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
+                                            <div class="text-base text-gray-600  mr-2">Recipient Sort Number </div>
+                                            <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                                {{ $transaction->meta['second_beneficiary_bank_code'] }}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
-                                    <div class="text-base text-gray-600  mr-2">Recipient Account Number </div>
-                                    <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
-                                        {{ $transaction->meta['second_beneficiary_bank_account_number'] }}</div>
-                                </div>
-                                <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
-                                    <div class="text-base text-gray-600  mr-2">Recipient Sort Number </div>
-                                    <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
-                                        {{ $transaction->meta['second_beneficiary_bank_code'] }}</div>
+                                <div class="col-span-12 sm:col-span-12 md:col-span-6 xl:col-span-6">
+                                    <div class="px-2 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                        <div
+                                            class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
+                                            <div class="text-base text-gray-600  mr-2">Amount To Send </div>
+                                            <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                                {{ $transaction->amount }} {{ $transaction->settled_currency }}</div>
+                                        </div>
+                                        <div
+                                            class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
+                                            <div class="text-base text-gray-600  mr-2">Payment Method </div>
+                                            <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                                {{ ucfirst($transaction->payment_method) }}</div>
+                                        </div>
+                                        <div
+                                            class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4">
+                                            <div class="text-base text-gray-600  mr-2">Transfer Reason </div>
+                                            <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
+                                                {{ @$transferReason['reason'] }}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
-                                <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
-                                    <div class="text-base text-gray-600  mr-2">Amount To Send </div>
-                                    <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
-                                        {{ $transaction->amount }} {{ $transaction->settled_currency }}</div>
-                                </div>
-                                <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
-                                    <div class="text-base text-gray-600  mr-2">Payment Method </div>
-                                    <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
-                                        {{ ucfirst($transaction->payment_method) }}</div>
-                                </div>
-                                <div
-                                    class="sm:flex text-center sm:text-left sm-mt-3 sm:mt-0 col-span-12 md:col-span-4 lg:col-span-4 form-inline">
-                                    <div class="text-base text-gray-600  mr-2">Transfer Reason </div>
-                                    <div class="text-xl text-theme-1 dark:text-theme-10 font-medium mt-0">
-                                        {{ @$transferReason['reason'] }}</div>
-                                </div>
-                            </div>
+
+
+
+
                         @endif
 
 

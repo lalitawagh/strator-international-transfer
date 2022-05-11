@@ -132,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '1'" >
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '1'" >
                     <label for="amount" class="form-label sm:w-30">Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror amount" value="{{ old('amount') }}">
@@ -142,7 +142,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '0'">
                     <label for="percentage" class="form-label sm:w-30">Percentage <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <div class="input-group">

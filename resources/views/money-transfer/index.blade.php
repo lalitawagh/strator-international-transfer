@@ -368,7 +368,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
 
-            <div class="modal-header p-5">
+            <div class="modal-header p-3">
                 <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
                 <div class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit w-3 h-3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> </div>
                 <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save w-3 h-3"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> </a>
@@ -378,7 +378,7 @@
             </div>
 
 
-            <div class="modal-body">
+            <div class="modal-body pt-2">
                 <div class="pr-0 border-b border-gray-200 dark:border-dark-5">
                     <div class="p-0">
                         <div class="pos__tabs nav nav-tabs gap-2" role="tablist">
@@ -387,7 +387,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-content">
+                <div class="tab-content py-3">
                     <div id="Overview" class="tab-pane active" role="tabpanel" aria-labelledby="Overview-tab">
                         @livewire('transaction-detail-component')
                     </div>

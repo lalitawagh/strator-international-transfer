@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-">
                     <label for="status" class="form-label sm:w-24">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
