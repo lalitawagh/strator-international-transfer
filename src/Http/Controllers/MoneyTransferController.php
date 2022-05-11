@@ -33,6 +33,8 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
+        session()->forget('money_transfer_request');
+
         return view('international-transfer::money-transfer.index');
     }
 
@@ -141,6 +143,11 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
+                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
+                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'reason' =>  $data['transfer_reason'],
                 ],
             ]);
         }else if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT){
@@ -192,8 +199,9 @@ class MoneyTransferController extends Controller
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transaction = $transferDetails['transaction'];
+        $transferReason = isset($transaction->meta['reference']) ? collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reference']) : collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reason']);
 
-        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction'));
+        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason'));
     }
 
     public function finalizeTransfer()
@@ -213,7 +221,6 @@ class MoneyTransferController extends Controller
         }
 
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
-        session()->forget('money_transfer_request');
 
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal',['filter' => ['workspace_id' => $workspace->id]]);
     }
@@ -234,7 +241,6 @@ class MoneyTransferController extends Controller
 
             throw $exception;
         }
-
 
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal',['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
@@ -298,7 +304,10 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
-        return view('international-transfer::money-transfer.process.final');
+        $transferDetails = session('money_transfer_request.transaction');
+        $transaction = Transaction::find($transferDetails->id);
+
+        return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
 
 
