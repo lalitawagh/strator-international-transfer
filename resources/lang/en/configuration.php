@@ -27,4 +27,8 @@ return [
     'accepted'            => 'Accepted',
     'pending'             => 'Pending',
     'pending-confirmation' => 'Pending Confirmation',
+    'draft'               => 'Draft',
+    'bank'                => 'Bank',
+    'manual_transfer'     => 'Manual Transfer',
+    'stripe'              => 'Stripe'
 ];
