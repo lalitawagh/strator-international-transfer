@@ -23,5 +23,13 @@ return [
     'someone-else'        => 'Someone Else',
     'business'            => 'Business or charity',
     'payment_methods'     => 'Payment methods',
-    'transfer_types'     => 'Transfer types',
+    'transfer_types'      => 'Transfer types',
+    'accepted'            => 'Accepted',
+    'pending'             => 'Pending',
+    'pending-confirmation' => 'Pending Confirmation',
+    'draft'               => 'Draft',
+    'cancelled'           => 'Cancelled',
+    'bank'                => 'Bank',
+    'manual_transfer'     => 'Manual Transfer',
+    'stripe'              => 'Stripe'
 ];

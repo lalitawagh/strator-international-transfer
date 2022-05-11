@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    <label for="bank_account_number" class="form-label sm:w-30">Account No <span class="text-theme-6">*</span></label>
+                    <label for="bank_account_number" class="form-label sm:w-40">Account No <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="bank_account_number" wire:model.defer="meta.bank_account_number" name="bank_account_number" type="text" class="form-control" required="required">
                         @error('meta.bank_account_number')
@@ -183,7 +183,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    <label for="bank_code" class="form-label sm:w-30">Sort No <span class="text-theme-6">*</span></label>
+                    <label for="bank_code" class="form-label sm:w-40">Sort Code <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code" type="text" class="form-control"  required="required">
                         @error('meta.bank_code')
@@ -201,7 +201,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-company">
-                    <label for="swift_code" class="form-label sm:w-40">SWIFT Code<span class="text-theme-6">*</span></label>
+                    <label for="swift_code" class="form-label sm:w-40">SWIFT Code <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="swift_code" wire:model.defer="meta.swift_code" name="swift_code" type="text" class="form-control" value="{{ $account?->bic_swift }}">
                         @error('meta.swift_code')

@@ -7,7 +7,7 @@
                     $sender = \Kanexy\Cms\I18N\Models\Country::find(@$beneficiary->meta['sending_currency']);
                     $receiver = Kanexy\Cms\I18N\Models\Country::find(@$beneficiary->meta['receiving_currency']);
                 @endphp
-                <div class="relative flex items-center py-2 border-t border-gray-200"
+                <div class="relative flex items-center py-2 border-t border-gray-200  cursor"
                     wire:click="getBeneficiary({{ $beneficiary->id }})">
                     <div
                         class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
@@ -99,7 +99,7 @@
                                         </div>
                                     </div>
                                     <div class="flex p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
-                                        <a style="color: #70297d;" data-dismiss="modal" class="text-primary pt-3">Select another receipient</a>
+                                        <a style="color: #70297d;" data-dismiss="modal" class="text-primary pt-3  cursor">Select another receipient</a>
                                         <br>
                                         <a href="{{ route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $workspace->id]]) }}"
                                             class="btn w-24 mt-0 btn-primary ml-auto">Continue</a>

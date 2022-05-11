@@ -124,6 +124,7 @@ class MyselfBeneficiary extends Component
             $this->email =  $user->email;
             $this->mobile = ! is_null(session('mobile')) ? session('mobile') : $user->phone;
         }
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
 
     }
 

@@ -18,6 +18,8 @@ use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
 
 class MoneyTransferController extends Controller
@@ -29,11 +31,26 @@ class MoneyTransferController extends Controller
         $this->payoutService = $payoutService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
-        return view('international-transfer::money-transfer.index');
+        session()->forget('transaction_id');
+
+        $transactions = QueryBuilder::for(Transaction::class)
+        ->allowedFilters([
+            AllowedFilter::exact('workspace_id'),
+        ]);
+
+        $workspace = null;
+
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        }
+
+        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+
+        return view('international-transfer::money-transfer.index', compact('transactions'));
     }
 
     public function create(Request $request)
@@ -141,6 +158,12 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
+                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
+                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'reason' =>  $data['transfer_reason'],
+                    'transaction_type' => 'money_transfer',
                 ],
             ]);
         }else if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT){
@@ -149,8 +172,8 @@ class MoneyTransferController extends Controller
             /** @var Contact $beneficiary */
             $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
 
-            /** @var Account $sender */
-            $sender = Account::findOrFail($account->id);
+            /** @var Account $senderAccount */
+            $senderAccount = Account::findOrFail($account->id);
 
             $info = [
                 'sender_account_id' => $account->id,
@@ -159,17 +182,24 @@ class MoneyTransferController extends Controller
                 'amount'            => $transferDetails['amount']
             ];
 
-            $transaction = $this->payoutService->initialize($sender, $beneficiary, $info);
+            $transaction = $this->payoutService->initialize($senderAccount, $beneficiary, $info);
 
-            $secondaryBeneficiary = [
+            $metaDetails = [
                 'second_beneficiary_id' => $secondBeneficiary?->id,
                 'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
                 'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
                 'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                 'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                'exchange_rate' => $transferDetails['guaranteed_rate'],
+                'base_currency' => $sender['currency'],
+                'exchange_currency' => $receiver['currency'],
+                'recipient_amount' => $transferDetails['recipient_amount'],
+                'reason' =>  $data['transfer_reason'],
+                'transaction_type' => 'money_transfer',
             ];
 
-            $meta = array_merge($transaction->meta,$secondaryBeneficiary);
+            $meta = array_merge($transaction->meta,$metaDetails);
+            $transaction->transaction_fee = $transferDetails['fee_charge'];
             $transaction->meta = $meta;
             $transaction->update();
         }
@@ -192,8 +222,9 @@ class MoneyTransferController extends Controller
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transaction = $transferDetails['transaction'];
+        $transferReason = isset($transaction->meta['reference']) ? collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reference']) : collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reason']);
 
-        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction'));
+        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason'));
     }
 
     public function finalizeTransfer()
@@ -213,6 +244,7 @@ class MoneyTransferController extends Controller
         }
 
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
+        session(['transaction_id' => $transferDetails['transaction']->id]);
         session()->forget('money_transfer_request');
 
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal',['filter' => ['workspace_id' => $workspace->id]]);
@@ -235,6 +267,8 @@ class MoneyTransferController extends Controller
             throw $exception;
         }
 
+        session(['transaction_id' => $request->query('id')]);
+        session()->forget('money_transfer_request');
 
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal',['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
@@ -278,7 +312,7 @@ class MoneyTransferController extends Controller
         {
             $stripeDetails = [
                 'sender_payment_id' => $response['data']['id'],
-                'sender_name' => $response['data']['source']['name'],
+                'sender_card_name' => $response['data']['source']['name'],
                 'sender_card_id' => $response['data']['payment_method'],
                 'sender_card_fingerprint' => $response['data']['source']['fingerprint'],
                 'stripe_balance_transaction' => $response['data']['balance_transaction'],
@@ -291,6 +325,9 @@ class MoneyTransferController extends Controller
             $transferDetails->update();
         }
 
+        session(['transaction_id' => $transferDetails->id]);
+        session()->forget('money_transfer_request');
+
         return response()->json(['status' => 'success']);
     }
 
@@ -298,7 +335,9 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
-        return view('international-transfer::money-transfer.process.final');
+        $transaction = Transaction::find(session('transaction_id'));
+
+        return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
 
 

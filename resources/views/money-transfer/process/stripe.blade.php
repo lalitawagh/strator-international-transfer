@@ -2,47 +2,51 @@
 
 @section('money-transfer-content')
 <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200">
-    <div class="col-span-12 lg:col-span-12">
-        <form role="form" action="" method="" class="require-validation" data-token-on-file="false"
-        data-stripe-publishable-key="{{ config('services.stripe.stripe_key') }}" id="payment-form">
-        @csrf
-        @php
-            $subtotal = $details->transaction_fee + $details->amount;
-            $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details->settled_currency)->formatByDecimal();
-        @endphp
-        <div class="overlay"></div>
-        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
-            <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
-            <div class="sm:w-5/6">
-                <div class="font-medium text-base">
+    <div class="intro-y mt-0 p-3">
+        <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
+            <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
+                <form role="form" action="" method="" class="require-validation" data-token-on-file="false" data-stripe-publishable-key="{{ config('services.stripe.stripe_key') }}" id="payment-form">
+                    @csrf
+                    @php
+                        // $subtotal = $details->transaction_fee + $details->amount;
+                        $subtotal = $details->amount;
+                        $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details->settled_currency)->formatByDecimal();
+                    @endphp
+                    <div class="overlay"></div>
+                    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
+                        <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
+                        <div class="sm:w-5/6">
+                            <div class="font-medium text-base">
 
-                    {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details->settled_currency) }}
+                                {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details->settled_currency) }}
 
-                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="amount" id="amount" value="{{ $total }}">
+                    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
+                        <label for="horizontal-form-3" class="form-label sm:w-24">Card Holder</label>
+                        <div class="sm:w-5/6">
+                            <input id="name_on_card" type="text" name="name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
+                        <label for="horizontal-form-3" class="form-label sm:w-24">Card Details</label>
+                        <div class="sm:w-5/6">
+                            <div id="card-element" style="padding-top: 5px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
+                        <label for="horizontal-form-3" class="form-label sm:w-24"></label>
+                        <div id="card-errors" class="sm:w-5/6" role="alert" style="color:red;"></div>
+                    </div>
+
+                    <div class="text-right mt-5 form-inline text-right mt-5 float-right">
+                        <button type="submit" class="btn btn-primary w-24">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <input type="hidden" name="amount" id="amount" value="{{ $total }}">
-        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
-            <label for="horizontal-form-3" class="form-label sm:w-24">Card Holder</label>
-            <div class="sm:w-5/6">
-                <input id="name_on_card" type="text" name="name" class="form-control">
-            </div>
-        </div>
-        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
-            <label for="horizontal-form-3" class="form-label sm:w-24">Card Details</label>
-            <div class="sm:w-5/6">
-                <div id="card-element" style="padding-top: 5px;"></div>
-            </div>
-        </div>
-        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
-            <label for="horizontal-form-3" class="form-label sm:w-24"></label>
-            <div id="card-errors" class="sm:w-5/6" role="alert" style="color:red;"></div>
-        </div>
-
-        <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-            <button type="submit" class="btn btn-primary w-24">Submit</button>
-        </div>
-    </form>
     </div>
 
 </div>
@@ -136,16 +140,16 @@
                 // Submit the form
                 $.ajax({
                     type: 'post',
-                    url: "{{ route('dashboard.international-transfer.money-transfer.stripeInitialize',['workspace_id' => $details['workspace_id']]) }}",
+                    url: "{{ route('dashboard.international-transfer.money-transfer.stripeInitialize',['filter' =>['workspace_id' => $details['workspace_id']]]) }}",
                     data: $('form').serialize(),
                     success: function(response) {
                         $.ajax({
                             type: 'post',
-                            url: "{{ route('dashboard.international-transfer.money-transfer.stripePayment',['workspace_id' => $details['workspace_id']]) }}",
+                            url: "{{ route('dashboard.international-transfer.money-transfer.stripePayment',['filter' =>['workspace_id' => $details['workspace_id']]]) }}",
                             data: response,
                             success: function(data) {
                                 window.location.href =
-                                    "{{ route('dashboard.international-transfer.money-transfer.showFinal',['workspace_id' => $details['workspace_id']]) }}";
+                                    "{{ route('dashboard.international-transfer.money-transfer.showFinal',['filter' =>['workspace_id' => $details['workspace_id']]]) }}";
                             },
                             error: function(data) {
                                 $('#card-errors').html('Someting went wrong');

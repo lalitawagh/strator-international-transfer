@@ -36,6 +36,7 @@ Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], functi
         Route::get("money-transfer/stripe",[MoneyTransferController::class, 'stripe'])->name('money-transfer.stripe');
         Route::post("money-transfer/stripe-initialize",[MoneyTransferController::class, 'stripeInitialize'])->name('money-transfer.stripeInitialize');
         Route::post("money-transfer/stripe-payment",[MoneyTransferController::class, 'storeStripePaymentDetails'])->name('money-transfer.stripePayment');
+
     });
 });
 

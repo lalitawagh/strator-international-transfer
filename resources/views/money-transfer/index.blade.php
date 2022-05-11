@@ -254,7 +254,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    Wallet
+                                                                    Payment Method
                                                                     <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             class="h-4 w-4 up" fill="#c1c4c9"
@@ -273,45 +273,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="whitespace-nowrap text-left">
-                                                                    Debit
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4 up" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4 down" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </th>
-                                                                <th class="whitespace-nowrap text-left">
-                                                                    Credit
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4 up" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4 down" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </th>
-                                                                <th class="whitespace-nowrap text-left">
-                                                                    Balance
+                                                                    Amount
                                                                     <span class="flex short-icon">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             class="h-4 w-4 up" fill="#c1c4c9"
@@ -348,66 +310,38 @@
                                                                         </svg>
                                                                     </span>
                                                                 </th>
-                                                                <th class="whitespace-nowrap text-left">
-                                                                    Reference
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4 up" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4 down" fill="#c1c4c9"
-                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </th>
-
-
-
                                                                 <th class="flex" style="">Action
                                                                 </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="whitespace-nowrap text-left">
-                                                                    <div class="form-check mt-1 border-gray-400">
-                                                                        <input id="checkbox-switch-1" class="form-check-input" type="checkbox" value="">
-                                                                        <label class="form-check-label" for="checkbox-switch-1"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="whitespace-nowrap text-left">22022022955974</td>
-                                                                <td class="whitespace-nowrap text-left">22-02-2022 06:03</td>
-                                                                <td class="whitespace-nowrap text-left">Card holder</td>
-                                                                <td class="whitespace-nowrap text-left">vivek tiwari</td>
-                                                                <td class="whitespace-nowrap text-left">GITTO Coin</td>
-                                                                <td class="whitespace-nowrap text-left">-</td>
-                                                                <td class="whitespace-nowrap text-left">...</td>
-                                                                <td class="whitespace-nowrap text-left"> G 4.08 </td>
-                                                                <td class="whitespace-nowrap text-left">Accepted</td>
-                                                                <td class="whitespace-nowrap text-left">g to u 10</td>
-                                                                <td class="table-report__action" style="box-shadow: none;">
-                                                                    <div class="dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
-                                                                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <x-feathericon-settings class="w-5 h-5 text-gray-600" /> </a>
-                                                                        <div class="dropdown-menu w-40">
-                                                                            <div class="dropdown-menu__content box p-2">
-                                                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#subscription-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                                            @foreach ($transactions as $transaction)
+                                                                <tr>
+                                                                    <td class="whitespace-nowrap text-left">
+                                                                        <div class="form-check mt-1 border-gray-400">
+                                                                            <input id="checkbox-switch-1" class="form-check-input" type="checkbox" value="">
+                                                                            <label class="form-check-label" for="checkbox-switch-1"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="whitespace-nowrap text-left">{{ $transaction->urn }}</td>
+                                                                    <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
+                                                                    <td class="whitespace-nowrap text-left">{{ $transaction->meta['sender_name'] }}</td>
+                                                                    <td class="whitespace-nowrap text-left">{{ $transaction->meta['second_beneficiary_name'] }}</td>
+                                                                    <td class="whitespace-nowrap text-left">{{ trans('international-transfer::configuration.'.$transaction->payment_method) }}</td>
+                                                                    <td class="whitespace-nowrap text-left">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $transaction->settled_currency) }} </td>
+                                                                    <td class="whitespace-nowrap text-left">{{ trans('international-transfer::configuration.'.$transaction->status) }}</td>
+                                                                    <td class="table-report__action" style="box-shadow: none;">
+                                                                        <div class="dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
+                                                                            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <x-feathericon-settings class="w-5 h-5 text-gray-600" /> </a>
+                                                                            <div class="dropdown-menu w-40">
+                                                                                <div class="dropdown-menu__content box p-2">
+                                                                                    <a href="javascript:void(0);"  onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" data-toggle="modal" data-target="#subscription-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                                {{-- <td>
-                                                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#subscription-modal" class="whitespace-nowrap flex items-center p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> View Invoice
-                                                                    </a>
-                                                                </td> --}}
-                                                            </tr>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
 
                                                     </table>
@@ -449,280 +383,19 @@
                     <div class="p-0">
                         <div class="pos__tabs nav nav-tabs gap-2" role="tablist">
                             <a id="Overview-tab" data-toggle="tab" data-target="#Overview" href="javascript:;" class="sm:mr-8 py-2 text-center active" role="tab" aria-controls="Overview" aria-selected="true">Overview</a>
-                            <a id="InvoiceHistory-tab" data-toggle="tab" data-target="#InvoiceHistory" href="javascript:;" class="sm:mr-8 py-2 text-center" role="tab" aria-controls="InvoiceHistory" aria-selected="false">Invoice History</a>
-                            <a id="RecentActivities-tab" data-toggle="tab" data-target="#RecentActivities" href="javascript:;" class="sm:mr-8 py-2 text-center" role="tab" aria-controls="RecentActivities" aria-selected="false">Recent Activities</a>
                             <a id="Admin-tab" data-toggle="tab" data-target="#Admin" href="javascript:;" class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Admin" aria-selected="false">Admin</a>
                         </div>
                     </div>
                 </div>
                 <div class="tab-content">
-                    <div class="grid grid-cols-12 gap-4 mt-0">
-                        <div class="col-span-12 lg:col-span-4 xxl:col-span-3 bg-gray-400 mt-5 px-3 pb-5">
-                            <h3 class="font-medium text-bace pt-5">Test</h3>
-                            <div class="mb-2 box flex flex-col lg:flex-row items-center px-0 py-2 border-b border-gray-200 dark:border-dark-5">
-                                <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                    <img alt="rounded-full" class="" src="../../dist/images/icons/2.png">
-                                </div>
-                                <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                                    <a href="" class="font-medium">Bank</a>
-                                    <div class="text-gray-600 text-xs mt-0.5">vivektiwari287@gmail.com</div>
-                                </div>
-
-                            </div>
-                            <div id="faq-accordion-1" class="box accordion accordion-boxed px-2 py-2">
-                                <div class="accordion-item">
-                                    <div id="faq-accordion-content-1" class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-1" aria-expanded="true" aria-controls="faq-accordion-collapse-1"> SENDER ACCOUNT </button>
-                                    </div>
-                                    <div id="faq-accordion-collapse-1" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-1" data-bs-parent="#faq-accordion-1">
-                                        <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Next Payment
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                    <span class="font-medium">
-                                                        23 Jun, 2021
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Payment Due Date
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                    <span class="font-medium">
-                                                        25 Agust, 2021
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Bill
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                    <span class="font-medium">
-                                                        1,25,846
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <div id="faq-accordion-content-2" class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-2" aria-expanded="false" aria-controls="faq-accordion-collapse-2"> BILLING INFORMATION</button>
-                                    </div>
-                                    <div id="faq-accordion-collapse-2" class="accordion-collapse collapse" aria-labelledby="faq-accordion-content-2" data-bs-parent="#faq-accordion-1">
-                                        <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Company Name
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                        <span class="font-medium">
-                                                        Kanexy
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Email Address
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                        <span class="font-medium">
-                                                        kanexy@gmail.co
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        VAT number
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                        <span class="font-medium">
-                                                        RF845762158762
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <div id="faq-accordion-content-3" class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-3" aria-expanded="false" aria-controls="faq-accordion-collapse-3"> PAYMENT METHOD </button>
-                                    </div>
-                                    <div id="faq-accordion-collapse-3" class="accordion-collapse collapse" aria-labelledby="faq-accordion-content-3" data-bs-parent="#faq-accordion-1">
-                                        <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Credit Card
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                        <span class="font-medium">
-                                                        Ending in 5845
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col lg:flex-row mt-2">
-                                                <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                                    <span>
-                                                        Expiring
-                                                    </span>
-                                                </div>
-                                                <div class="sm:whitespace-normal items-center text-right sm:w-1/2 sm:ml-auto">
-                                                        <span class="font-medium">
-                                                        09/28
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
-                            <div id="Overview" class="tab-pane active" role="tabpanel" aria-labelledby="Overview-tab">
-
-                                <div class="intro-y col-span-12 lg:col-span-12 px-0">
-                                    <div class="table-responsive  overflow-x-auto overflow-y-auto">
-                                        <table class="table box px-0 table-report sm:mt-2">
-                                            <thead>
-                                                <tr class="bg-gray-400">
-                                                    <th class="text-left whitespace-nowrap">Plan & Addon Details </th>
-                                                    <th class="text-left whitespace-nowrap">Qty</th>
-                                                    <th class="text-left whitespace-nowrap">Rate </th>
-                                                    <th class="text-left whitespace-nowrap">Tax </th>
-                                                    <th class="text-right whitespace-nowrap">Amount </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="intro-x zoom-in transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1">
-
-                                                    <td class="px-4 py-2">Starter </td>
-                                                    <td class="px-4 py-2 text-right">1</td>
-                                                    <td class="px-4 py-2">1,000.00 </td>
-                                                    <td class="px-4 py-2 text-center">-</td>
-                                                    <td class="px-4 py-2 text-right bg-gray-400">$1,000.00</td>
-                                                </tr>
-                                                <tr class="intro-x zoom-in transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1">
-
-                                                    <td class="px-4 py-2">Setup Free </td>
-                                                    <td class="px-4 py-2 text-right">1</td>
-                                                    <td class="px-4 py-2">1,000.00 </td>
-                                                    <td class="px-4 py-2 text-center">-</td>
-                                                    <td class="px-4 py-2 text-right bg-gray-400">$1,000.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4" class="border px-1 sm:px-4 py-2 text-medium w-2/5"><strong>Total</strong></td>
-                                                    <td class="border px-1 sm:px-4 py-2 text-right text-medium w-2/5"><strong>€0.00 GBP</strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <p class="mt-4"><strong>NOTES</strong><br>
-                                There are no notes added for this subscription.  <a class="text-gray-600" href="#"> Add Note</a></p>
-
-                            </div>
-
-
-                            <div id="InvoiceHistory" class="tab-pane" role="tabpanel" aria-labelledby="InvoiceHistory-tab">
-                                <div class="box p-5 mt-5">
-                                    <div class="flex items-center border-b border-gray-200 dark:border-dark-5 pb-5">
-                                        <div>
-                                            <div class="text-gray-600">Time</div>
-                                            <div class="mt-1">02/06/20 02:10 PM</div>
-                                        </div>
-                                        <i data-feather="clock" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                    <div class="flex items-center border-b border-gray-200 dark:border-dark-5 py-5">
-                                        <div>
-                                            <div class="text-gray-600">Customer</div>
-                                            <div class="mt-1">Al Pacino</div>
-                                        </div>
-                                        <i data-feather="user" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                    <div class="flex items-center border-b border-gray-200 dark:border-dark-5 py-5">
-                                        <div>
-                                            <div class="text-gray-600">People</div>
-                                            <div class="mt-1">3</div>
-                                        </div>
-                                        <i data-feather="users" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                    <div class="flex items-center pt-5">
-                                        <div>
-                                            <div class="text-gray-600">Table</div>
-                                            <div class="mt-1">21</div>
-                                        </div>
-                                        <i data-feather="mic" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="RecentActivities" class="tab-pane" role="tabpanel" aria-labelledby="RecentActivities-tab">
-                                <div class="box p-5 mt-5">
-                                    <div class="flex items-center border-b border-gray-200 dark:border-dark-5 pb-5">
-                                        <div>
-                                            <div class="text-gray-600">Time</div>
-                                            <div class="mt-1">02/06/20 02:10 PM</div>
-                                        </div>
-                                        <i data-feather="clock" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                    <div class="flex items-center border-b border-gray-200 dark:border-dark-5 py-5">
-                                        <div>
-                                            <div class="text-gray-600">Customer</div>
-                                            <div class="mt-1">Al Pacino</div>
-                                        </div>
-                                        <i data-feather="user" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                    <div class="flex items-center border-b border-gray-200 dark:border-dark-5 py-5">
-                                        <div>
-                                            <div class="text-gray-600">People</div>
-                                            <div class="mt-1">3</div>
-                                        </div>
-                                        <i data-feather="users" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                    <div class="flex items-center pt-5">
-                                        <div>
-                                            <div class="text-gray-600">Table</div>
-                                            <div class="mt-1">21</div>
-                                        </div>
-                                        <i data-feather="mic" class="w-4 h-4 text-gray-600 ml-auto"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="Admin" class="tab-pane" role="tabpanel" aria-labelledby="Admin-tab">
-                                <div class="box p-5 mt-5">
-                                    This is Admin tab section data..!
-                                </div>
-                            </div>
-                        </div>
+                    <div id="Overview" class="tab-pane active" role="tabpanel" aria-labelledby="Overview-tab">
+                        @livewire('transaction-detail-component')
                     </div>
-                </div>
 
+                    <div id="Admin" class="tab-pane" role="tabpanel" aria-labelledby="Admin-tab">
 
-                <div>
-                    <div>
-                        <div class="col-sm-12 text-right">
-                        <button class="btn btn-sm btn-primary mr-0 my-2"> Download Invoice </button>
+                        <div class="box p-5 mt-5">
+                            This is Admin tab section data..!
                         </div>
                     </div>
                 </div>
