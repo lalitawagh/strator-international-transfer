@@ -35,7 +35,9 @@ class MoneyTransferController extends Controller
 
         session()->forget('money_transfer_request');
 
-        return view('international-transfer::money-transfer.index');
+        $transactions = Transaction::where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+
+        return view('international-transfer::money-transfer.index', compact('transactions'));
     }
 
     public function create(Request $request)
@@ -148,6 +150,7 @@ class MoneyTransferController extends Controller
                     'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
                     'reason' =>  $data['transfer_reason'],
+                    'transaction_type' => 'money_transfer',
                 ],
             ]);
         }else if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT){
@@ -174,6 +177,7 @@ class MoneyTransferController extends Controller
                 'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
                 'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                 'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                'transaction_type' => 'money_transfer',
             ];
 
             $meta = array_merge($transaction->meta,$secondaryBeneficiary);
