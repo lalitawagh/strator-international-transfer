@@ -185,7 +185,7 @@
             </div>
 
             <div class="edit-transaction-content hidden">
-                <form id="transaction-form" action="{{ route('dashboard.international-transfer.transactionsUpdate', $transaction->getKey()) }}" method="POST" enctype="multipart/form-data">
+                <form id="transaction-form" action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
