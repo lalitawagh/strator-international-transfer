@@ -28,6 +28,7 @@ return [
     'pending'             => 'Pending',
     'pending-confirmation' => 'Pending Confirmation',
     'draft'               => 'Draft',
+    'cancelled'           => 'Cancelled',
     'bank'                => 'Bank',
     'manual_transfer'     => 'Manual Transfer',
     'stripe'              => 'Stripe'

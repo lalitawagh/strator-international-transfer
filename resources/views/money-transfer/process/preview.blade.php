@@ -12,11 +12,11 @@
                     <div class="border-2 border-dashed shadow-sm border-gray-200 dark:border-dark-5 rounded-md sm:p-5 m-3">
                         @if ($transferDetails['transaction']->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                             <div class="sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-2">
-                                <h3 class="mr-auto mb-3">Bank transfer details</h3>
+                                <h3 class="mr-auto mb-3">Bank Transfer Details</h3>
                                 <div class="text-xs text-right sm:ml-auto flex mb-3">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manually transfer Account Detail&body= Beneficiary :- {{ $beneficiary->display_name }} %0D%0A Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
                                             %0D%0A Bank Account Name:- {{ $masterAccount['account_holder_name'] }} %0D%0A Account Number :- {{ $masterAccount['account_number'] }} %0D%0A Sort Code :- {{ $masterAccount['sort_code'] }}  ">
-                                        <i data-feather="share-2" class="notification__icon dark:text-gray-300"></i>
+                                        <i data-feather="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
                                     <a href="javascript:void(0);" onclick="get_pdf('manual')"><i data-feather="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a onclick="copyData(this)"
@@ -85,7 +85,7 @@
                             @endif
                             <div class="sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-2">
                                 <h3 class="mr-auto mb-3">
-                                    {{ $payment }} transfer details
+                                    {{ $payment }} Transfer Details
                                 </h3>
                                 <div class="text-xs text-right sm:ml-auto flex mb-3">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject={{ $payment }} transfer Account Detail&body= Recipient Name :- {{ $transaction->meta['second_beneficiary_name'] }} %0D%0A Recipient Account Number :- {{ $transaction->meta['second_beneficiary_bank_account_number'] }} %0D%0A Recipient Sort Number:- {{ $transaction->meta['second_beneficiary_bank_code'] }}
@@ -155,7 +155,6 @@
                 </div>
             </div>
             <div class="text-right mt-5  py-4">
-                <button class="btn btn-secondary w-24">Previous</button>
                 <button type="submit" class="btn btn-primary w-24 ml-2">Continue</button>
             </div>
         </form>
