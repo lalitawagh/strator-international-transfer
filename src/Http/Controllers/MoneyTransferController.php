@@ -305,7 +305,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         $transferDetails = session('money_transfer_request.transaction');
-        $transaction = $transferDetails ? Transaction::find($transferDetails->id) : null;
+        $transaction = Transaction::find($transferDetails->id);
 
         return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
