@@ -22,7 +22,7 @@
                                     <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet"
                                         aria-labelledby="k-wallet-tab">
 
-                                        <div class="intro-y  overflow-x-auto overflow-y-hidden  mt-3 sm:mt-0">
+                                        <div class="intro-y  overflow-x-auto overflow-y-hidden  sm:mt-3 sm:mt-0">
 
                                             <div
                                                 class="flex-wrap sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">

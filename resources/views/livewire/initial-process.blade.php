@@ -1,6 +1,6 @@
 <div>
     <div class="mb-4 relative">
-        <input wire:change="changeAmount($event.target.value)" wire:model="amount" class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600" name="amount" type="number" autofocus>
+        <input wire:change="changeAmount($event.target.value)" wire:model="amount" class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600" name="amount" type="text" autofocus>
         <label class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">You Send</label>
 
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
@@ -139,7 +139,7 @@
         </ul>
     </div>
     <div class="mb-4 relative">
-        <input wire:model="recipient_amount" class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600" name="recipient_amount" type="number" autofocus>
+        <input wire:model="recipient_amount" class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600" name="recipient_amount" type="text" autofocus>
         <label class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Recipient Gets</label>
 
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
