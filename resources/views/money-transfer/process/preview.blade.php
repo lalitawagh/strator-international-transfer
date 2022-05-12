@@ -158,13 +158,14 @@
 
                     </div>
                     <div class="my-5 px-3 text-right">
-                        <a href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
-                            class="btn btn-primary text-center mr-1 mb-2 ml-auto">Cancel this transfer</a>
+
                     </div>
 
                 </div>
             </div>
             <div class="text-right mt-5  py-4">
+                <a href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
+                    class="btn btn-secondary text-center mr-1 mb-2 ml-auto">Cancel this transfer</a>
                 <button type="submit" class="btn btn-primary w-24 ml-2">Continue</button>
             </div>
         </form>
