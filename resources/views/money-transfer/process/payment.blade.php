@@ -5,6 +5,7 @@
         <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.transactionDetail',['filter' => ['workspace_id' => $workspace->id]]) }}">
             @csrf
             <div id="Transactions" class="grid grid-cols-12 gap-3" role="tabpanel" aria-labelledby="Transactions-tab">
+
                 <div class="col-span-12 lg:col-span-8 xxl:col-span-8 mt-4">
                     <div class="grid grid-cols-12 gap-3">
                         <!-- BEGIN: -->
