@@ -36,5 +36,14 @@
             $('#tabcuntery-selection2 option').attr("disabled", false);
             $('#tabcuntery-selection2 option[value="'+ event.detail.currency +'"]').attr("disabled", true);
         });
+
+        function preventNonNumericalInput(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
     </script>
 @endpush
