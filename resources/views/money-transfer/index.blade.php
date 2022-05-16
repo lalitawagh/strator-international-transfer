@@ -328,7 +328,7 @@
                                                                     <td class="whitespace-nowrap text-left">{{ $transaction->meta['sender_name'] }}</td>
                                                                     <td class="whitespace-nowrap text-left">{{ $transaction->meta['second_beneficiary_name'] }}</td>
                                                                     <td class="whitespace-nowrap text-left">{{ trans('international-transfer::configuration.'.$transaction->payment_method) }}</td>
-                                                                    <td class="whitespace-nowrap text-left">{{ $transaction->amount }} </td>
+                                                                    <td class="whitespace-nowrap text-right">{{ $transaction->amount }} </td>
                                                                     <td class="whitespace-nowrap text-left">{{ trans('international-transfer::configuration.'.$transaction->status) }}</td>
                                                                     <td class="table-report__action" style="box-shadow: none;">
                                                                         <div class="dropdown" style="display: flex; justify-content: center;left: 0;right: 0;margin: 0 auto;">
