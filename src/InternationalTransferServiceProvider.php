@@ -14,6 +14,7 @@ use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\OtpVerification;
 use Kanexy\InternationalTransfer\Livewire\TransactionDetailComponent;
+use Kanexy\InternationalTransfer\Livewire\TransactionLogComponent;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
@@ -93,6 +94,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('otp-verification', OtpVerification::class);
         Livewire::component('existing-beneficiary', ExistingBeneficiary::class);
         Livewire::component('transaction-detail-component', TransactionDetailComponent::class);
+        Livewire::component('transaction-log-component',TransactionLogComponent::class);
 
     }
 }

@@ -122,7 +122,7 @@
                                             <div class="font-medium">By 19 may</div>
                                         </div> --}}
                                         <div class="col-span-12 md:col-span-6 mt-4 form-inline">
-                                            <label for="bank_country" class="form-label sm:w-40"> Transfer Reason </label>
+                                            <label for="bank_country" class="form-label sm:w-40"> Transfer Reason <span class="text-theme-6">*</span></label>
                                             <div class="sm:w-5/6">
                                                 <select name="transfer_reason" data-search="true" class="tail-select w-full">
                                                     @foreach ($reasons as $reason)

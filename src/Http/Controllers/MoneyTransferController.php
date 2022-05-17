@@ -5,6 +5,7 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -16,6 +17,7 @@ use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
+use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -344,13 +346,47 @@ class MoneyTransferController extends Controller
     public function cancel(Request $request)
     {
         $transaction = Transaction::find($request->id);
-        $transaction->update(['status' => 'cancelled']);
+        $transaction->update(['status' => TransactionStatus::CANCELLED]);
         $transferDetails = session('money_transfer_request');
 
         return redirect()->route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->with([
             'status' => 'success',
             'message' => 'The money transfer request cancelled successfully.',
         ]);
+    }
+
+    public function transferCompleted(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->update(['status' => TransactionStatus::COMPLETED]);
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
+            'status' => 'success',
+            'message' => 'The money transfer request completed successfully.',
+        ]);
+    }
+
+    public function transferPending(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->update(['status' => TransactionStatus::PENDING]);
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
+            'status' => 'success',
+            'message' => 'The money transfer request pending successfully.',
+        ]);
+    }
+
+    public function logDetails(Request $request, Transaction $transaction)
+    {
+        $log = new Log();
+        $log->id = Str::uuid();
+        $log->text = $request->input('text');
+        $log->user_id = auth()->user()->id;
+        $log->target()->associate($transaction);
+        $log->save();
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Log Successfully']);
     }
 
 }

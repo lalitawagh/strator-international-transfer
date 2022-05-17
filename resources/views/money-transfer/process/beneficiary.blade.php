@@ -3,7 +3,7 @@
 @section('money-transfer-content')
     <div class="px-5 sm:px-5 mt-3 sm:pt-3 lg:mt-10 lg:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
-            <h3 class="text-2xl font-black sm:mb-4 text-center py-4">Select or create beneficiary</h3>
+            <h3 class="text-2xl font-black sm:mb-4 text-center py-4">Select or Create Beneficiary</h3>
             <!-- BEGIN: Horizontal Form -->
             <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5">
                 <div
