@@ -143,6 +143,7 @@
                     value="@isset($guaranteed_rate) {{ $guaranteed_rate }} @endisset">
                 <span class="sequence-icon tw-calculator-breakdown__icon">x</span>
                 <span class="tw-calculator-breakdown-item__left">{{ $guaranteed_rate }}</span>
+                <span class="tw-calculator-breakdown-item__right">Exchange Rate</span>
                 {{-- <span class="px-3 border-2 cursor-pointer border-dashed dark:border-dark-5 rounded-md tw-calculator-breakdown-item__right tooltip"
                     data-theme="light" data-tooltip-content="#custom-content-tooltip" data-trigger="click"
                     title="This is awesome tooltip example!">
