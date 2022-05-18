@@ -64,17 +64,29 @@ class TransferTypeFeeController extends Controller
     {
         $data = $request->validated();
         $data['id'] = $id;
+        $final = collect(Setting::getValue('money_transfer_type_fees'))->toArray();
 
-        $settings = collect(Setting::getValue('money_transfer_type_fees'))->filter(function ($item) use ($id) {
-            if ($item['id'] != $id) {
-                return true;
+        // $settings = collect(Setting::getValue('money_transfer_type_fees'))->filter(function ($item,$key) use ($id,$final,$data) {
+        //     if ($item['id'] == $id) {
+        //         $final[$key] = $data;
+        //         array_push($final[$key],$data);
+
+        //     }
+
+
+        // });
+
+        $settings = collect(Setting::getValue('money_transfer_type_fees'))->map(function ($item) use ($id,$data) {
+            if ($item['id'] == $id) {
+                return $data;
             }
 
-           return false;
+            return $item;
         });
 
 
-        $settings->push($data);
+
+        // $settings->push($data);
 
         Setting::updateOrCreate(['key' => 'money_transfer_type_fees'], ['value' => $settings]);
 

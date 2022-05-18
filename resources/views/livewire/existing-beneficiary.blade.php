@@ -48,7 +48,7 @@
 
         @isset($beneficiaryDetail)
             <!-- BEGIN: Modal Content -->
-            <div id="confirm-beneficiary-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+            <div id="confirm-beneficiary-modal-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
 

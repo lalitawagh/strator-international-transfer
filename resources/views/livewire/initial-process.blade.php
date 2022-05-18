@@ -182,7 +182,7 @@
                             <img src="{{ $country->flag }}">
                         @endif
                     @else
-                        @if ($country->id == '1')
+                        @if ($country->code == 'IN')
                             <img src="{{ $country->flag }}">
                         @endif
                     @endisset
@@ -196,7 +196,7 @@
                                 selected
                             @endif
                         @else
-                            @if ($country->id == '1')
+                            @if ($country->code == 'IN')
                                 selected
                             @endif @endisset>
                         {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}

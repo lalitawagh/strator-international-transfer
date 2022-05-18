@@ -46,7 +46,7 @@ class InitialProcess extends Component
         $this->fees = collect(Setting::getValue('money_transfer_type_fees',[]))->where('currency', $this->currency_from)->all();
         $this->amount = 1000;
         $this->from = Country::whereCode('UK')->first()->currency;
-        $this->to =  Country::whereCode('AD')->first()->currency;
+        $this->to =  Country::whereCode('IN')->first()->currency;
         $this->guaranteed_rate = Helper::getExchangeRate($this->from,$this->to);
         $this->guaranteed_rate = number_format((float) $this->guaranteed_rate, 2, '.', '');
         $this->initial_fee = collect(Setting::getValue('money_transfer_type_fees',[]))->firstWhere('currency', $defaultCountry->id);
@@ -73,7 +73,7 @@ class InitialProcess extends Component
         $this->currency_from = $value;
 
         $this->from = (isset($this->currency_from)) ? Country::Find($this->currency_from)?->currency : Country::whereCode('UK')->first()->currency;
-        $this->to =  (isset($this->currency_to)) ? Country::Find($this->currency_to)?->currency : Country::whereCode('AD')->first()->currency;
+        $this->to =  (isset($this->currency_to)) ? Country::Find($this->currency_to)?->currency : Country::whereCode('IN')->first()->currency;
         $amount = Helper::getExchangeRateWithAmount($this->from,$this->to,$this->amount);
         $exchange_rate = Helper::getExchangeRate($this->from,$this->to);
 
@@ -109,7 +109,7 @@ class InitialProcess extends Component
         $this->currency_to = $value;
 
         $this->from = (isset($this->currency_from)) ? Country::Find($this->currency_from)?->currency : Country::whereCode('UK')->first()->currency;
-        $this->to =  (isset($this->currency_to)) ? Country::Find($this->currency_to)?->currency : Country::whereCode('AD')->first()->currency;
+        $this->to =  (isset($this->currency_to)) ? Country::Find($this->currency_to)?->currency : Country::whereCode('IN')->first()->currency;
         $amount = Helper::getExchangeRateWithAmount($this->from,$this->to,$this->amount);
         $exchange_rate = Helper::getExchangeRate($this->from,$this->to);
 
@@ -151,7 +151,7 @@ class InitialProcess extends Component
     {
 
         $this->from = (isset($this->currency_from)) ? Country::Find($this->currency_from)?->currency : Country::whereCode('UK')->first()->currency;
-        $this->to =  (isset($this->currency_to)) ? Country::Find($this->currency_to)?->currency : Country::whereCode('AD')->first()->currency;
+        $this->to =  (isset($this->currency_to)) ? Country::Find($this->currency_to)?->currency : Country::whereCode('IN')->first()->currency;
 
         if(!empty($value))
         {

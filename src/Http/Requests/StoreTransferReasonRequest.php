@@ -16,7 +16,7 @@ class StoreTransferReasonRequest extends FormRequest
     public function rules()
     {
         return [
-            'reason'      =>    ['required','string'],
+            'reason'      =>    ['required','string','regex:/[a-zA-Z0-9\s]+/'],
             'status'      =>    ['required','string'],
         ];
     }
