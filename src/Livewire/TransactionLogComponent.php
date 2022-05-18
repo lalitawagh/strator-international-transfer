@@ -24,6 +24,8 @@ class TransactionLogComponent extends Component
     {
         $this->transaction = $transaction;
         $this->logs = $this->transaction->logs;
+        $this->dispatchBrowserEvent('UpdateCkeditorSelect');
+
     }
 
     public function render()
@@ -43,5 +45,6 @@ class TransactionLogComponent extends Component
         $this->logs = $this->transaction->logs;
 
         $this->emit('refreshLogs');
+        $this->dispatchBrowserEvent('UpdateCkeditorSelect');
     }
 }

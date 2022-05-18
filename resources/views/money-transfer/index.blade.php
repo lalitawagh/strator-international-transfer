@@ -419,17 +419,17 @@
                     <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
                     <div
                         class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                        <i data-feather="edit" class="w-3 h-3"></i> </div>
+                        <i data-feather="edit" class="w-3 h-3"></i>
+                    </div>
                     <a
                         class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
                         <i data-feather="save" class="w-3 h-3"></i> </a>
                     <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip"
                         data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
-                    <a href=""
+                    <a
                         class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip"
                         title="Share"> <i data-feather="share-2" class="w-3 h-3"></i> </a>
-                    <a
-                        class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                    <a class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
                         title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
                 </div>
 
@@ -461,126 +461,30 @@
         </div>
     </div>
 @endsection
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 @push('scripts')
     <script>
+        $('#create_pdf').click(function() {
+            var currentPosition = document.getElementById("Overview").scrollTop;
+            var w = document.getElementById("Overview").offsetWidth;
+            var h = document.getElementById("Overview").offsetHeight;
+            document.getElementById("Overview").style.height = "800";
 
-        function get_pdf() {
-            var doc = new jsPDF();
-            var elementHTML = $('#Overview').html();
-            var specialElementHandlers = {
-                '#elementH': function (element, renderer) {
-                    return true;
+            html2canvas(document.getElementById("Overview"), {
+                useCORS: true,
+                background: '#fff',
+                dpi: 300, // Set to 300 DPI
+                scale: 3, // Adjusts your resolution
+                onrendered: function(canvas) {
+                    var img = canvas.toDataURL("image/png", 1);
+                    var doc = new jsPDF('L', 'px', [w, h]);
+                    doc.addImage(img, 'PNG', 0, 0, w, h);
+                    doc.save('sample-file.pdf');
                 }
-            };
-            doc.fromHTML(elementHTML, 15, 15, {
-                'width': 170,
-                'elementHandlers': specialElementHandlers
             });
 
-            // Save the PDF
-            doc.save('sample-document.pdf');
-        }
+            document.getElementById("Overview").scrollTop = currentPosition;
+        });
+
     </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-        <script>
-            (function () {
-                var
-                 form = $('#Overview'),
-                 cache_width = form.width(),
-                 a4 = [650.28, 841.89]; // for a4 size paper width and height
-
-                $('#create_pdf').on('click', function () {
-                    window.scrollTo(0,0);
-                    createPDF();
-                });
-                //create pdf
-                function createPDF() {
-                    getCanvas().then(function (canvas) {
-                        var
-                         img = canvas.toDataURL("image/png"),
-                         doc = new jsPDF({
-                             unit: 'px',
-                             format: 'a4'
-                         });
-                        doc.addImage(img, 'JPEG', 20, 20, 400,400);
-                        doc.save('bhavdip-html-to-pdf.pdf');
-                        form.width(cache_width);
-                    });
-                }
-
-                // create canvas object
-                function getCanvas() {
-                    form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
-                    return html2canvas(form, {
-                        imageTimeout: 5000,
-                        removeContainer: true
-                    });
-                }
-
-            }());
-        </script>
-        <script>
-            (function ($) {
-                $.fn.html2canvas = function (options) {
-                    var date = new Date(),
-                    $message = null,
-                    timeoutTimer = false,
-                    timer = date.getTime();
-                    html2canvas.logging = options && options.logging;
-                    html2canvas.Preload(this[0], $.extend({
-                        complete: function (images) {
-                            var queue = html2canvas.Parse(this[0], images, options),
-                            $canvas = $(html2canvas.Renderer(queue, options)),
-                            finishTime = new Date();
-
-                            $canvas.css({ position: 'fixed', left: 0, top: 0 }).appendTo(document.body);
-                            $canvas.siblings().toggle();
-
-                            $(window).click(function () {
-                                if (!$canvas.is(':visible')) {
-                                    $canvas.toggle().siblings().toggle();
-                                    throwMessage("Canvas Render visible");
-                                } else {
-                                    $canvas.siblings().toggle();
-                                    $canvas.toggle();
-                                    throwMessage("Canvas Render hidden");
-                                }
-                            });
-                            throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);
-                        }
-                    }, options));
-
-                    function throwMessage(msg, duration) {
-                        window.clearTimeout(timeoutTimer);
-                        timeoutTimer = window.setTimeout(function () {
-                            $message.fadeOut(function () {
-                                $message.remove();
-                            });
-                        }, duration || 2000);
-                        if ($message)
-                            $message.remove();
-                        $message = $('<div ></div>').html(msg).css({
-                            margin: 0,
-                            padding: 10,
-                            background: "#000",
-                            opacity: 0.1,
-                            position: "fixed",
-                            top: 10,
-                            right: 10,
-                            fontFamily: 'Tahoma',
-
-                            fontSize: 12,
-                            borderRadius: 12,
-                            width: 'auto',
-                            height: 800,
-                            textAlign: 'center',
-                            textDecoration: 'none'
-                        }).hide().fadeIn().appendTo('body');
-                    }
-                };
-            })(jQuery);
-
-
-        </script>
 @endpush
