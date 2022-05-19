@@ -169,7 +169,7 @@
     <div class="mb-4 relative">
         <input wire:model="recipient_amount"
             class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
-            name="recipient_amount" onkeypress="preventNonNumericalInput(event)" autofocus>
+            name="recipient_amount" onkeypress="preventNonNumericalInput(event)" readonly autofocus>
         <label
             class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Recipient
             Gets</label>
@@ -182,7 +182,7 @@
                             <img src="{{ $country->flag }}">
                         @endif
                     @else
-                        @if ($country->id == '1')
+                        @if ($country->code == 'IN')
                             <img src="{{ $country->flag }}">
                         @endif
                     @endisset
@@ -196,7 +196,7 @@
                                 selected
                             @endif
                         @else
-                            @if ($country->id == '1')
+                            @if ($country->code == 'IN')
                                 selected
                             @endif @endisset>
                         {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}

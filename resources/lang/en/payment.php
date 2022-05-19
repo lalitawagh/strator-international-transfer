@@ -25,9 +25,9 @@ $data =  [
     ],
     [
         'method' => PaymentMethod::MANUAL_TRANSFER,
-        'title' => 'Manually Transfer',
-        'heading' => 'Bank charges will be applied for manually payment',
-        'description' => 'Easily transfer manually through reference number.',
+        'title' => 'Manual Transfer',
+        'heading' => 'Bank charges will be applied for manual payment',
+        'description' => 'Easily transfer manual through reference number.',
         'image' => asset('dist/images/Manually-Transfer.png'),
     ],
     [

@@ -19,8 +19,8 @@ class StoreTransferTypeFeeRequest extends FormRequest
         return [
             'currency'       =>    ['required','string'],
             'type'           =>    ['required','string',Rule::in(['payment_type', 'transfer_type'])],
-            'payment_type'   =>    ['required_if:type,==,payment_type'],
-            'transfer_type'  =>    ['required_if:type,==,transfer_type'],
+            'payment_type'   =>    ['required_if:type,==,payment_type','nullable','regex:/^[\s\w-]*$/'],
+            'transfer_type'  =>    ['required_if:type,==,transfer_type','nullable','regex:/^[\s\w-]*$/'],
             'min_amount'     =>    ['required','numeric','min:0'],
             'max_amount'     =>    ['required','numeric','gt:min_amount'],
             'fee_type'       =>    ['required'],
@@ -43,6 +43,9 @@ class StoreTransferTypeFeeRequest extends FormRequest
             'max_amount.gt'         => 'The max amount must be greater than min amount.',
             'amount.min'            => 'The amount should not be a negative value.',
             'percentage.between'    => 'The percentage must be between 0 and 100.',
+            'payment_type.regex' => 'The payment type field may only contain letters, numbers and spaces.',
+            'transfer_type.regex' => 'The transfer type field may only contain letters, numbers and spaces.',
+
         ];
     }
 }

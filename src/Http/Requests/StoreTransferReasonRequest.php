@@ -16,8 +16,15 @@ class StoreTransferReasonRequest extends FormRequest
     public function rules()
     {
         return [
-            'reason'      =>    ['required','string'],
+            'reason'      =>    ['required','string','regex:/^[\s\w-]*$/'],
             'status'      =>    ['required','string'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'reason.regex' => 'The reason field may only contain letters, numbers and spaces.',
         ];
     }
 }
