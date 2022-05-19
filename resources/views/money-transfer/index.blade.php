@@ -239,6 +239,44 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
+                                                                        Sender Currency
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th class="whitespace-nowrap text-left">
+                                                                        Sender Amount
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th class="whitespace-nowrap text-left">
                                                                         Receiver Name
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -257,8 +295,9 @@
                                                                             </svg>
                                                                         </span>
                                                                     </th>
+
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sending Currency
+                                                                        Receiver Currency
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -277,7 +316,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Receving Currency
+                                                                        Receiver Amount
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -314,7 +353,7 @@
                                                                             </svg>
                                                                         </span>
                                                                     </th>
-                                                                    <th class="whitespace-nowrap text-left">
+                                                                    {{-- <th class="whitespace-nowrap text-left">
                                                                         Amount
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -332,7 +371,7 @@
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
-                                                                    </th>
+                                                                    </th> --}}
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Status
                                                                         <span class="flex short-icon">
@@ -383,20 +422,29 @@
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['sender_name'] }}</td>
                                                                         <td class="whitespace-nowrap text-left">
-                                                                            {{ $transaction->meta['second_beneficiary_name'] }}
-                                                                        </td>
-                                                                        <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['base_currency'] }}
                                                                         </td>
+                                                                        <td class="whitespace-nowrap text-right text-theme-6">
+                                                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}
+                                                                        </td>
+                                                                        <td class="whitespace-nowrap text-left">
+                                                                            {{ $transaction->meta['second_beneficiary_name'] }}
+                                                                        </td>
+
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['exchange_currency'] }}
+                                                                        </td>
+                                                                        <td class="whitespace-nowrap text-right text-theme-9">
+                                                                           @isset($transaction->meta['recipient_amount'])
+                                                                           {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->meta['recipient_amount']) }}
+                                                                           @endisset
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->payment_method) }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-right @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
+                                                                        {{-- <td class="whitespace-nowrap text-right @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
                                                                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}
-                                                                        </td>
+                                                                        </td> --}}
 
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->status) }}

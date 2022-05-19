@@ -48,7 +48,7 @@ class InitialProcess extends Component
         $this->defaultCountry = $defaultCountry;
         $this->currency_from = $defaultCountry->id;
         $this->fees = collect(Setting::getValue('money_transfer_type_fees',[]))->where('currency', $this->currency_from)->all();
-        $this->amount = 1000;
+        $this->amount = old('amount') ? old('amount') : 1000;
         $this->from = Country::whereCode('UK')->first()->currency;
         $this->to =  Country::whereCode('IN')->first()->currency;
         $this->guaranteed_rate = Helper::getExchangeRate($this->from,$this->to);

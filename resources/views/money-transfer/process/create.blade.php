@@ -16,6 +16,9 @@
                             You could save up to <strong>20.59 GBP</strong> vs tha average bank
                             should arrive in <strong>4 hours</strong>
                         </p> --}}
+                        @error('recipient_amount')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror
 
                         <div class="text-right mt-5 py-4">
                             <a data-toggle="modal" data-target="#large-slide-over-size-preview"

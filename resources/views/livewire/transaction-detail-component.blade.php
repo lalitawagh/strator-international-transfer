@@ -94,6 +94,66 @@
                         </div>
                     </div>
 
+                    @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
+                    <div class="accordion-item">
+                        <div id="faq-accordion-content-3" class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-3" aria-expanded="false" aria-controls="faq-accordion-collapse-3"> Manual Bank Deposit Account Detail </button>
+                        </div>
+                        <div id="faq-accordion-collapse-3" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-3" data-bs-parent="#faq-accordion-3">
+                            <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
+                                <div class="flex flex-col lg:flex-row mt-2">
+                                    <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                        <span>
+                                            Account Name
+                                        </span>
+                                    </div>
+                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                        <span class="font-medium">
+                                            {{ @$masterAccount['account_holder_name'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col lg:flex-row mt-2">
+                                    <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                        <span>
+                                            Account No
+                                        </span>
+                                    </div>
+                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                        <span class="font-medium">
+                                            {{ @$masterAccount['account_number'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col lg:flex-row mt-2">
+                                    <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                        <span>
+                                            Sort Code
+                                        </span>
+                                    </div>
+                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                        <span class="font-medium">
+                                            {{ @$masterAccount['sort_code'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col lg:flex-row mt-2">
+                                    <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                        <span>
+                                            Reference Number
+                                        </span>
+                                    </div>
+                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                        <span class="font-medium">
+                                            {{ @$transaction->meta['reference_no'] }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    @endif
 
                     <div class="accordion-item">
                         <div id="faq-accordion-content-2" class="accordion-header">
@@ -129,7 +189,7 @@
                                 <div class="flex flex-col lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
-                                            Sort Code / IFSC Code
+                                            Sort Code
                                         </span>
                                     </div>
                                     <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
@@ -139,9 +199,25 @@
                                     </div>
                                 </div>
                                 @endisset
+
+                                @isset($transaction->meta['second_beneficiary_bank_iban'])
+                                <div class="flex flex-col lg:flex-row mt-2">
+                                    <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                        <span>
+                                            IFSC Code / IBAN
+                                        </span>
+                                    </div>
+                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                        <span class="font-medium">
+                                            {{ @$transaction->meta['second_beneficiary_bank_iban'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                                @endisset
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="col-span-12 lg:col-span-6 xxl:col-span-6  mt-5 px-3 pb-5">
@@ -272,7 +348,7 @@
                         </div>
                     </div>
 
-                    @isset($transaction->meta['reference'])
+                    @isset($transaction->meta['reason'])
                         <div class="mt-5">
                             <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
 
