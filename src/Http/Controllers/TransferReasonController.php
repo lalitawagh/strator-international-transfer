@@ -58,16 +58,13 @@ class TransferReasonController extends Controller
         $data = $request->validated();
         $data['id'] = $id;
 
-        $settings = collect(Setting::getValue('money_transfer_reasons'))->filter(function ($item) use ($id) {
-            if ($item['id'] != $id) {
-                return true;
+        $settings = collect(Setting::getValue('money_transfer_reasons'))->map(function ($item) use ($id,$data) {
+            if ($item['id'] == $id) {
+                return $data;
             }
 
-           return false;
+            return $item;
         });
-
-
-        $settings->push($data);
 
         Setting::updateOrCreate(['key' => 'money_transfer_reasons'], ['value' => $settings]);
 

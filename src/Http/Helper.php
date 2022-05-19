@@ -24,8 +24,13 @@ class Helper
 
     public static function getExchangeRate($from,$to)
     {
-        $exchange_rate = Currency::convert()->from($from)->to($to)->get();
-        return $exchange_rate;
+        try {
+            $exchange_rate = Currency::convert()->from($from)->to($to)->get();
+            return $exchange_rate;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 
 }
