@@ -213,7 +213,7 @@ class MoneyTransferController extends Controller
             $metaDetails = [
                 'second_beneficiary_id' => $secondBeneficiary?->id,
                 'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
+                'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
                 'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                 'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
                 'exchange_rate' => $transferDetails['guaranteed_rate'],
@@ -397,6 +397,17 @@ class MoneyTransferController extends Controller
     {
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::COMPLETED]);
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
+            'status' => 'success',
+            'message' => 'The money transfer request completed successfully.',
+        ]);
+    }
+
+    public function transferAccepted(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->update(['status' => TransactionStatus::ACCEPTED]);
 
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
