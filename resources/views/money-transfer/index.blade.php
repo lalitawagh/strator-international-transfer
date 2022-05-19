@@ -447,6 +447,13 @@
                                                                                                     class="w-4 h-4 mr-1" />
                                                                                                 Track
                                                                                             </a>
+                                                                                            <a href="javascript:void(0)"  href="javascript:void(0);"
+                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});"
+                                                                                            data-toggle="modal" data-target="#subscription-modal"  class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                <x-feathericon-eye
+                                                                                                    class="w-4 h-4 mr-1" />
+                                                                                                Show
+                                                                                            </a>
                                                                                             {{-- <a href="{{ route('') }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-x-circle class="w-4 h-4 mr-1" /> Cancelled </a> --}}
                                                                                         </div>
                                                                                     </div>
