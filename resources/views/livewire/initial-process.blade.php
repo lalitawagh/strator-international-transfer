@@ -85,6 +85,7 @@
                                                     @endphp
                                                 @endif
                                                 @php
+
                                                     $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                                 @endphp
 
@@ -94,18 +95,18 @@
                                                         <div class="flex flex-col sm:flex-row mt-2 m-2">
                                                             <div class="form-check mr-2">
                                                                 <input id="radio-switch-{{ $key }}"
-                                                                    wire:change="changeToMethod({{ $fee_charge }})"
+
                                                                     class="form-check-input" type="radio"
-                                                                    name="horizontal_radio_button"
-                                                                    @if ($key == 0) value="1" @endif>
-                                                                <label class="form-check-label" for="radio-switch-4">
+                                                                    name="feemethod"
+                                                                   value="{{ $key }}"  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
+                                                                <label class="form-check-label" for="radio-switch-{{ $key }}">
                                                                     <h4 href="javascript:;"
                                                                         class="font-medium truncate mr-5">
                                                                         @if ($fee['type'] == 'payment_type')
                                                                             {{ $fee['payment_type'] }}
                                                                         @elseif ($fee['type'] == 'transfer_type')
                                                                             {{ $fee['transfer_type'] }}
-                                                                        @endif -{{ $fee_charge }}
+                                                                        @endif -{{ number_format((float) $fee_charge, 2, '.', '');  }}
                                                                         {{ $country->currency }}
                                                                         @if ($fee['percentage'] != 0)
                                                                             ({{ $fee['percentage'] }} %)

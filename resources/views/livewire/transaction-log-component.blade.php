@@ -5,7 +5,7 @@
                     <label class="ml-6">Note</label>
                     <div class="form-inline mt-2">
                         <div class="form w-full ml-5">
-                            <textarea wire:model.defer="description" class="form-control"></textarea>
+                            <textarea class="editor" wire:model.defer="description"></textarea>
                         </div>
 
                     </div>

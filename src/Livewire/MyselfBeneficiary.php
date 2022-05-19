@@ -3,6 +3,7 @@
 namespace Kanexy\InternationalTransfer\Livewire;
 
 use Kanexy\Cms\Helper;
+use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
@@ -70,6 +71,11 @@ class MyselfBeneficiary extends Component
 
     public $meta;
 
+    public $sending_country;
+
+    public $receiving_country;
+
+
     protected function rules()
     {
         return  [
@@ -83,11 +89,10 @@ class MyselfBeneficiary extends Component
             'avatar' => ['nullable', 'max:5120', 'mimes:png,jpg,jpeg', 'file'],
             'note' => ['nullable'],
             'meta' => ['required', 'array'],
-            'meta.swift_code' => ['required'],
             'meta.iban_number' => ['required'],
             'meta.bank_account_name' => ['required', 'string'],
             'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits:8'],
-            'meta.bank_code' => ['required', 'string', 'numeric', 'digits:6'],
+            'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
         ];
     }
@@ -104,7 +109,15 @@ class MyselfBeneficiary extends Component
         'meta.bank_code' => 'bank sort code',
         'meta.bank_account_name' => 'bank account name',
         'meta.iban_number' => 'IBAN Number',
+        'meta.bank_country' => 'country'
     ];
+
+    protected function messages()
+    {
+        return  [
+            'meta.bank_code.required_if' => 'The sort code field is required.',
+        ];
+    }
 
 
     public function mount($countries, $defaultCountry, $user, $account, $workspace, $beneficiaryType)
@@ -115,6 +128,8 @@ class MyselfBeneficiary extends Component
         $this->account = $account;
         $this->workspace_id = $workspace->id;
         $this->beneficiaryType = $beneficiaryType;
+        $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;
+        $this->receiving_country = Country::find(session('money_transfer_request.currency_code_to'))->code;
         $this->type = ($beneficiaryType == Beneficiary::MYSELF || $beneficiaryType == Beneficiary::SOMEONE_ELSE) ? 'personal': 'business';
         if(($beneficiaryType == Beneficiary::MYSELF))
         {
@@ -126,6 +141,11 @@ class MyselfBeneficiary extends Component
         }
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
 
+    }
+
+    public function changeCountry($value)
+    {
+        $this->country = $value;
     }
 
     public function createBeneficiary()
@@ -147,6 +167,7 @@ class MyselfBeneficiary extends Component
             'sending_currency' => session('money_transfer_request.currency_code_from'),
             'receiving_currency' => session('money_transfer_request.currency_code_to'),
             'bank_code_type' => BankEnum::SORTCODE,
+            'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
         ];
 
         if(! is_null($data['mobile']))

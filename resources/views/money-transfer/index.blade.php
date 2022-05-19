@@ -1,5 +1,5 @@
 @extends('international-transfer::layouts.master')
-
+<link rel="stylesheet" href="{{ asset('dist/css/money-transfer.css') }}">
 @section('content')
     <div class="grid grid-cols-12 gap-6">
         <div class="col-span-12">
@@ -258,6 +258,44 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
+                                                                        Sending Currency
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th class="whitespace-nowrap text-left">
+                                                                        Receving Currency
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th class="whitespace-nowrap text-left">
                                                                         Payment Method
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -348,10 +386,18 @@
                                                                             {{ $transaction->meta['second_beneficiary_name'] }}
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
+                                                                            {{ $transaction->meta['base_currency'] }}
+                                                                        </td>
+                                                                        <td class="whitespace-nowrap text-left">
+                                                                            {{ $transaction->meta['exchange_currency'] }}
+                                                                        </td>
+                                                                        <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->payment_method) }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-right">
-                                                                            {{ $transaction->amount }} </td>
+                                                                        <td class="whitespace-nowrap text-right @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
+                                                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}
+                                                                        </td>
+
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->status) }}
                                                                         </td>
@@ -369,17 +415,44 @@
                                                                                     <div class="dropdown-menu w-40">
                                                                                         <div
                                                                                             class="dropdown-menu__content box p-2">
-                                                                                            <a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
-                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                <x-feathericon-check-circle
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                <a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
+                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                    <x-feathericon-check-circle
+                                                                                                        class="w-4 h-4 mr-1" />
+                                                                                                    Completed
+                                                                                                </a>
+                                                                                                @endif
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                <a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
+                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                    <x-feathericon-check
+                                                                                                        class="w-4 h-4 mr-1" />
+                                                                                                    Accepted
+                                                                                                </a>
+                                                                                                @endif
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                <a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
+                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                    <x-feathericon-alert-circle
+                                                                                                        class="w-4 h-4 mr-1" />
+                                                                                                    Pending
+                                                                                                </a>
+                                                                                                @endif
+                                                                                            @endif
+                                                                                            <a href="javascript:void(0)" onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"  data-toggle="modal" data-target="#superlarge-slide-over-size-preview"
+                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                <x-feathericon-navigation-2
                                                                                                     class="w-4 h-4 mr-1" />
-                                                                                                Completed
+                                                                                                Track
                                                                                             </a>
-                                                                                            <a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
-                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                <x-feathericon-alert-circle
+                                                                                            <a href="javascript:void(0)"  href="javascript:void(0);"
+                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});"
+                                                                                            data-toggle="modal" data-target="#subscription-modal"  class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                <x-feathericon-eye
                                                                                                     class="w-4 h-4 mr-1" />
-                                                                                                Pending
+                                                                                                Show
                                                                                             </a>
                                                                                             {{-- <a href="{{ route('') }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-x-circle class="w-4 h-4 mr-1" /> Cancelled </a> --}}
                                                                                         </div>
@@ -456,6 +529,22 @@
                             @livewire('transaction-log-component')
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="superlarge-slide-over-size-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true" style="padding-left: 0px;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header py-1">
+                    <h2 class="font-medium text-base mr-auto">
+                        Transaction Activity
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    @livewire('transaction-track-component')
+
                 </div>
             </div>
         </div>
