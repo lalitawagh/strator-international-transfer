@@ -85,6 +85,7 @@
                                                     @endphp
                                                 @endif
                                                 @php
+
                                                     $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                                 @endphp
 
@@ -94,18 +95,18 @@
                                                         <div class="flex flex-col sm:flex-row mt-2 m-2">
                                                             <div class="form-check mr-2">
                                                                 <input id="radio-switch-{{ $key }}"
-                                                                    wire:change="changeToMethod({{ $fee_charge }})"
+
                                                                     class="form-check-input" type="radio"
-                                                                    name="horizontal_radio_button"
-                                                                    @if ($key == 0) value="1" @endif>
-                                                                <label class="form-check-label" for="radio-switch-4">
+                                                                    name="feemethod"
+                                                                   value="{{ $key }}"  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
+                                                                <label class="form-check-label" for="radio-switch-{{ $key }}">
                                                                     <h4 href="javascript:;"
                                                                         class="font-medium truncate mr-5">
                                                                         @if ($fee['type'] == 'payment_type')
                                                                             {{ $fee['payment_type'] }}
                                                                         @elseif ($fee['type'] == 'transfer_type')
                                                                             {{ $fee['transfer_type'] }}
-                                                                        @endif -{{ $fee_charge }}
+                                                                        @endif -{{ number_format((float) $fee_charge, 2, '.', '');  }}
                                                                         {{ $country->currency }}
                                                                         @if ($fee['percentage'] != 0)
                                                                             ({{ $fee['percentage'] }} %)
@@ -143,6 +144,7 @@
                     value="@isset($guaranteed_rate) {{ $guaranteed_rate }} @endisset">
                 <span class="sequence-icon tw-calculator-breakdown__icon">x</span>
                 <span class="tw-calculator-breakdown-item__left">{{ $guaranteed_rate }}</span>
+                <span class="tw-calculator-breakdown-item__right">Exchange Rate</span>
                 {{-- <span class="px-3 border-2 cursor-pointer border-dashed dark:border-dark-5 rounded-md tw-calculator-breakdown-item__right tooltip"
                     data-theme="light" data-tooltip-content="#custom-content-tooltip" data-trigger="click"
                     title="This is awesome tooltip example!">
@@ -168,7 +170,7 @@
     <div class="mb-4 relative">
         <input wire:model="recipient_amount"
             class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
-            name="recipient_amount" onkeypress="preventNonNumericalInput(event)" autofocus>
+            name="recipient_amount" onkeypress="preventNonNumericalInput(event)" readonly autofocus>
         <label
             class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Recipient
             Gets</label>
@@ -181,7 +183,7 @@
                             <img src="{{ $country->flag }}">
                         @endif
                     @else
-                        @if ($country->id == '1')
+                        @if ($country->code == 'IN')
                             <img src="{{ $country->flag }}">
                         @endif
                     @endisset
@@ -195,7 +197,7 @@
                                 selected
                             @endif
                         @else
-                            @if ($country->id == '1')
+                            @if ($country->code == 'IN')
                                 selected
                             @endif @endisset>
                         {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}

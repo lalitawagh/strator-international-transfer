@@ -31,6 +31,7 @@ class InternationalTransferMenu extends Item
         }
 
         return [
+            new MenuItem('Transactions', 'activity', url:route('dashboard.international-transfer.money-transfer.index')),
             new MenuItem('Configuration', 'activity',url:route('dashboard.international-transfer.transfer-type-fee.index')),
         ];
     }

@@ -18,6 +18,7 @@ return [
     'sending_anchor'      => 'Sending Anchor',
     'receiving_anchor'    => 'Receiving Anchor',
     'exchange_fees'       => 'Exchange Fees',
+    'exchange_fee'       => 'Exchange Fee',
     'transfer_type'       => 'Transfer Type',
     'myself'              => 'Myself',
     'someone-else'        => 'Someone Else',
@@ -29,6 +30,7 @@ return [
     'pending-confirmation' => 'Pending Confirmation',
     'draft'               => 'Draft',
     'cancelled'           => 'Cancelled',
+    'completed'           => 'Completed',
     'bank'                => 'Bank',
     'manual_transfer'     => 'Manual Transfer',
     'stripe'              => 'Stripe'

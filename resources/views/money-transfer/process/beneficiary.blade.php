@@ -2,8 +2,10 @@
 
 @section('money-transfer-content')
     <div class="px-5 sm:px-5 mt-3 sm:pt-3 lg:mt-10 lg:pt-10 border-t border-gray-200">
+        <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.beneficiaryStore',['filter' => ['workspace_id' => $workspace->id]]) }}">
+        @csrf
         <div class="intro-y col-span-12 lg:col-span-12">
-            <h3 class="text-2xl font-black sm:mb-4 text-center py-4">Select or create beneficiary</h3>
+            <h3 class="text-2xl font-black sm:mb-4 text-center py-4">Select or Create Beneficiary</h3>
             <!-- BEGIN: Horizontal Form -->
             <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5">
                 <div
@@ -28,14 +30,20 @@
             </div>
 
             @livewire('existing-beneficiary',['workspace' => $workspace])
-
+            <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5 mt-5 pt-3">
+                @error('beneficiary')
+                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
 
         </div>
+
         <div
             class="text-right mt-5 py-4  w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5 mt-5 pt-3 text-right mt-5  py-4">
             <a href="{{ route('dashboard.international-transfer.money-transfer.create',['filter' => ['workspace_id' => $workspace->id]]) }}" class="btn btn-secondary w-24" >Previous</a>
-            {{-- <button class="btn btn-primary w-24 ml-2" >Continue</button> --}}
+            <button class="btn btn-primary w-24 ml-2" >Continue</button>
         </div>
+        </form>
     </div>
 
     @include('international-transfer::money-transfer.process.beneficiary-modal', ['beneficiaryType' => 'myself'])

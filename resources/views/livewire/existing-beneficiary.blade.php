@@ -48,7 +48,7 @@
 
         @isset($beneficiaryDetail)
             <!-- BEGIN: Modal Content -->
-            <div id="confirm-beneficiary-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+            <div id="confirm-beneficiary-modal-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
@@ -79,22 +79,43 @@
                                     </div>
                                     <div class="px-5 pb-8 text-center">
                                         <div class="sm:w-52 sm:w-auto mx-auto mt-0">
-                                            <div class="flex items-start text-left">
-
-                                                <span class="font-medium w-2/4 truncate">Email</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ $beneficiaryDetail->email }}</span>
-                                            </div>
-
                                             <div class="flex items-start text-left mt-4">
 
-                                                <span class="font-medium w-2/4 truncate">Sort Code / IFSC Code</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
+                                                <span class="font-medium w-2/4 truncate">Account Name</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_name'] }}</span>
                                             </div>
 
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">Account Number</span>
                                                 <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
+                                            </div>
+
+                                            <div class="flex items-start text-left mt-4">
+
+                                                <span class="font-medium w-2/4 truncate">IFSC Code / IBAN</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['iban_number'] }}</span>
+                                            </div>
+                                            @isset($beneficiaryDetail->meta['bank_code'])
+                                            <div class="flex items-start text-left mt-4">
+
+                                                <span class="font-medium w-2/4 truncate">Sort Code</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
+                                            </div>
+                                            @endisset
+
+                                            @isset($beneficiaryDetail->meta['bank_country'])
+                                            <div class="flex items-start text-left mt-4">
+
+                                                <span class="font-medium w-2/4 truncate">Country</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ \Kanexy\Cms\I18N\Models\Country::find($beneficiaryDetail->meta['bank_country'])?->name }}</span>
+                                            </div>
+                                            @endisset
+
+                                            <div class="flex items-start text-left mt-4">
+
+                                                <span class="font-medium w-2/4 truncate">Type</span>
+                                                <span class="font-medium w-2/3 text-sm break-all">{{ ucfirst($beneficiaryDetail->type) }}</span>
                                             </div>
                                         </div>
                                     </div>

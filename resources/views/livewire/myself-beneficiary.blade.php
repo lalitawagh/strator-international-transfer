@@ -30,12 +30,12 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2" id="sectionRefresh">
                     <label for="bank_country" class="form-label sm:w-40"> Country <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select id="{{ $beneficiaryType }}_country_id" name="country" data-search="true" wire:model.defer="country" class="tail-select w-full ">
+                        <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true" wire:change="changeCountry($event.target.value)" class="tail-select w-full ">
                             @foreach ($countries as $country)
-                                <option value="{{ $country->id }}" @if ($country->id == $user->country_id) selected @endif>{{ $country->name }}</option>
+                                <option value="{{ $country->id }}" @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
                             @endforeach
                         </select>
-                        @error('country')
+                        @error('meta.bank_country')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
@@ -182,15 +182,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    <label for="bank_code" class="form-label sm:w-40">Sort Code <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6">
-                        <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code" type="text" class="form-control"  required="required">
-                        @error('meta.bank_code')
-                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
+
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="iban_number" class="form-label sm:w-40">IFSC Code / IBAN <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
@@ -200,15 +192,20 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-company">
-                    <label for="swift_code" class="form-label sm:w-40">SWIFT Code <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6">
-                        <input id="swift_code" wire:model.defer="meta.swift_code" name="swift_code" type="text" class="form-control" value="{{ $account?->bic_swift }}">
-                        @error('meta.swift_code')
-                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                        @enderror
+
+                @if($receiving_country == 'UK')
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
+                        <label for="bank_code" class="form-label sm:w-40">Sort Code <span class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code" type="text" class="form-control"  required="required">
+                            @error('meta.bank_code')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
+                @endif
+
+
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="avatar" class="form-label sm:w-40">Avatar</label>
                     <div class="sm:w-5/6">
