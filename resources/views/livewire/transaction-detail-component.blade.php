@@ -249,51 +249,51 @@
                             </div>
                         </div>
                     @endif
-                        <div class="grid grid-cols-12 flex flex-wrap sm:gap-4">
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
+                    <div class="grid grid-cols-12 flex flex-wrap sm:gap-4">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
 
-                                <div class="flex flex-col lg:flex-row mt-3">
-                                    <div class="truncate sm:whitespace-normal flex items-center">
-                                        <x-feathericon-clock height="12"/>
+                        <div class="flex flex-col lg:flex-row mt-3">
+                            <div class="truncate sm:whitespace-normal flex items-center">
+                                <x-feathericon-clock height="12"/>
 
-                                        <span>
-                                            {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
-                                        </span>
-                                    </div>
-                                </div>
+                                <span>
+                                    {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
+                                </span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Receiver Currency</p>
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Receiver Currency</p>
 
-                                <div class="flex flex-col lg:flex-row mt-3">
-                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                        <x-feathericon-pocket height="12"/>
+                        <div class="flex flex-col lg:flex-row mt-3">
+                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                <x-feathericon-pocket height="12"/>
 
-                                        <span>
-                                            {{ $transaction->meta['exchange_currency'] }}
-                                        </span>
-                                    </div>
-                                </div>
+                                <span>
+                                    {{ $transaction->meta['exchange_currency'] }}
+                                </span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Sending Currency</p>
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Sending Currency</p>
 
-                                <div class="flex flex-col lg:flex-row mt-3">
-                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                        <x-feathericon-send height="12"/>
+                        <div class="flex flex-col lg:flex-row mt-3">
+                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                <x-feathericon-send height="12"/>
 
-                                        <span>
-                                            {{ $transaction->meta['base_currency'] }}
-                                        </span>
-                                    </div>
-                                </div>
+                                <span>
+                                    {{ $transaction->meta['base_currency'] }}
+                                </span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Receiving Amount</p>
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Receiving Amount</p>
 
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
@@ -302,9 +302,11 @@
                                     {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->meta['recipient_amount'],$transaction->meta['exchange_currency']) }}
                                 </span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Sending Amount</p>
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Sending Amount</p>
 
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
@@ -313,37 +315,38 @@
                                     {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
                                 </span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Exchange Rate</p>
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Exchange Rate</p>
 
-                                <div class="flex flex-col lg:flex-row mt-3">
-                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                        <x-feathericon-repeat height="12"/>
-                                        <span>
-                                            {{ @$transaction->meta['exchange_rate'] }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
-                                <p class="text-sm tracking-wide font-medium uppercase">Transfer Type</p>
-
-                                <div class="flex flex-col lg:flex-row mt-3">
-                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                        <x-feathericon-globe height="12"/>
-
-                                        <span>
-                                            {{ ucfirst($transaction->payment_method) }}
-                                        </span>
-                                    </div>
-                                </div>
+                        <div class="flex flex-col lg:flex-row mt-3">
+                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                <x-feathericon-repeat height="12"/>
+                                <span>
+                                    {{ @$transaction->meta['exchange_rate'] }}
+                                </span>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <p class="text-sm tracking-wide font-medium uppercase">Transfer Type</p>
+
+                        <div class="flex flex-col lg:flex-row mt-3">
+                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                <x-feathericon-globe height="12"/>
+
+                                <span>
+                                    {{ ucfirst($transaction->payment_method) }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
                     @isset($transaction->meta['reason'])
-                        <div class="mt-5">
+                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
                             <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
 
                             <div class="flex flex-col lg:flex-row mt-3">
@@ -361,7 +364,7 @@
                     <div class="saved-transaction">
 
                         @isset($transaction->attachment)
-                        <div class="mt-5">
+                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
                             <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                             <div class="flex flex-col lg:flex-row mt-3">
@@ -373,7 +376,7 @@
                         @endisset
 
                         @isset($transaction->note)
-                        <div class="mt-5">
+                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
                             <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                             <div class="flex flex-col lg:flex-row mt-3">
@@ -392,7 +395,7 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="mt-5">
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
                                 <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                                 <div class="flex flex-col lg:flex-row mt-3">
@@ -405,7 +408,7 @@
                                 </div>
                             </div>
 
-                            <div class="mt-5">
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
                                 <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                                 <div class="flex flex-col lg:flex-row mt-3">
@@ -416,6 +419,7 @@
                             </div>
 
                         </form>
+                    </div>
                     </div>
                 </div>
 
