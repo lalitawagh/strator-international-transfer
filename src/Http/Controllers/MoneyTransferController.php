@@ -176,7 +176,7 @@ class MoneyTransferController extends Controller
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
                     'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
                     'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
                     'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
