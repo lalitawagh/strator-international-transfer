@@ -41,7 +41,6 @@ class Helper
     public static function getExchangeRateAmount($amount,$currency)
     {
         try {
-            $amount =  $amount * 100;
             $money = money($amount,$currency);
             return $money;
         } catch (\Exception $e) {
