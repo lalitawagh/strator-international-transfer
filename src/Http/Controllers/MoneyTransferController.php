@@ -150,7 +150,7 @@ class MoneyTransferController extends Controller
         $account = Account::forHolder($workspace)->first();
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
-        if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER || $data['payment_method'] == PaymentMethod::STRIPE)
+        if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
         {
             $transaction = Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -184,46 +184,9 @@ class MoneyTransferController extends Controller
                     'transaction_type' => 'money_transfer',
                 ],
             ]);
-        }else if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT){
-            $masterAccountDetails = Setting::getValue('money_transfer_master_account_details');
-
-            /** @var Contact $beneficiary */
-            $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
-
-            /** @var Account $senderAccount */
-            $senderAccount = Account::findOrFail($account->id);
-
-            $info = [
-                'sender_account_id' => $account->id,
-                'beneficiary_id'    => $beneficiary->id,
-                'reference'         => $data['transfer_reason'],
-                'amount'            => $transferDetails['amount']
-            ];
-
-            $transaction = $this->payoutService->initialize($senderAccount, $beneficiary, $info);
-
-            $metaDetails = [
-                'second_beneficiary_id' => $secondBeneficiary?->id,
-                'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
-                'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
-                'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
-                'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
-                'exchange_rate' => $transferDetails['guaranteed_rate'],
-                'base_currency' => $sender['currency'],
-                'exchange_currency' => $receiver['currency'],
-                'recipient_amount' => $transferDetails['recipient_amount'],
-                'reason' =>  $data['transfer_reason'],
-                'transaction_type' => 'money_transfer',
-            ];
-
-            $meta = array_merge($transaction->meta,$metaDetails);
-            $transaction->transaction_fee = $transferDetails['fee_charge'];
-            $transaction->meta = $meta;
-            $transaction->update();
+            $transferDetails['transaction'] = $transaction;
         }
 
-        $transferDetails['transaction'] = $transaction;
         $transferDetails['payment_method'] = $data['payment_method'];
         $transferDetails['transfer_reason'] = $data['transfer_reason'];
         session(['money_transfer_request' => $transferDetails]);
@@ -242,16 +205,25 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $transferDetails = session('money_transfer_request');
-        $beneficiary = $transferDetails ? Contact::find($transferDetails['transaction']->meta['beneficiary_id']) : null;
+        $sender =  $transferDetails ? Country::find($transferDetails['currency_code_from']) : null;
+        $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
+        $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
+        $beneficiary = null;
+        $transaction = null;
+        $transferReason = null;
+        if(isset($transferDetails['transaction']))
+        {
+            $beneficiary = Contact::find($transferDetails['transaction']->meta['beneficiary_id']);
+            $transaction = $transferDetails['transaction'];
+        }
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
-        $transaction = $transferDetails['transaction'];
-        $transferReason = isset($transaction->meta['reference']) ? collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reference']) : collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transaction->meta['reason']);
+        $transferReason = collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transferDetails['transfer_reason']);
 
-        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason'));
+        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason','secondBeneficiary','sender','receiver'));
     }
 
-    public function finalizeTransfer()
+    public function finalizeTransfer(Request $request)
     {
         if(is_null(session('money_transfer_request')))
         {
@@ -259,17 +231,97 @@ class MoneyTransferController extends Controller
         }
 
         $transferDetails = session('money_transfer_request');
+        $user = Auth::user();
+        $sender =  $transferDetails ? Country::find($transferDetails['currency_code_from']) : null;
+        $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
+        $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
+        $workspace = $transferDetails ? Workspace::find($transferDetails['workspace_id']) : $request->input('filter.workspace_id');
+        $account = Account::forHolder($workspace)->first();
 
-        if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT)
+        if($transferDetails['payment_method'] == PaymentMethod::STRIPE)
         {
-            $transaction = $transferDetails['transaction'];
+            $transaction = Transaction::create([
+                'urn' => Transaction::generateUrn(),
+                'amount' => $transferDetails['amount'],
+                'workspace_id' => $transferDetails['workspace_id'],
+                'type' => 'debit',
+                'payment_method' => $transferDetails['payment_method'],
+                'note' => null,
+                'ref_id' =>  $user->id,
+                'ref_type' => 'money_transfer',
+                'settled_amount' => $transferDetails['amount'],
+                'settled_currency' => $sender['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'transaction_fee' => $transferDetails['fee_charge'],
+                'status' => TransactionStatus::DRAFT,
+                'meta' => [
+                    'reference_no' => MoneyTransfer::generateUrn(),
+                    'sender_id' => $user->id,
+                    'sender_name' => $user->getFullName(),
+                    'beneficiary_id' => $transferDetails['beneficiary_id'],
+                    'exchange_rate' => $transferDetails['guaranteed_rate'],
+                    'base_currency' => $sender['currency'],
+                    'exchange_currency' => $receiver['currency'],
+                    'recipient_amount' => $transferDetails['recipient_amount'],
+                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'reason' =>  $transferDetails['transfer_reason'],
+                    'transaction_type' => 'money_transfer',
+                ],
+            ]);
+
+            $transferDetails['transaction'] = $transaction;
+            session(['money_transfer_request' => $transferDetails]);
+
+            return redirect()->route('dashboard.international-transfer.money-transfer.stripe',['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
+
+        }else if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT){
+            $masterAccountDetails = Setting::getValue('money_transfer_master_account_details');
+
+            /** @var Contact $beneficiary */
+            $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
+
+            /** @var Account $senderAccount */
+            $senderAccount = Account::findOrFail($account->id);
+
+            $info = [
+                'sender_account_id' => $account->id,
+                'beneficiary_id'    => $beneficiary->id,
+                'amount'            => $transferDetails['amount']
+            ];
+
+            $transaction = $this->payoutService->initialize($senderAccount, $beneficiary, $info);
+
+            $metaDetails = [
+                'second_beneficiary_id' => $secondBeneficiary?->id,
+                'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
+                'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                'exchange_rate' => $transferDetails['guaranteed_rate'],
+                'base_currency' => $sender['currency'],
+                'exchange_currency' => $receiver['currency'],
+                'recipient_amount' => $transferDetails['recipient_amount'],
+                'reason' =>  $transferDetails['transfer_reason'],
+                'transaction_type' => 'money_transfer',
+            ];
+
+            $meta = array_merge($transaction->meta,$metaDetails);
+            $transaction->transaction_fee = $transferDetails['fee_charge'];
+            $transaction->meta = $meta;
+            $transaction->update();
+
+            $transferDetails['transaction'] = $transaction;
+            session(['money_transfer_request' => $transferDetails]);
+
             $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
             // $transaction->generateOtp("sms");
 
             return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30),["id"=>$transaction->id]), 'sms');
-        }else if($transferDetails['payment_method'] == PaymentMethod::STRIPE)
-        {
-            return redirect()->route('dashboard.international-transfer.money-transfer.stripe',['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
         }
 
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
