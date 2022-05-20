@@ -11,8 +11,8 @@
                         <!-- BEGIN: -->
                         <div class="intro-y box col-span-12 xxl:col-span-12">
                             <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                                <h2 class="text-2xl font-black text-center pt-2">
-                                    How would you like to pay?
+                                <h2 class="text-lg font-medium text-center pt-2">
+                                    Choose payment option
                                 </h2>
                             </div>
                             <div class="p-0">
@@ -34,13 +34,13 @@
 
                                                                         <div class="ml-4 mr-auto">
                                                                             <a href="" class="font-medium">{{ $payment['title'] }}</a>
-                                                                            <div
+                                                                            {{-- <div
                                                                                 class="w-full flex-column text-gray-600 text-xs sm:text-sm">
                                                                                 <div class="mr-2">
                                                                                     {{ $payment['heading'] }}
                                                                                 </div>
 
-                                                                            </div>
+                                                                            </div> --}}
                                                                         </div>
                                                                         <div class="font-medium text-gray-700 dark:text-gray-500">
                                                                             <div class="form-check mt-2">
@@ -110,7 +110,7 @@
                                         </div>
 
                                         <div class="flex mt-4">
-                                            <div class="mr-auto">Guaranteed rate </div>
+                                            <div class="mr-auto">Exchange rate </div>
                                             <div class="font-medium">{{ $transferDetails['guaranteed_rate'] }}</div>
                                         </div>
                                         <div class="flex mt-4">
@@ -122,8 +122,8 @@
                                             <div class="font-medium">By 19 may</div>
                                         </div> --}}
                                         <div class="col-span-12 md:col-span-6 mt-4 form-inline">
-                                            <label for="bank_country" class="form-label sm:w-40"> Transfer Reason <span class="text-theme-6">*</span></label>
-                                            <div class="sm:w-5/6">
+                                            <label for="bank_country" class="form-label sm:w-48"> Transfer Reason </label>
+                                            <div class="sm:w-5/6 Transfer-reason">
                                                 <select name="transfer_reason" data-search="true" class="tail-select w-full">
                                                     @foreach ($reasons as $reason)
                                                         @if ($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)

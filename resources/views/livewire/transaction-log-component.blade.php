@@ -1,5 +1,5 @@
 <div>
-    <div class="p-5">
+    <div class="py-5">
             @if ($logSent == true)
                 <h4 class="text-theme-9 mb-2">Message send successfully</h4>
             @endif
