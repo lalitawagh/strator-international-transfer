@@ -146,7 +146,7 @@ class InitialProcess extends Component
         }
 
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
-        $this->dispatchBrowserEvent('disabledSelectedCountry', ['currency' => $this->currency_from]);
+        // $this->dispatchBrowserEvent('disabledSelectedCountry', ['currency' => $this->currency_from]);
     }
 
     public function changeToMethod($value)

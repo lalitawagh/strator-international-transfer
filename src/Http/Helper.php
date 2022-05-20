@@ -3,6 +3,7 @@
 namespace Kanexy\InternationalTransfer\Http;
 
 use AmrShawky\LaravelCurrency\Facade\Currency;
+use Cknow\Money\Money;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -35,6 +36,17 @@ class Helper
             return $e->getMessage();
         }
 
+    }
+
+    public static function getExchangeRateAmount($amount,$currency)
+    {
+        try {
+            $amount =  $amount * 100;
+            $money = money($amount,$currency);
+            return $money;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
 }

@@ -18,7 +18,7 @@ class ExistingBeneficiary extends Component
 
     public function render()
     {
-        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($this->workspace)->whereRefType('money_transfer')->orderBy('id','desc')->take($this->count)->get();
+        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($this->workspace)->whereRefType('money_transfer')->where(['meta->bank_country' => session('money_transfer_request.currency_code_to')])->orderBy('id','desc')->take($this->count)->get();
 
         return view('international-transfer::livewire.existing-beneficiary', compact('beneficiaries'));
     }

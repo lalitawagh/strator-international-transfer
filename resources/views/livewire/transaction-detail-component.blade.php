@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
 
-                                @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE || $transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::BANK_ACCOUNT)
+                                @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE || $transaction->payment_method == 'bank')
                                 <div class="flex flex-col lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
@@ -71,7 +71,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                @isset($transaction->meta['second_beneficiary_bank_code'])
                                 <div class="flex flex-col lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
@@ -88,7 +87,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                @endisset
+
                                 @endif
                             </div>
                         </div>
@@ -225,7 +224,7 @@
                     <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">
                         <div class="dark:text-theme-10">
                             <p class="text-xl font-medium @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
-                                @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')  @else  @endif {{ number_format((float)$transaction->amount, 2, '.', '') }}
+                                @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')  @else  @endif  {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
                                 @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')
                                     <span class="text-sm font-medium text-gray-700 md:ml-4">Deposit / {{ \Illuminate\Support\Str::title(implode(' ', explode('-', $transaction->status))) }}</span>
                                 @else
@@ -298,10 +297,9 @@
 
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-pocket height="12"/>
 
                                 <span>
-                                    {{ $transaction->meta['recipient_amount'] }}
+                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->meta['recipient_amount'],$transaction->meta['exchange_currency']) }}
                                 </span>
                             </div>
                         </div>
@@ -312,10 +310,9 @@
 
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-send height="12"/>
 
                                 <span>
-                                    {{ $transaction->amount }}
+                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
                                 </span>
                             </div>
                         </div>
