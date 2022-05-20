@@ -46,9 +46,13 @@
 
             <li>
                 <span class="sequence-icon tw-calculator-breakdown__icon">–</span>
-                <span class="tw-calculator-breakdown-item__left"><strong> @isset($fee_charge)
+                <span class="tw-calculator-breakdown-item__left">
+                    <strong>
+                        @isset($fee_charge)
                             {{ $fee_charge }}
-                        @endisset {{ $from }}</strong></span>
+                        @endisset {{ $from }}
+                    </strong>
+                </span>
                 <span class="tw-calculator-breakdown-item__right">
                     <span class="m-r-1" data-tracking-id="calculator-payment-select">
                         <div class="tw-select btn-group dropdown">

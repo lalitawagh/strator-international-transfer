@@ -391,10 +391,9 @@
                                                                             </svg>
                                                                         </span>
                                                                     </th>
-                                                                    @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
-                                                                        <th class="flex" style="">Action
-                                                                        </th>
-                                                                    @endif
+                                                                    <th class="flex" style="">Action
+                                                                    </th>
+
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -425,7 +424,7 @@
                                                                             {{ $transaction->meta['base_currency'] }}
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-right text-theme-6">
-                                                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}
+                                                                            {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['second_beneficiary_name'] }}
@@ -436,7 +435,7 @@
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-right text-theme-9">
                                                                            @isset($transaction->meta['recipient_amount'])
-                                                                           {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->meta['recipient_amount']) }}
+                                                                           {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->meta['recipient_amount'],$transaction->meta['exchange_currency']) }}
                                                                            @endisset
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
@@ -449,7 +448,7 @@
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->status) }}
                                                                         </td>
-                                                                        @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
+
                                                                             <td class="table-report__action"
                                                                                 style="box-shadow: none;">
                                                                                 <div class="dropdown"
@@ -463,30 +462,32 @@
                                                                                     <div class="dropdown-menu w-40">
                                                                                         <div
                                                                                             class="dropdown-menu__content box p-2">
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
-                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
-                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                    <x-feathericon-check-circle
-                                                                                                        class="w-4 h-4 mr-1" />
-                                                                                                    Completed
-                                                                                                </a>
-                                                                                                @endif
-                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
-                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                    <x-feathericon-check
-                                                                                                        class="w-4 h-4 mr-1" />
-                                                                                                    Accepted
-                                                                                                </a>
-                                                                                                @endif
-                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
-                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                    <x-feathericon-alert-circle
-                                                                                                        class="w-4 h-4 mr-1" />
-                                                                                                    Pending
-                                                                                                </a>
+                                                                                            @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
+                                                                                                    @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                    <a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
+                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                        <x-feathericon-check-circle
+                                                                                                            class="w-4 h-4 mr-1" />
+                                                                                                        Completed
+                                                                                                    </a>
+                                                                                                    @endif
+                                                                                                    @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                    <a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
+                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                        <x-feathericon-check
+                                                                                                            class="w-4 h-4 mr-1" />
+                                                                                                        Accepted
+                                                                                                    </a>
+                                                                                                    @endif
+                                                                                                    @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                    <a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
+                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                        <x-feathericon-alert-circle
+                                                                                                            class="w-4 h-4 mr-1" />
+                                                                                                        Pending
+                                                                                                    </a>
+                                                                                                    @endif
                                                                                                 @endif
                                                                                             @endif
                                                                                             <a href="javascript:void(0)" onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"  data-toggle="modal" data-target="#superlarge-slide-over-size-preview"
@@ -507,7 +508,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
-                                                                        @endif
+
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -538,20 +539,15 @@
 
                 <div class="modal-header p-3">
                     <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
-                    <div
-                        class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                    <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
                         <i data-feather="edit" class="w-3 h-3"></i>
                     </div>
-                    <a
-                        class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
+                    <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
                         <i data-feather="save" class="w-3 h-3"></i> </a>
+                    <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                        title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
                     <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip"
                         data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
-                    <a
-                        class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip"
-                        title="Share"> <i data-feather="share-2" class="w-3 h-3"></i> </a>
-                    <a class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                        title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
                 </div>
 
 
@@ -616,7 +612,7 @@
                     var img = canvas.toDataURL("image/png", 1);
                     var doc = new jsPDF('L', 'px', [w, h]);
                     doc.addImage(img, 'PNG', 0, 0, w, h);
-                    doc.save('sample-file.pdf');
+                    doc.save('transaction-invoice.pdf');
                 }
             });
 

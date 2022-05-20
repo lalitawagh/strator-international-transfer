@@ -3,6 +3,7 @@
 namespace Kanexy\InternationalTransfer\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 
@@ -32,5 +33,23 @@ class MoneyTransferRequest extends FormRequest
             'recipient_amount.min'  => 'The recipient amount should not be a negative value.',
             'amount.min'         => 'The amount should not be a negative value.',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $sender = Country::find($this->input('currency_code_from'));
+            $receiver = Country::find($this->input('currency_code_to'));
+
+            if($sender->code != 'UK')
+            {
+                $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
+            }
+
+            if($sender->code == 'UK' && $receiver->code == 'UK')
+            {
+                $validator->errors()->add('country', 'Please click on Local button for Local transaction.');
+            }
+        });
     }
 }

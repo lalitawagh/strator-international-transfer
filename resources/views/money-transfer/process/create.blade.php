@@ -20,9 +20,13 @@
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
 
+                        @error('country')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror
+
                         <div class="text-right mt-5 py-4">
-                            <a data-toggle="modal" data-target="#large-slide-over-size-preview"
-                                class="btn btn-secondary">Compare Price</a>
+                            {{-- <a data-toggle="modal" data-target="#large-slide-over-size-preview"
+                                class="btn btn-secondary">Compare Price</a> --}}
 
                         <button class="btn btn-primary w-24 ml-2" >Continue</button>
                     </div>
