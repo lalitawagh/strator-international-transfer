@@ -46,7 +46,7 @@
                                             Sender Name
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$transaction->meta['sender_name'] }}
                                         </span>
@@ -65,7 +65,7 @@
 
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             @isset($sender) {{ @$sender->account_number }} @else {{ @$transaction->meta['sender_payment_id'] }} @endisset
                                         </span>
@@ -82,7 +82,7 @@
                                             @endisset
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             @isset($sender) {{ @$sender->bank_code }} @else {{ @$transaction->meta['sender_card_id'] }} @endisset
                                         </span>
@@ -107,7 +107,7 @@
                                             Account Name
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$masterAccount['account_holder_name'] }}
                                         </span>
@@ -119,7 +119,7 @@
                                             Account No
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$masterAccount['account_number'] }}
                                         </span>
@@ -131,7 +131,7 @@
                                             Sort Code
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$masterAccount['sort_code'] }}
                                         </span>
@@ -143,7 +143,7 @@
                                             Reference Number
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$transaction->meta['reference_no'] }}
                                         </span>
@@ -167,7 +167,7 @@
                                             Receiver Name
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$transaction->meta['second_beneficiary_name'] }}
                                         </span>
@@ -179,7 +179,7 @@
                                             Account No
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$transaction->meta['second_beneficiary_bank_account_number'] }}
                                         </span>
@@ -192,7 +192,7 @@
                                             Sort Code
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$transaction->meta['second_beneficiary_bank_code'] }}
                                         </span>
@@ -207,7 +207,7 @@
                                             IFSC Code / IBAN
                                         </span>
                                     </div>
-                                    <div class="sm:whitespace-normal items-center text-right sm:w-3/2 sm:ml-auto">
+                                    <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
                                             {{ @$transaction->meta['second_beneficiary_bank_iban'] }}
                                         </span>
@@ -222,7 +222,7 @@
             </div>
             <div class="col-span-12 lg:col-span-6 xxl:col-span-6  mt-5 px-3 pb-5">
                 <div class="intro-y col-span-12 lg:col-span-12 px-0">
-                    <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">
+                    <div class="flex flex-col lg:flex-row px-0 sm:px-0 py-0 mb-2">
                         <div class="dark:text-theme-10">
                             <p class="text-xl font-medium @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
                                 @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')  @else  @endif {{ number_format((float)$transaction->amount, 2, '.', '') }}
@@ -250,103 +250,104 @@
                             </div>
                         </div>
                     @endif
+                        <div class="grid grid-cols-12 flex flex-wrap sm:gap-4">
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
 
-                    <div class="mt-5">
-                        <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal flex items-center">
+                                        <x-feathericon-clock height="12"/>
 
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal flex items-center">
-                                <x-feathericon-clock height="12"/>
+                                        <span>
+                                            {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <span>
-                                    {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
-                                </span>
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Receiver Currency</p>
+
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                        <x-feathericon-pocket height="12"/>
+
+                                        <span>
+                                            {{ $transaction->meta['exchange_currency'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Sending Currency</p>
+
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                        <x-feathericon-send height="12"/>
+
+                                        <span>
+                                            {{ $transaction->meta['base_currency'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Receiving Amount</p>
+
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                        <x-feathericon-pocket height="12"/>
+
+                                        <span>
+                                            {{ $transaction->meta['recipient_amount'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Sending Amount</p>
+
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                        <x-feathericon-send height="12"/>
+
+                                        <span>
+                                            {{ $transaction->amount }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Exchange Rate</p>
+
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                        <x-feathericon-repeat height="12"/>
+                                        <span>
+                                            {{ @$transaction->meta['exchange_rate'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                                <p class="text-sm tracking-wide font-medium uppercase">Transfer Type</p>
+
+                                <div class="flex flex-col lg:flex-row mt-3">
+                                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                                        <x-feathericon-globe height="12"/>
+
+                                        <span>
+                                            {{ ucfirst($transaction->payment_method) }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="mt-5 float-right">
-                        <p class="text-sm tracking-wide font-medium uppercase">Receiver Currency</p>
-
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-pocket height="12"/>
-
-                                <span>
-                                    {{ $transaction->meta['exchange_currency'] }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5">
-                        <p class="text-sm tracking-wide font-medium uppercase">Sending Currency</p>
-
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-send height="12"/>
-
-                                <span>
-                                    {{ $transaction->meta['base_currency'] }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5 float-right">
-                        <p class="text-sm tracking-wide font-medium uppercase">Receiving Amount</p>
-
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-pocket height="12"/>
-
-                                <span>
-                                    {{ $transaction->meta['recipient_amount'] }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5">
-                        <p class="text-sm tracking-wide font-medium uppercase">Sending Amount</p>
-
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-send height="12"/>
-
-                                <span>
-                                    {{ $transaction->amount }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5 float-right">
-                        <p class="text-sm tracking-wide font-medium uppercase">Exchange Rate</p>
-
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-repeat height="12"/>
-                                <span>
-                                    {{ @$transaction->meta['exchange_rate'] }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5">
-                        <p class="text-sm tracking-wide font-medium uppercase">Transfer Type</p>
-
-                        <div class="flex flex-col lg:flex-row mt-3">
-                            <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                <x-feathericon-globe height="12"/>
-
-                                <span>
-                                    {{ ucfirst($transaction->payment_method) }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
                     @isset($transaction->meta['reason'])
                         <div class="mt-5">

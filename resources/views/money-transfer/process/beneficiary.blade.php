@@ -5,28 +5,34 @@
         <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.beneficiaryStore',['filter' => ['workspace_id' => $workspace->id]]) }}">
         @csrf
         <div class="intro-y col-span-12 lg:col-span-12">
-            <h3 class="text-2xl font-black sm:mb-4 text-center py-4">Select or Create Beneficiary</h3>
             <!-- BEGIN: Horizontal Form -->
-            <div class="grid rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5">
-                <div
-                    class="font-medium text-base col-span-12 sm:col-span-12 xxl:col-span-12 py-3">
-                    New Beneficiary</div>
+            <div class="rounded-lg w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5">
+                <h3 class="text-lg font-medium mb-4 sm:mb-2 text-left py-2">Select or Create Beneficiary</h3>
+                <div class="font-medium text-base col-span-12 sm:col-span-12 xxl:col-span-12 py-3"> New Beneficiary</div>
+                    <div class="grid grid-cols-12 gap-6">
                 <a data-toggle="modal" data-target="#myself-modal"
                     class="border-2 border-theme-1 dark:border-theme-1 col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
-                    <div class="font-medium text-base"><i data-feather="user" class="block w-12 h-12 mb-2 mx-auto"></i></div>
-                    <div class="font-medium text-center text-base mt-3">Myself</div>
+                    <div class="font-medium text-base">
+                        <img alt="" class="m-auto" src="{{ asset('dist/images/self-icon.png') }}">
+                    </div>
+                    <div class="font-medium text-center text-base mt-3">Self</div>
                 </a>
                 <a data-toggle="modal" data-target="#someone-else-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
-                    <div class="font-medium text-base text-base"><i data-feather="users" class="block w-12 h-12 mb-2 mx-auto"></i></div>
+                    <div class="font-medium text-base text-base">
+                        <img alt="" class="m-auto" src="{{ asset('dist/images/someone-els-icon.png') }}">
+                    </div>
                     <div class="font-medium text-center text-base mt-3">Someone else</div>
                 </a>
                 <a data-toggle="modal" data-target="#business-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
-                    <div class="font-medium text-base"><i data-feather="home"  class="block w-12 h-12 mb-2 mx-auto"></i></div>
+                    <div class="font-medium text-base">
+                        <img alt="" class="m-auto" src="{{ asset('dist/images/business-c-icon.png') }}">
+                    </div>
                     <div class="font-medium text-center text-base mt-3">Business or charity
                     </div>
                 </a>
+                    </div>
             </div>
 
             @livewire('existing-beneficiary',['workspace' => $workspace])
