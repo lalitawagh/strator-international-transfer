@@ -12,6 +12,7 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
+use Kanexy\InternationalTransfer\Http\Requests\MoneyTransferRequest;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
@@ -66,19 +67,9 @@ class MoneyTransferController extends Controller
         return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace'));
     }
 
-    public function store(Request $request)
+    public function store(MoneyTransferRequest $request)
     {
-        $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
-
-        $data = $request->validate([
-            'currency_code_from' => ['required', 'exists:countries,id'],
-            'currency_code_to' => ['required', 'exists:countries,id'],
-            'amount' => ['required'],
-            'fee_charge' => ['required'],
-            'guaranteed_rate' => ['required'],
-            'recipient_amount' => ['required'],
-            'workspace_id' => ['required'],
-        ]);
+        $data = $request->validated();
 
         session(['money_transfer_request' => $data]);
 
@@ -188,6 +179,7 @@ class MoneyTransferController extends Controller
                     'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'],
                     'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
                     'reason' =>  $data['transfer_reason'],
                     'transaction_type' => 'money_transfer',
                 ],
@@ -216,6 +208,7 @@ class MoneyTransferController extends Controller
                 'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
                 'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                 'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
                 'exchange_rate' => $transferDetails['guaranteed_rate'],
                 'base_currency' => $sender['currency'],
                 'exchange_currency' => $receiver['currency'],

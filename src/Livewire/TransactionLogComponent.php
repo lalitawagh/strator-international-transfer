@@ -6,26 +6,32 @@ use Illuminate\Support\Str;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class TransactionLogComponent extends Component
 {
+    use WithFileUploads;
+
     public Transaction $transaction;
 
     public $description;
+
+    public $attachment;
+
+    public $logSent;
 
     public $logs = [];
 
     protected $listeners = [
         'showTransactionLog',
-        'refreshLogs' => '$refresh'
+        'refreshComponent' => '$refresh',
+        'clearInput'
     ];
 
     public function showTransactionLog(Transaction $transaction)
     {
         $this->transaction = $transaction;
-        $this->logs = $this->transaction->logs;
-        $this->dispatchBrowserEvent('UpdateCkeditorSelect');
-
+        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
     }
 
     public function render()
@@ -40,11 +46,25 @@ class TransactionLogComponent extends Component
         $log->text = $this->description;
         $log->user_id = auth()->user()->id;
         $log->target()->associate($transaction);
+
+        if(! is_null($this->attachment))
+        {
+            $data['attachment'] = $this->attachment->store('Images', 'azure');
+            $log->meta = $data;
+        }
+
         $log->save();
 
-        $this->logs = $this->transaction->logs;
 
-        $this->emit('refreshLogs');
-        $this->dispatchBrowserEvent('UpdateCkeditorSelect');
+        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
+        $this->logSent = true;
+        $this->emit('clearInput');
+    }
+
+    public function clearInput()
+    {
+        $this->logSent = false;
+        $this->description = null;
+        $this->attachment = null;
     }
 }
