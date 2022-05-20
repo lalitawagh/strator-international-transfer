@@ -1,16 +1,36 @@
 <div>
-    <div class="p-5 mt-5">
-            <div class="md:flex mt-2">
-                <div class="w-full px-4">
-                    <label class="ml-6">Note</label>
-                    <div class="form-inline mt-2">
-                        <div class="form w-full ml-5">
-                            <textarea wire:model.defer="description" class="form-control"></textarea>
-                        </div>
-
+    <div class="p-5">
+            @if ($logSent == true)
+                <h4 class="text-theme-9 mb-2">Message send successfully</h4>
+            @endif
+            <div class="grid grid-cols-12 md:gap-10 mt-0">
+                <div class="col-span-12 md:col-span-6 form-inline mt-2" style="align-items: inherit;">
+                    <label class="form-label sm:w-20">Description <span class="text-theme-6">*</span></label>
+                    <div class="sm:w-5/6">
+                       <textarea wire:model.defer="description" class="form-control" required></textarea>
                     </div>
-                    <button type="button" wire:click="transactionLogSubmit({{ $transaction }})" class="btn btn-sm btn-primary w-24 mr-1" style="margin-left: 18px; margin-top: 12px;">Save</button>
                 </div>
+                <div class="col-span-12 md:col-span-6 "x-data="{ isUploading: false, progress: 0 }"
+                x-on:livewire-upload-start="isUploading = true"
+                x-on:livewire-upload-finish="isUploading = false"
+                x-on:livewire-upload-error="isUploading = false"
+                x-on:livewire-upload-progress="progress = $event.detail.progress">
+                <div class="form-inline mt-2" >
+                    <label class="form-label sm:w-20">Attachment</label>
+                    <div class="sm:w-5/6">
+                        <input id="attachment" wire:model="attachment" name="attachment" type="file" class="form-control">
+                    </div>
+
+                </div>
+                <div x-show="isUploading">
+                    <progress max="100" x-bind:value="progress"></progress>
+                    Uploading...
+                </div>
+                </div>
+
+            </div>
+            <div class="text-right mt-5" >
+                <button type="button"   wire:click="transactionLogSubmit({{ $transaction }})" class="btn btn-sm btn-primary w-24 mr-1" >Save</button>
             </div>
             <div class="flex mt-5">
             </div>
@@ -18,7 +38,7 @@
     </div>
 
         <!-- BEGIN: Recent Activities -->
-    <div class="grid grid-cols-12 gap-0" id="refreshLogs"  style="max-height:350px;overflow-y:auto;">
+    <div class="grid grid-cols-12 gap-0"  style="max-height:350px;overflow-y:auto;">
         <div class="col-span-12 md:col-span-12 xl:col-span-12 xxl:col-span-12 pt-1">
             <div class="intro-x flex items-center h-10">
                 <h2 class="text-lg font-medium truncate mr-5">
@@ -37,9 +57,12 @@
                             </div>
                             <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
                                 <div class="flex items-center">
-                                    <div class="text-xs text-gray-500 ml-auto">{{ $log->user->getFullName() }}, {{ date('d-m-Y H:i:s',strtotime($log->updated_at)) }}</div>
+
+                                    <div class="text-xs text-gray-500 ml-auto">  {{ $log->user->getFullName() }}, {{ date('d-m-Y H:i:s',strtotime($log->updated_at)) }}</div>
                                 </div>
-                                <div class="text-gray-600 mt-1"><p>{!! $log->text !!}</p></div>
+                                <div class="text-gray-600 mt-1"><p>{!! $log->text !!}</p>@isset($log->meta['attachment'])
+                                    <a target="_blank" href="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($log->meta['attachment']) }}"> <x-feathericon-file height="25"/></a>
+                                    @endif</div>
                             </div>
                         </div>
                     </div>
