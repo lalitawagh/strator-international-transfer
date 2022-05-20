@@ -24,14 +24,14 @@ class TransactionLogComponent extends Component
 
     protected $listeners = [
         'showTransactionLog',
-        'refreshComponent' => '$refresh'
+        'refreshComponent' => '$refresh',
+        'clearInput'
     ];
 
     public function showTransactionLog(Transaction $transaction)
     {
         $this->transaction = $transaction;
         $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
-
     }
 
     public function render()
@@ -55,8 +55,16 @@ class TransactionLogComponent extends Component
 
         $log->save();
 
-        // $this->emit('refreshComponent');
+
         $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
         $this->logSent = true;
+        $this->emit('clearInput');
+    }
+
+    public function clearInput()
+    {
+        $this->logSent = false;
+        $this->description = null;
+        $this->attachment = null;
     }
 }
