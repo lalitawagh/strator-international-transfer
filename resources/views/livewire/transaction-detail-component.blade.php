@@ -250,7 +250,7 @@
                         </div>
                     @endif
                     <div class="grid grid-cols-12 flex flex-wrap sm:gap-4">
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -263,7 +263,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Transfer Type</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -276,7 +276,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Sending Currency</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -289,7 +289,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Receiving Currency</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -302,7 +302,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Sending Amount</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -314,7 +314,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Receiving Amount</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -327,7 +327,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                         <p class="text-sm tracking-wide font-medium uppercase">Exchange Rate</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
@@ -343,7 +343,7 @@
 
 
                     @isset($transaction->meta['reason'])
-                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                             <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
@@ -361,7 +361,7 @@
                     <div class="saved-transaction">
 
                         @isset($transaction->attachment)
-                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                             <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
@@ -373,7 +373,7 @@
                         @endisset
 
                         @isset($transaction->note)
-                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                        <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                             <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
@@ -392,7 +392,7 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                                 <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                                 <div class="flex flex-col lg:flex-row mt-1">
@@ -405,7 +405,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-5">
+                            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                                 <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                                 <div class="flex flex-col lg:flex-row mt-1">
