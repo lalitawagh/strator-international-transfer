@@ -1,5 +1,5 @@
 <div>
-    <div class="mb-4 relative">
+    <div class="mb-4 relative z-10">
         <input wire:change="changeAmount($event.target.value)" wire:model="amount"
             class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
             name="amount" onkeypress="preventNonNumericalInput(event)" autofocus>
@@ -170,7 +170,7 @@
             </li>
         </ul>
     </div>
-    <div class="mb-4 relative">
+    <div class="mb-4 relative z-10">
         <input wire:model="recipient_amount"
             class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
             name="recipient_amount" onkeypress="preventNonNumericalInput(event)" readonly autofocus>
