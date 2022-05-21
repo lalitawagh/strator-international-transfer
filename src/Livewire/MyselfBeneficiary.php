@@ -10,6 +10,7 @@ use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
 use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
+use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -152,54 +153,77 @@ class MyselfBeneficiary extends Component
     {
         $data =  $this->validate();
 
-        if($data['type'] == 'business'){
-            $data['display_name'] = $data['company_name'];
+        if(isset($data['meta']['bank_code']))
+        {
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->bank_code', $data['meta']['bank_code'])
+            ->first();
         }else{
-            $data['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->iban_number', $data['meta']['iban_number'])
+            ->first();
         }
 
-        if(! is_null($this->avatar))
+
+        if(!is_null($contactExist))
         {
-            $data['avatar'] = $this->avatar->store('Images', 'azure');
+            $this->addError('meta.bank_account_number', 'The beneficiary with this account number has already been created.');
+        }else{
+
+            if($data['type'] == 'business'){
+                $data['display_name'] = $data['company_name'];
+            }else{
+                $data['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
+            }
+
+            if(! is_null($this->avatar))
+            {
+                $data['avatar'] = $this->avatar->store('Images', 'azure');
+            }
+
+            $currencyDetails = [
+                'sending_currency' => session('money_transfer_request.currency_code_from'),
+                'receiving_currency' => session('money_transfer_request.currency_code_to'),
+                'bank_code_type' => BankEnum::SORTCODE,
+                'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
+            ];
+
+            if(! is_null($data['mobile']))
+            {
+                $data['mobile'] = Helper::normalizePhone($data['mobile']);
+            }
+
+            $data['workspace_id'] = $this->workspace_id;
+            $data['ref_type'] = 'money_transfer';
+            $data['classification'] = $this->classification;
+            $data['meta'] = array_merge($data['meta'],$currencyDetails);
+            $data['status'] = 'active';
+
+             /** @var Contact $contact */
+            $contact = Contact::create($data);
+
+            event(new ContactCreated($contact));
+
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+            $this->contact = $contact;
+
+            $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            // $contact->generateOtp("sms");
+            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+
+            session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
+
+            //$user->generateOtp("sms");
+            $this->beneficiary_created = true;
+
+            $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
         }
 
-        $currencyDetails = [
-            'sending_currency' => session('money_transfer_request.currency_code_from'),
-            'receiving_currency' => session('money_transfer_request.currency_code_to'),
-            'bank_code_type' => BankEnum::SORTCODE,
-            'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
-        ];
-
-        if(! is_null($data['mobile']))
-        {
-            $data['mobile'] = Helper::normalizePhone($data['mobile']);
-        }
-
-        $data['workspace_id'] = $this->workspace_id;
-        $data['ref_type'] = 'money_transfer';
-        $data['classification'] = $this->classification;
-        $data['meta'] = array_merge($data['meta'],$currencyDetails);
-        $data['status'] = 'active';
-
-         /** @var Contact $contact */
-        $contact = Contact::create($data);
-
-        event(new ContactCreated($contact));
-
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        $this->contact = $contact;
-
-        $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-        // $contact->generateOtp("sms");
-        $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-
-        session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
-
-        //$user->generateOtp("sms");
-        $this->beneficiary_created = true;
-
-        $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
 
     }
 

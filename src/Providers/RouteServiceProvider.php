@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\LedgerFoundation\Providers;
+namespace Modules\InternationalTransfer\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
