@@ -581,7 +581,7 @@
     <div id="superlarge-slide-over-size-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true" style="padding-left: 0px;">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header py-1">
+                <div class="modal-header py-3">
                     <h2 class="font-medium text-base mr-auto">
                         Transaction Activity
                     </h2>

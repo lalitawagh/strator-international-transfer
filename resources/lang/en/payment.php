@@ -20,7 +20,7 @@ $data =  [
         'method' => PaymentMethod::BANK_ACCOUNT,
         'title' => 'Transfer from ' . config('app.name') . ' Bank Balance',
         'heading' => 'Transfer through ' . config('app.name') . '  account',
-        'description' => 'This payment is made through your kanexy account. ' . config('app.name') . ' account.',
+        'description' => 'This payment is made through your ' . config('app.name') . ' account.',
         'image' => asset('dist/images/Yzer-Bank.png'),
     ],
     [

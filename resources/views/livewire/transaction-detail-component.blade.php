@@ -96,7 +96,7 @@
                     @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                     <div class="accordion-item">
                         <div id="faq-accordion-content-3" class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-3" aria-expanded="false" aria-controls="faq-accordion-collapse-3"> Manual Bank Deposit Account Detail </button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-3" aria-expanded="false" aria-controls="faq-accordion-collapse-3"> Manual Bank Deposit Account Details </button>
                         </div>
                         <div id="faq-accordion-collapse-3" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-3" data-bs-parent="#faq-accordion-3">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
