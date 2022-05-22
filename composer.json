@@ -26,8 +26,8 @@
     },
     "require": {
         "php": "^8.0",
-        "kanexy/cms":"dev-dev",
-        "kanexy/partner-foundation":"dev-dev"
+        "kanexy/cms":"dev-uat",
+        "kanexy/partner-foundation":"dev-uat"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",
