@@ -183,6 +183,7 @@ class MyselfBeneficiary extends Component
 
             if($data['type'] == 'business'){
                 $data['display_name'] = $data['company_name'];
+                $data['type'] = 'company';
             }else{
                 $data['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
             }
