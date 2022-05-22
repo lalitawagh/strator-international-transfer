@@ -1,7 +1,7 @@
 <div>
     <div class="py-5">
             @if ($logSent == true)
-                <h4 class="text-theme-9 mb-2">Message send successfully</h4>
+                <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Message send successfully</h4>
             @endif
             <div class="grid grid-cols-12 md:gap-10 mt-0">
                 <div class="col-span-12 md:col-span-6 form-inline mt-2" style="align-items: inherit;">
