@@ -13,6 +13,7 @@ use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\OtpVerification;
+use Kanexy\InternationalTransfer\Livewire\TransactionAttachmentComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionDetailComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionLogComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
@@ -99,6 +100,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-detail-component', TransactionDetailComponent::class);
         Livewire::component('transaction-log-component',TransactionLogComponent::class);
         Livewire::component('transaction-track-component',TransactionTrackComponent::class);
+        Livewire::component('transaction-attachment-component',TransactionAttachmentComponent::class);
 
     }
 }
