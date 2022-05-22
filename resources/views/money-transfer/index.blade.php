@@ -62,7 +62,7 @@
                                                         <a href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <i class="w-4 h-4" data-feather="list"></i></a>
-                                                        <a href="{{ route('design.email-template') }}"
+                                                        <a href="#"
                                                             class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                                 viewBox="0 0 20 20" fill="#c1c4c9">
