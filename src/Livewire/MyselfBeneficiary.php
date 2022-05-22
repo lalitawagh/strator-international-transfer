@@ -149,8 +149,15 @@ class MyselfBeneficiary extends Component
         $this->country = $value;
     }
 
+    public function selectBeneficiaryType($value)
+    {
+        $this->type = $value;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+    }
+
     public function createBeneficiary()
     {
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $data =  $this->validate();
 
         if(isset($data['meta']['bank_code']))
@@ -223,7 +230,6 @@ class MyselfBeneficiary extends Component
 
             $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
         }
-
 
     }
 
