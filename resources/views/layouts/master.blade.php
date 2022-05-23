@@ -3,4 +3,3 @@
 @section('content')
     @yield('subcontent')
 @endsection
-
