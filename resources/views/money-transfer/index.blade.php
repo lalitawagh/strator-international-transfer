@@ -239,7 +239,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Currency
+                                                                        Sending Currency
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -258,7 +258,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Amount
+                                                                        Sending Amount
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -277,7 +277,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Receiving Name
+                                                                        Receiver Name
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -425,7 +425,7 @@
                                                                         <td class="whitespace-nowrap text-right text-theme-6">
                                                                             {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-center">
+                                                                        <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['second_beneficiary_name'] }}
                                                                         </td>
 

@@ -150,6 +150,16 @@ class MoneyTransferController extends Controller
         $account = Account::forHolder($workspace)->first();
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
+        if($data['payment_method'] == PaymentMethod::BANK_ACCOUNT)
+        {
+            if($transferDetails['amount'] > $account->balance)
+            {
+                return redirect()->route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
+                    ['payment_method' => 'Insufficient account balance.']
+                );
+            }
+        }
+
         if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
         {
             $transaction = Transaction::create([
