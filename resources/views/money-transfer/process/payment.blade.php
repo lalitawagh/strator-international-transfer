@@ -97,7 +97,7 @@
                                             </div>
                                         </div>
                                         <div class="flex">
-                                            <div class="mr-auto">Sender</div>
+                                            <div class="mr-auto">Sending Amount</div>
                                             <div class="font-medium">{{ $transferDetails['amount'] }} {{ $sender['currency'] }}</div>
                                         </div>
 
@@ -116,7 +116,7 @@
                                             <div class="font-medium">{{ $transferDetails['guaranteed_rate'] }}</div>
                                         </div>
                                         <div class="flex mt-4">
-                                            <div class="mr-auto">Receiver </div>
+                                            <div class="mr-auto">Receiving Amount </div>
                                             <div class="font-medium">{{ $transferDetails['recipient_amount'] }} {{ $receiver['currency'] }}</div>
                                         </div>
                                         {{-- <div class="flex mt-4">

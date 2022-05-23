@@ -220,7 +220,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Name
+                                                                        Sending Name
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -239,7 +239,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Currency
+                                                                        Sending Currency
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -258,7 +258,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Amount
+                                                                        Sending Amount
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
