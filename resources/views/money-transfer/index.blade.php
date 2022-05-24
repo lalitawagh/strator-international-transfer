@@ -538,7 +538,7 @@
             <div class="modal-content">
 
                 <div class="modal-header p-3">
-                    <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
+                    <h2 class="text-lg font-medium mr-auto">Transfer Details1</h2>
                     <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
                         <i data-feather="edit" class="w-3 h-3"></i>
                     </div>
