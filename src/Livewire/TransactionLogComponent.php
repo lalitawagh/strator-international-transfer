@@ -6,17 +6,12 @@ use Illuminate\Support\Str;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class TransactionLogComponent extends Component
 {
-    use WithFileUploads;
-
     public Transaction $transaction;
 
     public $description;
-
-    public $attachment;
 
     public $logSent;
 
@@ -27,6 +22,14 @@ class TransactionLogComponent extends Component
         'refreshComponent' => '$refresh',
         'clearInput'
     ];
+
+    protected function rules()
+    {
+        return  [
+            'description' => 'required',
+        ];
+
+    }
 
     public function showTransactionLog(Transaction $transaction)
     {
@@ -41,18 +44,13 @@ class TransactionLogComponent extends Component
 
     public function transactionLogSubmit(Transaction $transaction)
     {
+        $data = $this->validate();
+
         $log = new Log();
         $log->id = Str::uuid();
-        $log->text = $this->description;
+        $log->text = $data['description'];
         $log->user_id = auth()->user()->id;
         $log->target()->associate($transaction);
-
-        if(! is_null($this->attachment))
-        {
-            $data['attachment'] = $this->attachment->store('Images', 'azure');
-            $log->meta = $data;
-        }
-
         $log->save();
 
 
@@ -65,6 +63,5 @@ class TransactionLogComponent extends Component
     {
         $this->logSent = false;
         $this->description = null;
-        $this->attachment = null;
     }
 }

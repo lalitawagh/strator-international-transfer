@@ -8,11 +8,11 @@
               <div class="sm:w-5/6 sm:pt-1">
                 <div class="flex sm:flex-row mt-2">
                   <div class="form-check mr-6 mb-2">
-                    <input id="type-personal" class="form-check-input contact-type" wire:model="type" x-on:click="selectedDiv = 'personal'"  type="radio" name="type" value="personal" checked="">
+                    <input id="type-personal" class="form-check-input contact-type" wire:model="type"  wire:click="selectBeneficiaryType($event.target.value)" x-on:click="selectedDiv = 'personal'"  type="radio" name="type" value="personal" checked="">
                     <label class="form-check-label" for="type-personal">Personal</label>
                   </div>
                   <div class="form-check mr-2 mb-2 sm:mt-0">
-                    <input id="type-company" class="form-check-input contact-type" wire:model="type" x-on:click="selectedDiv = 'business'" type="radio" name="type" value="business">
+                    <input id="type-company" class="form-check-input contact-type" wire:model="type" wire:click="selectBeneficiaryType($event.target.value)" x-on:click="selectedDiv = 'business'" type="radio" name="type" value="business">
                     <label class="form-check-label" for="type-company">Company</label>
                   </div>
                 </div>

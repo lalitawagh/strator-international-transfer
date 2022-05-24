@@ -20,6 +20,7 @@ class TransactionDetailComponent extends Component
     {
         $this->transaction = $transaction;
         $this->masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
+        $this->dispatchBrowserEvent('show-transaction-detail-modal');
     }
 
     public function render()

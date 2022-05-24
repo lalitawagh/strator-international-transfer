@@ -344,7 +344,7 @@
 
                     @isset($transaction->meta['reason'])
                         <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
-                            <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
+                            <p class="text-sm tracking-wide font-medium uppercase">Transfer Reason</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
                                 <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">

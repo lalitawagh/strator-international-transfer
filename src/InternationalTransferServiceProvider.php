@@ -13,6 +13,7 @@ use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\OtpVerification;
+use Kanexy\InternationalTransfer\Livewire\TransactionAttachmentComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionDetailComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionLogComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
@@ -22,6 +23,7 @@ use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
+use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -90,6 +92,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
+        \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
         Livewire::component('otp-verification', OtpVerification::class);
@@ -97,6 +100,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-detail-component', TransactionDetailComponent::class);
         Livewire::component('transaction-log-component',TransactionLogComponent::class);
         Livewire::component('transaction-track-component',TransactionTrackComponent::class);
+        Livewire::component('transaction-attachment-component',TransactionAttachmentComponent::class);
 
     }
 }

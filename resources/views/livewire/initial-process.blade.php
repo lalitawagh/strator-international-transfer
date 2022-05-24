@@ -100,8 +100,9 @@
                                                                 <input id="radio-switch-{{ $key }}"
 
                                                                     class="form-check-input" type="radio"
-                                                                    name="feemethod"
-                                                                   value="{{ $key }}"  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
+                                                                    name="feeMethod"
+                                                                    wire:model="feeMethod"
+                                                                   value="{{ $fee['id'] }}" @if($feeMethod == $fee['id'])  checked @endif  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
                                                                 <label class="form-check-label" for="radio-switch-{{ $key }}">
                                                                     <h4 href="javascript:;"
                                                                         class="font-medium truncate mr-5">

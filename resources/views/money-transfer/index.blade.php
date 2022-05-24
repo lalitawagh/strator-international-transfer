@@ -62,7 +62,7 @@
                                                         <a href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <i class="w-4 h-4" data-feather="list"></i></a>
-                                                        <a href="{{ route('design.email-template') }}"
+                                                        <a href="#"
                                                             class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                                 viewBox="0 0 20 20" fill="#c1c4c9">
@@ -239,7 +239,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Currency
+                                                                        Sending Currency
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -258,7 +258,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Sender Amount
+                                                                        Sending Amount
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -277,7 +277,7 @@
                                                                         </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        Receiving Name
+                                                                        Receiver Name
                                                                         <span class="flex short-icon">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
@@ -410,9 +410,8 @@
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left"> <a
                                                                                 href="javascript:void(0);"
-                                                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});"
-                                                                                data-toggle="modal"
-                                                                                data-target="#subscription-modal"
+                                                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
+
                                                                                 style="color:#70297d !important;">{{ $transaction->urn }}</a>
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
@@ -426,7 +425,7 @@
                                                                         <td class="whitespace-nowrap text-right text-theme-6">
                                                                             {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-center">
+                                                                        <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['second_beneficiary_name'] }}
                                                                         </td>
 
@@ -497,8 +496,8 @@
                                                                                                 Track
                                                                                             </a>
                                                                                             <a href="javascript:void(0)"  href="javascript:void(0);"
-                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});"
-                                                                                            data-toggle="modal" data-target="#subscription-modal"  class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
+                                                                                              class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                 <x-feathericon-eye
                                                                                                     class="w-4 h-4 mr-1" />
                                                                                                 Show
@@ -539,13 +538,15 @@
 
                 <div class="modal-header p-3">
                     <h2 class="text-lg font-medium mr-auto">Transfer Details1</h2>
-                    <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                        <i data-feather="edit" class="w-3 h-3"></i>
+                    <div class="form-inline flex">
+                        <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                            <i data-feather="edit" class="w-3 h-3"></i>
+                        </div>
+                        <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
+                            <i data-feather="save" class="w-3 h-3"></i> </a>
+                        <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                            title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
                     </div>
-                    <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                        <i data-feather="save" class="w-3 h-3"></i> </a>
-                    <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                        title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
                     <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip"
                         data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
                 </div>
@@ -561,16 +562,24 @@
                                 <a id="Notes-tab" data-toggle="tab" data-target="#Notes" href="javascript:;"
                                     class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Notes"
                                     aria-selected="false">Notes</a>
+                                <a id="Attachments-tab" data-toggle="tab" data-target="#Attachments" href="javascript:;"
+                                    class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Attachments"
+                                    aria-selected="false">Attachments</a>
                             </div>
                         </div>
                     </div>
                     <div class="tab-content py-3">
                         <div id="Overview" class="tab-pane active" role="tabpanel" aria-labelledby="Overview-tab">
+
                             @livewire('transaction-detail-component')
                         </div>
 
                         <div id="Notes" class="tab-pane" role="tabpanel" aria-labelledby="Notes-tab">
                             @livewire('transaction-log-component')
+                        </div>
+
+                        <div id="Attachments" class="tab-pane" role="tabpanel" aria-labelledby="Attachments-tab">
+                            @livewire('transaction-attachment-component')
                         </div>
                     </div>
                 </div>
@@ -619,5 +628,8 @@
             document.getElementById("Overview").scrollTop = currentPosition;
         });
 
+        window.addEventListener('show-transaction-detail-modal', event => {
+            cash("#subscription-modal").modal("show");
+        });
     </script>
 @endpush
