@@ -12,7 +12,7 @@
                         <div class="intro-y box col-span-12 xxl:col-span-12">
                             <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
                                 <h2 class="text-lg font-medium text-center pt-2">
-                                    Choose payment option
+                                    Choose Payment Option
                                 </h2>
                             </div>
                             <div class="p-0">
@@ -102,7 +102,7 @@
                                         </div>
 
                                         <div class="flex mt-4">
-                                            <div class="mr-auto">Total fees</div>
+                                            <div class="mr-auto">Total Fees</div>
                                             <div class="font-medium">{{ $transferDetails['fee_charge'] }} {{ $sender['currency'] }}</div>
                                         </div>
                                         <div class="flex mt-4">
@@ -112,7 +112,7 @@
                                         </div>
 
                                         <div class="flex mt-4">
-                                            <div class="mr-auto">Exchange rate </div>
+                                            <div class="mr-auto">Exchange Rate </div>
                                             <div class="font-medium">{{ $transferDetails['guaranteed_rate'] }}</div>
                                         </div>
                                         <div class="flex mt-4">
