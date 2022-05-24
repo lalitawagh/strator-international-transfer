@@ -40,7 +40,7 @@
                         </div>
                         <div id="faq-accordion-collapse-1" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-1" data-bs-parent="#faq-accordion-1">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Sender Name
@@ -54,7 +54,7 @@
                                 </div>
 
                                 @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE || $transaction->payment_method == 'bank')
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             @isset($sender)
@@ -71,7 +71,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             @isset($sender)
@@ -100,7 +100,7 @@
                         </div>
                         <div id="faq-accordion-collapse-3" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-3" data-bs-parent="#faq-accordion-3">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Account Name
@@ -112,7 +112,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Account No
@@ -124,7 +124,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Sort Code
@@ -136,7 +136,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Reference Number
@@ -160,7 +160,7 @@
                         </div>
                         <div id="faq-accordion-collapse-2" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-2" data-bs-parent="#faq-accordion-1">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Receiver Name
@@ -172,7 +172,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Account No
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                                 @isset($transaction->meta['second_beneficiary_bank_code'])
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Sort Code
@@ -200,7 +200,7 @@
                                 @endisset
 
                                 @isset($transaction->meta['second_beneficiary_bank_iban'])
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             IFSC Code / IBAN
@@ -254,7 +254,7 @@
                         <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
-                            <div class="sm:whitespace-normal flex items-center">
+                            <div class="truncate sm:whitespace-normal flex items-center">
                                 <x-feathericon-clock height="12"/>
 
                                 <span>
@@ -365,7 +365,7 @@
                             <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
-                                <div class="sm:whitespace-normal flex items-center">
+                                <div class="truncate sm:whitespace-normal flex items-center">
                                     <img width="100" height="100" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
                                 </div>
                             </div>
@@ -377,7 +377,7 @@
                             <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
-                                <div class="sm:whitespace-normal flex items-center">
+                                <div class="truncate sm:whitespace-normal flex items-center">
                                     <span>
                                         {{ $transaction->note }}
                                     </span>
@@ -396,7 +396,7 @@
                                 <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                                 <div class="flex flex-col lg:flex-row mt-1">
-                                    <div class="sm:whitespace-normal flex items-center">
+                                    <div class="truncate sm:whitespace-normal flex items-center">
                                         @isset($transaction->attachment)
                                             <img width="100" height="100" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
                                         @endisset
@@ -409,7 +409,7 @@
                                 <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                                 <div class="flex flex-col lg:flex-row mt-1">
-                                    <div class="sm:whitespace-normal flex items-center">
+                                    <div class="truncate sm:whitespace-normal flex items-center">
                                         <textarea id="note" name="note" class="form-control w-full" value="{{ $transaction->note }}">{{ $transaction->note }}</textarea>
                                     </div>
                                 </div>
