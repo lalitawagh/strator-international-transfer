@@ -254,7 +254,7 @@
                         <p class="text-sm tracking-wide font-medium uppercase">Created At</p>
 
                         <div class="flex flex-col lg:flex-row mt-1">
-                            <div class="truncate sm:whitespace-normal flex items-center">
+                            <div class="sm:whitespace-normal flex items-center">
                                 <x-feathericon-clock height="12"/>
 
                                 <span>
@@ -365,7 +365,7 @@
                             <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
-                                <div class="truncate sm:whitespace-normal flex items-center">
+                                <div class="sm:whitespace-normal flex items-center">
                                     <img width="100" height="100" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
                                 </div>
                             </div>
@@ -377,7 +377,7 @@
                             <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
-                                <div class="truncate sm:whitespace-normal flex items-center">
+                                <div class="sm:whitespace-normal flex items-center">
                                     <span>
                                         {{ $transaction->note }}
                                     </span>
@@ -396,7 +396,7 @@
                                 <p class="text-sm tracking-wide font-medium uppercase">Attachment</p>
 
                                 <div class="flex flex-col lg:flex-row mt-1">
-                                    <div class="truncate sm:whitespace-normal flex items-center">
+                                    <div class="sm:whitespace-normal flex items-center">
                                         @isset($transaction->attachment)
                                             <img width="100" height="100" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
                                         @endisset
@@ -409,7 +409,7 @@
                                 <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                                 <div class="flex flex-col lg:flex-row mt-1">
-                                    <div class="truncate sm:whitespace-normal flex items-center">
+                                    <div class="sm:whitespace-normal flex items-center">
                                         <textarea id="note" name="note" class="form-control w-full" value="{{ $transaction->note }}">{{ $transaction->note }}</textarea>
                                     </div>
                                 </div>

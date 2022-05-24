@@ -83,7 +83,7 @@
                                                                     class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter <i
                                                                     data-feather="chevron-down"
                                                                     class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
-                                                            <div class="dropdown-menu w-40 filter-dropbox">
+                                                            <div class="dropdown-menu lg:w-40 filter-dropbox">
                                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                                                                     <a id="tabulator-export-xlsx" href="javascript:;"
                                                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
@@ -538,15 +538,7 @@
 
                 <div class="modal-header p-3">
                     <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
-                    <div class="form-inline flex">
-                        <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                            <i data-feather="edit" class="w-3 h-3"></i>
-                        </div>
-                        <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                            <i data-feather="save" class="w-3 h-3"></i> </a>
-                        <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                            title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
-                    </div>
+
                     <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip"
                         data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
                 </div>
@@ -569,7 +561,16 @@
                         </div>
                     </div>
                     <div class="tab-content py-3">
-                        <div id="Overview" class="tab-pane active" role="tabpanel" aria-labelledby="Overview-tab">
+                        <div class="form-inline flex float-right">
+                            <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                                <i data-feather="edit" class="w-3 h-3"></i>
+                            </div>
+                            <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
+                                <i data-feather="save" class="w-3 h-3"></i> </a>
+                            <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                                title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
+                        </div>
+                        <div id="Overview" class="tab-pane active mt-10" role="tabpanel" aria-labelledby="Overview-tab">
 
                             @livewire('transaction-detail-component')
                         </div>
