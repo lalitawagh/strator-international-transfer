@@ -92,7 +92,7 @@ class MyselfBeneficiary extends Component
             'meta' => ['required', 'array'],
             'meta.iban_number' => ['required'],
             'meta.bank_account_name' => ['required', 'string'],
-            'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits:8'],
+            'meta.bank_account_number' => ['required', 'string', 'numeric'],
             'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
         ];

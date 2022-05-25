@@ -119,10 +119,7 @@
                                             <div class="mr-auto">Receiving Amount </div>
                                             <div class="font-medium">{{ $transferDetails['recipient_amount'] }} {{ $receiver['currency'] }}</div>
                                         </div>
-                                        {{-- <div class="flex mt-4">
-                                            <div class="mr-auto">Should arrive </div>
-                                            <div class="font-medium">By 19 may</div>
-                                        </div> --}}
+
                                         <div class="col-span-12 md:col-span-6 mt-4 form-inline">
                                             <label for="bank_country" class="form-label sm:w-48"> Transfer Reason <span class="text-theme-6">*</span></label>
                                             <div class="sm:w-5/6 Transfer-reason">

@@ -35,6 +35,11 @@
             </form>
         </div>
     </div>
+
+    @includeWhen(
+        $workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
+        'partner-foundation::core.inactive-account-alert'
+    )
 @endsection
 
 @push('scripts')

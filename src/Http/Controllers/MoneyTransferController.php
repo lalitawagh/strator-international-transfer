@@ -162,7 +162,10 @@ class MoneyTransferController extends Controller
 
         if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
         {
-            $transaction = Transaction::create([
+            $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
+            $transaction = Transaction::updateOrCreate([
+                'id' => $transactionExist?->id,
+            ],[
                 'urn' => Transaction::generateUrn(),
                 'amount' => $transferDetails['amount'],
                 'workspace_id' => $transferDetails['workspace_id'],
@@ -178,8 +181,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $user->id,
-                    'sender_name' => $user->getFullName(),
+                    'sender_id' => $account->id,
+                    'sender_name' => $account->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
@@ -266,8 +269,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $user->id,
-                    'sender_name' => $user->getFullName(),
+                    'sender_id' => $account->id,
+                    'sender_name' => $account->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
