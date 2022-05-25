@@ -40,7 +40,7 @@
                         </div>
                         <div id="faq-accordion-collapse-1" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-1" data-bs-parent="#faq-accordion-1">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Sender Name
@@ -54,7 +54,7 @@
                                 </div>
 
                                 @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE || $transaction->payment_method == 'bank')
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             @isset($sender)
@@ -71,7 +71,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             @isset($sender)
@@ -100,7 +100,7 @@
                         </div>
                         <div id="faq-accordion-collapse-3" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-3" data-bs-parent="#faq-accordion-3">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Account Name
@@ -112,7 +112,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Account No
@@ -124,7 +124,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Sort Code
@@ -136,7 +136,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Reference Number
@@ -160,7 +160,7 @@
                         </div>
                         <div id="faq-accordion-collapse-2" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-2" data-bs-parent="#faq-accordion-1">
                             <div class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Receiver Name
@@ -172,7 +172,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Account No
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                                 @isset($transaction->meta['second_beneficiary_bank_code'])
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             Sort Code
@@ -200,7 +200,7 @@
                                 @endisset
 
                                 @isset($transaction->meta['second_beneficiary_bank_iban'])
-                                <div class="flex flex-col lg:flex-row mt-2">
+                                <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
                                             IFSC Code / IBAN
@@ -344,7 +344,7 @@
 
                     @isset($transaction->meta['reason'])
                         <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
-                            <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
+                            <p class="text-sm tracking-wide font-medium uppercase">Transfer Reason</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
                                 <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
