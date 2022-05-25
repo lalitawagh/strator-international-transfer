@@ -56,7 +56,7 @@ class StoreTransferTypeFeeRequest extends FormRequest
             $currency = collect(Setting::getValue('money_transfer_type_fees',[]))->firstWhere('currency', $this->input('currency'));
             if($currency['type'] != $this->input('type'))
             {
-                $validator->errors()->add('type', 'Already one transfer type assigned to this country');
+                $validator->errors()->add('type', "This country's Type filed has already been selected. Please select the same Type.");
             }
         });
     }
