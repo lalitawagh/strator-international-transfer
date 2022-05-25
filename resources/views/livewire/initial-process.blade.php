@@ -36,7 +36,11 @@
 
             </select>
         </div>
+
     </div>
+    @error('amount')
+    <span class="block text-theme-6 mt-2 mb-2">{{ $message }}</span>
+    @enderror
 
     <div class="mb-4 relative mt-center">
         <ul
@@ -102,7 +106,7 @@
                                                                     class="form-check-input" type="radio"
                                                                     name="feeMethod"
                                                                     wire:model="feeMethod"
-                                                                   value="{{ $fee['id'] }}" @if($feeMethod == $fee['id'])  checked @endif  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
+                                                                   value="{{ $fee['id'] }}" @if($feeMethod == $fee['id'])  checked @else disabled @endif  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
                                                                 <label class="form-check-label" for="radio-switch-{{ $key }}">
                                                                     <h4 href="javascript:;"
                                                                         class="font-medium truncate mr-5">

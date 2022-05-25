@@ -71,6 +71,16 @@ class MoneyTransferController extends Controller
     {
         $data = $request->validated();
 
+        $existSessionRequest = session('money_transfer_request');
+
+        if(!is_null(session('money_transfer_request')))
+        {
+            $data['beneficiary_id'] = $existSessionRequest['beneficiary_id'];
+            $data['transaction'] = isset($existSessionRequest['transaction']) ? $existSessionRequest['transaction'] : null;
+            $data['payment_method'] = $existSessionRequest['payment_method'];
+            $data['transfer_reason'] = $existSessionRequest['transfer_reason'];
+        }
+
         session(['money_transfer_request' => $data]);
 
         return redirect()->route('dashboard.international-transfer.money-transfer.beneficiary',['filter' => ['workspace_id' => $request->input('workspace_id')]]);
@@ -253,7 +263,10 @@ class MoneyTransferController extends Controller
 
         if($transferDetails['payment_method'] == PaymentMethod::STRIPE)
         {
-            $transaction = Transaction::create([
+            $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
+            $transaction = Transaction::updateOrCreate([
+                'id' => $transactionExist?->id,
+            ],[
                 'urn' => Transaction::generateUrn(),
                 'amount' => $transferDetails['amount'],
                 'workspace_id' => $transferDetails['workspace_id'],
