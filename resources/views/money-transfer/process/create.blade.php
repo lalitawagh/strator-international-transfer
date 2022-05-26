@@ -9,7 +9,7 @@
             <div class="intro-y mt-0 p-3">
                 <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
                     <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
-                        <h3 class="text-lg font-medium mb-4">Enter the amount to Transfer</h3>
+                        <h3 class="text-lg font-medium mb-4">Enter The Amount To Transfer</h3>
                         @livewire('initial-process',['countries' => $countries, 'defaultCountry' => $defaultCountry])
 
                         {{-- <p class="py-3">
@@ -35,6 +35,11 @@
             </form>
         </div>
     </div>
+
+    @includeWhen(
+        $workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
+        'partner-foundation::core.inactive-account-alert'
+    )
 @endsection
 
 @push('scripts')
@@ -44,13 +49,10 @@
             $('#tabcuntery-selection2 option[value="'+ event.detail.currency +'"]').attr("disabled", true);
         });
 
-        function preventNonNumericalInput(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode != 46 && charCode > 31
-                && (charCode < 48 || charCode > 57))
-                return false;
-
-            return true;
+        function preventNonNumericalInput(event,the) {
+            if ((event.which != 46 || $(the).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
         }
     </script>
 @endpush

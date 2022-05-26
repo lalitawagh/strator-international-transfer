@@ -26,7 +26,7 @@ class TransactionLogComponent extends Component
     protected function rules()
     {
         return  [
-            'description' => 'required',
+            'description' => 'required|max:250',
         ];
 
     }

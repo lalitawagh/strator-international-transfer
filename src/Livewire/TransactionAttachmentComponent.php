@@ -18,7 +18,7 @@ class TransactionAttachmentComponent extends Component
 
     public $description;
 
-    public $attachment;
+    public $attachment = [];
 
     public $mediaItems;
 
@@ -31,6 +31,25 @@ class TransactionAttachmentComponent extends Component
         'refreshComponent' => '$refresh',
         'clearInput'
     ];
+
+    protected function rules()
+    {
+        return  [
+            'attachment.*' => ['required','max:5120','mimes:png,jpg,jpeg','file']
+        ];
+
+    }
+
+    protected $validationAttributes = [
+        'attachment.*' => 'attachments',
+    ];
+
+    protected function messages()
+    {
+        return  [
+            'attachment.*.max' => 'The attachments may not be greater than 5 MB.',
+        ];
+    }
 
     public function showTransactionAttachment(Transaction $transaction)
     {
@@ -47,6 +66,7 @@ class TransactionAttachmentComponent extends Component
 
     public function transactionAttachmentSubmit($transaction)
     {
+        $data = $this->validate();
         if(! is_null($this->attachment))
         {
             $transaction = Transaction::find($transaction);
