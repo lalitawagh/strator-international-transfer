@@ -2,7 +2,7 @@
     <div class="mb-4 relative z-10">
         <input wire:change="changeAmount($event.target.value)" wire:model="amount"
             class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
-            name="amount" onkeypress="preventNonNumericalInput(event)" autofocus>
+            name="amount" onkeypress="preventNonNumericalInput(event,this)" autofocus>
         <label class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Sending</label>
 
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">

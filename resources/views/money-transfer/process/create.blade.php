@@ -49,13 +49,9 @@
             $('#tabcuntery-selection2 option[value="'+ event.detail.currency +'"]').attr("disabled", true);
         });
 
-        function preventNonNumericalInput(event) {
-            if (event.which != 46 && (event.which < 47 || event.which > 59))
-            {
+        function preventNonNumericalInput(event,the) {
+            if ((event.which != 46 || $(the).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                 event.preventDefault();
-                if ((event.which == 46) && ($(this).indexOf('.') != -1)) {
-                    event.preventDefault();
-                }
             }
         }
     </script>

@@ -82,7 +82,7 @@ class MyselfBeneficiary extends Component
         return  [
             'type' => ['required', 'string'],
             'email' => ['nullable','email'],
-            'mobile' => ['nullable',new MobileNumber],
+            'mobile' => ['nullable','digits_between:10,11'],
             'first_name' => ['required_if:type,personal', 'nullable', new AlphaSpaces, 'string','max:40'],
             'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
             'last_name' =>  ['required_if:type,personal', 'nullable', new AlphaSpaces, 'string','max:40'],
