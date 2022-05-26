@@ -24,7 +24,7 @@
                                             <div class="intro-y  overflow-x-auto overflow-y-hidden  sm:mt-3 sm:mt-0">
 
                                                 <div
-                                                    class="flex-wrap sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                    class="w-full flex-wrap sm:flex sm:items-center items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5 justify-end">
                                                     <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                                                         <a id="work-in-progress-mobile-new-tab" data-toggle="tab"
                                                             data-target="#work-in-progress-new" href="javascript:;"
@@ -74,9 +74,9 @@
                                                     </div>
 
                                                     <div class="dr-btn flex sm:flex mt-5 sm:mt-0 mb-2"
-                                                        style="margin-top:-6px;">
+                                                        style="">
 
-                                                        <div class="dropdown sm:w-auto mr-2">
+                                                        <div class="dropdown sm:w-auto ml-2 sm:ml-0 mr-2">
                                                             <button
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
                                                                 aria-expanded="false"><i data-feather="filter"
@@ -157,7 +157,7 @@
                                                     </div>
                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                                                         <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
-                                                            class="btn btn-sm btn-primary sm:ml-2 -mt-1 sm:mb-2">Money
+                                                            class="btn btn-sm btn-primary sm:ml-2 sm:-mt-1 lg:-mt-1 sm:mb-2 mb-2">Money
                                                             Transfer</a>
                                                     @endif
                                                 </div>
