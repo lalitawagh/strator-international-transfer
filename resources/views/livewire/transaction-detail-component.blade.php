@@ -57,33 +57,33 @@
                                 <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
-                                            @isset($sender)
-                                                Account No.
-                                            @else
+                                            @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE)
                                                 Sender Payment Id
-                                            @endisset
+                                            @else
+                                                Account No.
+                                            @endif
 
                                         </span>
                                     </div>
                                     <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
-                                            @isset($sender) {{ @$sender->account_number }} @else {{ @$transaction->meta['sender_payment_id'] }} @endisset
+                                            @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE) {{ @$transaction->meta['sender_payment_id'] }} @else  {{ @$sender->account_number }} @endif
                                         </span>
                                     </div>
                                 </div>
                                 <div class="sm:flex lg:flex-row mt-2">
                                     <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                         <span>
-                                            @isset($sender)
-                                                Sort Code
-                                            @else
+                                            @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE)
                                                 Sender Card Id
-                                            @endisset
+                                            @else
+                                                Sort Code
+                                            @endif
                                         </span>
                                     </div>
                                     <div class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                         <span class="font-medium">
-                                            @isset($sender) {{ @$sender->bank_code }} @else {{ @$transaction->meta['sender_card_id'] }} @endisset
+                                            @if($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE)  {{ @$transaction->meta['sender_card_id'] }} @else {{ @$sender->bank_code }} @endif
                                         </span>
                                     </div>
                                 </div>
@@ -377,7 +377,7 @@
                             <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
                             <div class="flex flex-col lg:flex-row mt-1">
-                                <div class="truncate sm:whitespace-normal flex items-center">
+                                <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
                                     <span>
                                         {{ $transaction->note }}
                                     </span>

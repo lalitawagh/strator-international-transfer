@@ -16,6 +16,7 @@ class FeeTest extends TestCase
 
         $data = [
             'type'        =>    'exchange_fees',
+            'fee_type'    =>    'percentage',
             'min_amount'  =>    0,
             'max_amount'  =>    1000,
             'amount'      =>    1880,
@@ -35,6 +36,7 @@ class FeeTest extends TestCase
 
         $data = [
             'type'        =>    'exchange_fees',
+            'fee_type'    =>    'percentage',
             'min_amount'  =>    0,
             'max_amount'  =>    1000,
             'amount'      =>    1880,

@@ -35,6 +35,11 @@
             </form>
         </div>
     </div>
+
+    @includeWhen(
+        $workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
+        'partner-foundation::core.inactive-account-alert'
+    )
 @endsection
 
 @push('scripts')
@@ -44,13 +49,10 @@
             $('#tabcuntery-selection2 option[value="'+ event.detail.currency +'"]').attr("disabled", true);
         });
 
-        function preventNonNumericalInput(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode != 46 && charCode > 31
-                && (charCode < 48 || charCode > 57))
-                return false;
-
-            return true;
+        function preventNonNumericalInput(event,the) {
+            if ((event.which != 46 || $(the).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
         }
     </script>
 @endpush

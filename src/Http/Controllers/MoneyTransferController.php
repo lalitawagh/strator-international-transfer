@@ -71,6 +71,16 @@ class MoneyTransferController extends Controller
     {
         $data = $request->validated();
 
+        $existSessionRequest = session('money_transfer_request');
+
+        if(!is_null(session('money_transfer_request')))
+        {
+            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id']) ? $existSessionRequest['beneficiary_id'] :null;
+            $data['transaction'] = isset($existSessionRequest['transaction']) ? $existSessionRequest['transaction'] : null;
+            $data['payment_method'] = isset($existSessionRequest['payment_method']) ? $existSessionRequest['payment_method'] : null;
+            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason']) ? $existSessionRequest['transfer_reason'] : null;
+        }
+
         session(['money_transfer_request' => $data]);
 
         return redirect()->route('dashboard.international-transfer.money-transfer.beneficiary',['filter' => ['workspace_id' => $request->input('workspace_id')]]);
@@ -162,7 +172,10 @@ class MoneyTransferController extends Controller
 
         if($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
         {
-            $transaction = Transaction::create([
+            $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
+            $transaction = Transaction::updateOrCreate([
+                'id' => $transactionExist?->id,
+            ],[
                 'urn' => Transaction::generateUrn(),
                 'amount' => $transferDetails['amount'],
                 'workspace_id' => $transferDetails['workspace_id'],
@@ -178,8 +191,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $user->id,
-                    'sender_name' => $user->getFullName(),
+                    'sender_id' => $account->id,
+                    'sender_name' => $account->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
@@ -250,7 +263,10 @@ class MoneyTransferController extends Controller
 
         if($transferDetails['payment_method'] == PaymentMethod::STRIPE)
         {
-            $transaction = Transaction::create([
+            $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
+            $transaction = Transaction::updateOrCreate([
+                'id' => $transactionExist?->id,
+            ],[
                 'urn' => Transaction::generateUrn(),
                 'amount' => $transferDetails['amount'],
                 'workspace_id' => $transferDetails['workspace_id'],
@@ -266,8 +282,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $user->id,
-                    'sender_name' => $user->getFullName(),
+                    'sender_id' => $account->id,
+                    'sender_name' => $account->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
