@@ -24,7 +24,7 @@
                                             <div class="intro-y  overflow-x-auto overflow-y-hidden  sm:mt-3 sm:mt-0">
 
                                                 <div
-                                                    class="flex-wrap sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                    class="w-full flex-wrap sm:flex sm:items-center items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5 justify-end">
                                                     <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                                                         <a id="work-in-progress-mobile-new-tab" data-toggle="tab"
                                                             data-target="#work-in-progress-new" href="javascript:;"
@@ -74,16 +74,16 @@
                                                     </div>
 
                                                     <div class="dr-btn flex sm:flex mt-5 sm:mt-0 mb-2"
-                                                        style="margin-top:-6px;">
+                                                        style="">
 
-                                                        <div class="dropdown sm:w-auto mr-2">
+                                                        <div class="dropdown sm:w-auto ml-2 sm:ml-0 mr-2">
                                                             <button
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
                                                                 aria-expanded="false"><i data-feather="filter"
                                                                     class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter <i
                                                                     data-feather="chevron-down"
                                                                     class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
-                                                            <div class="dropdown-menu w-40 filter-dropbox">
+                                                            <div class="dropdown-menu lg:w-40 filter-dropbox">
                                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                                                                     <a id="tabulator-export-xlsx" href="javascript:;"
                                                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
@@ -157,7 +157,7 @@
                                                     </div>
                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                                                         <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
-                                                            class="btn btn-sm btn-primary sm:ml-2 -mt-1 sm:mb-2">Money
+                                                            class="btn btn-sm btn-primary sm:ml-2 sm:-mt-1 lg:-mt-1 sm:mb-2 mb-2">Money
                                                             Transfer</a>
                                                     @endif
                                                 </div>
@@ -561,16 +561,17 @@
                         </div>
                     </div>
                     <div class="tab-content py-3">
-                        <div id="Overview" class="tab-pane active" role="tabpanel" aria-labelledby="Overview-tab">
-                            <div class="form-inline flex">
-                                <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                                    <i data-feather="edit" class="w-3 h-3"></i>
-                                </div>
-                                <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                                    <i data-feather="save" class="w-3 h-3"></i> </a>
-                                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                                    title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
+                        <div class="form-inline flex float-right">
+                            <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                                <i data-feather="edit" class="w-3 h-3"></i>
                             </div>
+                            <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
+                                <i data-feather="save" class="w-3 h-3"></i> </a>
+                            <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                                title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
+                        </div>
+                        <div id="Overview" class="tab-pane active mt-10" role="tabpanel" aria-labelledby="Overview-tab">
+
                             @livewire('transaction-detail-component')
                         </div>
 
@@ -602,6 +603,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 @push('scripts')

@@ -2,8 +2,8 @@
     <div class="p-0" x-data="{ selectedDiv: 'personal' }">
 
         <form>
-          <div class="grid grid-cols-12 md:gap-10 mt-0 lg:mb-3">
-            <div class="col-span-12 md:col-span-8 lg:col-span-6 form-inline lg:mt-2">
+          <div class="grid grid-cols-12 md:gap-10 mt-0 lg:mb-0">
+            <div class="col-span-12 md:col-span-8 lg:col-span-6 form-inline lg:mt-0">
               <label class="form-label sm:w-40">Contact Type <span class="text-theme-6">*</span></label>
               <div class="sm:w-5/6 sm:pt-1">
                 <div class="flex sm:flex-row mt-2">
@@ -25,7 +25,7 @@
 
           <div class="grid grid-cols-12 md:gap-10 mt-0">
 
-            <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-2">
+            <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-0">
 
                 <div class="col-span-12 md:col-span-6 form-inline mt-2" id="sectionRefresh">
                     <label for="bank_country" class="form-label sm:w-40"> Country <span class="text-theme-6">*</span></label>
@@ -97,7 +97,9 @@
                                             align-items: center;
                                             align-self: center;margin-right:10px;">
                                     @foreach ($countries as $country)
-                                        @if ($country->id == old('country_code', $defaultCountry->id))
+                                        @if ($country->id == old('country_code'))
+                                            <img src="{{ $country->flag }}">
+                                        @elseif ($country->code == $receiving_country)
                                             <img src="{{ $country->flag }}">
                                         @endif
                                     @endforeach
@@ -108,7 +110,7 @@
                                     class="tail-select" style="width:20%">
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
-                                            value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
+                                            value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
                                             ({{ $country->phone }})
                                         </option>
                                     @endforeach
@@ -134,7 +136,9 @@
                                             align-items: center;
                                             align-self: center;margin-right:10px;">
                                     @foreach ($countries as $country)
-                                        @if ($country->id == old('country_code', $defaultCountry->id))
+                                        @if ($country->id == old('country_code'))
+                                            <img src="{{ $country->flag }}">
+                                        @elseif ($country->code == $receiving_country)
                                             <img src="{{ $country->flag }}">
                                         @endif
                                     @endforeach
@@ -145,7 +149,7 @@
                                     class="tail-select" style="width:20%">
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
-                                            value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
+                                            value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
                                             ({{ $country->phone }})
                                         </option>
                                     @endforeach
@@ -163,7 +167,7 @@
             </div>
 
 
-            <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-2">
+            <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-0">
                 <div class="col-span-12 md:col-span-6 form-inline mt-2">
                     <label for="bank_account_name" class="form-label sm:w-40"> Account Name <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">

@@ -4,6 +4,7 @@ namespace Kanexy\InternationalTransfer\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 
@@ -47,5 +48,16 @@ class StoreTransferTypeFeeRequest extends FormRequest
             'transfer_type.regex' => 'The transfer type field may only contain letters, numbers and spaces.',
 
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $currency = collect(Setting::getValue('money_transfer_type_fees',[]))->firstWhere('currency', $this->input('currency'));
+            if($currency['type'] != $this->input('type'))
+            {
+                $validator->errors()->add('type', "This country's Type filed has already been selected. Please select the same Type.");
+            }
+        });
     }
 }

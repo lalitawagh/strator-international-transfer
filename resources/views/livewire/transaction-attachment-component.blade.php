@@ -14,14 +14,17 @@
                     <label class="form-label sm:w-20">Attachment</label>
                     <div class="sm:w-5/6">
                         <input id="attachment" wire:model="attachment" name="attachment" type="file" class="form-control" multiple>
+                        @error('attachment.0')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
-
                 </div>
                 <div x-show="isUploading">
                     <progress max="100" x-bind:value="progress"></progress>
                     Uploading...
                 </div>
                 </div>
+
 
             </div>
             <div class="text-right mt-5" >

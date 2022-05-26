@@ -118,9 +118,11 @@ class InitialProcess extends Component
                 $this->feeMethod =  $this->initial_fee['id'];
             }else{
                 $this->fee_charge = 0;
+                $this->feeMethod =  0;
             }
         }else{
             $this->fee_charge = 0;
+            $this->feeMethod =  0;
         }
 
         $this->fee_charge = number_format((float) $this->fee_charge, 2, '.', '');

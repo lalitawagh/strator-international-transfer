@@ -20,7 +20,6 @@ class StoreMasterAccountRequest extends FormRequest
             'account_branch'        =>    ['required','string'],
             'account_number'        =>    ['required','numeric','digits:8'],
             'sort_code'             =>    ['required','numeric','digits:6'],
-            'beneficiary_id'        =>    ['required'],
         ];
     }
 
