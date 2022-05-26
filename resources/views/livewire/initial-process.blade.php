@@ -109,7 +109,7 @@
                                                                    value="{{ $fee['id'] }}" @if($feeMethod == $fee['id'])  checked @else disabled @endif  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
                                                                 <label class="form-check-label" for="radio-switch-{{ $key }}">
                                                                     <h4 href="javascript:;"
-                                                                        class="font-medium truncate mr-5">
+                                                                        class="font-medium  mr-5">
                                                                         @if ($fee['type'] == 'payment_type')
                                                                             {{ $fee['payment_type'] }}
                                                                         @elseif ($fee['type'] == 'transfer_type')
