@@ -387,7 +387,7 @@
                         @endisset
                     </div>
 
-                    <div class="edit-transaction-content hidden">
+                    <div class="edit-transaction-content col-span-12 lg:col-span-12 xxl:col-span-12 mt-2 hidden">
                         <form id="transaction-form" action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -408,7 +408,7 @@
                             <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                                 <p class="text-sm tracking-wide font-medium uppercase">Note</p>
 
-                                <div class="flex flex-col lg:flex-row mt-1">
+                                <div class="flex-col lg:flex-row mt-1">
                                     <div class="truncate sm:whitespace-normal flex items-center">
                                         <textarea id="note" name="note" class="form-control w-full" value="{{ $transaction->note }}">{{ $transaction->note }}</textarea>
                                     </div>
