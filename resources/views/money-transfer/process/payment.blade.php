@@ -123,9 +123,9 @@
                                             <div class="mr-auto">Should arrive </div>
                                             <div class="font-medium">By 19 may</div>
                                         </div> --}}
-                                        <div class="col-span-12 md:col-span-6 mt-4 lg:form-inline">
-                                            <label for="bank_country" class="form-label lg:w-48"> Transfer Reason <span class="text-theme-6">*</span></label>
-                                            <div class="sm:w-5/6 Transfer-reason text-right">
+                                        <div class="col-span-12 md:col-span-6 mt-4 form-inline">
+                                            <label for="bank_country" class="form-label sm:w-64"> Transfer Reason <span class="text-theme-6">*</span></label>
+                                            <div class="sm:w-5/6 Transfer-reason sm:text-right">
                                                 <select name="transfer_reason" data-search="true" class="tail-select w-full">
                                                     @foreach ($reasons as $reason)
                                                         @if ($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)

@@ -29,7 +29,7 @@
                     <div class="font-medium text-base">
                         <img alt="" class="m-auto" src="{{ asset('dist/images/business-c-icon.png') }}">
                     </div>
-                    <div class="font-medium text-center text-base mt-3">Business or charity
+                    <div class="font-medium text-center text-base mt-3">Business or Charity
                     </div>
                 </a>
                     </div>
