@@ -22,14 +22,14 @@
                     <div class="font-medium text-base text-base">
                         <img alt="" class="m-auto" src="{{ asset('dist/images/someone-els-icon.png') }}">
                     </div>
-                    <div class="font-medium text-center text-base mt-3">Someone else</div>
+                    <div class="font-medium text-center text-base mt-3">Another Person</div>
                 </a>
                 <a data-toggle="modal" data-target="#business-modal"
                     class="col-span-12 sm:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                     <div class="font-medium text-base">
                         <img alt="" class="m-auto" src="{{ asset('dist/images/business-c-icon.png') }}">
                     </div>
-                    <div class="font-medium text-center text-base mt-3">Business or Charity
+                    <div class="font-medium text-center text-base mt-3">Business/Welfare
                     </div>
                 </a>
                     </div>
