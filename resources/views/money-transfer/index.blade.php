@@ -575,11 +575,11 @@
                             @livewire('transaction-detail-component')
                         </div>
 
-                        <div id="Notes" class="tab-pane" role="tabpanel" aria-labelledby="Notes-tab">
+                        <div id="Notes" class="tab-pane mt-10" role="tabpanel" aria-labelledby="Notes-tab">
                             @livewire('transaction-log-component')
                         </div>
 
-                        <div id="Attachments" class="tab-pane" role="tabpanel" aria-labelledby="Attachments-tab">
+                        <div id="Attachments" class="tab-pane mt-10" role="tabpanel" aria-labelledby="Attachments-tab">
                             @livewire('transaction-attachment-component')
                         </div>
                     </div>
