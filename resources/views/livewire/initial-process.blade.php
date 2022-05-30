@@ -95,7 +95,7 @@
 
                                                     $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                                 @endphp
-
+                                                @if($amount >= $fee['min_amount'] && $amount <= $fee['max_amount'])
                                                 <div
                                                     class="cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
                                                     <div class="ml-0 overflow-hidden">
@@ -106,7 +106,7 @@
                                                                     class="form-check-input" type="radio"
                                                                     name="feeMethod"
                                                                     wire:model="feeMethod"
-                                                                   value="{{ $fee['id'] }}" @if($feeMethod == $fee['id'])  checked @else disabled @endif  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
+                                                                   value="{{ $fee['id'] }}" @if($feeMethod == $fee['id'])  checked  @endif  wire:click="$emit('changeToMethod','{{ $fee_charge }}')" >
                                                                 <label class="form-check-label" for="radio-switch-{{ $key }}">
                                                                     <h4 href="javascript:;"
                                                                         class="font-medium  mr-5">
@@ -131,6 +131,7 @@
                                                     </div>
                                                 </div>
                                                 <hr>
+                                                @endif
                                             @endif
                                         @endforeach
                                     @endisset
