@@ -36,7 +36,7 @@
                                     </div>
 
 
-                                    <div class="wizard flex flex-col lg:flex-row justify-center px-5 pt-4 sm:px-20">
+                                    <div class=" pb-2 wizard flex flex-col lg:flex-row justify-center px-5 pt-4 sm:px-20">
                                         <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
                                             <button class="w-10 h-10 rounded-full btn {{ request()->routeIs('dashboard.international-transfer.money-transfer.create') ? 'btn-primary' : 'text-gray-600 bg-gray-200 dark:bg-dark-1' }}">1</button>
                                             <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto {{ request()->routeIs('dashboard.international-transfer.money-transfer.create') ? 'font-bold' : 'text-gray-700 dark:text-gray-600' }}">Amount</div>
