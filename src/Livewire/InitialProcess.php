@@ -90,7 +90,7 @@ class InitialProcess extends Component
 
     public function changeAmount($value)
     {
-        if(!empty($value))
+        if(!empty($value) && $value != '.')
         {
             $this->amount = $value;
             $this->getDetails();

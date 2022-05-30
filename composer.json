@@ -14,20 +14,8 @@
             "role": "Developer"
         }
     ],
-    "repositories": {
-        "kanexy/cms": {
-            "type": "git",
-            "url": "https://Kanexy@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
-        },
-        "kanexy/partner-foundation": {
-            "type": "git",
-            "url": "https://Kanexy@dev.azure.com/Kanexy/Kanexy%20Platform/_git/partner-foundation"
-        }
-    },
     "require": {
-        "php": "^8.0",
-        "kanexy/cms":"dev-uat",
-        "kanexy/partner-foundation":"dev-uat"
+        "php": "^8.0"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",

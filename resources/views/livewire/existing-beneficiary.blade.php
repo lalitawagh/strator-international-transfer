@@ -25,7 +25,7 @@
                     </div>
                     <div class="w-full flex-column text-gray-600 text-xs sm:text-sm">
                         <div class="mr-2"> <b>{{ @$receiver->currency }} </b> account ending in
-                            {{ substr(@$beneficiary->meta['bank_account_number'], 4) }}</div>
+                            {{ substr(@$beneficiary->meta['bank_account_number'], -4) }}</div>
 
                     </div>
                 </div>
