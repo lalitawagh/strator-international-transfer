@@ -8,8 +8,8 @@
 
             <div class="intro-y col-span-12 lg:col-span-12">
                 <!-- BEGIN: Horizontal Form -->
-                <div class="intro-y box mt-0 clearfix">
-                    <div class="border-2 border-dashed shadow-sm border-gray-200 dark:border-dark-5 rounded-md sm:p-5 m-3">
+                <div class="intro-y mt-0 clearfix">
+                    <div class="border-2 border-dashed border-gray-200 dark:border-dark-5 rounded-md sm:p-5 m-3">
                         @if ($transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                             <div class=" p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Transfer Details</h3>
@@ -159,11 +159,9 @@
                             </div>
                         @endif
                     </div>
-                    <div class="my-5 px-3 text-right">
-                    </div>
                 </div>
             </div>
-            <div class="text-right mt-5  py-4">
+            <div class="text-right mt-3 py-4">
                 @isset($transferDetails['transaction'])
                 <a href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
                     class="btn btn-secondary text-center mr-1 mb-2 ml-auto">Cancel this transfer</a>
