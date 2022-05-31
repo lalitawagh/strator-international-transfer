@@ -102,7 +102,7 @@
                             </div>
 
                             <div class="grid grid-cols-12">
-                                <div class="col-span-12 sm:col-span-12 md:col-span-12 xl:col-span-6">
+                                <div class="col-span-12 sm:col-span-12 md:col-span-12 xl:col-span-12">
                                     <div class="border-b border-gray-200 dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex">
@@ -134,7 +134,7 @@
                                         @endisset
                                     </div>
                                 </div>
-                                <div class="col-span-12 sm:col-span-12 md:col-span-12 xl:col-span-6">
+                                <div class="col-span-12 sm:col-span-12 md:col-span-12 xl:col-span-12">
                                     <div class="border-b border-gray-200 dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex">
