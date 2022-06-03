@@ -10,7 +10,7 @@
                     <div class="grid grid-cols-12 gap-3">
                         <!-- BEGIN: -->
                         <div class="intro-y box col-span-12 xxl:col-span-12">
-                            <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                            <div class="flex items-center sm:px-5 sm:py-5 sm:py-3 mb-2 border-b border-gray-200 dark:border-dark-5">
                                 <h2 class="text-lg font-medium text-center pt-2">
                                     Choose Payment Option
                                 </h2>

@@ -358,7 +358,7 @@
 
 
 
-                    <div class="saved-transaction">
+                    <div class="saved-transaction col-span-12 lg:col-span-12 xxl:col-span-12 mt-2">
 
                         @isset($transaction->attachment)
                         <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
@@ -366,7 +366,7 @@
 
                             <div class="flex flex-col lg:flex-row mt-1">
                                 <div class="truncate sm:whitespace-normal flex items-center">
-                                    <img width="400" height="400" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
+                                    <img width="100" height="100" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
                                 </div>
                             </div>
                         </div>

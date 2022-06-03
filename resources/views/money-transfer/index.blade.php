@@ -561,25 +561,25 @@
                         </div>
                     </div>
                     <div class="tab-content py-3">
-                        <div class="form-inline flex float-right">
-                            <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                                <i data-feather="edit" class="w-3 h-3"></i>
-                            </div>
-                            <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                                <i data-feather="save" class="w-3 h-3"></i> </a>
-                            <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                                title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
-                        </div>
-                        <div id="Overview" class="tab-pane active mt-10" role="tabpanel" aria-labelledby="Overview-tab">
 
+                        <div id="Overview" class="tab-pane active " role="tabpanel" aria-labelledby="Overview-tab">
+                            <div class="form-inline flex float-right">
+                                <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                                    <i data-feather="edit" class="w-3 h-3"></i>
+                                </div>
+                                <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
+                                    <i data-feather="save" class="w-3 h-3"></i> </a>
+                                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                                    title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
+                            </div>
                             @livewire('transaction-detail-component')
                         </div>
 
-                        <div id="Notes" class="tab-pane mt-10" role="tabpanel" aria-labelledby="Notes-tab">
+                        <div id="Notes" class="tab-pane" role="tabpanel" aria-labelledby="Notes-tab">
                             @livewire('transaction-log-component')
                         </div>
 
-                        <div id="Attachments" class="tab-pane mt-10" role="tabpanel" aria-labelledby="Attachments-tab">
+                        <div id="Attachments" class="tab-pane" role="tabpanel" aria-labelledby="Attachments-tab">
                             @livewire('transaction-attachment-component')
                         </div>
                     </div>
