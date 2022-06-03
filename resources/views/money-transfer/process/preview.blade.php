@@ -1,7 +1,7 @@
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
-    <div class="px-5 sm:px-20 mt-5 pt-5 border-t border-gray-200">
+    <div class="px-3 sm:px-20 mt-5 pt-5 border-t border-gray-200">
 
         <form method="GET"
             action="{{ route('dashboard.international-transfer.money-transfer.final', ['filter' => ['workspace_id' => $workspace->id]]) }}">
@@ -9,7 +9,7 @@
             <div class="intro-y col-span-12 lg:col-span-12">
                 <!-- BEGIN: Horizontal Form -->
                 <div class="intro-y mt-0 clearfix">
-                    <div class="border-2 border-dashed border-gray-200 dark:border-dark-5 rounded-md sm:p-5 m-3">
+                    <div class="border-2 border-dashed border-gray-200 dark:border-dark-5 rounded-md sm:p-5 sm:m-3">
                         @if ($transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                             <div class=" p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Transfer Details</h3>
