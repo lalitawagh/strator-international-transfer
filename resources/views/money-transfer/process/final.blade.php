@@ -24,3 +24,14 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+
+    window.onload = function() {
+        setTimeout(function () {
+            window.location.href = '{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}';
+        }, 10000);
+    }
+</script>
+@endpush
