@@ -93,7 +93,7 @@
             <div class="grid grid-cols-12 md:gap-3 mt-0">
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6">
+                    <div class="sm:w-5/6 tillselect-marging">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
                                 <option value="{{ $status }}" @if (old('status') == $status) selected @endif> {{ ucfirst($status) }} </option>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" style="align-items: inherit;">
-                    <label for="amount" class="form-label sm:w-30">Description </label>
+                    <label for="amount" class="form-label sm:w-30 pt-2">Description </label>
                     <div class="sm:w-5/6">
                         <textarea name="description" rows="3" class="form-control resize-none">{{ old('description') }}</textarea>
 
