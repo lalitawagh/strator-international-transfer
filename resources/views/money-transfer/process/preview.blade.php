@@ -1,7 +1,7 @@
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
-    <div class="px-3 sm:px-20 mt-5 pt-5 border-t border-gray-200">
+    <div class="px-3 sm:px-5 lg:px-10 xl:px-20 mt-5 pt-5 border-t border-gray-200">
 
         <form method="GET"
             action="{{ route('dashboard.international-transfer.money-transfer.final', ['filter' => ['workspace_id' => $workspace->id]]) }}">
