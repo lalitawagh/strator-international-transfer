@@ -572,6 +572,7 @@
                                 <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
                                     title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
                             </div>
+                            <div class="clearfix"></div>
                             @livewire('transaction-detail-component')
                         </div>
 
