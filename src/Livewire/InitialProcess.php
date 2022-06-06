@@ -127,7 +127,7 @@ class InitialProcess extends Component
 
         $this->fee_charge = number_format((float) $this->fee_charge, 2, '.', '');
 
-        if(!empty($this->amount))
+        if(!empty($this->amount) && $this->amount != '.')
         {
             $this->fee_deduction_amount = $this->amount - $this->fee_charge;
             $this->recipient_amount = $this->fee_deduction_amount * $this->guaranteed_rate;

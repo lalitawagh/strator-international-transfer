@@ -96,9 +96,9 @@
 
 
             <div class="grid grid-cols-12 md:gap-3 mt-0">
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6">
+                    <div class="sm:w-5/6 tillselect-marging">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
                                 <option value="{{ $status }}" @if (old('status',$transfer_type_fee['status']) == $status) selected @endif> {{ ucfirst($status) }} </option>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" style="align-items: inherit;">
-                    <label for="amount" class="form-label sm:w-30">Description </label>
+                    <label for="amount" class="form-label sm:w-30 pt-2">Description </label>
                     <div class="sm:w-5/6">
                         <textarea name="description" class="form-control">{{ old('description',$transfer_type_fee['description']) }}</textarea>
 
@@ -122,10 +122,10 @@
                 </div>
             </div>
             <div class="grid grid-cols-12 md:gap-3 mt-0" @if (old('fee_type',$transfer_type_fee['fee_type']) == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type',$transfer_type_fee['fee_type']) == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                <div class="items-center justify-center col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="amount" class="form-label sm:w-30">Fee <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6 sm:pt-1" >
-                        <div class="form-check mr-2">
+                    <div class="sm:w-5/6 sm:pt-0" >
+                        <div class="form-check mr-2 sm:pt-0">
                             <input id="radio-switch-1" class="form-check-input" type="radio" x-on:click="selected = '1'" name="fee_type" value="amount" @if (old('fee_type',$transfer_type_fee['fee_type']) == 'amount') checked @endif>
                             <label class="form-check-label" for="radio-switch-1"><h4 href="javascript:;" class="font-medium truncate mr-5 " >
                                 <h4>Amount</h4></label>
@@ -138,7 +138,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '1'" >
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '1'" >
                     <label for="amount" class="form-label sm:w-30">Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror amount" value="{{ old('amount',$transfer_type_fee['amount']) }}">
@@ -148,7 +148,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '0'">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
                     <label for="percentage" class="form-label sm:w-30">Percentage <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <div class="input-group">

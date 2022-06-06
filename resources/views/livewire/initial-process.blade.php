@@ -82,7 +82,7 @@
                                     @isset($fees)
                                         @foreach ($fees as $key => $fee)
                                             @if ($fee['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
-                                                @if (!empty($amount))
+                                                @if (!empty($amount) && $amount != '.')
                                                     @php
                                                         $fee_charge = $fee['percentage'] == 0 ? $fee['amount'] : $amount * ($fee['percentage'] / 100);
                                                     @endphp

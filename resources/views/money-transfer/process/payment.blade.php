@@ -10,7 +10,7 @@
                     <div class="grid grid-cols-12 gap-3">
                         <!-- BEGIN: -->
                         <div class="intro-y box col-span-12 xxl:col-span-12">
-                            <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                            <div class="flex items-center sm:px-5 sm:py-5 sm:py-3 mb-2 border-b border-gray-200 dark:border-dark-5">
                                 <h2 class="text-lg font-medium text-center pt-2">
                                     Choose Payment Option
                                 </h2>
@@ -123,9 +123,9 @@
                                             <div class="mr-auto">Should arrive </div>
                                             <div class="font-medium">By 19 may</div>
                                         </div> --}}
-                                        <div class="col-span-12 md:col-span-6 mt-4 lg:form-inline">
-                                            <label for="bank_country" class="form-label lg:w-48"> Transfer Reason <span class="text-theme-6">*</span></label>
-                                            <div class="sm:w-5/6 Transfer-reason text-right">
+                                        <div class="col-span-12 md:col-span-6 mt-4 form-inline">
+                                            <label for="bank_country" class="form-label sm:w-64"> Transfer Reason <span class="text-theme-6">*</span></label>
+                                            <div class="sm:w-5/6 Transfer-reason sm:text-right">
                                                 <select name="transfer_reason" data-search="true" class="tail-select w-full">
                                                     @foreach ($reasons as $reason)
                                                         @if ($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
