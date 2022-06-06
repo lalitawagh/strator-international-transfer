@@ -29,7 +29,7 @@
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @else disabled @endif>
-                                            ({{ $country->phone }})
+                                            {{ $country->code }} ({{ $country->phone }})
                                         </option>
                                     @endforeach
                                 </select>

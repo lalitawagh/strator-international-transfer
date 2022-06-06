@@ -157,7 +157,7 @@
                                                     </div>
                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                                                         <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
-                                                            class="btn btn-sm btn-primary sm:ml-2 sm:-mt-1 lg:-mt-1 sm:mb-2 mb-2">Money
+                                                            class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Money
                                                             Transfer</a>
                                                     @endif
                                                 </div>
@@ -561,17 +561,18 @@
                         </div>
                     </div>
                     <div class="tab-content py-3">
-                        <div class="form-inline flex float-right">
-                            <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                                <i data-feather="edit" class="w-3 h-3"></i>
-                            </div>
-                            <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                                <i data-feather="save" class="w-3 h-3"></i> </a>
-                            <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                                title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
-                        </div>
-                        <div id="Overview" class="tab-pane active mt-10" role="tabpanel" aria-labelledby="Overview-tab">
 
+                        <div id="Overview" class="tab-pane active " role="tabpanel" aria-labelledby="Overview-tab">
+                            <div class="form-inline flex float-right">
+                                <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                                    <i data-feather="edit" class="w-3 h-3"></i>
+                                </div>
+                                <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
+                                    <i data-feather="save" class="w-3 h-3"></i> </a>
+                                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
+                                    title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
+                            </div>
+                            <div class="clearfix"></div>
                             @livewire('transaction-detail-component')
                         </div>
 
