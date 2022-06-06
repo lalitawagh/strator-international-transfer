@@ -32,19 +32,19 @@
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Payee Name</div>
-                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         {{ $beneficiary->display_name }}</div>
                                 </div>
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Payment Reference </div>
-                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         {{ @$transferDetails['transaction']->meta['reference_no'] }}</div>
                                 </div>
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Amount to Send </div>
-                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         {{ $transferDetails['transaction']->amount }}
                                         {{ $transferDetails['transaction']->settled_currency }}</div>
                                 </div>
@@ -57,19 +57,19 @@
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name </div>
-                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         {{ $masterAccount['account_holder_name'] }}</div>
                                 </div>
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Number </div>
-                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         {{ $masterAccount['account_number'] }}</div>
                                 </div>
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Sort Code </div>
-                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                    <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         {{ $masterAccount['sort_code'] }}</div>
                                 </div>
                             </div>
@@ -103,24 +103,24 @@
 
                             <div class="grid grid-cols-12">
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 xl:col-span-12">
-                                    <div class="border-b border-gray-200 dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                    <div class="dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Recipient Name</div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ $secondBeneficiary?->meta['bank_account_name'] }}</div>
                                         </div>
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Recipient Account Number </div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ $secondBeneficiary?->meta['bank_account_number'] }}</div>
                                         </div>
                                         @isset($secondBeneficiary?->meta['bank_code'])
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Recipient Sort Number </div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ @$secondBeneficiary?->meta['bank_code'] }}</div>
                                         </div>
                                         @endisset
@@ -128,30 +128,30 @@
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Recipient IFSC Code / IBAN </div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ @$secondBeneficiary?->meta['iban_number'] }}</div>
                                         </div>
                                         @endisset
                                     </div>
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 xl:col-span-12">
-                                    <div class="border-b border-gray-200 dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                    <div class="dark:border-dark-5 px-2 pb-4 mt-3 sm:px-2 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Amount To Send </div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ $transferDetails['amount'] }} {{ $sender->currency }}</div>
                                         </div>
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Payment Method </div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ ucfirst($transferDetails['payment_method']) }}</div>
                                         </div>
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Transfer Reason </div>
-                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-1/3 text-sm">
+                                            <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                                 {{ @$transferReason['reason'] }}</div>
                                         </div>
                                     </div>
