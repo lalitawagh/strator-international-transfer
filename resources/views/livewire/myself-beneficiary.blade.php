@@ -111,7 +111,7 @@
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
-                                            ({{ $country->phone }})
+                                            {{ $country->code }} ({{ $country->phone }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -150,7 +150,7 @@
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
-                                            ({{ $country->phone }})
+                                            {{ $country->code }} ({{ $country->phone }})
                                         </option>
                                     @endforeach
                                 </select>
