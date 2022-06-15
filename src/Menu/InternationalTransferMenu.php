@@ -19,7 +19,7 @@ class InternationalTransferMenu extends Item
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if ($user->isSubscriber() && $user->is_banking_user == true) {
+        if ($user->isSubscriber() && $user->is_banking_user) {
             return true;
         }
         if ($user->isSuperAdmin()) {
@@ -33,7 +33,7 @@ class InternationalTransferMenu extends Item
         /** @var $user App\Model\User */
         $user = Auth::user();
 
-        if($user->isSubscriber() && $user->is_banking_user == true) {
+        if($user->isSubscriber() && $user->is_banking_user) {
             return [
             new MenuItem('Money Transfer', 'activity', url:route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]])),
             ];
