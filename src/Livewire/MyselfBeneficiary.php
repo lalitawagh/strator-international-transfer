@@ -220,7 +220,7 @@ class MyselfBeneficiary extends Component
             $user = auth()->user();
             $this->contact = $contact;
 
-            $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
             // $contact->generateOtp("sms");
             $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
 
