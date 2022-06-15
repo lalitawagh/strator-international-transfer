@@ -66,6 +66,7 @@ class MasterAccountController extends Controller
                 $data['meta']['bank_code_type'] = 'sort-code';
                 $data['meta']['bank_code'] = $info['sort_code'];
                 $data['meta']['bank_account_number'] = $info['account_number'];
+                $data['meta']['bank_account_name'] =  $info['account_holder_name'];
                 $data['email'] = $user->email;
 
                 $beneficiaryRefId = $this->service->createBeneficiary(
