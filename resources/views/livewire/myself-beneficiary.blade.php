@@ -23,7 +23,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-12 md:gap-10 mt-0">
+          <div class="grid grid-cols-12 md:gap-0 lg:gap-10 mt-0">
 
             <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-0">
 
