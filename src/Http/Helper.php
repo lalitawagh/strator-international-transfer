@@ -41,7 +41,7 @@ class Helper
     public static function getExchangeRateAmount($amount,$currency)
     {
         try {
-            $money = money($amount,$currency);
+            $money = Money::parseByDecimal($amount,$currency);
             return $money;
         } catch (\Exception $e) {
             return $e->getMessage();
