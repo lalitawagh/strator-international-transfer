@@ -16,6 +16,7 @@ use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
 use Kanexy\PartnerFoundation\Core\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class MasterAccountController extends Controller
 {
@@ -42,6 +43,7 @@ class MasterAccountController extends Controller
         $info['id'] = now()->format('dmYHis');
 
         $account = Account::whereAccountNumber($info['account_number'])->first();
+        $workspace = Workspace::find($account->holder_id);
 
         if(is_null($account))
         {
@@ -70,10 +72,10 @@ class MasterAccountController extends Controller
                 $data['email'] = $user->email;
 
                 $beneficiaryRefId = $this->service->createBeneficiary(
-                    new CreateBeneficiaryDto($account->holder_id, $data)
+                    new CreateBeneficiaryDto($workspace->ref_id, $data)
                 );
 
-                $data['workspace_id'] = $account->holder_id;
+                $data['workspace_id'] = $workspace->id;
                 $data['ref_id']       = $beneficiaryRefId;
                 $data['ref_type']     = 'wrappex';
                 $data['classification'] = [ContactClassificationType::BENEFICIARY];
@@ -95,8 +97,6 @@ class MasterAccountController extends Controller
                 'message' => 'Account details updated successfully.',
             ]);
         }
-
-
     }
 
 }

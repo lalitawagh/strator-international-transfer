@@ -257,6 +257,7 @@
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 <x-feathericon-clock height="12"/>
 
+
                                 <span>
                                     {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
                                 </span>

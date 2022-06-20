@@ -63,6 +63,8 @@ class FeeController extends Controller
     {
         $data = $request->validated();
         $data['id'] = $id;
+        $data['amount'] = ($data['fee_type'] == 'amount') ? $data['amount'] : 0;
+        $data['percentage'] = ($data['fee_type'] == 'percentage') ? $data['percentage'] : 0;
 
         $settings = collect(Setting::getValue('money_transfer_fees'))->map(function ($item) use ($id,$data) {
             if ($item['id'] == $id) {
