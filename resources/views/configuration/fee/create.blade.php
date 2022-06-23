@@ -8,7 +8,7 @@
             enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="type" id="type" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
@@ -24,7 +24,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="grid grid-cols-12 md:gap-10 mt-0">
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
                     <label for="min_amount" class="form-label sm:w-30">Min Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="min_amount" name="min_amount" type="text" class="form-control @error('min_amount') border-theme-6 @enderror" value="{{ old('min_amount') }}" required>
@@ -51,7 +51,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
                     <label for="max_amount" class="form-label sm:w-30">Max Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="max_amount" name="max_amount" type="text" class="form-control @error('max_amount') border-theme-6 @enderror" value="{{ old('max_amount') }}" required>
