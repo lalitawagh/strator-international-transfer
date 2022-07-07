@@ -33,7 +33,7 @@
                                                                         </div>
 
                                                                         <div class="ml-4 mr-auto">
-                                                                            <a href="" class="font-medium">{{ $payment['title'] }}</a>
+                                                                            <a href="" class="font-medium">@if(!$user->is_banking_user && $payment['method'] == 'bank_account') <span style="color:red;">For the banking payment method, you need to open a bank account.</span><br> @endif{{ $payment['title'] }}</a>
                                                                             {{-- <div
                                                                                 class="w-full flex-column text-gray-600 text-xs sm:text-sm">
                                                                                 <div class="mr-2">
@@ -44,7 +44,7 @@
                                                                         </div>
                                                                         <div class="font-medium text-gray-700 dark:text-gray-500">
                                                                             <div class="form-check mt-2">
-                                                                                <input id="radio-switch-{{ $key }}" class="form-check-input" type="radio" name="payment_method" value="{{ $payment['method'] }}">
+                                                                                <input id="radio-switch-{{ $key }}" class="form-check-input" type="radio" name="payment_method" value="{{ $payment['method'] }}" @if(!$user->is_banking_user && $payment['method'] == 'bank_account') disabled @endif>
                                                                                 <label class="form-check-label" for="radio-switch-{{ $key }}"></label>
                                                                             </div>
 

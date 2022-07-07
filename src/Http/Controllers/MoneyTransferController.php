@@ -191,8 +191,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $account->id,
-                    'sender_name' => $account->name,
+                    'sender_id' => $workspace->id,
+                    'sender_name' => $workspace->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
@@ -282,8 +282,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $account->id,
-                    'sender_name' => $account->name,
+                    'sender_id' => $workspace->id,
+                    'sender_name' => $workspace->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
