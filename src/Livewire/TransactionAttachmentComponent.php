@@ -71,11 +71,9 @@ class TransactionAttachmentComponent extends Component
         {
             $transaction = Transaction::find($transaction);
 
-            foreach($this->attachment as $image)
-            {
-                $transaction->addMedia($image)->toMediaCollection('Images', 'azure');
-            }
-
+            collect($this->attachment)->each(fn($image) =>
+                $transaction->addMedia($image->getRealPath())->toMediaCollection('Images', 'azure')
+            );
         }
         $this->mediaItems =  $transaction->getMedia('Images');
         $this->logSent = true;
