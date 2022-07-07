@@ -1,5 +1,6 @@
 <div>
     <div class="py-5">
+        <form enctype="multipart/form-data">
             @if ($logSent == true)
                 <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Message send successfully</h4>
             @endif
