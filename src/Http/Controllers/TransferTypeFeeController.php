@@ -18,7 +18,7 @@ class TransferTypeFeeController extends Controller
     {
         $this->authorize(TransferTypeFeePolicy::VIEW, TransferTypeFeeConfiguration::class);
 
-        $transfer_type_fees = Helper::paginate(collect(Setting::getValue('money_transfer_type_fees',[])));
+        $transfer_type_fees = Helper::paginate(collect(Setting::getValue('money_transfer_type_fees',[]))->reverse());
         return view("international-transfer::configuration.transfer-type.index", compact('transfer_type_fees'));
     }
 

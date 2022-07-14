@@ -52,11 +52,12 @@ class TransactionLogComponent extends Component
         $log->user_id = auth()->user()->id;
         $log->target()->associate($transaction);
         $log->save();
-
-
-        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
+        
         $this->logSent = true;
         $this->emit('clearInput');
+        
+        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
+       
     }
 
     public function clearInput()
