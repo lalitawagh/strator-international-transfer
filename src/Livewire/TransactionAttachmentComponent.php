@@ -74,9 +74,12 @@ class TransactionAttachmentComponent extends Component
             collect($this->attachment)->each(fn($image) =>
                 $transaction->addMedia($image->getRealPath())->toMediaCollection('Images', 'azure')
             );
+
+            $this->mediaItems =  $transaction?->getMedia('Images');
+
+            $this->logSent = true;
         }
-        $this->mediaItems =  $transaction->getMedia('Images');
-        $this->logSent = true;
+       
         $this->emit('clearInput');
     }
 

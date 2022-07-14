@@ -2,7 +2,7 @@
     <div class="py-5">
         <form enctype="multipart/form-data">
             @if ($logSent == true)
-                <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Message send successfully</h4>
+                <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Attachment updated successfully</h4>
             @endif
             <div class="grid grid-cols-12 md:gap-10 mt-0">
 
