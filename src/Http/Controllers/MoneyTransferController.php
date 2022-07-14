@@ -39,6 +39,8 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
         session()->forget('transaction_id');
+        
+        session()->forget('money_transfer_request');
 
         $transactions = QueryBuilder::for(Transaction::class)
         ->allowedFilters([
@@ -462,6 +464,7 @@ class MoneyTransferController extends Controller
             'status' => 'success',
             'message' => 'The money transfer request cancelled successfully.',
         ]);
+        
     }
 
     public function transferCompleted(Request $request)

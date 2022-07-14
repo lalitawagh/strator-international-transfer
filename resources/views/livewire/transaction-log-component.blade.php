@@ -62,7 +62,7 @@
                             <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
                                 <div class="flex items-center">
 
-                                    <div class="text-xs text-gray-500 ml-auto">  {{ $log->user->getFullName() }}, {{ date('d-m-Y H:i:s',strtotime($log->updated_at)) }}</div>
+                                    <div class="text-xs text-gray-500 ml-auto">  {{ $log->user->getFullName() }}, {{ date('D d/m/Y H:i',strtotime($log->updated_at)) }}</div>
                                 </div>
                                 <div class="text-gray-600 mt-1"><p>{!! $log->text !!}</p></div>
                             </div>
