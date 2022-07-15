@@ -2,7 +2,7 @@
     <div class="p-0" x-data="{ selectedDiv: 'personal' }">
 
         <form>
-          <div class="grid grid-cols-12 md:gap-10 mt-0 lg:mb-0">
+          <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0 lg:mb-0">
             <div class="col-span-12 md:col-span-8 lg:col-span-6 form-inline lg:mt-0">
               <label class="form-label sm:w-40">Contact Type <span class="text-theme-6">*</span></label>
               <div class="sm:w-5/6 sm:pt-1">
@@ -30,7 +30,7 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2" id="sectionRefresh">
                     <label for="bank_country" class="form-label sm:w-40"> Country <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true" wire:change="changeCountry($event.target.value)" class="tail-select w-full ">
+                        <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true" wire:change="changeCountry($event.target.value)" class="tom-select w-full ">
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}" @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
                             @endforeach
@@ -107,7 +107,7 @@
 
                                 <select id="countryWithPhone" name="country_code"
                                     onchange="getFlagImg(this,'{{ $beneficiaryType }}')" data-search="true"
-                                    class="tail-select" style="width:20%">
+                                    class="tom-select" style="width:20%">
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
@@ -146,7 +146,7 @@
 
                                 <select id="countryWithPhone" name="country_code"
                                     onchange="getFlagImgLandline(this,'{{ $beneficiaryType }}')" data-search="true"
-                                    class="tail-select" style="width:20%">
+                                    class="tom-select" style="width:20%">
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>

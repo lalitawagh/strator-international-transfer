@@ -5,7 +5,7 @@
             <div class="intro-y mt-3 sm:mt-0">
 
                 <div class="flex-wrap sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                    <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
+                    <div class="w-auto nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                         <a id="work-in-progress-mobile-new-tab" data-toggle="tab" data-target="#work-in-progress-new"
                             href="javascript:;" class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
                         <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-toggle="tab" data-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
@@ -57,7 +57,7 @@
                                         Add Custom Filter </a>
                                     <form class="filter-form relative">
                                         <div class="form mb-1">
-                                            <select data-search="true" class="tail-select w-full form-control-sm mt-2">
+                                            <select data-search="true" class="tom-select w-full form-control-sm mt-2">
                                                 <option value="1">Column Name</option>
                                                 <option value="2">Column Name 1</option>
                                                 <option value="3">Column Name 2</option>
@@ -68,7 +68,7 @@
                                             </span>
                                         </div>
                                         <div class="form mb-1">
-                                            <select data-search="true" class="tail-select w-full form-control-sm mt-2">
+                                            <select data-search="true" class="tom-select w-full form-control-sm mt-2">
                                                 <option value="1">Action is true</option>
                                                 <option value="2">Action is false</option>
                                             </select>

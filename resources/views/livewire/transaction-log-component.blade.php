@@ -3,7 +3,7 @@
             @if ($logSent == true)
                 <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Message send successfully</h4>
             @endif
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                 <div class="col-span-12 md:col-span-12 form-inline mt-2" style="align-items: inherit;">
                     <label class="form-label sm:w-20">Description <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">

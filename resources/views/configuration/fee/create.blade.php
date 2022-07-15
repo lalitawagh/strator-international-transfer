@@ -7,11 +7,11 @@
         <form action="{{ route('dashboard.international-transfer.fee.store') }}" method="POST"
             enctype="multipart/form-data">
             @csrf
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select name="type" id="type" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
+                        <select name="type" id="type" data-search="true" class="tom-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($fee_types as $fee_type)
                                 @if ($fee_type != \Kanexy\InternationalTransfer\Enums\Fee::PAYMENT_TYPE && $fee_type != \Kanexy\InternationalTransfer\Enums\Fee::TRANSFER_TYPE)
                                     <option value="{{ $fee_type }}"> {{  trans('international-transfer::configuration.'.$fee_type) }}</option>
@@ -27,7 +27,7 @@
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select name="status" id="status" data-search="true" class="tail-select w-full @error('status') border-theme-6 @enderror" required>
+                        <select name="status" id="status" data-search="true" class="tom-select w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
                                 <option value="{{ $status }}"> {{ ucfirst($status) }} </option>
                             @endforeach
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="min_amount" class="form-label sm:w-30">Min Amount <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-10 mt-0" @if (old('fee_type') == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type') == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0" @if (old('fee_type') == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type') == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="amount" class="form-label sm:w-30">Fee <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 sm:pt-0" >

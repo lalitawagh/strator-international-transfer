@@ -15,7 +15,7 @@
                 <thead class="short-wrp">
                     <tr>
                         <th class="w-16 whitespace-nowrap text-left">
-                            <div class="form-check mt-1 border-gray-400">
+                            <div class="form-check mt-0 border-gray-400">
                                 <input id="checkbox-switch-1" class="form-check-input" type="checkbox" value="">
                                 <label class="form-check-label" for="checkbox-switch-1"></label>
                             </div>
