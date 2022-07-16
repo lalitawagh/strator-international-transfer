@@ -74,7 +74,11 @@
                             <input id="radio-switch-2" class="form-check-input ml-3" type="radio"   x-on:click="selected = '0'" name="fee_type" value="percentage" @if (old('fee_type') == 'percentage') checked @endif>
                             <label class="form-check-label" for="radio-switch-2"><h4 href="javascript:;" class="font-medium truncate mr-5">
                                 <h4>Percentage</h4></label>
+                               
                         </div>
+                        @error('fee_type')
+                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        @enderror    
                     </div>
                 </div>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '1'" >
