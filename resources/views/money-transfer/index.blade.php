@@ -26,8 +26,8 @@
                                                 <div
                                                     class="w-full flex-wrap sm:flex sm:items-center items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5 justify-end">
                                                     <div class="w-auto nav nav-tabs mr-auto hidden sm:flex" role="tablist">
-                                                        <a id="work-in-progress-mobile-new-tab" data-toggle="tab"
-                                                            data-target="#work-in-progress-new" href="javascript:;"
+                                                        <a id="work-in-progress-mobile-new-tab" data-tw-toggle="tab"
+                                                            data-tw-target="#work-in-progress-new" href="javascript:;"
                                                             class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
                                                     </div>
                                                     <div class="flex flex-wrap gap-2 items-center md:ml-auto mb-2">
@@ -36,7 +36,7 @@
                                                             <input list="browsers" name="browser" id="browser"
                                                                 placeholder="Search"
                                                                 class="search__input form-control border-transparent placeholder-theme-13">
-                                                            <i data-feather="search"
+                                                            <i data-lucide="search"
                                                                 class="search__icon dark:text-gray-300"></i>
                                                         </div>
                                                         <div class="dark:text-gray-300">1 of 50</div>
@@ -61,7 +61,7 @@
 
                                                         <a href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
-                                                            <i class="w-4 h-4" data-feather="list"></i></a>
+                                                            <i class="w-4 h-4" data-lucide="list"></i></a>
                                                         <a href="#"
                                                             class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
@@ -79,9 +79,9 @@
                                                         <div class="dropdown sm:w-auto ml-2 sm:ml-0 mr-2">
                                                             <button
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
-                                                                aria-expanded="false"><i data-feather="filter"
+                                                                aria-expanded="false"><i data-lucide="filter"
                                                                     class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter <i
-                                                                    data-feather="chevron-down"
+                                                                    data-lucide="chevron-down"
                                                                     class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
                                                             <div class="dropdown-menu lg:w-40 filter-dropbox">
                                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
@@ -99,7 +99,7 @@
                                                                             <span class="float-right ml-2 absolute plus"
                                                                                 style="margin:0;">
                                                                                 <a href="javascript:;"><i
-                                                                                        data-feather="trash-2"
+                                                                                        data-lucide="trash-2"
                                                                                         class="w-4 h-4 mr-2"></i></a>
                                                                             </span>
                                                                         </div>
@@ -116,12 +116,12 @@
                                                                             <div class="form-inline">
                                                                                 <button type="submit"
                                                                                     class="btn btn-elevated-primary btn-sm mr-1"><i
-                                                                                        data-feather="file-text"
+                                                                                        data-lucide="file-text"
                                                                                         class="w-5 h-5 mr-1"></i>
                                                                                     Apply</button>
                                                                                 <a href="javascript:void(0);"
                                                                                     class="btn btn-secondary btn-sm mr-1"><i
-                                                                                        data-feather="plus-circle"
+                                                                                        data-lucide="plus-circle"
                                                                                         class="w-5 h-5 mr-1"></i> Add a
                                                                                     condition</a>
 
@@ -133,22 +133,22 @@
                                                         </div>
                                                         <button id="tabulator-print"
                                                             class="w-full btn btn-sm py-2 btn-outline-secondary sm:w-auto mr-2">
-                                                            <i data-feather="printer" class="w-4 h-4 mr-2"></i> Print
+                                                            <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print
                                                         </button>
                                                         <div class="dropdown sm:w-auto">
                                                             <button
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
-                                                                aria-expanded="false"> Export <i data-feather="chevron-down"
+                                                                aria-expanded="false"> Export <i data-lucide="chevron-down"
                                                                     class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
                                                             <div class="dropdown-menu w-40">
                                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                                                                     <a id="tabulator-export-xlsx" href="javascript:;"
                                                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                        <i data-feather="file-text"
+                                                                        <i data-lucide="file-text"
                                                                             class="w-4 h-4 mr-2"></i> Export XLSX </a>
                                                                     <a id="tabulator-export-html" href="javascript:;"
                                                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                        <i data-feather="file-text"
+                                                                        <i data-lucide="file-text"
                                                                             class="w-4 h-4 mr-2"></i> Export PDF </a>
                                                                 </div>
                                                             </div>
@@ -489,7 +489,7 @@
                                                                                                     @endif
                                                                                                 @endif
                                                                                             @endif
-                                                                                            <a href="javascript:void(0)" onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"  data-toggle="modal" data-target="#superlarge-slide-over-size-preview"
+                                                                                            <a href="javascript:void(0)" onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"  data-tw-toggle="modal" data-tw-target="#superlarge-slide-over-size-preview"
                                                                                                 class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                 <x-feathericon-navigation-2
                                                                                                     class="w-4 h-4 mr-1" />
@@ -540,7 +540,7 @@
                     <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
 
                     <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip"
-                        data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
+                        data-dismiss="modal"> <i data-lucide="x" class="w-3 h-3"></i> </a>
                 </div>
 
 
@@ -548,13 +548,13 @@
                     <div class="pr-0 border-b border-gray-200 dark:border-dark-5">
                         <div class="p-0">
                             <div class="pos__tabs nav nav-tabs gap-2" role="tablist">
-                                <a id="Overview-tab" data-toggle="tab" data-target="#Overview" href="javascript:;"
+                                <a id="Overview-tab" data-tw-toggle="tab" data-tw-target="#Overview" href="javascript:;"
                                     class="sm:mr-8 py-2 text-center active" role="tab" aria-controls="Overview"
                                     aria-selected="true">Overview</a>
-                                <a id="Notes-tab" data-toggle="tab" data-target="#Notes" href="javascript:;"
+                                <a id="Notes-tab" data-tw-toggle="tab" data-tw-target="#Notes" href="javascript:;"
                                     class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Notes"
                                     aria-selected="false">Notes</a>
-                                <a id="Attachments-tab" data-toggle="tab" data-target="#Attachments" href="javascript:;"
+                                <a id="Attachments-tab" data-tw-toggle="tab" data-tw-target="#Attachments" href="javascript:;"
                                     class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Attachments"
                                     aria-selected="false">Attachments</a>
                             </div>
@@ -565,12 +565,12 @@
                         <div id="Overview" class="tab-pane active " role="tabpanel" aria-labelledby="Overview-tab">
                             <div class="form-inline flex float-right">
                                 <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                                    <i data-feather="edit" class="w-3 h-3"></i>
+                                    <i data-lucide="edit" class="w-3 h-3"></i>
                                 </div>
                                 <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                                    <i data-feather="save" class="w-3 h-3"></i> </a>
+                                    <i data-lucide="save" class="w-3 h-3"></i> </a>
                                 <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                                    title="Download PDF" id="create_pdf"> <i data-feather="download" class="w-3 h-3"></i> </a>
+                                    title="Download PDF" id="create_pdf"> <i data-lucide="download" class="w-3 h-3"></i> </a>
                             </div>
                             <div class="clearfix"></div>
                             @livewire('transaction-detail-component')

@@ -133,14 +133,14 @@
                                 <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
                                         <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
+                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
                                         </button>
 
                                         <div class="dropdown-menu w-48">
                                             <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
                                                 <a href="{{ route('dashboard.international-transfer.transfer-type-fee.edit', $transfer_type_fee['id']) }}"
                                                     class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                    <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                    <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                 </a>
                                                 <form
                                                     action="{{ route('dashboard.international-transfer.transfer-type-fee.destroy', $transfer_type_fee['id']) }}"
@@ -150,7 +150,7 @@
 
                                                     <button type="submit"
                                                         class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                        <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
+                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
                                                     </button>
                                                 </form>
                                             </div>

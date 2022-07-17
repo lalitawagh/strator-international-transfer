@@ -16,14 +16,14 @@
                                 <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manual transfer Account Details&body= Beneficiary :- {{ $beneficiary->display_name }} %0D%0A Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
                                             %0D%0A Bank Account Name:- {{ $masterAccount['account_holder_name'] }} %0D%0A Account Number :- {{ $masterAccount['account_number'] }} %0D%0A Sort Code :- {{ $masterAccount['sort_code'] }}  ">
-                                        <i data-feather="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
+                                        <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
-                                    <a href="javascript:void(0);" onclick="get_pdf('manual')"><i data-feather="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
+                                    <a href="javascript:void(0);" onclick="get_pdf('manual')"><i data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a onclick="copyData(this)"
                                         data-copy="Manual transfer Account Details- Beneficiary :- {{ $beneficiary->display_name }}  Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }}  Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
                                             Bank Account Name:- {{ $masterAccount['account_holder_name'] }}  Account Number :- {{ $masterAccount['account_number'] }}  Sort Code :- {{ $masterAccount['sort_code'] }}  "
                                         href="javascript:void(0);">
-                                        <i data-feather="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
+                                        <i data-lucide="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
                                 </div>
                             </div>
@@ -90,13 +90,13 @@
                                 <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject={{ $payment }} transfer Account Details&body= Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} %0D%0A Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }} %0D%0A @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset
                                             %0D%0A Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }} %0D%0A Payment Method :- {{ $transferDetails['payment_method'] }} %0D%0A Transfer Reason :- {{ @$transferReason['reason'] }}  ">
-                                        <i data-feather="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
+                                        <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
-                                    <a href="javascript:void(0);" onclick="get_pdf('{{ $payment }}')"><i data-feather="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
+                                    <a href="javascript:void(0);" onclick="get_pdf('{{ $payment }}')"><i data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a onclick="copyData(this)"
                                         data-copy="{{ $payment }} transfer Account Details- Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }}  Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }}  @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number'])Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }}  Payment Method :- {{ $transferDetails['payment_method'] }}  Transfer Reason :- {{ @$transferReason['reason'] }} "
                                         href="javascript:void(0);">
-                                        <i data-feather="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
+                                        <i data-lucide="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
                                 </div>
                             </div>

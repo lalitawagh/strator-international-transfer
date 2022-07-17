@@ -22,11 +22,11 @@
                                         </h2>
                                         <div class="ml-auto pos">
                                             <div class="pos__tabs nav nav-tabs justify-center" role="tablist">
-                                                <a id="ticket-tab" data-toggle="tab" data-target="#ticket"
+                                                <a id="ticket-tab" data-tw-toggle="tab" data-tw-target="#ticket"
                                                     href="{{ route('dashboard.banking.payouts.index', ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]) }}"
                                                     class="flex-1 btn-secondary py-1 px-2 mr-2 rounded-md text-center "
                                                     role="tab" aria-controls="ticket" aria-selected="true">Local</a>
-                                                <a id="details-tab" data-toggle="tab" data-target="#details"
+                                                <a id="details-tab" data-tw-toggle="tab" data-tw-target="#details"
                                                     href="{{ route('dashboard.international-transfer.money-transfer.create',['filter' =>  ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
                                                     class="flex-1 btn-secondary py-1 px-2 mr-2 rounded-md text-center active"
                                                     role="tab" aria-controls="details"
@@ -66,7 +66,7 @@
                                         <div
                                             class="intro-x lg:text-center flex items-center mt-4 lg:mt-0 sm:mt-0 lg:block flex-1 z-10">
                                             <button class="w-10 h-10 rounded-full btn {{ request()->routeIs('dashboard.international-transfer.money-transfer.showFinal') ? 'btn-primary' : 'text-gray-600 bg-gray-200 dark:bg-dark-1' }}"
-                                                data-target="#copy-button-modal">5</button>
+                                                data-tw-target="#copy-button-modal">5</button>
                                             <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto {{ request()->routeIs('dashboard.international-transfer.money-transfer.showFinal') ? 'font-bold' : 'text-gray-700 dark:text-gray-600' }}">
                                                 Finish</div>
                                         </div>

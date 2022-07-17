@@ -11,7 +11,7 @@
                 <div class="">
                     <div class="modal-body py-10">
                         <div class="pb-20 text-center">
-                            <i data-feather="check-circle" class="w-16 h-16 text-theme-9 mx-auto mt-3"></i>
+                            <i data-lucide="check-circle" class="w-16 h-16 text-theme-9 mx-auto mt-3"></i>
                             <div class="text-3xl mt-5">Money Transfer Successful</div>
                         </div>
 

@@ -25,7 +25,7 @@
                         @enderror
 
                         <div class="text-right mt-5 py-4">
-                            {{-- <a data-toggle="modal" data-target="#large-slide-over-size-preview"
+                            {{-- <a data-tw-toggle="modal" data-tw-target="#large-slide-over-size-preview"
                                 class="btn btn-secondary">Compare Price</a> --}}
 
                         <button class="btn btn-primary w-24 ml-2" >Continue</button>
