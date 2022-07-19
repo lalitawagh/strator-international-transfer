@@ -30,7 +30,7 @@
                 <div class="col-span-12 md:col-span-6 form-inline mt-2" id="sectionRefresh">
                     <label for="bank_country" class="form-label sm:w-40"> Country <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true" wire:change="changeCountry($event.target.value)" class="tom-select w-full ">
+                        <select class="tom-select" id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true" wire:change="changeCountry($event.target.value)" class="tom-select w-full ">
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}" @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
                             @endforeach

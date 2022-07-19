@@ -33,7 +33,7 @@
                                                     <div class="flex flex-wrap gap-2 items-center md:ml-auto mb-2">
                                                         <div
                                                             class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search  sm:block lg:mr-2 lg:ml-auto">
-                                                            <input list="browsers" name="browser" id="browser"
+                                                            <input type="text" list="browsers" name="browser" id="browser"
                                                                 placeholder="Search"
                                                                 class="search__input form-control border-transparent placeholder-theme-13">
                                                             <i data-lucide="search"
