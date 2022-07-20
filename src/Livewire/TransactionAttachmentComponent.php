@@ -73,12 +73,9 @@ class TransactionAttachmentComponent extends Component
 
     public function transactionAttachmentSubmit($transaction)
     {
-        // dd($this->buttonDisabled);
         if($this->buttonDisabled != 'true')
         {
-            // dd('xx');
             $data = $this->validate();
-        
             $this->buttonDisabled = true;
            
             if(! is_null($this->attachment))
@@ -95,7 +92,6 @@ class TransactionAttachmentComponent extends Component
             }
         
             $this->emit('clearInput');
-            // $this->emit('refreshComponent');
         }
         
     }
