@@ -18,11 +18,13 @@ class TransactionAttachmentComponent extends Component
 
     public $description;
 
-    public $attachment = [];
+    public $attachment;
 
     public $mediaItems;
 
     public $logSent;
+
+    public $buttonDisabled;
 
     public $logs = [];
 
@@ -35,20 +37,25 @@ class TransactionAttachmentComponent extends Component
     protected function rules()
     {
         return  [
-            'attachment.*' => ['required','max:5120','mimes:png,jpg,jpeg','file']
+            'attachment' => ['required','max:5120','mimes:png,jpg,jpeg','file']
         ];
 
     }
 
     protected $validationAttributes = [
-        'attachment.*' => 'attachments',
+        'attachment' => 'attachments',
     ];
 
     protected function messages()
     {
         return  [
-            'attachment.*.max' => 'The attachments may not be greater than 5 MB.',
+            'attachment.max' => 'The attachments may not be greater than 5 MB.',
         ];
+    }
+
+    public function fileUpload()
+    {
+        $this->buttonDisabled = false;
     }
 
     public function showTransactionAttachment(Transaction $transaction)
@@ -66,21 +73,27 @@ class TransactionAttachmentComponent extends Component
 
     public function transactionAttachmentSubmit($transaction)
     {
-        $data = $this->validate();
-        if(! is_null($this->attachment))
+        if($this->buttonDisabled != 'true')
         {
-            $transaction = Transaction::find($transaction);
+            $data = $this->validate();
+            $this->buttonDisabled = true;
+           
+            if(! is_null($this->attachment))
+            {
+                $transaction = Transaction::find($transaction);
+                $transaction->addMedia($this->attachment->getRealPath())->toMediaCollection('Images', 'azure');
+                // collect($this->attachment)->each(fn($image) =>
+                //     $transaction->addMedia($image->getRealPath())->toMediaCollection('Images', 'azure')
+                // );
 
-            collect($this->attachment)->each(fn($image) =>
-                $transaction->addMedia($image->getRealPath())->toMediaCollection('Images', 'azure')
-            );
-
-            $this->mediaItems =  $transaction?->getMedia('Images');
-
-            $this->logSent = true;
+                $this->mediaItems =  $transaction?->getMedia('Images');
+            
+                $this->logSent = true;
+            }
+        
+            $this->emit('clearInput');
         }
-       
-        $this->emit('clearInput');
+        
     }
 
     public function clearInput()
@@ -88,5 +101,6 @@ class TransactionAttachmentComponent extends Component
         $this->logSent = false;
         $this->description = null;
         $this->attachment = null;
+        $this->buttonDisabled = false;
     }
 }
