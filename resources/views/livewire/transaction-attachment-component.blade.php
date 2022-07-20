@@ -1,7 +1,8 @@
 <div>
     <div class="py-5">
+        <form enctype="multipart/form-data" >
             @if ($logSent == true)
-                <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Message send successfully</h4>
+                <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Attachment updated successfully</h4>
             @endif
             <div class="grid grid-cols-12 md:gap-10 mt-0">
 
@@ -13,8 +14,8 @@
                 <div class="form-inline mt-2" >
                     <label class="form-label sm:w-20">Attachment</label>
                     <div class="sm:w-5/6">
-                        <input id="attachment" wire:model="attachment" name="attachment" type="file" class="form-control" multiple>
-                        @error('attachment.0')
+                        <input id="attachment" wire:model="attachment" wire:change="fileUpload()" name="attachment" type="file" class="form-control">
+                        @error('attachment')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
                     </div>
@@ -28,7 +29,7 @@
 
             </div>
             <div class="text-right mt-5" >
-                <button type="button"   wire:click="transactionAttachmentSubmit({{ $transaction?->id }})" class="btn btn-sm btn-primary w-24 mr-1" >Save</button>
+                <button type="button" id="transactionSubmit"   @if($buttonDisabled == true) @else onclick="myFunction()" wire:click="transactionAttachmentSubmit({{ $transaction?->id }})" @endif   class="btn btn-sm btn-primary w-24 mr-1" >Save</button>
             </div>
             <div class="flex mt-5">
             </div>
@@ -65,3 +66,14 @@
         </div>
         <!-- END: Recent Activities -->
 </div>
+
+@push('scripts')
+<script>
+    function myFunction() {
+         document.getElementById("transactionSubmit").disabled = true;
+         setTimeout(function(){
+           document.getElementById("transactionSubmit").disabled = false;
+         }, 5000);
+    }
+</script>
+@endpush
