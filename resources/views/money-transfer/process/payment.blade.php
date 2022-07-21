@@ -26,7 +26,7 @@
                                                     @foreach (trans('international-transfer::payment') as $key => $payment)
                                                         <div class="accordion-item">
                                                             <div id="faq-accordion-content-{{ $key }}" class="accordion-header">
-                                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-{{ $key }}" aria-expanded="true" aria-controls="faq-accordion-collapse-{{ $key }}">
+                                                                <button class="accordion-button" type="button" data-tw-toggle="collapse" data-tw-target="#faq-accordion-collapse-{{ $key }}" aria-expanded="true" aria-controls="faq-accordion-collapse-{{ $key }}">
                                                                     <div class="relative flex items-center pb-0">
                                                                         <div class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                                                                             <img alt="" class="rounded-full" style="padding:7px;" src="{{ $payment['image'] }}">
@@ -55,7 +55,7 @@
                                                             <div id="faq-accordion-collapse-{{ $key }}"
                                                                 class="accordion-collapse collapse @if ($key == 0) show @endif"
                                                                 aria-labelledby="faq-accordion-content-{{ $key }}"
-                                                                data-bs-parent="#faq-accordion-{{ $key }}">
+                                                                data-tw-parent="#faq-accordion-{{ $key }}">
                                                                 <div
                                                                     class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
                                                                     {{ $payment['description'] }}
