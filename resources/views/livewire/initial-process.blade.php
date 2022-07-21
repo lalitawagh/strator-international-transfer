@@ -197,7 +197,7 @@
                     @endisset
                 @endforeach
             </span>
-            <select class="tom-select" id='tabcuntery-selection2' style='width: 105px;' wire:change="changeToCurrency($event.target.value)"
+            <select class="tom-select" id='tabcuntery-selection2'  wire:change="changeToCurrency($event.target.value)"
                 class="" name="currency_code_to">
                 @foreach ($countries as $country)
                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"

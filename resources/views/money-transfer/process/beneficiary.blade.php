@@ -81,12 +81,16 @@
 @push('scripts')
     <script>
         window.addEventListener('showOtpModel', event => {
-            cash("#"+event.detail.modalType+"-modal").modal("hide");
-            cash("#otp-modal").modal("show");
+            const mySlideOver = tailwind.Modal.getOrCreateInstance(document.querySelector("#"+event.detail.modalType+"-modal"));
+            mySlideOver.hide();
+
+            const showModal = tailwind.Modal.getOrCreateInstance(document.querySelector("#otp-modal"));
+            showModal.show();
         });
 
         window.addEventListener('confirmBeneficiary', event => {
-            cash("#confirm-beneficiary-modal-preview").modal("show");
+            const showModal = tailwind.Modal.getOrCreateInstance(document.querySelector("#confirm-beneficiary-modal-preview"));
+            showModal.show();
         });
 
         function getFlagImg(the,type) {
