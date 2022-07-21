@@ -565,12 +565,12 @@
                         <div id="Overview" class="tab-pane active " role="tabpanel" aria-labelledby="Overview-tab">
                             <div class="form-inline flex float-right">
                                 <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
-                                    <i data-lucide="edit" class="w-3 h-3"></i>
+                                    <i data-lucide="edit" class="w-30 h-30"></i>
                                 </div>
-                                <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip">
-                                    <i data-lucide="save" class="w-3 h-3"></i> </a>
-                                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip"
-                                    title="Download PDF" id="create_pdf"> <i data-lucide="download" class="w-3 h-3"></i> </a>
+                                <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip">
+                                    <i data-lucide="save" class="w-30 h-30"></i> </a>
+                                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip"
+                                    title="Download PDF" id="create_pdf"> <i data-lucide="download" class="w-30 h-30"></i> </a>
                             </div>
                             <div class="clearfix"></div>
                             @livewire('transaction-detail-component')
@@ -632,7 +632,8 @@
         });
 
         window.addEventListener('show-transaction-detail-modal', event => {
-            cash("#subscription-modal").modal("show");
+            const myModal = tailwind.Modal.getInstance(document.querySelector("#subscription-modal"));
+            myModal.show();
         });
     </script>
 @endpush
