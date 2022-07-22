@@ -1,4 +1,4 @@
-@extends("international-transfer::configuration.skeleton")
+@extends('international-transfer::configuration.skeleton')
 
 @section('title', 'Fee Setup')
 
@@ -114,28 +114,35 @@
 
                                 <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
-                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                        <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                            data-tw-toggle="dropdown">
+                                            <span class="w-5 h-5 flex items-center justify-center">
+                                                <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                            </span>
                                         </button>
+                                        <div class="dropdown-menu w-40">
+                                            <ul class="dropdown-content">
+                                                <li>
+                                                    <a href="{{ route('dashboard.international-transfer.fee.edit', $fee['id']) }}"
+                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                        <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                    </a>
+                                                </li>
 
-                                        <div class="dropdown-menu w-48">
-                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                <a href="{{ route('dashboard.international-transfer.fee.edit', $fee['id']) }}"
-                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                    <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                </a>
-                                                <form
-                                                    action="{{ route('dashboard.international-transfer.fee.destroy', $fee['id']) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
+                                                <li>
+                                                    <form
+                                                        action="{{ route('dashboard.international-transfer.fee.destroy', $fee['id']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
 
-                                                    <button type="submit"
-                                                        class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                    </button>
-                                                </form>
-                                            </div>
+                                                        <button type="submit"
+                                                            class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </td>
