@@ -11,7 +11,7 @@
                 x-on:livewire-upload-error="isUploading = false"
                 x-on:livewire-upload-progress="progress = $event.detail.progress">
                 <div class="form-inline mt-2" >
-                    <label class="form-label sm:w-20">Attachment</label>
+                    <label class="form-label sm:w-28">Attachment</label>
                     <div class="sm:w-5/6">
                         <input id="attachment" wire:model="attachment" name="attachment" type="file" class="form-control" multiple>
                         @error('attachment.0')

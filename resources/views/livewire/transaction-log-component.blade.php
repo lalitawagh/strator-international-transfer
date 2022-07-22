@@ -5,7 +5,7 @@
             @endif
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                 <div class="col-span-12 md:col-span-12 form-inline mt-2" style="align-items: inherit;">
-                    <label class="form-label sm:w-20">Description <span class="text-theme-6">*</span></label>
+                    <label class="form-label sm:w-28">Description <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                        <textarea wire:model.defer="description" class="form-control" required></textarea>
                        @error('description')

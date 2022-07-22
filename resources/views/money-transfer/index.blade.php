@@ -408,11 +408,8 @@
                                                                                     for="checkbox-switch-1"></label>
                                                                             </div>
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-left"> <a
-                                                                                href="javascript:void(0);"
-                                                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
-
-                                                                                style="color:#70297d !important;">{{ $transaction->urn }}</a>
+                                                                        <td class="whitespace-nowrap text-left"> 
+                                                                            <a class="active-clr" href="javascript:void(0);" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
