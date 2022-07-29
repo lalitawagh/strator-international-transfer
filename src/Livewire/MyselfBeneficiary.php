@@ -117,6 +117,7 @@ class MyselfBeneficiary extends Component
     {
         return  [
             'meta.bank_code.required_if' => 'The sort code field is required.',
+            'meta.iban_number.required' => 'The IFSC code/ IBAN field is required.',
         ];
     }
 

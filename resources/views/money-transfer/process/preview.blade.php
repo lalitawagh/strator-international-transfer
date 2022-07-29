@@ -11,6 +11,7 @@
                 <div class="intro-y mt-0 clearfix">
                     <div class="border-2 border-dashed border-gray-200 dark:border-dark-5 rounded-md sm:p-5 sm:m-3">
                         @if ($transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
+                            @php $payment = 'Manual Transfer'; @endphp
                             <div class=" p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Transfer Details</h3>
                                 <div class="text-xs text-right sm:ml-auto flex mb-0">
@@ -94,7 +95,7 @@
                                     </a>
                                     <a href="javascript:void(0);" onclick="get_pdf('{{ $payment }}')"><i data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a onclick="copyData(this)"
-                                        data-copy="{{ $payment }} transfer Account Details- Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }}  Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }}  @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number'])Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }}  Payment Method :- {{ $transferDetails['payment_method'] }}  Transfer Reason :- {{ @$transferReason['reason'] }} "
+                                        data-copy="{{ $payment }} transfer Account Details- Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }}  Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }}  @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number'])Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }}  Payment Method :- {{ $payment }}  Transfer Reason :- {{ @$transferReason['reason'] }} "
                                         href="javascript:void(0);">
                                         <i data-lucide="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
@@ -146,7 +147,7 @@
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                             <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Payment Method </div>
                                             <div class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                                {{ ucfirst($transferDetails['payment_method']) }}</div>
+                                                {{ $payment }}</div>
                                         </div>
                                         <div
                                             class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
@@ -194,7 +195,7 @@
                 doc.save('manual-transfer-bank-detail.pdf');
             } else {
                 doc.fromHTML(
-                    '<h2>'+type+' Transfer Account Details</h2><div><div class="text-lg font-medium text-theme-1 dark:text-theme-10 mt-2"> Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} </br></div><div class="mt-1">Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }} </br></div><div class="mt-1"> @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number :- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN :- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset</br></div><div class="mt-1">Amount To Send :- {{ $transferDetails['amount'] }} {{ $sender->currency }} </br></div><div class="mt-1">Payment Method :- {{ $transferDetails['payment_method'] }} </br></div><div class="mt-1">Transfer Reason :- {{ @$transferReason['reason'] }} </br></div></div>',
+                    '<h2>'+type+' Transfer Account Details</h2><div><div class="text-lg font-medium text-theme-1 dark:text-theme-10 mt-2"> Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} </br></div><div class="mt-1">Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }} </br></div><div class="mt-1"> @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number :- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN :- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset</br></div><div class="mt-1">Amount To Send :- {{ $transferDetails['amount'] }} {{ $sender->currency }} </br></div><div class="mt-1">Payment Method :- {{ $payment }} </br></div><div class="mt-1">Transfer Reason :- {{ @$transferReason['reason'] }} </br></div></div>',
                     15, 15, {
                         'width': 170,
                         'elementHandlers': specialElementHandlers

@@ -18,7 +18,7 @@ class FeeController extends Controller
         $this->authorize(FeePolicy::VIEW, FeeConfiguration::class);
 
         $fee_types = Fee::toArray();
-        $fees = Helper::paginate(collect(Setting::getValue('money_transfer_fees',[])));
+        $fees = Helper::paginate(collect(Setting::getValue('money_transfer_fees',[]))->reverse());
 
         return view("international-transfer::configuration.fee.index", compact('fees', 'fee_types'));
     }
