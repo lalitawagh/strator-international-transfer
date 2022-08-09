@@ -39,6 +39,8 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
         session()->forget('transaction_id');
+        
+        session()->forget('money_transfer_request');
 
         $transactions = QueryBuilder::for(Transaction::class)
         ->allowedFilters([
@@ -191,8 +193,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $account->id,
-                    'sender_name' => $account->name,
+                    'sender_id' => $workspace->id,
+                    'sender_name' => $workspace->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
@@ -282,8 +284,8 @@ class MoneyTransferController extends Controller
                 'status' => TransactionStatus::DRAFT,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
-                    'sender_id' => $account->id,
-                    'sender_name' => $account->name,
+                    'sender_id' => $workspace->id,
+                    'sender_name' => $workspace->name,
                     'beneficiary_id' => $transferDetails['beneficiary_id'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
@@ -462,6 +464,7 @@ class MoneyTransferController extends Controller
             'status' => 'success',
             'message' => 'The money transfer request cancelled successfully.',
         ]);
+        
     }
 
     public function transferCompleted(Request $request)

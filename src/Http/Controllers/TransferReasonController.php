@@ -16,7 +16,7 @@ class TransferReasonController extends Controller
     {
         $this->authorize(TransferReasonPolicy::VIEW, TransferReasonConfiguration::class);
 
-        $money_transfer_reasons = Helper::paginate(collect(Setting::getValue('money_transfer_reasons',[])));
+        $money_transfer_reasons = Helper::paginate(collect(Setting::getValue('money_transfer_reasons',[]))->reverse());
         return view("international-transfer::configuration.transfer-reason.index", compact('money_transfer_reasons'));
     }
 
