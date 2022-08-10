@@ -28,13 +28,14 @@
                                                     <div class="w-auto nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                                                         <a id="work-in-progress-mobile-new-tab" data-tw-toggle="tab"
                                                             data-tw-target="#work-in-progress-new" href="javascript:;"
-                                                            class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
+                                                            class="py-2 ml-0 active" role="tab"
+                                                            aria-selected="true">ALL</a>
                                                     </div>
                                                     <div class="flex flex-wrap gap-2 items-center md:ml-auto mb-2">
                                                         <div
                                                             class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search  sm:block lg:mr-2 lg:ml-auto">
-                                                            <input type="text" list="browsers" name="browser" id="browser"
-                                                                placeholder="Search"
+                                                            <input type="text" list="browsers" name="browser"
+                                                                id="browser" placeholder="Search"
                                                                 class="search__input form-control border-transparent placeholder-theme-13">
                                                             <i data-lucide="search"
                                                                 class="search__icon dark:text-gray-300"></i>
@@ -42,19 +43,19 @@
                                                         <div class="dark:text-gray-300">1 of 50</div>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round"
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-left w-5 h-5">
                                                                 <polyline points="15 18 9 12 15 6"></polyline>
                                                             </svg> </a>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 lg:mr-2 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round"
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-right w-5 h-5">
                                                                 <polyline points="9 18 15 12 9 6"></polyline>
                                                             </svg> </a>
@@ -73,8 +74,7 @@
 
                                                     </div>
 
-                                                    <div class="dr-btn flex sm:flex mt-5 sm:mt-0 mb-2"
-                                                        style="">
+                                                    <div class="dr-btn flex sm:flex mt-5 sm:mt-0 mb-2" style="">
 
                                                         <div class="dropdown sm:w-auto ml-2 sm:ml-0 mr-2">
                                                             <button
@@ -93,8 +93,10 @@
                                                                             <select data-search="true"
                                                                                 class="tom-select w-full form-control-sm mt-2">
                                                                                 <option value="1">Column Name</option>
-                                                                                <option value="2">Column Name 1</option>
-                                                                                <option value="3">Column Name 2</option>
+                                                                                <option value="2">Column Name 1
+                                                                                </option>
+                                                                                <option value="3">Column Name 2
+                                                                                </option>
                                                                             </select>
                                                                             <span class="float-right ml-2 absolute plus"
                                                                                 style="margin:0;">
@@ -106,8 +108,10 @@
                                                                         <div class="form mb-1">
                                                                             <select data-search="true"
                                                                                 class="tom-select w-full form-control-sm mt-2">
-                                                                                <option value="1">Action is true</option>
-                                                                                <option value="2">Action is false</option>
+                                                                                <option value="1">Action is true
+                                                                                </option>
+                                                                                <option value="2">Action is false
+                                                                                </option>
                                                                             </select>
                                                                         </div>
                                                                     </form>
@@ -138,7 +142,8 @@
                                                         <div class="dropdown sm:w-auto">
                                                             <button
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
-                                                                aria-expanded="false"> Export <i data-lucide="chevron-down"
+                                                                aria-expanded="false"> Export <i
+                                                                    data-lucide="chevron-down"
                                                                     class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
                                                             <div class="dropdown-menu w-40">
                                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
@@ -187,14 +192,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -207,14 +214,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -226,14 +235,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -245,14 +256,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -264,14 +277,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -283,14 +298,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -303,14 +320,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -322,14 +341,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -341,14 +362,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -379,14 +402,16 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -408,8 +433,10 @@
                                                                                     for="checkbox-switch-1"></label>
                                                                             </div>
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-left"> 
-                                                                            <a class="active-clr" href="javascript:void(0);" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
+                                                                        <td class="whitespace-nowrap text-left">
+                                                                            <a class="active-clr"
+                                                                                href="javascript:void(0);"
+                                                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
@@ -419,8 +446,9 @@
                                                                         <td class="whitespace-nowrap text-center">
                                                                             {{ $transaction->meta['base_currency'] }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-right text-theme-6">
-                                                                            {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount,$transaction->meta['base_currency']) }}
+                                                                        <td
+                                                                            class="whitespace-nowrap text-right text-theme-6">
+                                                                            {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->amount, $transaction->meta['base_currency']) }}
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ $transaction->meta['second_beneficiary_name'] }}
@@ -429,10 +457,11 @@
                                                                         <td class="whitespace-nowrap text-center">
                                                                             {{ $transaction->meta['exchange_currency'] }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-right text-success">
-                                                                           @isset($transaction->meta['recipient_amount'])
-                                                                           {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->meta['recipient_amount'],$transaction->meta['exchange_currency']) }}
-                                                                           @endisset
+                                                                        <td
+                                                                            class="whitespace-nowrap text-right text-success">
+                                                                            @isset($transaction->meta['recipient_amount'])
+                                                                                {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->meta['recipient_amount'], $transaction->meta['exchange_currency']) }}
+                                                                            @endisset
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->payment_method) }}
@@ -445,62 +474,73 @@
                                                                             {{ trans('international-transfer::configuration.' . $transaction->status) }}
                                                                         </td>
 
-                                                                            <td class="whitespace-nowrap text-left"
-                                                                                style="box-shadow: none;">
-                                                                                <div class="dropdown">
-                                                                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                                                                        data-tw-toggle="dropdown">
-                                                                                        <span class="w-5 h-5 flex items-center justify-center">
-                                                                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
-                                                                                        </span>
-                                                                                    </button>
-                                                                                    <div class="dropdown-menu w-40">
-                                                                                        <ul class="dropdown-content">
-                                                                                            @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
-                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
-                                                                                                    @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                        <td class="whitespace-nowrap text-left"
+                                                                            style="box-shadow: none;">
+                                                                            <div class="dropdown">
+                                                                                <button
+                                                                                    class="dropdown-toggle btn px-2 box"
+                                                                                    aria-expanded="false"
+                                                                                    data-tw-toggle="dropdown">
+                                                                                    <span
+                                                                                        class="w-5 h-5 flex items-center justify-center">
+                                                                                        <i data-lucide="settings"
+                                                                                            class="w-5 h-5 text-gray-600"></i>
+                                                                                    </span>
+                                                                                </button>
+                                                                                <div class="dropdown-menu w-40">
+                                                                                    <ul class="dropdown-content">
+                                                                                        @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
                                                                                                     <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
-                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                        <x-feathericon-check-circle
-                                                                                                            class="w-4 h-4 mr-1" />
-                                                                                                        Completed
-                                                                                                    </a></li>
-                                                                                                    @endif
-                                                                                                    @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            <x-feathericon-check-circle
+                                                                                                                class="w-4 h-4 mr-1" />
+                                                                                                            Completed
+                                                                                                        </a></li>
+                                                                                                @endif
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
+                                                                                                    $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
                                                                                                     <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
-                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                        <x-feathericon-check
-                                                                                                            class="w-4 h-4 mr-1" />
-                                                                                                        Accepted
-                                                                                                    </a></li>
-                                                                                                    @endif
-                                                                                                    @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING && $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
+                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            <x-feathericon-check
+                                                                                                                class="w-4 h-4 mr-1" />
+                                                                                                            Accepted
+                                                                                                        </a></li>
+                                                                                                @endif
+                                                                                                @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
+                                                                                                    $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING &&
+                                                                                                    $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
                                                                                                     <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
-                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                        <x-feathericon-alert-circle
-                                                                                                            class="w-4 h-4 mr-1" />
-                                                                                                        Pending
-                                                                                                    </a></li>
-                                                                                                    @endif
+                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            <x-feathericon-alert-circle
+                                                                                                                class="w-4 h-4 mr-1" />
+                                                                                                            Pending
+                                                                                                        </a></li>
                                                                                                 @endif
                                                                                             @endif
-                                                                                            <li><a href="javascript:void(0)" onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"  data-tw-toggle="modal" data-tw-target="#superlarge-slide-over-size-preview"
+                                                                                        @endif
+                                                                                        <li><a href="javascript:void(0)"
+                                                                                                onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"
+                                                                                                data-tw-toggle="modal"
+                                                                                                data-tw-target="#superlarge-slide-over-size-preview"
                                                                                                 class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                 <x-feathericon-navigation-2
                                                                                                     class="w-4 h-4 mr-1" />
                                                                                                 Track
                                                                                             </a></li>
-                                                                                            <li><a href="javascript:void(0)"  href="javascript:void(0);"
-                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
-                                                                                              class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                        <li><a href="javascript:void(0)"
+                                                                                                href="javascript:void(0);"
+                                                                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
+                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                 <x-feathericon-eye
                                                                                                     class="w-4 h-4 mr-1" />
                                                                                                 Show
                                                                                             </a></li>
-                                                                                        </ul>
-                                                                                    </div>
+                                                                                    </ul>
                                                                                 </div>
-                                                                            </td>
+                                                                            </div>
+                                                                        </td>
 
                                                                     </tr>
                                                                 @endforeach
@@ -541,30 +581,39 @@
                 <div class="modal-body pt-2">
                     <div class="pr-0 border-b border-gray-200 dark:border-dark-5">
                         <div class="p-0">
-                            <div class="pos__tabs nav nav-tabs gap-2" role="tablist">
-                                <a id="Overview-tab" data-tw-toggle="tab" data-tw-target="#Overview" href="javascript:;"
-                                    class="sm:mr-8 py-2 text-center active" role="tab" aria-controls="Overview"
-                                    aria-selected="true">Overview</a>
-                                <a id="Notes-tab" data-tw-toggle="tab" data-tw-target="#Notes" href="javascript:;"
-                                    class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Notes"
-                                    aria-selected="false">Notes</a>
-                                <a id="Attachments-tab" data-tw-toggle="tab" data-tw-target="#Attachments" href="javascript:;"
-                                    class="sm:mr-8 py-2 text-center" role="tab" aria-controls="Attachments"
-                                    aria-selected="false">Attachments</a>
-                            </div>
+                            <ul class="nav nav-link-tabs text-center" role="tablist">
+                                <li id="Overview-tab" class="nav-item flex-1" role="presentation">
+                                    <a data-tw-toggle="pill" data-tw-target="#Overview" href="javascript:;"
+                                        class="nav-link w-full py-2 active" role="tab" aria-controls="Overview"
+                                        aria-selected="true">Overview</a>
+                                </li>
+                                <li id="Notes-tab" class="nav-item flex-1" role="presentation">
+                                    <a data-tw-toggle="pill" data-tw-target="#Notes" href="javascript:;"
+                                        class="nav-link w-full py-2" role="tab" aria-controls="Notes"
+                                        aria-selected="false">Notes</a>
+                                </li>
+                                <li id="Attachments-tab" class="nav-item flex-1" role="presentation">
+                                    <a data-tw-toggle="pill" data-tw-target="#Attachments" href="javascript:;"
+                                        class="nav-link w-full py-2" role="tab" aria-controls="Attachments"
+                                        aria-selected="false">Attachments</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="tab-content py-3">
 
                         <div id="Overview" class="tab-pane active " role="tabpanel" aria-labelledby="Overview-tab">
                             <div class="form-inline flex float-right">
-                                <div  class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
+                                <div
+                                    class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
                                     <i data-lucide="edit" class="w-30 h-30"></i>
                                 </div>
-                                <a class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip">
+                                <a
+                                    class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip">
                                     <i data-lucide="save" class="w-30 h-30"></i> </a>
                                 <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip"
-                                    title="Download PDF" id="create_pdf"> <i data-lucide="download" class="w-30 h-30"></i> </a>
+                                    title="Download PDF" id="create_pdf"> <i data-lucide="download"
+                                        class="w-30 h-30"></i> </a>
                             </div>
                             <div class="clearfix"></div>
                             @livewire('transaction-detail-component')
@@ -583,7 +632,8 @@
         </div>
     </div>
 
-    <div id="superlarge-slide-over-size-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true" style="padding-left: 0px;">
+    <div id="superlarge-slide-over-size-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true"
+        style="padding-left: 0px;">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header py-3">
