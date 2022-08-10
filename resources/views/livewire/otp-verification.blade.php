@@ -25,7 +25,7 @@
 
                                 <select id="countryWithPhone" name="country_code"
                                     onchange="getFlagImg(this,'Otp')" data-search="true"
-                                    class="tom-select" style="width:20%" >
+                                    class="tom-select" >
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @else disabled @endif>
@@ -46,7 +46,7 @@
                     @error('code')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
-                    <a wire:click="resendOtp()"  class="block text-theme-1 mt-2" style="cursor: pointer;">Resend OTP </a>
+                    <a wire:click="resendOtp()"  class="block active-clr mt-2" style="cursor: pointer;">Resend OTP </a>
                     </div>
                 </div>
             </div>

@@ -107,7 +107,7 @@
 
                                 <select id="countryWithPhone" name="country_code"
                                     onchange="getFlagImg(this,'{{ $beneficiaryType }}')" data-search="true"
-                                    class="tom-select" style="width:20%">
+                                    class="tom-select" >
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
@@ -146,7 +146,7 @@
 
                                 <select id="countryWithPhone" name="country_code"
                                     onchange="getFlagImgLandline(this,'{{ $beneficiaryType }}')" data-search="true"
-                                    class="tom-select" style="width:20%">
+                                    class="tom-select" >
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}"
                                             value="{{ $country->id }}" @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
