@@ -429,7 +429,7 @@
                                                                         <td class="whitespace-nowrap text-center">
                                                                             {{ $transaction->meta['exchange_currency'] }}
                                                                         </td>
-                                                                        <td class="whitespace-nowrap text-right text-theme-9">
+                                                                        <td class="whitespace-nowrap text-right text-success">
                                                                            @isset($transaction->meta['recipient_amount'])
                                                                            {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($transaction->meta['recipient_amount'],$transaction->meta['exchange_currency']) }}
                                                                            @endisset
@@ -437,7 +437,7 @@
                                                                         <td class="whitespace-nowrap text-left">
                                                                             {{ trans('international-transfer::configuration.' . $transaction->payment_method) }}
                                                                         </td>
-                                                                        {{-- <td class="whitespace-nowrap text-right @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
+                                                                        {{-- <td class="whitespace-nowrap text-right @if ($transaction->type === 'debit') text-theme-6 @else text-success @endif">
                                                                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}
                                                                         </td> --}}
 
@@ -445,7 +445,7 @@
                                                                             {{ trans('international-transfer::configuration.' . $transaction->status) }}
                                                                         </td>
 
-                                                                            <td class="table-report__action"
+                                                                            <td class="whitespace-nowrap text-left"
                                                                                 style="box-shadow: none;">
                                                                                 <div class="dropdown">
                                                                                     <button class="dropdown-toggle btn px-2 box" aria-expanded="false"

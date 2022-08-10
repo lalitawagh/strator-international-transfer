@@ -1,10 +1,10 @@
 <div>
     <div class="modal-body">
         @if ($sent_resend_otp == true)
-            <h4 class="text-success mb-2">OTP Resend Successfully</h4>
+            <h4 class="text-theme-9 mb-2">OTP Resend Successfully</h4>
         @endif
         <div class="p-0">
-            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+            <div class="grid grid-cols-12 md:gap-3 mt-0">
                 <div class="col-span-12 md:col-span-12 form-inline">
                     <label for="mobile" class="form-label sm:w-16">Mobile <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">
@@ -50,7 +50,7 @@
                         @error('code')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
-                        <a wire:click="resendOtp()" class="block text-theme-1 mt-2" style="cursor: pointer;">Resend OTP
+                        <a wire:click="resendOtp()" class="block active-clr mt-2" style="cursor: pointer;">Resend OTP
                         </a>
                     </div>
                 </div>
