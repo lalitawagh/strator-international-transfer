@@ -4,7 +4,7 @@
             <h4 class="text-success mb-2">OTP Resend Successfully</h4>
         @endif
         <div class="p-0">
-            <div class="grid grid-cols-12 md:gap-3 mt-0">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                 <div class="col-span-12 md:col-span-12 form-inline">
                     <label for="mobile" class="form-label sm:w-16">Mobile <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">

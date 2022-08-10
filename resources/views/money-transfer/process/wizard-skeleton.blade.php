@@ -8,7 +8,7 @@
 @section('content')
     <div class="grid grid-cols-12 gap-0 mt-0">
         <div class="col-span-12 lg:col-span-12 xxl:col-span-12">
-            <div class="grid grid-cols-12 gap-1 mt-0.5">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                 <div class="intro-y col-span-12 lg:col-span-12">
                     <div class="tab-content">
                         <div id="RequestCard" class="tab-pane grid grid-cols-12 gap-3 mt-0 active" role="tabpanel"
