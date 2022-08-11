@@ -43,7 +43,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20 gap-3 pb-2 wizard flex flex-wrap lg:flex-row justify-center px-5 mt-5 sm:px-20">
+                                    <div
+                                        class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20 gap-3 pb-2 wizard flex flex-wrap lg:flex-row justify-center px-5 mt-5 sm:px-20">
                                         <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
                                             <button
                                                 class="w-10 h-10 rounded-full btn {{ request()->routeIs('dashboard.international-transfer.money-transfer.create') ? 'btn-primary' : 'text-gray-600 bg-gray-200 dark:bg-dark-1' }}">1</button>
