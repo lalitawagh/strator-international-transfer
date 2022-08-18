@@ -434,7 +434,7 @@
                                                                             </div>
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
-                                                                            <a class="active-clr"
+                                                                            <a class="active-clr dark:text-slate-300"
                                                                                 href="javascript:void(0);"
                                                                                 onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
                                                                         </td>
