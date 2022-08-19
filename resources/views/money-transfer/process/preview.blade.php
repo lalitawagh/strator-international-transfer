@@ -12,7 +12,7 @@
                     <div class="border-2 border-dashed border-gray-200 dark:border-dark-5 rounded-md sm:p-5 sm:m-3">
                         @if ($transferDetails['payment_method'] == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                             @php $payment = 'Manual Transfer'; @endphp
-                            <div class=" p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
+                            <div class="dark:bg-darkmode-400 dark:border-darkmode-400 p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Transfer Details</h3>
                                 <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manual transfer Account Details&body= Beneficiary :- {{ $beneficiary->display_name }} %0D%0A Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
 
-                            <div class="p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-3">
+                            <div class="dark:bg-darkmode-400 dark:border-darkmode-400 p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Account Details For Manual Transfer</h3>
                             </div>
                             <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
@@ -84,7 +84,7 @@
                                     $payment = 'Stripe';
                                 @endphp
                             @endif
-                            <div class="p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">
+                            <div class="dark:bg-darkmode-400 dark:border-darkmode-400 p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-0">
                                 <h3 class="text-lg font-medium mr-auto mb-0">
                                     {{ $payment }} Transfer Details
                                 </h3>

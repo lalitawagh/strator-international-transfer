@@ -105,7 +105,8 @@
 
                 </div>
                 <!-- BEGIN: Profile Menu -->
-                <div class="mt-4 bg-gray-400 col-span-12 lg:col-span-4 xxl:col-span-4 flex lg:block flex-col-reverse">
+                <div
+                    class="mt-4 bg-gray-400 dark:bg-darkmode-400 col-span-12 lg:col-span-4 xxl:col-span-4 flex lg:block flex-col-reverse">
                     <div class="intro-y bg-transparent mt-5 lg:mt-0 p-3">
                         <!-- BEGIN: Ticket -->
                         <div class="col-span-12 lg:col-span-4">

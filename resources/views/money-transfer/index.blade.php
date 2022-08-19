@@ -40,25 +40,7 @@
                                                             <i data-lucide="search"
                                                                 class="search__icon dark:text-gray-300"></i>
                                                         </div>
-                                                        <div class="dark:text-gray-300">1 of 50</div>
-                                                        <a href="javascript:;"
-                                                            class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-chevron-left w-5 h-5">
-                                                                <polyline points="15 18 9 12 15 6"></polyline>
-                                                            </svg> </a>
-                                                        <a href="javascript:;"
-                                                            class="w-5 h-5 lg:mr-2 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-chevron-right w-5 h-5">
-                                                                <polyline points="9 18 15 12 9 6"></polyline>
-                                                            </svg> </a>
+
 
                                                         <a href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
@@ -173,7 +155,8 @@
 
                                                         <table id="tableID"
                                                             class="shroting display table table-report -mt-2">
-                                                            <thead class="short-wrp">
+                                                            <thead
+                                                                class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">
                                                                 <tr>
                                                                     <th>
                                                                         <div class="form-check mt-0 border-gray-400">
