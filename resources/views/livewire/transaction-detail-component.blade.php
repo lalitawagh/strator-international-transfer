@@ -24,7 +24,8 @@
         @endisset
 
         <div class="grid grid-cols-12 gap-4 mt-0">
-            <div class="col-span-12 lg:col-span-6 xxl:col-span-6 bg-gray-400 mt-5 px-3 pb-5">
+            <div
+                class="dark:bg-darkmode-400 dark:border-darkmode-400 col-span-12 lg:col-span-6 xxl:col-span-6 bg-gray-400 mt-5 px-3 pb-5">
                 <div
                     class="mb-2 mt-3 box flex flex-col lg:flex-row items-center px-0 py-2 border-b border-gray-200 dark:border-dark-5">
                     <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">

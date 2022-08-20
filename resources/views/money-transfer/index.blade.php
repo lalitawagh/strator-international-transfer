@@ -40,25 +40,7 @@
                                                             <i data-lucide="search"
                                                                 class="search__icon dark:text-gray-300"></i>
                                                         </div>
-                                                        <div class="dark:text-gray-300">1 of 50</div>
-                                                        <a href="javascript:;"
-                                                            class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-chevron-left w-5 h-5">
-                                                                <polyline points="15 18 9 12 15 6"></polyline>
-                                                            </svg> </a>
-                                                        <a href="javascript:;"
-                                                            class="w-5 h-5 lg:mr-2 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-chevron-right w-5 h-5">
-                                                                <polyline points="9 18 15 12 9 6"></polyline>
-                                                            </svg> </a>
+
 
                                                         <a href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
@@ -173,7 +155,8 @@
 
                                                         <table id="tableID"
                                                             class="shroting display table table-report -mt-2">
-                                                            <thead class="short-wrp">
+                                                            <thead
+                                                                class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">
                                                                 <tr>
                                                                     <th>
                                                                         <div class="form-check mt-0 border-gray-400">
@@ -434,7 +417,7 @@
                                                                             </div>
                                                                         </td>
                                                                         <td class="whitespace-nowrap text-left">
-                                                                            <a class="active-clr"
+                                                                            <a class="active-clr dark:text-slate-300"
                                                                                 href="javascript:void(0);"
                                                                                 onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
                                                                         </td>
@@ -493,7 +476,7 @@
                                                                                             @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
                                                                                                 @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
                                                                                                     <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
-                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                             <x-feathericon-check-circle
                                                                                                                 class="w-4 h-4 mr-1" />
                                                                                                             Completed
@@ -502,7 +485,7 @@
                                                                                                 @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
                                                                                                     $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
                                                                                                     <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
-                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                             <x-feathericon-check
                                                                                                                 class="w-4 h-4 mr-1" />
                                                                                                             Accepted
@@ -512,7 +495,7 @@
                                                                                                     $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING &&
                                                                                                     $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
                                                                                                     <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
-                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-yellow-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                             <x-feathericon-alert-circle
                                                                                                                 class="w-4 h-4 mr-1" />
                                                                                                             Pending
@@ -524,7 +507,7 @@
                                                                                                 onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"
                                                                                                 data-tw-toggle="modal"
                                                                                                 data-tw-target="#superlarge-slide-over-size-preview"
-                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                 <x-feathericon-navigation-2
                                                                                                     class="w-4 h-4 mr-1" />
                                                                                                 Track
@@ -532,7 +515,7 @@
                                                                                         <li><a href="javascript:void(0)"
                                                                                                 href="javascript:void(0);"
                                                                                                 onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
-                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-blue-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                 <x-feathericon-eye
                                                                                                     class="w-4 h-4 mr-1" />
                                                                                                 Show
