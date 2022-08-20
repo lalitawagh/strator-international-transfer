@@ -57,7 +57,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="max_amount" class="form-label sm:w-30">Max Amount <span
                             class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
