@@ -4,52 +4,50 @@
     <div class="px-5 mt-3 sm:px-10 sm:mt-10 sm:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
             <form method="POST" action="{{ route('dashboard.international-transfer.money-transfer.store') }}">
-            @csrf
-            <input type="hidden" name="workspace_id" value="{{ $workspace->id }}">
-            <div class="intro-y mt-0 p-3">
-                <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
-                    <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
-                        <h3 class="text-lg font-medium mb-4">Enter The Amount To Transfer</h3>
-                        @livewire('initial-process',['countries' => $countries, 'defaultCountry' => $defaultCountry])
+                @csrf
+                <input type="hidden" name="workspace_id" value="{{ $workspace->id }}">
+                <div class="intro-y mt-0 p-3">
+                    <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
+                        <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
+                            <h3 class="text-lg font-medium mb-4">Enter The Amount To Transfer</h3>
+                            @livewire('initial-process', ['countries' => $countries, 'defaultCountry' => $defaultCountry])
 
-                        {{-- <p class="py-3">
+                            {{-- <p class="py-3">
                             You could save up to <strong>20.59 GBP</strong> vs tha average bank
                             should arrive in <strong>4 hours</strong>
                         </p> --}}
-                        @error('recipient_amount')
-                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                        @enderror
+                            @error('recipient_amount')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
 
-                        @error('country')
-                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                        @enderror
+                            @error('country')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
 
-                        <div class="text-right mt-5 py-4">
-                            {{-- <a data-tw-toggle="modal" data-tw-target="#large-slide-over-size-preview"
+                            <div class="text-right mt-5 py-4">
+                                {{-- <a data-tw-toggle="modal" data-tw-target="#large-slide-over-size-preview"
                                 class="btn btn-secondary">Compare Price</a> --}}
 
-                        <button class="btn btn-primary w-24 ml-2" >Continue</button>
+                                <button class="btn btn-primary w-24 ml-2">Continue</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
             </form>
         </div>
     </div>
 
-    @includeWhen(
-        $workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
-        'partner-foundation::core.inactive-account-alert'
-    )
+    @includeWhen($workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
+        'partner-foundation::core.inactive-account-alert')
 @endsection
 
 @push('scripts')
     <script>
         window.addEventListener('disabledSelectedCountry', event => {
             $('#tabcuntery-selection2 option').attr("disabled", false);
-            $('#tabcuntery-selection2 option[value="'+ event.detail.currency +'"]').attr("disabled", true);
+            $('#tabcuntery-selection2 option[value="' + event.detail.currency + '"]').attr("disabled", true);
         });
 
-        function preventNonNumericalInput(event,the) {
+        function preventNonNumericalInput(event, the) {
             if ((event.which != 46 || $(the).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                 event.preventDefault();
             }
