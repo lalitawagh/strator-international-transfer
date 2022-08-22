@@ -14,7 +14,7 @@
                     <div class="sm:w-5/6">
 
                         <select name="currency" id="currency" data-search="true"
-                            class="tom-select w-full @error('currency') border-theme-6 @enderror" required>
+                            class="w-full @error('currency') border-theme-6 @enderror" required>
 
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}" @if (old('currency', $transfer_type_fee['currency']) == $country->id) selected @endif>
@@ -33,7 +33,7 @@
                     <div class="sm:w-5/6">
 
                         <select name="type" id="type" onchange="getType(this)" data-search="true"
-                            class="tom-select w-full @error('status') border-theme-6 @enderror" required>
+                            class="w-full @error('status') border-theme-6 @enderror" required>
                             <option>Select Type</option>
                             @foreach ($fee_types as $fee_type)
                                 @if ($fee_type == 'payment_type' || $fee_type == 'transfer_type')
@@ -117,7 +117,7 @@
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">
                         <select name="status" id="status" data-search="true"
-                            class="tom-select w-full @error('status') border-theme-6 @enderror" required>
+                            class="w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
                                 <option value="{{ $status }}" @if (old('status', $transfer_type_fee['status']) == $status) selected @endif>
                                     {{ ucfirst($status) }} </option>

@@ -25,7 +25,7 @@
                                 </span>
 
                                 <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this,'Otp')"
-                                    data-search="true" class="tom-select">
+                                    data-search="true" class="w-full">
                                     @foreach ($countries as $country)
                                         <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                             @if ($country->id == old('country_code', $defaultCountry->id)) selected @else disabled @endif>

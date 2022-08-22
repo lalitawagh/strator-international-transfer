@@ -37,9 +37,9 @@
                         <label for="bank_country" class="form-label sm:w-40"> Country <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
-                            <select class="tom-select" id="{{ $beneficiaryType }}_country_id" name="bank_country"
+                            <select id="{{ $beneficiaryType }}_country_id" name="bank_country"
                                 data-search="true" wire:change="changeCountry($event.target.value)"
-                                class="tom-select w-full ">
+                                class="w-full">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->id }}"
                                         @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
@@ -130,7 +130,7 @@
 
                                     <select id="countryWithPhone" name="country_code"
                                         onchange="getFlagImg(this,'{{ $beneficiaryType }}')" data-search="true"
-                                        class="tom-select">
+                                        class="w-full">
                                         @foreach ($countries as $country)
                                             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                                 @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>
@@ -172,7 +172,7 @@
 
                                     <select id="countryWithPhone" name="country_code"
                                         onchange="getFlagImgLandline(this,'{{ $beneficiaryType }}')"
-                                        data-search="true" class="tom-select">
+                                        data-search="true" class="w-full">
                                         @foreach ($countries as $country)
                                             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                                 @if ($country->id == old('country_code')) selected @elseif ($country->code == $receiving_country) selected @endif>

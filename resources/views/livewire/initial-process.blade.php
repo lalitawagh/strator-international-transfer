@@ -20,7 +20,7 @@
                     @endisset
                 @endforeach
             </span>
-            <select class=" w-full" id='tabcuntery-selection1' style='width: 210px;'
+            <select class="tail-select w-full" id='tabcuntery-selection1' style='width: 210px;'
                 wire:change="changeFromCurrency($event.target.value)" class="" name="currency_code_from">
                 @foreach ($countries as $country)
                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
@@ -57,9 +57,8 @@
         </span>
         <span class="tw-calculator-breakdown-item__right">
             <span class="m-r-1" data-tracking-id="calculator-payment-select">
-                <div class="tw-select btn-group dropdown">
-                    <div class="dropdown-toggle notification cursor-pointer" role="button"
-                        aria-expanded="false">
+                <div class="intro-x dropdown mr-auto sm:mr-3">
+                    <div class="dropdown-toggle notification cursor-pointer" role="button" aria-expanded="false" data-tw-toggle="dropdown">
                         <button type="button" class="btn btn-sm btn-secondary mr-4 mb-0">
                             @isset($fees)
                                 @if (array_search('payment_type', array_column($fees, 'type')) === 0)
@@ -75,6 +74,7 @@
                             </svg>
                         </button>
                     </div>
+
                     <div class="notification-content pt-2 dropdown-menu">
                         <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
                             @isset($fees)
@@ -179,7 +179,7 @@
             @endisset
         @endforeach
     </span>
-    <select class="tom-select" id='tabcuntery-selection2' wire:change="changeToCurrency($event.target.value)"
+    <select class="tail-select w-full" id='tabcuntery-selection2' wire:change="changeToCurrency($event.target.value)"
         name="currency_code_to">
         @foreach ($countries as $country)
             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
