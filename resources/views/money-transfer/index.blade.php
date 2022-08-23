@@ -23,7 +23,7 @@
 
                                             <div class="intro-y mt-0">
                                                 <div
-                                                    class="sm:flex justify-end flex-wrap items-center sm:py-1 border-b border-gray-200 dark:border-dark-5 gap-1">
+                                                    class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <x-list-view-filters />
                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                                                         <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
@@ -280,8 +280,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td class="whitespace-nowrap text-left">
-                                                                        <a class="active-clr dark:text-slate-300"
-                                                                            href="javascript:void(0);"
+                                                                        <a class="active-clr" href="javascript:void(0);"
                                                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
                                                                     </td>
                                                                     <td class="whitespace-nowrap text-left">
