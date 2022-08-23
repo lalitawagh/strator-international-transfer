@@ -140,7 +140,7 @@
                 @if (old('fee_type') == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type') == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="amount" class="form-label sm:w-30">Fee <span class="text-theme-6">*</span></label>
-                    <div class="sm:w-5/6 sm:pt-0 self-center">
+                    <div class="sm:w-5/6 sm:pt-3">
                         <div class="form-check mr-2 sm:pt-0">
                             <input id="radio-switch-1" class="form-check-input" type="radio"
                                 x-on:click="selected = '1'" name="fee_type" value="amount"
