@@ -23,7 +23,7 @@
 
                                             <div class="intro-y mt-0">
                                                 <div
-                                                    class="sm:flex justify-end flex-wrap items-center sm:py-1 border-b border-gray-200 dark:border-dark-5 gap-1">
+                                                    class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <x-list-view-filters />
                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                                                         <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
