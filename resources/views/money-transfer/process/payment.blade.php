@@ -154,7 +154,7 @@
                                             <label for="bank_country" class="form-label sm:w-72"> Transfer Reason <span
                                                     class="text-theme-6">*</span></label>
                                             <div class="sm:w-1/5 lg:w-5/6 Transfer-reason ml-auto">
-                                                <select name="transfer_reason" data-search="true" class="tom-select w-full">
+                                                <select name="transfer_reason" data-search="true" class="w-full">
                                                     @foreach ($reasons as $reason)
                                                         @if ($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
                                                             <option value="{{ $reason['id'] }}">{{ $reason['reason'] }}

@@ -11,7 +11,7 @@
                     <label for="type" class="form-label sm:w-30">Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="type" id="type" data-search="true"
-                            class="tom-select w-full @error('status') border-theme-6 @enderror" required>
+                            class="w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($fee_types as $fee_type)
                                 @if ($fee_type != \Kanexy\InternationalTransfer\Enums\Fee::PAYMENT_TYPE &&
                                     $fee_type != \Kanexy\InternationalTransfer\Enums\Fee::TRANSFER_TYPE)
@@ -30,7 +30,7 @@
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="status" id="status" data-search="true"
-                            class="tom-select w-full @error('status') border-theme-6 @enderror" required>
+                            class="w-full @error('status') border-theme-6 @enderror" required>
                             @foreach ($statuses as $status)
                                 <option value="{{ $status }}"> {{ ucfirst($status) }} </option>
                             @endforeach
