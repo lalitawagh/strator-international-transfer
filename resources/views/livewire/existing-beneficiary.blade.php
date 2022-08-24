@@ -56,7 +56,7 @@
                             <div class="p-5 text-center">
                                 <div class="relative flex items-center p-0">
                                     <div
-                                        class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                                        class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200  w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                                         @isset($beneficiaryDetail->first_name)
                                             {{ ucfirst(substr($beneficiaryDetail->first_name, 0, 1)) }}{{ ucfirst(substr($beneficiaryDetail->last_name, 0, 1)) }}
                                         @else
