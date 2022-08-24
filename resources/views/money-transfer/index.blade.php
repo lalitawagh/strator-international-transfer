@@ -412,7 +412,7 @@
                     <h2 class="text-lg font-medium mr-auto">Transfer Details</h2>
 
                     <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip"
-                        data-dismiss="modal"> <i data-lucide="x" class="w-3 h-3"></i> </a>
+                        data-tw-dismiss="modal"> <i data-lucide="x" class="w-3 h-3"></i> </a>
                 </div>
 
 
@@ -441,7 +441,7 @@
                     <div class="tab-content py-3">
 
                         <div id="Overview" class="tab-pane active " role="tabpanel" aria-labelledby="Overview-tab">
-                            <div class="form-inline flex float-right">
+                            <div class="flex float-right">
                                 <div
                                     class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip">
                                     <i data-lucide="edit" class="w-30 h-30"></i>
