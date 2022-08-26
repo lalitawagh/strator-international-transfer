@@ -1,3 +1,7 @@
-<a id="details-tab" data-toggle="tab" data-target="#details" href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
-    class="flex-1 btn-secondary py-1 px-2 mr-2 rounded-md text-center" role="tab" aria-controls="details"
-    aria-selected="false">International</a>
+<li id="international-tab" class="nav-item flex-1" role="presentation">
+    <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
+        class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#international" type="button"
+        role="tab" aria-controls="international" aria-selected="true">
+        International
+    </a>
+</li>
