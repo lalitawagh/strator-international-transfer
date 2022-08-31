@@ -69,7 +69,7 @@
                             class="btn-sm bg-indigo-600 btn-primary text-white font-bold py-3 px-6 rounded">Confirm</a> --}}
                     </div>
                 </div>
-                @livewire('otp-verification',['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'account' => $account, 'workspace' => $workspace])
+                @livewire('otp-verification-component',['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'account' => $account, 'workspace' => $workspace])
             </div>
         </div>
     </div>
