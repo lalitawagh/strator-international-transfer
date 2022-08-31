@@ -7,7 +7,7 @@
                     Send to  {{ trans('international-transfer::configuration.'.$beneficiaryType) }}
                 </h2>
                 <div class="items-center justify-center mt-0">
-                    {{-- <a data-toggle="modal" data-target="#review-transfer"
+                    {{-- <a data-tw-toggle="modal" data-tw-target="#review-transfer"
                         class="btn-sm bg-indigo-600 btn-primary text-white font-bold py-3 px-6 rounded">Confirm</a> --}}
                 </div>
             </div>

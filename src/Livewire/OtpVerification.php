@@ -87,6 +87,6 @@ class OtpVerification extends Component
 
     public function render()
     {
-        return view('international-transfer::livewire.otp-verification');
+        return view('international-transfer::livewire.otp-verification-component');
     }
 }

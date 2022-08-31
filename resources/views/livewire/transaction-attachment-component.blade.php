@@ -4,7 +4,7 @@
             @if ($logSent == true)
                 <h4 class="alert-success mb-2 text-white mb-2 p-2 rounded-md">Attachment updated successfully</h4>
             @endif
-            <div class="grid grid-cols-12 md:gap-10 mt-0">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
 
                 <div class="col-span-12 md:col-span-6 "x-data="{ isUploading: false, progress: 0 }"
                 x-on:livewire-upload-start="isUploading = true"
@@ -12,7 +12,7 @@
                 x-on:livewire-upload-error="isUploading = false"
                 x-on:livewire-upload-progress="progress = $event.detail.progress">
                 <div class="form-inline mt-2" >
-                    <label class="form-label sm:w-20">Attachment</label>
+                    <label class="form-label sm:w-28">Attachment</label>
                     <div class="sm:w-5/6">
                         <input id="attachment" wire:model="attachment" wire:change="fileUpload()" name="attachment" type="file" class="form-control">
                         @error('attachment')

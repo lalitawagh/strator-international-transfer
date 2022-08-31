@@ -10,7 +10,7 @@
                 <div class="relative flex items-center py-2 border-t border-gray-200  cursor"
                     wire:click="getBeneficiary({{ $beneficiary->id }})">
                     <div
-                        class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                        class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                         @isset($beneficiary->first_name) {{ ucfirst(substr($beneficiary->first_name, 0, 1)) }}
                             {{ ucfirst(substr($beneficiary->last_name, 0, 1)) }}
                         @else
@@ -56,7 +56,7 @@
                             <div class="p-5 text-center">
                                 <div class="relative flex items-center p-0">
                                     <div
-                                        class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                                        class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200  w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                                         @isset($beneficiaryDetail->first_name)
                                             {{ ucfirst(substr($beneficiaryDetail->first_name, 0, 1)) }}{{ ucfirst(substr($beneficiaryDetail->last_name, 0, 1)) }}
                                         @else
@@ -82,47 +82,53 @@
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">Account Name</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_name'] }}</span>
+                                                <span
+                                                    class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_name'] }}</span>
                                             </div>
 
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">Account Number</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
+                                                <span
+                                                    class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
                                             </div>
 
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">IFSC Code / IBAN</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['iban_number'] }}</span>
+                                                <span
+                                                    class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['iban_number'] }}</span>
                                             </div>
                                             @isset($beneficiaryDetail->meta['bank_code'])
-                                            <div class="flex items-start text-left mt-4">
+                                                <div class="flex items-start text-left mt-4">
 
-                                                <span class="font-medium w-2/4 truncate">Sort Code</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
-                                            </div>
+                                                    <span class="font-medium w-2/4 truncate">Sort Code</span>
+                                                    <span
+                                                        class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_code'] }}</span>
+                                                </div>
                                             @endisset
 
                                             @isset($beneficiaryDetail->meta['bank_country'])
-                                            <div class="flex items-start text-left mt-4">
+                                                <div class="flex items-start text-left mt-4">
 
-                                                <span class="font-medium w-2/4 truncate">Country</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ \Kanexy\Cms\I18N\Models\Country::find($beneficiaryDetail->meta['bank_country'])?->name }}</span>
-                                            </div>
+                                                    <span class="font-medium w-2/4 truncate">Country</span>
+                                                    <span
+                                                        class="font-medium w-2/3 text-sm break-all">{{ \Kanexy\Cms\I18N\Models\Country::find($beneficiaryDetail->meta['bank_country'])?->name }}</span>
+                                                </div>
                                             @endisset
 
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">Type</span>
-                                                <span class="font-medium w-2/3 text-sm break-all">{{ ucfirst($beneficiaryDetail->type) }}</span>
+                                                <span
+                                                    class="font-medium w-2/3 text-sm break-all">{{ ucfirst($beneficiaryDetail->type) }}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="flex p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
                                         <a data-dismiss="modal" class="text-primary pt-3 active-clr cursor">Select another recipient</a>
                                         <br>
-                                        <a href="{{ route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $workspace->id]]) }}"
+                                        <a href="{{ route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $workspace->id]]) }}"
                                             class="btn w-24 mt-0 btn-primary ml-auto">Continue</a>
                                     </div>
                                 </div>

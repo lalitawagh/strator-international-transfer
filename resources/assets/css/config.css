@@ -127,7 +127,8 @@
 
 .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
 .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
-    color: rgba(112, 41, 125, var(--tw-text-opacity)) !important;
+    --tw-text-opacity: 1;
+        color: rgb(var(--color-primary)/var(--tw-text-opacity));
 }
 
 .configuration-nav .side-nav .side-menu__icon {
@@ -142,7 +143,8 @@
 .configuration-nav .side-nav>ul>li>.side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
     background-color: transparent;
     width: 100%;
-    color: rgba(112, 41, 125, var(--tw-text-opacity)) !important;
+    --tw-text-opacity: 1;
+        color: rgb(var(--color-primary)/var(--tw-text-opacity));
     border-radius: 9999px;
 }
 
