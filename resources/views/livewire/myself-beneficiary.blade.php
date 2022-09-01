@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-0 lg:gap-10 mt-0">
+            <div class="grid grid-cols-12 md:gap-0 lg:gap-10 mt-0 ihphone-scroll-height">
 
                 <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-0">
 
@@ -37,9 +37,8 @@
                         <label for="bank_country" class="form-label sm:w-40"> Country <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
-                            <select id="{{ $beneficiaryType }}_country_id" name="bank_country"
-                                data-search="true" wire:change="changeCountry($event.target.value)"
-                                class="w-full">
+                            <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true"
+                                wire:change="changeCountry($event.target.value)" class="w-full">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->id }}"
                                         @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
