@@ -15,29 +15,28 @@
                     <div class="side-nav pt-3 p-0 border-t border-gray-200 dark:border-dark-5">
                         <ul>
                             <li>
-                                <a href="{{ route('dashboard.wallet.ledger.index') }}"
-                                    class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.ledger.index' ||
-                                        Route::current()->getName() == 'dashboard.wallet.ledger.create' ||
-                                        Route::current()->getName() == 'dashboard.wallet.ledger.edit') side-menu--active @endif">
-                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                    <div class="side-menu__title"> Ledgers </div>
-                                </a>
-
                                 <a href="{{ route('dashboard.international-transfer.transfer-type-fee.index') }}"
-                                    class="side-menu">
+                                    class="side-menu @if (Route::current()->getName() == 'dashboard.international-transfer.transfer-type-fee.index' ||
+                                        Route::current()->getName() == 'dashboard.international-transfer.transfer-type-fee.create' ||
+                                        Route::current()->getName() == 'dashboard.international-transfer.transfer-type-fee.edit') side-menu--active @endif">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title">Transfer Type Fee </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('dashboard.international-transfer.fee.index') }}" class="side-menu">
+                                <a href="{{ route('dashboard.international-transfer.fee.index') }}"
+                                    class="side-menu @if (Route::current()->getName() == 'dashboard.international-transfer.fee.index' ||
+                                        Route::current()->getName() == 'dashboard.international-transfer.fee.create' ||
+                                        Route::current()->getName() == 'dashboard.international-transfer.fee.edit') side-menu--active @endif">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> Fee Setup </div>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('dashboard.international-transfer.transfer-reason.index') }}"
-                                    class="side-menu">
+                                    class="side-menu @if (Route::current()->getName() == 'dashboard.international-transfer.transfer-reason.index' ||
+                                        Route::current()->getName() == 'dashboard.international-transfer.transfer-reason.create' ||
+                                        Route::current()->getName() == 'dashboard.international-transfer.transfer-reason.edit') side-menu--active @endif">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> Transfer Reason </div>
                                 </a>
@@ -45,7 +44,7 @@
 
                             <li>
                                 <a href="{{ route('dashboard.international-transfer.master-account.index') }}"
-                                    class="side-menu">
+                                    class="side-menu  @if (Route::current()->getName() == 'dashboard.international-transfer.master-account.index') side-menu--active @endif">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> MTC Account </div>
                                 </a>
