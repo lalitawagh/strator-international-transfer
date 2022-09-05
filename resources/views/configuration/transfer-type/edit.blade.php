@@ -113,7 +113,7 @@
 
 
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 self-center">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                     <label for="status" class="form-label sm:w-30">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">
                         <select name="status" id="status" data-search="true"
