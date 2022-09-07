@@ -95,7 +95,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
-        Livewire::component('otp-verification', OtpVerification::class);
+        Livewire::component('otp-verification-component', OtpVerification::class);
         Livewire::component('existing-beneficiary', ExistingBeneficiary::class);
         Livewire::component('transaction-detail-component', TransactionDetailComponent::class);
         Livewire::component('transaction-log-component',TransactionLogComponent::class);
