@@ -38,7 +38,7 @@ class InternationalTransferMenu extends Item
             $menus[] = new MenuItem('Money Transfer', 'activity', url:route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]));
         }
 
-        if($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)) {
+        if($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && $user->isSuperAdmin()) {
             $menus[] = new MenuItem('Transactions', 'activity', url:route('dashboard.international-transfer.money-transfer.index'));
         }
 
