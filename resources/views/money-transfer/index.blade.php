@@ -25,11 +25,12 @@
                                                 <div
                                                     class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <x-list-view-filters />
-                                                    @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
+                                                    @can(\Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy::CREATE,
+                                                    \Kanexy\InternationalTransfer\Contracts\MoneyTransfer::class)
                                                         <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
                                                             class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Money
                                                             Transfer</a>
-                                                    @endif
+                                                    @endcan
                                                 </div>
                                             </div>
 
