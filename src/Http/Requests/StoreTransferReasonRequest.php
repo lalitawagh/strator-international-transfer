@@ -10,7 +10,12 @@ class StoreTransferReasonRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(TransferReasonPolicy::CREATE, TransferReasonConfiguration::class);
+        if($this->user()->can(TransferReasonPolicy::CREATE, TransferReasonConfiguration::class))
+        {
+            return $this->user()->can(TransferReasonPolicy::CREATE, TransferReasonConfiguration::class);
+        }
+
+        return $this->user()->can(TransferReasonPolicy::EDIT, TransferReasonConfiguration::class);
     }
 
     public function rules()

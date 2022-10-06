@@ -12,7 +12,12 @@ class StoreTransferTypeFeeRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(TransferTypeFeePolicy::CREATE, TransferTypeFeeConfiguration::class);
+        if($this->user()->can(TransferTypeFeePolicy::CREATE, TransferTypeFeeConfiguration::class))
+        {
+            return $this->user()->can(TransferTypeFeePolicy::CREATE, TransferTypeFeeConfiguration::class);
+        }
+
+        return $this->user()->can(TransferTypeFeePolicy::EDIT, TransferTypeFeeConfiguration::class);
     }
 
     public function rules()
