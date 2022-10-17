@@ -41,6 +41,7 @@ Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], functi
         Route::get("money-transfer/transfer-accepted/{id}",[MoneyTransferController::class, 'transferAccepted'])->name('money-transfer.transferAccepted');
         Route::get("money-transfer/transfer-pending/{id}",[MoneyTransferController::class, 'transferPending'])->name('money-transfer.transferPending');
         Route::post("money-transfer/logs",[MoneyTransferController::class, 'logDetails'])->name('money-transfer.logDetails');
+        Route::get('money-transfer/pdf/{transaction_id}',[MoneyTransferController::class,'moneyTransferPDF'])->name("money-transfer.moneytransfersPdf");
     });
 });
 

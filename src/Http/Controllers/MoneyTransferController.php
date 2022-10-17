@@ -24,6 +24,7 @@ use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
+use PDF;
 
 class MoneyTransferController extends Controller
 {
@@ -39,7 +40,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
         session()->forget('transaction_id');
-        
+
         session()->forget('money_transfer_request');
 
         $transactions = QueryBuilder::for(Transaction::class)
@@ -346,8 +347,12 @@ class MoneyTransferController extends Controller
             $transferDetails['transaction'] = $transaction;
             session(['money_transfer_request' => $transferDetails]);
 
-            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-            // $transaction->generateOtp("sms");
+            if(config('services.disable_sms_service') == true){
+                $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+            }
+            else{
+                $transaction->generateOtp("sms");
+            }
 
             return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30),["id"=>$transaction->id]), 'sms');
         }
@@ -464,7 +469,7 @@ class MoneyTransferController extends Controller
             'status' => 'success',
             'message' => 'The money transfer request cancelled successfully.',
         ]);
-        
+
     }
 
     public function transferCompleted(Request $request)
@@ -510,6 +515,18 @@ class MoneyTransferController extends Controller
         $log->save();
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Log Successfully']);
+    }
+
+    public function moneyTransferPDF(Request $request)
+    {
+        $transaction = Transaction::find($request->transaction_id);
+        $account = auth()->user()->workspaces()->first()?->accounts()->first();
+
+        $view = PDF::loadView('international-transfer::money-transfer.moneytransferpdf', compact('account','transaction'))
+            ->setPaper(array(0, 0, 1000, 900), 'landscape')
+            ->output();
+
+        return response()->streamDownload(fn () => print($view), "moneytransfer.pdf");
     }
 
 }

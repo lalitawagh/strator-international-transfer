@@ -450,9 +450,11 @@
                                 <a
                                     class="save-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip">
                                     <i data-lucide="save" class="w-30 h-30"></i> </a>
-                                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip"
-                                    title="Download PDF" id="create_pdf"> <i data-lucide="download"
-                                        class="w-30 h-30"></i> </a>
+                                {{-- <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip"
+                                    title="Download PDF" href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', $transaction->id) }}" > <i data-lucide="download"
+                                    class="w-30 h-30"></i>
+                                </a> --}}
+
                             </div>
                             <div class="clearfix"></div>
                             @livewire('transaction-detail-component')

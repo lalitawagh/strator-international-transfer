@@ -16,6 +16,10 @@
             </svg>
         </div>
     @else
+    <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip"
+        title="Download PDF" href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', ['transaction_id' => $transaction->getKey()]) }}" > <i data-lucide="download"
+        class="w-30 h-30"></i>
+    </a>
         @isset($transaction->meta['sender_id'])
             @php
                 $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
