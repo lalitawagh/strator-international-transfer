@@ -64,6 +64,21 @@ class OtpVerification extends Component
         $this->contact = session('contact');
 
         $oneTimePassword = $this->contact->oneTimePasswords()->first();
+        $manualOtp = Setting::getValue('otp');
+
+        if (isset($manualOtp) && ($manualOtp == $data['code'])) {
+            $oneTimePassword->update(['verified_at' => now()]);
+
+            $requestTransfer = session('money_transfer_request');
+            $requestTransfer['beneficiary_id'] = $this->contact->id;
+
+            session(['money_transfer_request' => $requestTransfer]);
+
+            return redirect()->route('dashboard.international-transfer.money-transfer.payment',['filter' => ['workspace_id' => $this->workspace_id]])->with([
+                'status' => 'success',
+                'message' => 'The beneficiary created successfully.',
+            ]);
+        }
 
         if ($oneTimePassword->code !== $data['code']) {
             $this->addError('code', 'The otp you entered did not match.');
