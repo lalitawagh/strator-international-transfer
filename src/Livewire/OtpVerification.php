@@ -5,6 +5,7 @@ namespace Kanexy\InternationalTransfer\Livewire;
 use Carbon\Carbon;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
+use Kanexy\Cms\Setting\Models\Setting;
 use Livewire\Component;
 
 class OtpVerification extends Component
