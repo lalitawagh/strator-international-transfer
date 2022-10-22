@@ -50,7 +50,9 @@ class OtpVerification extends Component
             $oneTimePassword->update(['code' => rand(100000, 999999), 'expires_at' => now()->addMinutes(OneTimePassword::getExpiringDuration())]);
         }
 
-        $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+        if(config('services.disable_sms_service') == false){
+            $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+        }
 
         $this->sent_resend_otp = true;
     }

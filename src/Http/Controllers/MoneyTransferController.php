@@ -346,7 +346,7 @@ class MoneyTransferController extends Controller
             $transferDetails['transaction'] = $transaction;
             session(['money_transfer_request' => $transferDetails]);
 
-            if(config('services.disable_sms_service') == true){
+            if(config('services.disable_sms_service') == false){
                 $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
             }
             else{
