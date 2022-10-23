@@ -346,8 +346,12 @@ class MoneyTransferController extends Controller
             $transferDetails['transaction'] = $transaction;
             session(['money_transfer_request' => $transferDetails]);
 
-            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-            // $transaction->generateOtp("sms");
+            if(config('services.disable_sms_service') == false){
+                $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+            }
+            else{
+                $transaction->generateOtp("sms");
+            }
 
             return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30),["id"=>$transaction->id]), 'sms');
         }
