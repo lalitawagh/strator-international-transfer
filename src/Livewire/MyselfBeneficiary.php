@@ -220,9 +220,13 @@ class MyselfBeneficiary extends Component
             /** @var \App\Models\User $user */
             $user = auth()->user();
             $this->contact = $contact;
-
-            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-            // $contact->generateOtp("sms");
+            if(config('services.disable_sms_service') == false){
+                $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            }
+            else
+            {
+                $contact->generateOtp("sms");
+            }
             $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
 
             session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
