@@ -54,7 +54,7 @@ class MasterAccountController extends Controller
         }
 
         $account = Account::whereAccountNumber($info['account_number'])->first();
-        $workspace = Workspace::find($account->holder_id);
+        $workspace = Workspace::find($account?->holder_id);
 
         if(is_null($account))
         {
