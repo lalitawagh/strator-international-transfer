@@ -42,6 +42,17 @@ class MasterAccountController extends Controller
         $user = Auth::user();
         $info['id'] = now()->format('dmYHis');
 
+        if(config('services.disable_banking') == true)
+        {
+            $info['beneficiary_id'] = ''; 
+            Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $info]);
+
+            return redirect()->route('dashboard.international-transfer.master-account.index')->with([
+                'status' => 'success',
+                'message' => 'Account details updated successfully.',
+            ]);
+        }
+
         $account = Account::whereAccountNumber($info['account_number'])->first();
         $workspace = Workspace::find($account->holder_id);
 
