@@ -16,10 +16,17 @@
             </svg>
         </div>
     @else
-    <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-theme-10 ml-2 tooltip"
-        title="Download PDF" href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', ['transaction_id' => $transaction->getKey()]) }}" > <i data-lucide="download"
-        class="w-30 h-30"></i>
-    </a>
+        <div class="flex float-right">
+                <a class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-dark ml-2 tooltip"
+                        title="Edit" onclick="openfileattachment()"> <x-feathericon-edit width="24" height="24" /> </a>
+                <a class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
+                        title="Save" onclick="savefileattachment()"> <x-feathericon-save width="24" height="24" /> </a>
+                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
+                title="Download PDF" href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', ['transaction_id' => $transaction->getKey()]) }}" >
+                <x-feathericon-download width="24" height="24" />
+            </a>
+        </div>
+        <div class="clearfix"></div>
         @isset($transaction->meta['sender_id'])
             @php
                 $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
@@ -481,9 +488,9 @@
         $(".edit-transaction").removeClass('hidden');
         $(".edit-transaction").addClass('flex');
         $(".save-transaction").addClass('hidden');
-        $(".save-transaction").click(function() {
+        function savefileattachment(){
             $("#transaction-form").submit();
-        });
+        }
 
         // document.addEventListener("DOMContentLoaded", () => {
         //     Livewire.hook('element.updated', (el, component) => {
@@ -491,8 +498,9 @@
         //     });
         // });
 
-        $(".edit-transaction").click(function() {
-            $(this).addClass('hidden');
+
+        function openfileattachment(){
+            $(".edit-transaction").addClass('hidden');
             $("#attachment").val('');
             $("#note").val('');
             $(".edit-transaction-content").removeClass('hidden');
@@ -500,6 +508,7 @@
             $(".save-transaction").removeClass('hidden');
             $(".save-transaction").addClass('flex');
             $(".saved-transaction").addClass('hidden');
-        });
+        }
+
     </script>
 @endpush

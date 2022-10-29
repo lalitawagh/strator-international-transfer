@@ -10,7 +10,26 @@
       <!-- Visually Hidden Preheader Text : BEGIN -->
       <div style="width:100%; margin: auto;font-family: box-shadow: 0px 3px 20px #0000000b; border-radius: 0.375rem;">
          <!-- Email Body : BEGIN -->
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="background-color: #fff; max-width: 6000px;">
+            @if($user->isSuperAdmin())
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="background-color: #fff; max-width: 6000px;">
+                <!-- Hero Image, Flush : BEGIN -->
+                <tbody>
+                <tr style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                    <td bgcolor="#ffffff" style="padding:20px 20px; text-align: left; font-family: sans-serif; font-size: 16px; line-height: 26px; color: #666666;">
+                        <img src="https://dev.kanexy.com/img/core-img/logo.png" width="13rem" height="" alt="alt_text" border="0"  class="fluid" style="width: 100%; max-width: 13rem; background: #fff; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+                    </td>
+                    <td style="text-align:right;padding:20px 20px;font-family: 'Rubik', sans-serif">
+                        <div class="lg:text-right mt-10 lg:mt-0 lg:ml-auto">
+                            <div style="font-size: 1.5rem;line-height: 2rem; font-weight:600;">Transfer Details</div>
+                            <div style="font-size: 1rem;line-height: 2rem; font-weight:500;"> Date: <span class="font-medium">{{ $transaction->created_at }}</span> </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            @endif
+         @if(!$user->isSuperAdmin())
+         <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="background-color: #fff; max-width: 6000px;">
             <!-- Hero Image, Flush : BEGIN -->
             <tbody>
             <tr style="padding-left: 2.5rem; padding-right: 2.5rem;">
@@ -20,7 +39,7 @@
                 <td style="text-align:right;padding:20px 20px;font-family: 'Rubik', sans-serif">
                     <div class="lg:text-right mt-10 lg:mt-0 lg:ml-auto">
                         <div style="font-size: 1.5rem;line-height: 2rem; font-weight:600;">Transfer Details</div>
-                        <div style="font-size: 1rem;line-height: 2rem; font-weight:500;"> Date: <span class="font-medium">12/12/2021</span> </div>
+                        <div style="font-size: 1rem;line-height: 2rem; font-weight:500;"> Date: <span class="font-medium">{{ $transaction->created_at }}</span> </div>
                     </div>
                 </td>
             </tr>
@@ -43,6 +62,7 @@
             </tr>
             </tbody>
         </table>
+        @endif
          <h2 style="text-align: center">Transfer Details</h2>
         <table role="presentation" cellspacing="0" cellpadding="10" border="0" width="100%">
             <thead style="text-align:left; font-size: 16px;font-weight: 600;">
@@ -62,12 +82,12 @@
                     <tr style="border-top: 1px solid #f1f5f9;font-size: 16px;">
                         <td style="white-space: nowrap;">{{ $transaction?->urn }}</td>
                         <td style="white-space: nowrap;">{{ $transaction?->created_at }}</td>
-                        <td style="white-space: nowrap;">{{ $transaction?->payment_method }}</td>
+                        <td style="white-space: nowrap;">{{ trans('international-transfer::configuration.' . $transaction?->payment_method) }}</td>
                         <td style="white-space: nowrap;">{{ @$transaction?->meta['base_currency'] }}</td>
                         <td style="white-space: nowrap;">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction?->amount) }}</td>
                         <td style="white-space: nowrap;">{{ @$transaction?->meta['exchange_currency'] }}</td>
                         <td style="white-space: nowrap;">{{ @$transaction?->meta['recipient_amount'] }}</td></td>
-                        <td style="white-space: nowrap;">{{ $transaction?->status }}</td>
+                        <td style="white-space: nowrap;">{{ ucfirst($transaction?->status) }}</td>
                     </tr>
 
             </tbody>

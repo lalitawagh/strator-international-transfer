@@ -519,10 +519,11 @@ class MoneyTransferController extends Controller
 
     public function moneyTransferPDF(Request $request)
     {
+        $user = Auth::user();
         $transaction = Transaction::find($request->transaction_id);
         $account = auth()->user()->workspaces()->first()?->accounts()->first();
 
-        $view = PDF::loadView('international-transfer::money-transfer.moneytransferpdf', compact('account','transaction'))
+        $view = PDF::loadView('international-transfer::money-transfer.moneytransferpdf', compact('account','transaction','user'))
             ->setPaper(array(0, 0, 1000, 900), 'landscape')
             ->output();
 
