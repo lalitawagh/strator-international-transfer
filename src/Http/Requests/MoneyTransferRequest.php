@@ -19,7 +19,7 @@ class MoneyTransferRequest extends FormRequest
         return [
             'currency_code_from' => ['required', 'exists:countries,id'],
             'currency_code_to' => ['required', 'exists:countries,id'],
-            'amount' => ['required','numeric','min:0.50','max:100000'],
+            'amount' => ['required','numeric','min:0.50','max:10000000'],
             'fee_charge' => ['required'],
             'guaranteed_rate' => ['required'],
             'recipient_amount' => ['required','numeric','min:0'],
@@ -31,8 +31,8 @@ class MoneyTransferRequest extends FormRequest
     {
         return [
             'recipient_amount.min'  => 'The recipient amount should not be a negative value.',
-            'amount.min' => 'The smallest amount you can send is 0.50 GBP.',
-            'amount.max' => 'The most you can send is 100000 GBP.',
+            'amount.min' => 'The smallest amount you can send is 0.50',
+            'amount.max' => 'The most you can send is 10000000',
         ];
     }
 
@@ -42,10 +42,10 @@ class MoneyTransferRequest extends FormRequest
             $sender = Country::find($this->input('currency_code_from'));
             $receiver = Country::find($this->input('currency_code_to'));
 
-            if($sender->code != 'UK')
-            {
-                $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
-            }
+            // if($sender->code != 'UK')
+            // {
+            //     $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
+            // }
 
             if($sender->code == 'UK' && $receiver->code == 'UK')
             {

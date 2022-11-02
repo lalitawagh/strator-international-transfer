@@ -49,6 +49,18 @@
                                                                                         payment method, you need to open a
                                                                                         bank account.</span><br>
                                                                                 @endif
+                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'bank_account')
+                                                                                    <span style="color:red;">This
+                                                                                        payment method, not available for {{ $sender->code }} money transfer.</span><br>
+                                                                                @endif
+                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
+                                                                                    <span style="color:red;">This
+                                                                                        payment method, not available for {{ $sender->code }} money transfer.</span><br>
+                                                                                @endif
+                                                                                @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer') 
+                                                                                <span style="color:red;">This
+                                                                                    payment method, not available for {{ $sender->code }} money transfer.</span><br>
+                                                                                @endif
                                                                                 {{ $payment['title'] }}
                                                                             </a>
                                                                             {{-- <div
@@ -59,6 +71,7 @@
 
                                                                             </div> --}}
                                                                         </div>
+                                                                        
                                                                         <div
                                                                             class="font-medium text-gray-700 dark:text-gray-500">
                                                                             <div class="form-check mt-2">
@@ -66,7 +79,7 @@
                                                                                     class="form-check-input" type="radio"
                                                                                     name="payment_method"
                                                                                     value="{{ $payment['method'] }}"
-                                                                                    @if (!$user->is_banking_user && $payment['method'] == 'bank_account') disabled @endif>
+                                                                                    @if (!$user->is_banking_user && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
                                                                                 <label class="form-check-label"
                                                                                     for="radio-switch-{{ $key }}"></label>
                                                                             </div>
