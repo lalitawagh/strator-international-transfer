@@ -33,5 +33,7 @@ return [
     'completed'           => 'Completed',
     'bank'                => 'Bank',
     'manual_transfer'     => 'Manual Transfer',
-    'stripe'              => 'Stripe'
+    'stripe'              => 'Stripe',
+    'active'              => 'Active',
+    'inactive'            => 'Inactive'
 ];
