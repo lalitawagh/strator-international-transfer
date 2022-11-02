@@ -16,6 +16,8 @@ class Permission
 
     public const MASTER_ACCOUNT_VIEW   = 'international-transfer::master_account.view';
     public const MASTER_ACCOUNT_CREATE = 'international-transfer::master_account.create';
+    public const MASTER_ACCOUNT_EDIT   = 'international-transfer::master_account.edit';
+    public const MASTER_ACCOUNT_DELETE = 'international-transfer::master_account.delete';
 
     public const FEE_VIEW   = 'international-transfer::fee.view';
     public const FEE_CREATE = 'international-transfer::fee.create';
@@ -24,4 +26,5 @@ class Permission
 
     public const MONEY_TRANSFER_VIEW   = 'international-transfer::money_transfer.view';
     public const MONEY_TRANSFER_CREATE = 'international-transfer::money_transfer.create';
+
 }
