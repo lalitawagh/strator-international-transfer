@@ -159,7 +159,7 @@
                                             \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class)
                                             <li>
                                                 <form
-                                                    action="{{ route('dashboard.wallet.master-account.destroy', $master_account['id']) }}"
+                                                    action="{{ route('dashboard.international-transfer.master-account.destroy', $master_account['id']) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -186,7 +186,7 @@
             </table>
         </div>
         <div class="my-2">
-            {{-- {{ $master_accounts->links() }} --}}
+            {{ $account_details->links() }}
         </div>
     </div>
 @endsection
