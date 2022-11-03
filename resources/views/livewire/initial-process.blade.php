@@ -1,6 +1,6 @@
 <div>
     <div class="mb-4 relative z-10">
-        <input wire:change="changeAmount($event.target.value)" wire:model="amount"
+        <input  wire:model="amount"
             class="dark:bg-darkmode-400 dark:border-darkmode-400 input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
             name="amount" onkeypress="preventNonNumericalInput(event,this)" autofocus>
         <label
@@ -90,7 +90,7 @@
                                             @endphp
                                         @endif
                                         @php
-                                            
+
                                             $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                         @endphp
                                         @if ($amount >= $fee['min_amount'] && $amount <= $fee['max_amount'])
@@ -183,13 +183,13 @@
         name="currency_code_to">
         @foreach ($countries as $country)
             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                @isset($currency_to) 
+                @isset($currency_to)
                     @if ($country->id == $currency_to)
                         selected
                     @endif
-                    @else @if ($country->code == 'IN') 
-                        selected 
-                    @endif 
+                    @else @if ($country->code == 'IN')
+                        selected
+                    @endif
                 @endisset>
                     {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
             </option>
