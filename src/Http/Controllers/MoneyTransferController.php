@@ -24,6 +24,7 @@ use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
+use PDF;
 
 class MoneyTransferController extends Controller
 {
@@ -39,7 +40,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
 
         session()->forget('transaction_id');
-        
+
         session()->forget('money_transfer_request');
 
         $transactions = QueryBuilder::for(Transaction::class)
@@ -136,8 +137,9 @@ class MoneyTransferController extends Controller
         $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
         $totalAmount =  $transferDetails ? ($transferDetails['amount'] - $transferDetails['fee_charge']) : 0;
         $reasons = collect(Setting::getValue('money_transfer_reasons',[]));
+        $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $sender->id);
 
-        return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons'));
+        return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons', 'masterAccount'));
     }
 
     public function transactionDetail(Request $request)
@@ -241,7 +243,7 @@ class MoneyTransferController extends Controller
             $beneficiary = Contact::find($transferDetails['transaction']->meta['beneficiary_id']);
             $transaction = $transferDetails['transaction'];
         }
-        $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
+        $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $sender->id);
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transferReason = collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transferDetails['transfer_reason']);
 
@@ -307,7 +309,8 @@ class MoneyTransferController extends Controller
             return redirect()->route('dashboard.international-transfer.money-transfer.stripe',['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
 
         }else if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT){
-            $masterAccountDetails = Setting::getValue('money_transfer_master_account_details');
+
+            $masterAccountDetails = collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', 231);
 
             /** @var Contact $beneficiary */
             $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
@@ -346,7 +349,7 @@ class MoneyTransferController extends Controller
             $transferDetails['transaction'] = $transaction;
             session(['money_transfer_request' => $transferDetails]);
 
-            if(config('services.disable_sms_service') == true){
+            if(config('services.disable_sms_service') == false){
                 $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
             }
             else{
@@ -468,7 +471,7 @@ class MoneyTransferController extends Controller
             'status' => 'success',
             'message' => 'The money transfer request cancelled successfully.',
         ]);
-        
+
     }
 
     public function transferCompleted(Request $request)
@@ -514,6 +517,19 @@ class MoneyTransferController extends Controller
         $log->save();
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Log Successfully']);
+    }
+
+    public function moneyTransferPDF(Request $request)
+    {
+        $user = Auth::user();
+        $transaction = Transaction::find($request->transaction_id);
+        $account = auth()->user()->workspaces()->first()?->accounts()->first();
+
+        $view = PDF::loadView('international-transfer::money-transfer.moneytransferpdf', compact('account','transaction','user'))
+            ->setPaper(array(0, 0, 1000, 900), 'landscape')
+            ->output();
+
+        return response()->streamDownload(fn () => print($view), "moneytransfer.pdf");
     }
 
 }

@@ -88,6 +88,15 @@ class InitialProcess extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
+
+    public function updated($propertyName)
+    {
+            if($propertyName=='amount')
+            {
+                $this->changeAmount($this->amount);
+            }
+    }
+
     public function changeAmount($value)
     {
         if(!empty($value) && $value != '.')
