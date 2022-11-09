@@ -137,8 +137,9 @@ class MoneyTransferController extends Controller
         $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
         $totalAmount =  $transferDetails ? ($transferDetails['amount'] - $transferDetails['fee_charge']) : 0;
         $reasons = collect(Setting::getValue('money_transfer_reasons',[]));
+        $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $sender->id);
 
-        return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons'));
+        return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons', 'masterAccount'));
     }
 
     public function transactionDetail(Request $request)
@@ -242,7 +243,7 @@ class MoneyTransferController extends Controller
             $beneficiary = Contact::find($transferDetails['transaction']->meta['beneficiary_id']);
             $transaction = $transferDetails['transaction'];
         }
-        $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]));
+        $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $sender->id);
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transferReason = collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('id', $transferDetails['transfer_reason']);
 
@@ -308,7 +309,8 @@ class MoneyTransferController extends Controller
             return redirect()->route('dashboard.international-transfer.money-transfer.stripe',['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
 
         }else if($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT){
-            $masterAccountDetails = Setting::getValue('money_transfer_master_account_details');
+
+            $masterAccountDetails = collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', 231);
 
             /** @var Contact $beneficiary */
             $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);

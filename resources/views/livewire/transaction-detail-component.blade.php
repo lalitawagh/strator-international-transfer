@@ -159,6 +159,7 @@
                                             </span>
                                         </div>
                                     </div>
+                                    @if(@$masterAccount['country'] == 231)
                                     <div class="sm:flex lg:flex-row mt-2">
                                         <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                             <span>
@@ -172,6 +173,21 @@
                                             </span>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="sm:flex lg:flex-row mt-2">
+                                        <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                            <span>
+                                                IFSC Code
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
+                                            <span class="font-medium">
+                                                {{ @$masterAccount['ifsc_code'] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @endif
                                     <div class="sm:flex lg:flex-row mt-2">
                                         <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                             <span>
