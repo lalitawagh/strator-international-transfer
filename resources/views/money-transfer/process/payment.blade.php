@@ -43,22 +43,23 @@
                                                                         </div>
 
                                                                         <div class="ml-4 mr-auto">
-                                                                            <a href="" class="font-medium">
+                                                                            <a  class="font-medium">
+                                                                                {{ $payment['title'] }}
+                                                                                <br>
                                                                                 @if (!$user->is_banking_user && $payment['method'] == 'bank_account')
-                                                                                    <span style="color:red;">For the banking
+                                                                                    <span style="color:#d32e2e;">For the banking
                                                                                         payment method, you need to open a
                                                                                         bank account.</span><br>
                                                                                 @endif
                                                                                 @if ($sender->code != 'UK' && $payment['method'] == 'bank_account')
-                                                                                    <span style="color:red;">The Bank payment option are applicable only, If the transfer is from GBP</span><br>
+                                                                                    <span style="color:#d32e2e;">The Bank payment option are applicable only, If the transfer is from GBP</span><br>
                                                                                 @endif
                                                                                 @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
-                                                                                    <span style="color:red;">The Stripe payment option are applicable only, If the transfer is from GBP</span><br>
+                                                                                    <span style="color:#d32e2e;">The Stripe payment option are applicable only, If the transfer is from GBP</span><br>
                                                                                 @endif
-                                                                                @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer') 
-                                                                                <span style="color:red;">The Manual Transfer payment option is not applicable for this {{ $sender->code }} money transfer.</span><br>
+                                                                                @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer')
+                                                                                <span style="color:#d32e2e;">The Manual Transfer payment option is not applicable for this {{ $sender->code }} money transfer.</span><br>
                                                                                 @endif
-                                                                                {{ $payment['title'] }}
                                                                             </a>
                                                                             {{-- <div
                                                                                 class="w-full flex-column text-gray-600 text-xs sm:text-sm">
@@ -68,7 +69,7 @@
 
                                                                             </div> --}}
                                                                         </div>
-                                                                        
+
                                                                         <div
                                                                             class="font-medium text-gray-700 dark:text-gray-500">
                                                                             <div class="form-check mt-2">
