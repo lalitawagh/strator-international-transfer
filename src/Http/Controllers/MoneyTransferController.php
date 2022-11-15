@@ -4,7 +4,6 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
@@ -13,7 +12,6 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
-use Kanexy\InternationalTransfer\Helper\TotalProcessing;
 use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Http\Requests\MoneyTransferRequest;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
