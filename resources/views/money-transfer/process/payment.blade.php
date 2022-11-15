@@ -52,8 +52,11 @@
                                                                                 @if ($sender->code != 'UK' && $payment['method'] == 'bank_account')
                                                                                     <span style="color:red;">The Bank payment option are applicable only, If the transfer is from GBP</span><br>
                                                                                 @endif
-                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
+                                                                                {{-- @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
                                                                                     <span style="color:red;">The Stripe payment option are applicable only, If the transfer is from GBP</span><br>
+                                                                                @endif --}}
+                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
+                                                                                    <span style="color:red;">The Total payment option are applicable only, If the transfer is from GBP</span><br>
                                                                                 @endif
                                                                                 @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer') 
                                                                                 <span style="color:red;">The Manual Transfer payment option is not applicable for this {{ $sender->code }} money transfer.</span><br>
@@ -76,7 +79,7 @@
                                                                                     class="form-check-input" type="radio"
                                                                                     name="payment_method"
                                                                                     value="{{ $payment['method'] }}"
-                                                                                    @if (!$user->is_banking_user && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
+                                                                                    @if (!$user->is_banking_user && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
                                                                                 <label class="form-check-label"
                                                                                     for="radio-switch-{{ $key }}"></label>
                                                                             </div>
