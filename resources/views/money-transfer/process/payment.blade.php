@@ -47,18 +47,18 @@
                                                                                 {{ $payment['title'] }}
                                                                                 <br>
                                                                                 @if (!$user->is_banking_user && $payment['method'] == 'bank_account')
-                                                                                    <span style="color:#d32e2e;">For the banking
+                                                                                    <span class="paymentoption_error_message">For the banking
                                                                                         payment method, you need to open a
                                                                                         bank account.</span><br>
                                                                                 @endif
                                                                                 @if ($sender->code != 'UK' && $payment['method'] == 'bank_account')
-                                                                                    <span style="color:#d32e2e;">The Bank payment option are applicable only, If the transfer is from GBP</span><br>
+                                                                                    <span class="paymentoption_error_message">The Bank payment option are applicable only, If the transfer is from GBP</span><br>
                                                                                 @endif
                                                                                 @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
-                                                                                    <span style="color:#d32e2e;">The Stripe payment option are applicable only, If the transfer is from GBP</span><br>
+                                                                                    <span class="paymentoption_error_message">The Stripe payment option are applicable only, If the transfer is from GBP</span><br>
                                                                                 @endif
                                                                                 @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer')
-                                                                                <span style="color:#d32e2e;">The Manual Transfer payment option is not applicable for this {{ $sender->code }} money transfer.</span><br>
+                                                                                <span class="paymentoption_error_message">The Manual Transfer payment option is not applicable for this {{ $sender->code }} money transfer.</span><br>
                                                                                 @endif
                                                                             </a>
                                                                             {{-- <div
