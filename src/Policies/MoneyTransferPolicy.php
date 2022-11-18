@@ -28,7 +28,7 @@ class MoneyTransferPolicy
 
     public function view(User $user)
     {
-        if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)) {
+        if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW) && $user->isSuperadmin()) {
             return true;
         }
         $workspaceId = request()->input('filter.workspace_id');
@@ -51,6 +51,7 @@ class MoneyTransferPolicy
             return true;
         }
 
-        return $user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE);
+        return false;
+        //return $user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE);
     }
 }
