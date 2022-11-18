@@ -38,6 +38,14 @@ $data =  [
         'description' => 'This payment can be made through a card. Total Processing charges are applied.',
         'image' => asset('dist/images/CardPay-Debit.png'),
     ],
+
 ];
 
+// [
+//     'method' => PaymentMethod::STRIPE,
+//     'title' => 'Stripe',
+//     'heading' => 'Stripe charges will be applied',
+//     'description' => 'This payment can be made through a card. Stripe charges are applied.',
+//     'image' => asset('dist/images/CardPay-Debit.png'),
+// ],
 return $data;

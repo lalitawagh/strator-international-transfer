@@ -46,30 +46,4 @@ class Helper
             return $e->getMessage();
         }
     }
-
-    public static function totaProcessingInitialize($amount)
-    {
-
-        $url = "https://eu-test.oppwa.com/v1/checkouts";
-        $data = "entityId=8ac9a4c983a8088b0183a852c336054a" .
-            "&amount=$amount" .
-            "&currency=GBP" .
-            "&paymentType=DB";
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Authorization:Bearer OGFjOWE0Y2U4M2E4MmNkODAxODNhODUyYzIzMzAzMTZ8elR5NkE0WGVoVA=='
-        ));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this should be set to true in production
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $responseData = curl_exec($ch);
-        if (curl_errno($ch)) {
-            return curl_error($ch);
-        }
-        curl_close($ch);
-        return json_decode($responseData);
-    }
 }

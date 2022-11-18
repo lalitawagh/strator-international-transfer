@@ -39,7 +39,7 @@
                                                                             class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                                                                             <img alt="" class="rounded-full"
                                                                                 style="padding:7px;"
-                                                                                src="{{ $payment['image'] }}">
+                                                                                src="{{ $payment['image'] ?? '' }}">
                                                                         </div>
 
                                                                         <div class="ml-4 mr-auto">

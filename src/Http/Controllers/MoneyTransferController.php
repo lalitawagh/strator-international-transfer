@@ -12,7 +12,6 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
-use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Http\Requests\MoneyTransferRequest;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
@@ -20,6 +19,7 @@ use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
 use Kanexy\PartnerFoundation\Core\Models\Log;
+use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -565,7 +565,7 @@ class MoneyTransferController extends Controller
      */
 
 
-    public function totalProcessingRequest(Request $request)
+    public function totalProcessingRequest(Request $request, TotalProcessingService $service)
     {
 
         $transferDetails = session('money_transfer_request.transaction');
@@ -575,9 +575,10 @@ class MoneyTransferController extends Controller
             "description" => session('money_transfer_request.transfer_reason') ? session('money_transfer_request.transfer_reason') : null,
         ]);
 
-        $prepareCheckout = Helper::totaProcessingInitialize($transferDetails['amount']);
+        $prepareCheckout = $service->prepare($transferDetails['amount']);
         $getData = get_object_vars($prepareCheckout);
         $checkoutId = $getData['id'];
+        // dd($transferDetails);
         return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'checkoutId'));
     }
 }
