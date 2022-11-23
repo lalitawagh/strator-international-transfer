@@ -63,62 +63,77 @@ class MasterAccountController extends Controller
             ]);
         }
 
-        $account = Account::whereAccountNumber($info['account_number'])->first();
-        $workspace = Workspace::find($account?->holder_id);
-
-        if(is_null($account))
-        {
-            return redirect()->back()->withErrors(
-                ['account_number' => 'Please provide '.config('app.name').' account for master account']
-            );
-        }else{
-
-            $contactExist = Contact::beneficiaries()
-            ->where("workspace_id", $account->holder_id)
-            ->where('meta->bank_account_number', $info['account_number'])
-            ->where('meta->bank_code', $info['sort_code'])
-            ->first();
-
-
-            if(!is_null($contactExist))
-            {
-                $info['beneficiary_id'] = $contactExist->id;
-            }else{
-                $data['type'] = 'company';
-                $data['display_name'] = $info['account_holder_name'];
-                $data['meta']['bank_code_type'] = 'sort-code';
-                $data['meta']['bank_code'] = $info['sort_code'];
-                $data['meta']['bank_account_number'] = $info['account_number'];
-                $data['meta']['bank_account_name'] =  $info['account_holder_name'];
-                $data['email'] = $user->email;
-
-                $beneficiaryRefId = $this->service->createBeneficiary(
-                    new CreateBeneficiaryDto($workspace->ref_id, $data)
-                );
-
-                $data['workspace_id'] = $workspace->id;
-                $data['ref_id']       = $beneficiaryRefId;
-                $data['ref_type']     = 'wrappex';
-                $data['classification'] = [ContactClassificationType::BENEFICIARY];
-                $data['status'] = Status::ACTIVE;
-                $data['verified_at'] = now();
-
-                /** @var Contact $contact */
-                $contact = Contact::create($data);
-
-                event(new ContactCreated($contact));
-
-                $info['beneficiary_id'] = $contact->id;
-            }
-
-            $settings = collect(Setting::getValue('money_transfer_master_account_details',[]))->push($info);
+        if (config('services.disable_banking') == true) {
+            $info['beneficiary_id'] = '';
+            $settings = collect(Setting::getValue('money_transfer_master_account_details', []))->push($info);
 
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
             return redirect()->route('dashboard.international-transfer.master-account.index')->with([
                 'status' => 'success',
-                'message' => 'Account details updated successfully.',
+                'message' => 'Account details created successfully.',
             ]);
+        } 
+        else 
+        {
+
+            $account = Account::whereAccountNumber($info['account_number'])->first();
+            $workspace = Workspace::find($account?->holder_id);
+
+            if(is_null($account))
+            {
+                return redirect()->back()->withErrors(
+                    ['account_number' => 'Please provide '.config('app.name').' account for master account']
+                );
+            }else{
+
+                $contactExist = Contact::beneficiaries()
+                ->where("workspace_id", $account->holder_id)
+                ->where('meta->bank_account_number', $info['account_number'])
+                ->where('meta->bank_code', $info['sort_code'])
+                ->first();
+
+
+                if(!is_null($contactExist))
+                {
+                    $info['beneficiary_id'] = $contactExist->id;
+                }else{
+                    $data['type'] = 'company';
+                    $data['display_name'] = $info['account_holder_name'];
+                    $data['meta']['bank_code_type'] = 'sort-code';
+                    $data['meta']['bank_code'] = $info['sort_code'];
+                    $data['meta']['bank_account_number'] = $info['account_number'];
+                    $data['meta']['bank_account_name'] =  $info['account_holder_name'];
+                    $data['email'] = $user->email;
+
+                    $beneficiaryRefId = $this->service->createBeneficiary(
+                        new CreateBeneficiaryDto($workspace->ref_id, $data)
+                    );
+
+                    $data['workspace_id'] = $workspace->id;
+                    $data['ref_id']       = $beneficiaryRefId;
+                    $data['ref_type']     = 'wrappex';
+                    $data['classification'] = [ContactClassificationType::BENEFICIARY];
+                    $data['status'] = Status::ACTIVE;
+                    $data['verified_at'] = now();
+
+                    /** @var Contact $contact */
+                    $contact = Contact::create($data);
+
+                    event(new ContactCreated($contact));
+
+                    $info['beneficiary_id'] = $contact->id;
+                }
+
+                $settings = collect(Setting::getValue('money_transfer_master_account_details',[]))->push($info);
+
+                Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
+
+                return redirect()->route('dashboard.international-transfer.master-account.index')->with([
+                    'status' => 'success',
+                    'message' => 'Account details updated successfully.',
+                ]);
+            }
         }
     }
 
@@ -173,53 +188,8 @@ class MasterAccountController extends Controller
             ]);
         }
 
-        $account = Account::whereAccountNumber($info['account_number'])->first();
-        $workspace = Workspace::find($account?->holder_id);
-
-        if(is_null($account))
-        {
-            return redirect()->back()->withErrors(
-                ['account_number' => 'Please provide '.config('app.name').' account for master account']
-            );
-        }else{
-
-            $contactExist = Contact::beneficiaries()
-            ->where("workspace_id", $account->holder_id)
-            ->where('meta->bank_account_number', $info['account_number'])
-            ->where('meta->bank_code', $info['sort_code'])
-            ->first();
-
-
-            if(!is_null($contactExist))
-            {
-                $info['beneficiary_id'] = $contactExist->id;
-            }else{
-                $data['type'] = 'company';
-                $data['display_name'] = $info['account_holder_name'];
-                $data['meta']['bank_code_type'] = 'sort-code';
-                $data['meta']['bank_code'] = $info['sort_code'];
-                $data['meta']['bank_account_number'] = $info['account_number'];
-                $data['meta']['bank_account_name'] =  $info['account_holder_name'];
-                $data['email'] = $user->email;
-
-                $beneficiaryRefId = $this->service->createBeneficiary(
-                    new CreateBeneficiaryDto($workspace->ref_id, $data)
-                );
-
-                $data['workspace_id'] = $workspace->id;
-                $data['ref_id']       = $beneficiaryRefId;
-                $data['ref_type']     = 'wrappex';
-                $data['classification'] = [ContactClassificationType::BENEFICIARY];
-                $data['status'] = Status::ACTIVE;
-                $data['verified_at'] = now();
-
-                /** @var Contact $contact */
-                $contact = Contact::create($data);
-
-                event(new ContactCreated($contact));
-
-                $info['beneficiary_id'] = $contact->id;
-            }
+        if (config('services.disable_banking') == true) {
+            $info['beneficiary_id'] = ''; 
 
             $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {
                 if ($item['id'] == $id) {
@@ -235,6 +205,73 @@ class MasterAccountController extends Controller
                 'status' => 'success',
                 'message' => 'Account details updated successfully.',
             ]);
+        } 
+        else 
+        {
+
+            $account = Account::whereAccountNumber($info['account_number'])->first();
+            $workspace = Workspace::find($account?->holder_id);
+
+            if(is_null($account))
+            {
+                return redirect()->back()->withErrors(
+                    ['account_number' => 'Please provide '.config('app.name').' account for master account']
+                );
+            }else{
+
+                $contactExist = Contact::beneficiaries()
+                ->where("workspace_id", $account->holder_id)
+                ->where('meta->bank_account_number', $info['account_number'])
+                ->where('meta->bank_code', $info['sort_code'])
+                ->first();
+
+
+                if(!is_null($contactExist))
+                {
+                    $info['beneficiary_id'] = $contactExist->id;
+                }else{
+                    $data['type'] = 'company';
+                    $data['display_name'] = $info['account_holder_name'];
+                    $data['meta']['bank_code_type'] = 'sort-code';
+                    $data['meta']['bank_code'] = $info['sort_code'];
+                    $data['meta']['bank_account_number'] = $info['account_number'];
+                    $data['meta']['bank_account_name'] =  $info['account_holder_name'];
+                    $data['email'] = $user->email;
+
+                    $beneficiaryRefId = $this->service->createBeneficiary(
+                        new CreateBeneficiaryDto($workspace->ref_id, $data)
+                    );
+
+                    $data['workspace_id'] = $workspace->id;
+                    $data['ref_id']       = $beneficiaryRefId;
+                    $data['ref_type']     = 'wrappex';
+                    $data['classification'] = [ContactClassificationType::BENEFICIARY];
+                    $data['status'] = Status::ACTIVE;
+                    $data['verified_at'] = now();
+
+                    /** @var Contact $contact */
+                    $contact = Contact::create($data);
+
+                    event(new ContactCreated($contact));
+
+                    $info['beneficiary_id'] = $contact->id;
+                }
+
+                $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {
+                    if ($item['id'] == $id) {
+                        return $info;
+                    }
+        
+                    return $item;
+                });
+        
+                Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
+
+                return redirect()->route('dashboard.international-transfer.master-account.index')->with([
+                    'status' => 'success',
+                    'message' => 'Account details updated successfully.',
+                ]);
+            }
         }
     }
 
