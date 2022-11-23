@@ -569,16 +569,16 @@ class MoneyTransferController extends Controller
     {
 
         $transferDetails = session('money_transfer_request.transaction');
+
+
         $data = ([
-            "amount" => $transferDetails['amount'],
-            "currency" => $transferDetails->settled_currency,
-            "description" => session('money_transfer_request.transfer_reason') ? session('money_transfer_request.transfer_reason') : null,
+            "receiver_currency" => session('money_transfer_request.transaction.meta.exchange_currency') ? session('money_transfer_request.transaction.meta.exchange_currency') : null,
+            "receiver_amount" => session('money_transfer_request.transaction.meta.recipient_amount') ? session('money_transfer_request.transaction.meta.recipient_amount') : null
         ]);
 
-        $prepareCheckout = $service->prepare($transferDetails['amount']);
+        $prepareCheckout = $service->prepare($data);
         $getData = get_object_vars($prepareCheckout);
         $checkoutId = $getData['id'];
-        // dd($transferDetails);
         return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'checkoutId'));
     }
 }

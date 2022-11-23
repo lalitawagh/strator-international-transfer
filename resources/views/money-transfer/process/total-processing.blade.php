@@ -1,11 +1,8 @@
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
-@section('custom_js_scripts')
-    <script src="https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId={{ $checkoutId }}">
-    </script>
-@endsection
-
 @section('money-transfer-content')
+<script src="https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId={{ $checkoutId }}">
+</script>
     <div class="px-5 sm:px-20 mt-3 pt-3 sm:mt-10 sm:pt-10 border-t border-gray-200">
         <div class="intro-y mt-0 p-3">
             <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
@@ -15,6 +12,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
