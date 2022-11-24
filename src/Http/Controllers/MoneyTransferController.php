@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\Cms\Helper;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
@@ -56,7 +57,7 @@ class MoneyTransferController extends Controller
 
         $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
 
-        return view('international-transfer::money-transfer.index', compact('transactions'));
+        return view('international-transfer::money-transfer.index', compact('transactions','workspace'));
     }
 
     public function create(Request $request)
@@ -202,7 +203,7 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
-                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_name' => Helper::removeExtraSpace($secondBeneficiary?->meta['bank_account_name']),
                     'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
                     'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
