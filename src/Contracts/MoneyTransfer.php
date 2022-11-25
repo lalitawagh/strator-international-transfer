@@ -4,6 +4,7 @@ namespace Kanexy\InternationalTransfer\Contracts;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Kanexy\InternationalTransfer\Exports\MoneyTransferExport;
 use Kanexy\PartnerFoundation\Banking\Exports\TransactionExport;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
@@ -13,6 +14,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
+use PDF;
 
 class MoneyTransfer extends Transaction
 {
@@ -44,11 +46,11 @@ class MoneyTransfer extends Transaction
 
         $account = auth()->user()->workspaces()->first()?->account()->first();
         $user = Auth::user();
-        $view = PDF::loadView('partner-foundation::banking.transactionspdf', compact('transactions','account','user'))
+        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','account','user'))
             ->setPaper(array(0, 0, 1000, 800), 'landscape')
             ->output();
 
-        return response()->streamDownload(fn () => print($view), "transactions.pdf");
+        return response()->streamDownload(fn () => print($view), "transactionslist.pdf");
     }
 
     public static function columns()
