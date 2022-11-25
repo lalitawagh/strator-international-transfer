@@ -26,7 +26,7 @@ class StoreFeeRequest extends FormRequest
             'max_amount'     =>    ['required','numeric','gt:min_amount'],
             'fee_type'       =>    ['required'],
             'amount'         =>    ['required_if:fee_type,==,amount','nullable','numeric','min:0'],
-            'percentage'     =>    ['required_if:fee_type,==,percentage','nullable','numeric','between:0,100'],
+            'percentage'     =>    ['required_if:fee_type,==,percentage','nullable','numeric','between:0,100','min:0'],
             'status'         =>    ['required','string'],
         ];
     }
