@@ -98,9 +98,15 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('otp-verification-component', OtpVerification::class);
         Livewire::component('existing-beneficiary', ExistingBeneficiary::class);
         Livewire::component('transaction-detail-component', TransactionDetailComponent::class);
-        Livewire::component('transaction-log-component',TransactionLogComponent::class);
-        Livewire::component('transaction-track-component',TransactionTrackComponent::class);
-        Livewire::component('transaction-attachment-component',TransactionAttachmentComponent::class);
+        Livewire::component('transaction-log-component', TransactionLogComponent::class);
+        Livewire::component('transaction-track-component', TransactionTrackComponent::class);
+        Livewire::component('transaction-attachment-component', TransactionAttachmentComponent::class);
+    }
 
+    public function registerDefaultTopbarComponents()
+    {
+        \Kanexy\Cms\Facades\Topbar::addItem(TopbarSendMoney::class);
+        \Kanexy\Cms\Facades\Topbar::addItem(TopbarWorkspace::class);
+        \Kanexy\Cms\Facades\Topbar::addItem(TopbarMembership::class);
     }
 }
