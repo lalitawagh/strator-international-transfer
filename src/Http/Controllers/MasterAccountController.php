@@ -32,8 +32,8 @@ class MasterAccountController extends Controller
     public function index()
     {
         $this->authorize(MasterAccountPolicy::VIEW, MasterAccountConfiguration::class);
-
-        $account_details = Helper::paginate(collect(Setting::getValue('money_transfer_master_account_details', [])));
+        
+        $account_details = Helper::paginate(collect(Setting::getValue('money_transfer_master_account_details', []))->reverse());
 
         return view("international-transfer::configuration.master-account.index", compact('account_details'));
     }

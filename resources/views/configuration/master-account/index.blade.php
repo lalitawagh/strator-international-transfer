@@ -115,7 +115,7 @@
                     @endphp
                     @foreach ($account_details as $index => $master_account)
                         <tr>
-                            <td class="whitespace-nowrap text-left">{{ $index + 1 }}</td>
+                            <td class="whitespace-nowrap text-left">{{ $account_details->firstItem() + $i }}</td>
                             <td class="whitespace-nowrap text-left">
                                 {{ \Kanexy\Cms\I18N\Models\Country::find($master_account['country'])?->name }}
                             </td>
