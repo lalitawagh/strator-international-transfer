@@ -442,11 +442,18 @@ class MoneyTransferController extends Controller
 
             $transaction->update(['status' => TransactionStatus::PENDING]);
 
+            $metaDetails = [
+                'transaction_id' => $transaction->urn,
+                'threshold_exceeded' => true,
+                'transaction_amount' => $transaction->amount,
+                'alert_status' => false,
+            ];
+            $meta = array_merge($transaction->meta, $metaDetails);
             $log = new Log();
             $log->id = Str::uuid();
-            $log->text = 'Threshhold Exceeded';
+            $log->text = $transaction->urn;
             $log->user_id = auth()->user()->id;
-            $log->meta = $transaction->meta;
+            $log->meta = $meta;
             $log->target()->associate($transaction);
             $log->save();
         }
@@ -483,6 +490,18 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::ACCEPTED]);
 
+        if ($transaction->amount >= 600) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
+            $status = [
+                'transaction_id' => $transaction->urn,
+                'transaction_amount' => $transaction->amount,
+                'threshold_exceeded' => false,
+                'alert_status' => true,
+            ];
+            $meta = array_merge($transaction->meta, $status);
+            $logs->meta = $meta;
+            $logs->update();
+        }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
             'message' => 'The money transfer request completed successfully.',
@@ -494,6 +513,18 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::PENDING]);
 
+        if ($transaction->amount >= 600) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
+            $status = [
+                'transaction_id' => $transaction->urn,
+                'transaction_amount' => $transaction->amount,
+                'threshold_exceeded' => true,
+                'alert_status' => true,
+            ];
+            $meta = array_merge($transaction->meta, $status);
+            $logs->meta = $meta;
+            $logs->update();
+        }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
             'message' => 'The money transfer request pending successfully.',
@@ -522,5 +553,13 @@ class MoneyTransferController extends Controller
             ->output();
 
         return response()->streamDownload(fn () => print($view), "moneytransfer.pdf");
+    }
+
+    public function adminApproval($transaction_id)
+    {
+        $transaction = Transaction::where('urn', $transaction_id)->first();
+        $logs = Log::where('meta->transaction_id', $transaction_id)->first();
+
+        return view('international-transfer::money-transfer.admin-approval', compact("transaction"));
     }
 }
