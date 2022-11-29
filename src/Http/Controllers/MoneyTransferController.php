@@ -48,6 +48,7 @@ class MoneyTransferController extends Controller
             AllowedFilter::exact('workspace_id'),
         ]);
 
+        $user = Auth::user();
         $workspace = null;
 
         if ($request->has('filter.workspace_id')) {
@@ -56,7 +57,32 @@ class MoneyTransferController extends Controller
 
         $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
 
-        return view('international-transfer::money-transfer.index', compact('transactions'));
+        return view('international-transfer::money-transfer.index', compact('transactions','user'));
+    }
+
+    public function review(Request $request)
+    {
+        $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
+
+        session()->forget('transaction_id');
+
+        session()->forget('money_transfer_request');
+
+        $transactions = QueryBuilder::for(Transaction::class)
+        ->allowedFilters([
+            AllowedFilter::exact('workspace_id'),
+        ]);
+
+        $user = Auth::user();
+        $workspace = null;
+
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        }
+
+        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+
+        return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions','user'));
     }
 
     public function create(Request $request)
