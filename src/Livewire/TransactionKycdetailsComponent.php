@@ -3,35 +3,18 @@
 namespace Kanexy\InternationalTransfer\Livewire;
 
 use Kanexy\Cms\Models\UserSetting;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
-use Kanexy\PartnerFoundation\Core\Models\Document;
-use Kanexy\PartnerFoundation\Membership\Models\Membership;
-use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Livewire\Component;
 
 class TransactionKycdetailsComponent extends Component
 {
     public $workspace;
 
-    public $membership;
-
     public $user;
-
-    public $memberships;
-
-    public $account;
 
     public $yotiLog;
 
-    public $railsbankKYC;
-
-    public  $documents;
-
-    public $documentStatuses;
-
-    public $check_document_results;
-
+    public $documents;
 
     protected $listeners = [
         'showTransactionKYCDetails',

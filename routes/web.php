@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
+use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferController;
@@ -20,12 +21,12 @@ use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
 
 Route::group(['middleware' => ['web','auth',ColorModeMiddleware::class]], function () {
     Route::group(['prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
+        Route::name('money-transfer-dashboard')->get('/', [DashboardController::class,'index']);
         Route::resource("transfer-reason",TransferReasonController::class);
         Route::resource("master-account",MasterAccountController::class)->only(['index', 'store', 'create', 'edit', 'update', 'destroy']);
         Route::resource("transfer-type-fee",TransferTypeFeeController::class);
         Route::resource("fee",FeeController::class);
-        Route::resource("money-transfer",MoneyTransferController::class)->only(['index', 'store', 'create']);
-        Route::resource("money-transfer",MoneyTransferController::class)->only(['review']);
+        Route::resource("money-transfer",MoneyTransferController::class)->only(['index', 'store', 'create', 'review']);
         Route::get("money-transfer/beneficiary",[MoneyTransferController::class, 'showBeneficiary'])->name('money-transfer.beneficiary');
         Route::post("money-transfer/beneficiary-store",[MoneyTransferController::class, 'beneficiaryStore'])->name('money-transfer.beneficiaryStore');
         Route::get("money-transfer/payment",[MoneyTransferController::class, 'showPaymentMethod'])->name('money-transfer.payment');
