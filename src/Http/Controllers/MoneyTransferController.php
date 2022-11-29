@@ -5,6 +5,7 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
@@ -21,6 +22,7 @@ use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
+use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -457,6 +459,11 @@ class MoneyTransferController extends Controller
             $log->meta = $meta;
             $log->target()->associate($transaction);
             $log->save();
+
+            $admin = User::whereHas("roles", function ($q) {
+                $q->where("name", "super_admin");
+            })->get();
+            Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
         }
 
         return view('international-transfer::money-transfer.process.final', compact('transaction'));

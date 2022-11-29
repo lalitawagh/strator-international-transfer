@@ -87,7 +87,8 @@
                                             Sort
                                         @else
                                             IFSC
-                                        @endif Code </div>
+                                        @endif Code
+                                    </div>
                                     <div
                                         class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
                                         @if ($masterAccount['country'] == 231)
