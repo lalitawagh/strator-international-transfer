@@ -2,6 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
@@ -513,18 +514,6 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::PENDING]);
 
-        if ($transaction->amount >= 600) {
-            $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
-            $status = [
-                'transaction_id' => $transaction->urn,
-                'transaction_amount' => $transaction->amount,
-                'threshold_exceeded' => true,
-                'alert_status' => true,
-            ];
-            $meta = array_merge($transaction->meta, $status);
-            $logs->meta = $meta;
-            $logs->update();
-        }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
             'message' => 'The money transfer request pending successfully.',
@@ -559,7 +548,31 @@ class MoneyTransferController extends Controller
     {
         $transaction = Transaction::where('urn', $transaction_id)->first();
         $logs = Log::where('meta->transaction_id', $transaction_id)->first();
+        $user = User::find($transaction->ref_id);
+        return view('international-transfer::money-transfer.admin-approval', compact("transaction", "user"));
+    }
 
-        return view('international-transfer::money-transfer.admin-approval', compact("transaction"));
+    public function transferDeclined(Request $request)
+    {
+
+        $transaction = Transaction::find($request->id);
+        $transaction->update(['status' => TransactionStatus::DECLINED]);
+        if ($transaction->amount >= 600) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
+            $status = [
+                'transaction_id' => $transaction->urn,
+                'transaction_amount' => $transaction->amount,
+                'threshold_exceeded' => true,
+                'alert_status' => true,
+            ];
+            $meta = array_merge($transaction->meta, $status);
+            $logs->meta = $meta;
+            $logs->update();
+        }
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
+            'status' => 'success',
+            'message' => 'The money transfer request declined .',
+        ]);
     }
 }

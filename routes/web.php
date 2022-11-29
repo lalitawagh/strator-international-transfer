@@ -44,5 +44,6 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
         Route::post("money-transfer/logs", [MoneyTransferController::class, 'logDetails'])->name('money-transfer.logDetails');
         Route::get('money-transfer/pdf/{transaction_id}', [MoneyTransferController::class, 'moneyTransferPDF'])->name("money-transfer.moneytransfersPdf");
         Route::get("admin-approval/{id}", [MoneyTransferController::class, 'adminApproval'])->name("approval");
+        Route::get("money-transfer/transfer-declined/{id}", [MoneyTransferController::class, 'transferDeclined'])->name('money-transfer.transferDeclined');
     });
 });
