@@ -43,7 +43,7 @@ class InternationalTransferMenu extends Item
         }
 
         if($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && !$user->isSubscriber()) {
-            $menus[] = new MenuItem('Transactions Review', 'activity', url:route('dashboard.international-transfer.money-transfer.index'));
+            $menus[] = new MenuItem('Transactions Review', 'activity', url:route('dashboard.international-transfer.money-transfer-review'));
         }
 
         if($user->hasAnyPermission(Permission::TRANSFER_REASON_CREATE,Permission::TRANSFER_REASON_VIEW,Permission::TRANSFER_TYPE_FEE_VIEW,Permission::TRANSFER_TYPE_FEE_CREATE,Permission::FEE_VIEW,Permission::FEE_CREATE,Permission::MASTER_ACCOUNT_VIEW,Permission::MASTER_ACCOUNT_CREATE)) {

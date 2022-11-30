@@ -2,7 +2,9 @@
 
 namespace Kanexy\InternationalTransfer;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
@@ -107,6 +109,13 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-kycdetails-component',TransactionKycdetailsComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
+
+        Cms::setRedirectRouteAfterLogin(function (User $user) {
+            if($user->is_banking_user == 2 && config('services.disable_banking') == true)
+            {
+                return route('dashboard.international-transfer.money-transfer-dashboard');
+            }
+        });
 
     }
 }

@@ -83,7 +83,7 @@ class MoneyTransferController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::ACCEPTED,TransactionStatus::DECLINED])->latest()->paginate();
 
         return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions', 'user'));
     }
@@ -468,7 +468,7 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find(session('transaction_id'));
 
         $limit = Setting::getValue('transaction_threshold_amount', []);
-
+        
         if ($transaction->amount >=  $limit) {
 
             $transaction->update(['status' => TransactionStatus::PENDING]);

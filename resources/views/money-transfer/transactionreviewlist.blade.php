@@ -393,6 +393,9 @@
 
                                                     </table>
                                                 </div>
+                                                <div class="my-2">
+                                                    {{ $transactions->links() }}
+                                                </div>
                                             </div>
                                             <!-- END: HTML Table Data -->
                                         </div>
