@@ -9,6 +9,7 @@ use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
+use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
@@ -17,6 +18,7 @@ use Kanexy\InternationalTransfer\Livewire\TransactionAttachmentComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionDetailComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionLogComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
+use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
@@ -85,6 +87,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
     {
     }
 
+
     public function packageBooted()
     {
         parent::packageBooted();
@@ -101,6 +104,9 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-log-component',TransactionLogComponent::class);
         Livewire::component('transaction-track-component',TransactionTrackComponent::class);
         Livewire::component('transaction-attachment-component',TransactionAttachmentComponent::class);
+        Livewire::component('transaction-kycdetails-component',TransactionKycdetailsComponent::class);
+
+        \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
 
     }
 }
