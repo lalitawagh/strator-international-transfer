@@ -183,10 +183,10 @@ class MyselfBeneficiary extends Component
         }else{
 
             if($data['type'] == 'business'){
-                $data['display_name'] = $data['company_name'];
+                $data['display_name'] = Helper::removeExtraSpace($data['company_name']);
                 $data['type'] = 'company';
             }else{
-                $data['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
+                $data['display_name'] = Helper::removeExtraSpace(implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]));
             }
 
             if(! is_null($this->avatar))
