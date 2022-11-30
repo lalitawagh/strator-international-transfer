@@ -467,9 +467,9 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         $transaction = Transaction::find(session('transaction_id'));
 
-        $limit = collect(Setting::getValue('transaction_threshold_amount', []));
+        $limit = Setting::getValue('transaction_threshold_amount', []);
 
-        if ($transaction->amount >= $limit['0']) {
+        if ($transaction->amount >=  $limit) {
 
             $transaction->update(['status' => TransactionStatus::PENDING]);
 
@@ -526,9 +526,9 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::ACCEPTED]);
 
-        $limit = collect(Setting::getValue('transaction_threshold_amount', []));
+        $limit = Setting::getValue('transaction_threshold_amount', []);
 
-        if ($transaction->amount >= $limit['0']) {
+        if ($transaction->amount >=  $limit) {
             $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
             $status = [
                 'transaction_id' => $transaction->urn,
@@ -595,9 +595,9 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::DECLINED]);
 
-        $limit = collect(Setting::getValue('transaction_threshold_amount', []));
+        $limit = Setting::getValue('transaction_threshold_amount', []);
 
-        if ($transaction->amount >= $limit['0']) {
+        if ($transaction->amount >=  $limit) {
             $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
             $status = [
                 'transaction_id' => $transaction->urn,
