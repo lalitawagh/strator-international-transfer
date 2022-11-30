@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
+use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferController;
@@ -21,6 +22,7 @@ use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
 
 Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], function () {
     Route::group(['prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
+        Route::name('money-transfer-dashboard')->get('/', [DashboardController::class,'index']);
         Route::resource("transfer-reason", TransferReasonController::class);
         Route::resource("master-account", MasterAccountController::class)->only(['index', 'store', 'create', 'edit', 'update', 'destroy']);
         Route::resource("transfer-type-fee", TransferTypeFeeController::class);
