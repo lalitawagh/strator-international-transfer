@@ -83,7 +83,7 @@ class MoneyTransferController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::ACCEPTED,TransactionStatus::DECLINED])->latest()->paginate();
+        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
 
         return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions', 'user'));
     }
@@ -189,7 +189,7 @@ class MoneyTransferController extends Controller
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
         if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
-            if ($transferDetails['amount'] > $account->balance) {
+            if ($transferDetails['amount'] > $account?->balance) {
                 return redirect()->route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
                     ['payment_method' => 'Insufficient account balance.']
                 );
@@ -451,7 +451,7 @@ class MoneyTransferController extends Controller
                 'stripe_receipt_url' => $response['data']['receipt_url'],
             ];
 
-            $meta = array_merge($transferDetails->meta, $stripeDetails);
+            $meta = array_merge($transferDetails?->meta, $stripeDetails);
             $transferDetails->meta = $meta;
             $transferDetails->status = 'accepted';
             $transferDetails->update();
@@ -479,7 +479,7 @@ class MoneyTransferController extends Controller
                 'transaction_amount' => $transaction->amount,
                 'alert_status' => false,
             ];
-            $meta = array_merge($transaction->meta, $metaDetails);
+            $meta = array_merge($transaction?->meta, $metaDetails);
             $log = new Log();
             $log->id = Str::uuid();
             $log->text = $transaction->urn;
@@ -528,15 +528,15 @@ class MoneyTransferController extends Controller
 
         $limit = Setting::getValue('transaction_threshold_amount', []);
 
-        if ($transaction->amount >=  $limit) {
-            $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
+        if ($transaction?->amount >=  $limit) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction?->urn)->first();
             $status = [
-                'transaction_id' => $transaction->urn,
-                'transaction_amount' => $transaction->amount,
+                'transaction_id' => $transaction?->urn,
+                'transaction_amount' => $transaction?->amount,
                 'threshold_exceeded' => false,
                 'alert_status' => true,
             ];
-            $meta = array_merge($transaction->meta, $status);
+            $meta = array_merge($transaction?->meta, $status);
             $logs->meta = $meta;
             $logs->update();
         }
@@ -597,15 +597,15 @@ class MoneyTransferController extends Controller
 
         $limit = Setting::getValue('transaction_threshold_amount', []);
 
-        if ($transaction->amount >=  $limit) {
-            $logs = Log::where('meta->transaction_id', '=', $transaction->urn)->first();
+        if ($transaction?->amount >=  $limit) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction?->urn)->first();
             $status = [
-                'transaction_id' => $transaction->urn,
-                'transaction_amount' => $transaction->amount,
+                'transaction_id' => $transaction?->urn,
+                'transaction_amount' => $transaction?->amount,
                 'threshold_exceeded' => true,
                 'alert_status' => true,
             ];
-            $meta = array_merge($transaction->meta, $status);
+            $meta = array_merge($transaction?->meta, $status);
             $logs->meta = $meta;
             $logs->update();
         }
