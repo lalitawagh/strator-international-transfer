@@ -65,7 +65,13 @@
                             <div class="lg:ml-2 lg:mr-2 text-right lg:text-left mt-3 lg:mt-0">
                                 <div class="active-clr text-xs mt-0.5 ">Total Completed Transaction Amount</div>
                                 
-                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id ]]) }}" class="font-medium">{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionCompletedAmount->total_amount, 'GBP') }}</a>
+                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id ]]) }}" class="font-medium">
+                                   @if(!is_null($totalTransactionCompletedAmount?->total_amount))
+                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionCompletedAmount->total_amount, 'GBP') }}
+                                    @else
+                                        £ 0.00
+                                    @endif
+                                </a>
                                 
                             </div>
                             
