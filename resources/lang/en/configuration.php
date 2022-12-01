@@ -35,5 +35,6 @@ return [
     'manual_transfer'     => 'Manual Transfer',
     'stripe'              => 'Stripe',
     'active'              => 'Active',
-    'inactive'            => 'Inactive'
+    'inactive'            => 'Inactive',
+    'declined'            => 'Declined'
 ];
