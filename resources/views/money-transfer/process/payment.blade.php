@@ -46,7 +46,7 @@
                                                                             <a  class="font-medium">
                                                                                 {{ $payment['title'] }}
                                                                                 <br>
-                                                                                @if (!$user->is_banking_user && $payment['method'] == 'bank_account')
+                                                                                @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account')
                                                                                     <span class="paymentoption_error_message">For the banking
                                                                                         payment method, you need to open a
                                                                                         bank account.</span><br>
@@ -77,7 +77,7 @@
                                                                                     class="form-check-input" type="radio"
                                                                                     name="payment_method"
                                                                                     value="{{ $payment['method'] }}"
-                                                                                    @if (!$user->is_banking_user && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
+                                                                                    @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
                                                                                 <label class="form-check-label"
                                                                                     for="radio-switch-{{ $key }}"></label>
                                                                             </div>
