@@ -537,7 +537,7 @@ class MoneyTransferController extends Controller
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
-            $logs->meta = $meta;
+            $logs?->meta = $meta;
             $logs->update();
         }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
@@ -606,7 +606,7 @@ class MoneyTransferController extends Controller
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
-            $logs->meta = $meta;
+            $logs?->meta = $meta;
             $logs->update();
         }
 
