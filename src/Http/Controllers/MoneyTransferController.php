@@ -78,12 +78,13 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $workspace = null;
+        $limit = Setting::getValue('transaction_threshold_amount', []);
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
+        $transactions = $transactions->where('amount','>',$limit)->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
 
         return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions', 'user'));
     }
