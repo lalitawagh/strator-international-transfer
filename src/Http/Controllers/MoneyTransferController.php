@@ -586,7 +586,10 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::where('urn', $transaction_id)->first();
         $logs = Log::where('meta->transaction_id', $transaction_id)->first();
         $user = User::find($transaction->ref_id);
-        return view('international-transfer::money-transfer.admin-approval', compact("transaction", "user"));
+        $masterAccount = collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', 231);
+        $totalTransactionCompletedAmount = Transaction::where('workspace_id', $transaction->workspace_id)->where('status','completed')->selectRaw("SUM(amount) as total_amount")->first();
+       
+        return view('international-transfer::money-transfer.admin-approval', compact("transaction", "user", "masterAccount", "totalTransactionCompletedAmount"));
     }
 
     public function transferDeclined(Request $request)
