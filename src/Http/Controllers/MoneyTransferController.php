@@ -537,8 +537,11 @@ class MoneyTransferController extends Controller
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
-            $logs?->meta = $meta;
-            $logs->update();
+            if(!is_null($meta))
+            {
+                $logs->meta = $meta;
+                $logs->update();
+            }
         }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
@@ -605,9 +608,14 @@ class MoneyTransferController extends Controller
                 'threshold_exceeded' => true,
                 'alert_status' => true,
             ];
+
             $meta = array_merge($transaction?->meta, $status);
-            $logs?->meta = $meta;
-            $logs->update();
+            if(!is_null($meta))
+            {
+                $logs->meta = $meta;
+                $logs->update();
+            }
+           
         }
 
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
