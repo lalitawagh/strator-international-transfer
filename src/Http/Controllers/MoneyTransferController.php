@@ -76,12 +76,23 @@ class MoneyTransferController extends Controller
 
         $existSessionRequest = session('money_transfer_request');
 
-        if(!is_null(session('money_transfer_request')))
-        {
-            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id']) ? $existSessionRequest['beneficiary_id'] :null;
-            $data['transaction'] = isset($existSessionRequest['transaction']) ? $existSessionRequest['transaction'] : null;
-            $data['payment_method'] = isset($existSessionRequest['payment_method']) ? $existSessionRequest['payment_method'] : null;
-            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason']) ? $existSessionRequest['transfer_reason'] : null;
+        if (!is_null(session('money_transfer_request'))) {
+
+            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id'])
+                                        ? $existSessionRequest['beneficiary_id']
+                                        :null;
+
+            $data['transaction'] = isset($existSessionRequest['transaction'])
+                                    ? $existSessionRequest['transaction']
+                                    : null;
+
+            $data['payment_method'] = isset($existSessionRequest['payment_method'])
+                                    ? $existSessionRequest['payment_method']
+                                    : null;
+
+            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason'])
+                                    ? $existSessionRequest['transfer_reason']
+                                    : null;
         }
 
         session(['money_transfer_request' => $data]);
