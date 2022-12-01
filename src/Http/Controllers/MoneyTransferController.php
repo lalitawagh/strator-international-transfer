@@ -537,7 +537,7 @@ class MoneyTransferController extends Controller
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
-            if(!is_null($meta))
+            if(!is_null($meta) && !is_null($logs))
             {
                 $logs->meta = $meta;
                 $logs->update();
@@ -610,7 +610,7 @@ class MoneyTransferController extends Controller
             ];
 
             $meta = array_merge($transaction?->meta, $status);
-            if(!is_null($meta))
+            if(!is_null($meta) && !is_null($logs))
             {
                 $logs->meta = $meta;
                 $logs->update();
