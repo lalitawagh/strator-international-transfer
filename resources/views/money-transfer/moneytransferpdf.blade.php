@@ -46,9 +46,9 @@
             <tr style="padding-left: 2.5rem; padding-left: 2.5rem;">
                 <td style="text-align:left;padding:20px 20px;">
                     <div>
-                        <div style="font-size: 1.5rem;line-height: 2rem; font-weight:600; padding-bottom:10px">Sender Name:&nbsp; {{ $account->name }}</div>
-                        <div style="font-size: 1rem;line-height:1.5; font-weight:500;">Account No:&nbsp; {{ $account->account_number }}<br>
-                            <div style="font-size: 1rem;line-height:1.5; font-weight:500;">Sort Code:&nbsp; {{ $account->bank_code }}<br>
+                        <div style="font-size: 1.5rem;line-height: 2rem; font-weight:600; padding-bottom:10px">Sender Name:&nbsp; {{ $account?->name }}</div>
+                        <div style="font-size: 1rem;line-height:1.5; font-weight:500;">Account No:&nbsp; {{ $account?->account_number }}<br>
+                            <div style="font-size: 1rem;line-height:1.5; font-weight:500;">Sort Code:&nbsp; {{ $account?->bank_code }}<br>
                         </div>
                     </div>
                 </td>
