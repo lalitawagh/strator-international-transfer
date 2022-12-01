@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Helper;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class DashboardController extends Controller
@@ -16,11 +17,15 @@ class DashboardController extends Controller
         $user = Auth::user();
         $workspace = null;
 
-        if ($request->has('filter.workspace_id')) {
-            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
-        }
-        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->account','money-transfer')->latest()->take(5)->get();
+        $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
 
-        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace'));
+        if (Helper::activeWorkspaceId()) {
+            $workspace = Workspace::findOrFail(Helper::activeWorkspaceId());
+            $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
+        }
+        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->latest()->take(5)->get();
+       
+
+        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions'));
     }
 }

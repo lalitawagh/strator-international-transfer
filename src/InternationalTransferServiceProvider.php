@@ -114,6 +114,9 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
             if($user->is_banking_user == 2 && config('services.disable_banking') == true)
             {
                 return route('dashboard.international-transfer.money-transfer-dashboard');
+            }else if($user->isSuperAdmin() && (config('services.disable_banking') == true))
+            {
+                return route('dashboard.international-transfer.money-transfer-dashboard');
             }
         });
 
