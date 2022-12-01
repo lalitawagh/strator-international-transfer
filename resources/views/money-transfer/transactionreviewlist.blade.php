@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Money Transfer
+                        Transactions Alert
                     </h2>
                 </div>
 
@@ -284,7 +284,7 @@
                                                                     </td>
                                                                     <td class="whitespace-nowrap text-left">
                                                                         <a class="active-clr" href="javascript:void(0);"
-                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});Livewire.emit('showTransactionKYCDetails', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
+                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});">{{ $transaction->urn }}</a>
                                                                     </td>
                                                                     <td class="whitespace-nowrap text-left">
                                                                         {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
@@ -376,7 +376,7 @@
                                                                                         </a></li>
                                                                                     <li><a href="javascript:void(0)"
                                                                                             href="javascript:void(0);"
-                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});Livewire.emit('showTransactionKYCDetails', {{ $transaction->getKey() }});"
+                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
                                                                                             class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                             <x-feathericon-eye
                                                                                                 class="w-4 h-4 mr-1" />
@@ -399,10 +399,9 @@
                                             </div>
                                             <!-- END: HTML Table Data -->
                                         </div>
-                                        
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -442,13 +441,6 @@
                                         class="nav-link w-full py-2" role="tab" aria-controls="Attachments"
                                         aria-selected="false">Attachments</a>
                                 </li>
-                                @if (Auth::user()->isSuperAdmin())
-                                    <li id="KYC-documents-tab" class="nav-item flex-1" role="presentation">
-                                        <a data-tw-toggle="pill" data-tw-target="#KYCdocuments" href="javascript:;"
-                                            class="nav-link w-full py-2" role="tab" aria-controls="KYCdocuments"
-                                            aria-selected="false">KYC Documents</a>
-                                    </li>
-                                @endif
                             </ul>
                         </div>
                     </div>
@@ -464,10 +456,6 @@
 
                         <div id="Attachments" class="tab-pane" role="tabpanel" aria-labelledby="Attachments-tab">
                             @livewire('transaction-attachment-component')
-                        </div>
-
-                        <div id="KYCdocuments" class="tab-pane" role="tabpanel" aria-labelledby="KYC-documents-tab">
-                            @livewire('transaction-kycdetails-component')
                         </div>
                     </div>
                 </div>
