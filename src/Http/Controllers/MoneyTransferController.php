@@ -86,12 +86,13 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $workspace = null;
+        $limit = Setting::getValue('transaction_threshold_amount', []);
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
+        $transactions = $transactions->where('amount','>',$limit)->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
 
         return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions', 'user'));
     }
@@ -114,10 +115,23 @@ class MoneyTransferController extends Controller
         $existSessionRequest = session('money_transfer_request');
 
         if (!is_null(session('money_transfer_request'))) {
-            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id']) ? $existSessionRequest['beneficiary_id'] : null;
-            $data['transaction'] = isset($existSessionRequest['transaction']) ? $existSessionRequest['transaction'] : null;
-            $data['payment_method'] = isset($existSessionRequest['payment_method']) ? $existSessionRequest['payment_method'] : null;
-            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason']) ? $existSessionRequest['transfer_reason'] : null;
+
+            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id'])
+                                        ? $existSessionRequest['beneficiary_id']
+                                        :null;
+
+            $data['transaction'] = isset($existSessionRequest['transaction'])
+                                    ? $existSessionRequest['transaction']
+                                    : null;
+
+            $data['payment_method'] = isset($existSessionRequest['payment_method'])
+                                    ? $existSessionRequest['payment_method']
+                                    : null;
+
+            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason'])
+                                    ? $existSessionRequest['transfer_reason']
+                                    : null;
+
         }
 
         session(['money_transfer_request' => $data]);
@@ -476,7 +490,7 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find(session('transaction_id'));
 
         $limit = Setting::getValue('transaction_threshold_amount', []);
-        
+
         if ($transaction->amount >=  $limit) {
 
             $transaction->update(['status' => TransactionStatus::PENDING]);
@@ -545,8 +559,11 @@ class MoneyTransferController extends Controller
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
-            $logs->meta = $meta;
-            $logs->update();
+            if(!is_null($meta) && !is_null($logs))
+            {
+                $logs->meta = $meta;
+                $logs->update();
+            }
         }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
@@ -617,9 +634,14 @@ class MoneyTransferController extends Controller
                 'threshold_exceeded' => true,
                 'alert_status' => true,
             ];
+
             $meta = array_merge($transaction?->meta, $status);
-            $logs->meta = $meta;
-            $logs->update();
+            if(!is_null($meta) && !is_null($logs))
+            {
+                $logs->meta = $meta;
+                $logs->update();
+            }
+
         }
 
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
