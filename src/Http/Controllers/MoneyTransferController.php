@@ -620,7 +620,6 @@ class MoneyTransferController extends Controller
 
     public function transferDeclined(Request $request)
     {
-
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::DECLINED]);
 
