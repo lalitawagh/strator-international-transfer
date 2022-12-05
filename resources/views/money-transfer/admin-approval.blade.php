@@ -74,6 +74,20 @@
                                 </a>
                                 
                             </div>
+
+                            <div class="lg:ml-2 lg:mr-2 text-right lg:text-left mt-3 lg:mt-0">
+                                <div class="active-clr text-xs mt-0.5 ">Total Benficary Sent Amount</div>
+                                
+                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id,
+                                 ],'id' => $transaction?->id]) }}" class="font-medium">
+                                   @if(!is_null($totalTransactionBeneficaryAmount?->total_amount))
+                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionBeneficaryAmount->total_amount, 'GBP') }}
+                                    @else
+                                        £ 0.00
+                                    @endif
+                                </a>
+                                
+                            </div>
                             
                             
                         </div>

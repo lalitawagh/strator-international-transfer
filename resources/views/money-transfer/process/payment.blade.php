@@ -51,7 +51,7 @@
                                                                                 data-id="radio-switch-{{ $key }}">
                                                                                 {{ $payment['title'] }}
                                                                                 <br>
-                                                                                @if (!$user->is_banking_user && $payment['method'] == 'bank_account')
+                                                                                @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account')
                                                                                     <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">For
