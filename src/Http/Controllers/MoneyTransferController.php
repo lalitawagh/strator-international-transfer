@@ -2,8 +2,10 @@
 
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
@@ -21,6 +23,7 @@ use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
+use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -49,15 +52,50 @@ class MoneyTransferController extends Controller
                 AllowedFilter::exact('workspace_id'),
             ]);
 
+        $user = Auth::user();
         $workspace = null;
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+    
+        if(!is_null($request->input('id')))
+        {
+            $transactionBeneficary= Transaction::find($request->input('id'));
+            $transactions = $transactions->where('meta->second_beneficiary_bank_account_number',$transactionBeneficary->meta['second_beneficiary_bank_account_number'])->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+        }else
+        {
+            $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+        }
 
-        return view('international-transfer::money-transfer.index', compact('transactions'));
+        return view('international-transfer::money-transfer.index', compact('transactions', 'user'));
+    }
+
+    public function review(Request $request)
+    {
+        $this->authorize(MoneyTransferPolicy::VIEW, MoneyTransfer::class);
+
+        session()->forget('transaction_id');
+
+        session()->forget('money_transfer_request');
+
+        $transactions = QueryBuilder::for(Transaction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('workspace_id'),
+            ]);
+
+        $user = Auth::user();
+        $workspace = null;
+        $limit = Setting::getValue('transaction_threshold_amount', []);
+
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        }
+
+        $transactions = $transactions->where('amount','>',$limit)->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
+
+        return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions', 'user'));
     }
 
     public function create(Request $request)
@@ -78,10 +116,23 @@ class MoneyTransferController extends Controller
         $existSessionRequest = session('money_transfer_request');
 
         if (!is_null(session('money_transfer_request'))) {
-            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id']) ? $existSessionRequest['beneficiary_id'] : null;
-            $data['transaction'] = isset($existSessionRequest['transaction']) ? $existSessionRequest['transaction'] : null;
-            $data['payment_method'] = isset($existSessionRequest['payment_method']) ? $existSessionRequest['payment_method'] : null;
-            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason']) ? $existSessionRequest['transfer_reason'] : null;
+
+            $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id'])
+                                        ? $existSessionRequest['beneficiary_id']
+                                        :null;
+
+            $data['transaction'] = isset($existSessionRequest['transaction'])
+                                    ? $existSessionRequest['transaction']
+                                    : null;
+
+            $data['payment_method'] = isset($existSessionRequest['payment_method'])
+                                    ? $existSessionRequest['payment_method']
+                                    : null;
+
+            $data['transfer_reason'] = isset($existSessionRequest['transfer_reason'])
+                                    ? $existSessionRequest['transfer_reason']
+                                    : null;
+
         }
 
         session(['money_transfer_request' => $data]);
@@ -161,7 +212,7 @@ class MoneyTransferController extends Controller
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
         if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
-            if ($transferDetails['amount'] > $account->balance) {
+            if ($transferDetails['amount'] > $account?->balance) {
                 return redirect()->route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
                     ['payment_method' => 'Insufficient account balance.']
                 );
@@ -454,7 +505,6 @@ class MoneyTransferController extends Controller
         $transferDetails = session('money_transfer_request.transaction');
         $response = $request->all();
 
-
         if ($response['data']['status'] == 'succeeded') {
             $stripeDetails = [
                 'sender_payment_id' => $response['data']['id'],
@@ -465,12 +515,11 @@ class MoneyTransferController extends Controller
                 'stripe_receipt_url' => $response['data']['receipt_url'],
             ];
 
-            $meta = array_merge($transferDetails->meta, $stripeDetails);
+            $meta = array_merge($transferDetails?->meta, $stripeDetails);
             $transferDetails->meta = $meta;
             $transferDetails->status = 'accepted';
             $transferDetails->update();
         }
-
         session(['transaction_id' => $transferDetails->id]);
         session()->forget('money_transfer_request');
 
@@ -480,8 +529,34 @@ class MoneyTransferController extends Controller
     public function showFinalizeTransfer()
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
-
         $transaction = Transaction::find(session('transaction_id'));
+
+        $limit = Setting::getValue('transaction_threshold_amount', []);
+
+        if ($transaction->amount >=  $limit) {
+
+            $transaction->update(['status' => TransactionStatus::PENDING]);
+
+            $metaDetails = [
+                'transaction_id' => $transaction->urn,
+                'threshold_exceeded' => true,
+                'transaction_amount' => $transaction->amount,
+                'alert_status' => false,
+            ];
+            $meta = array_merge($transaction?->meta, $metaDetails);
+            $log = new Log();
+            $log->id = Str::uuid();
+            $log->text = $transaction->urn;
+            $log->user_id = auth()->user()->id;
+            $log->meta = $meta;
+            $log->target()->associate($transaction);
+            $log->save();
+
+            $admin = User::whereHas("roles", function ($q) {
+                $q->where("name", "super_admin");
+            })->get();
+            Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
+        }
 
         return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
@@ -515,6 +590,23 @@ class MoneyTransferController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::ACCEPTED]);
 
+        $limit = Setting::getValue('transaction_threshold_amount', []);
+
+        if ($transaction?->amount >=  $limit) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction?->urn)->first();
+            $status = [
+                'transaction_id' => $transaction?->urn,
+                'transaction_amount' => $transaction?->amount,
+                'threshold_exceeded' => false,
+                'alert_status' => true,
+            ];
+            $meta = array_merge($transaction?->meta, $status);
+            if(!is_null($meta) && !is_null($logs))
+            {
+                $logs->meta = $meta;
+                $logs->update();
+            }
+        }
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
             'message' => 'The money transfer request completed successfully.',
@@ -540,7 +632,6 @@ class MoneyTransferController extends Controller
         $log->user_id = auth()->user()->id;
         $log->target()->associate($transaction);
         $log->save();
-
         return redirect()->back()->with(['status' => 'success', 'message' => 'Log Successfully']);
     }
 
@@ -580,5 +671,46 @@ class MoneyTransferController extends Controller
         $getData = get_object_vars($prepareCheckout);
         $checkoutId = $getData['id'];
         return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'checkoutId'));
+    public function adminApproval($transaction_id)
+    {
+        $transaction = Transaction::where('urn', $transaction_id)->first();
+        $logs = Log::where('meta->transaction_id', $transaction_id)->first();
+        $user = User::find($transaction->ref_id);
+        $masterAccount = collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', 231);
+        $totalTransactionCompletedAmount = Transaction::where('workspace_id', $transaction->workspace_id)->where('status','completed')->selectRaw("SUM(amount) as total_amount")->first();
+        $totalTransactionBeneficaryAmount = Transaction::where('meta->second_beneficiary_bank_account_number', $transaction->meta['second_beneficiary_bank_account_number'])->selectRaw("SUM(amount) as total_amount")->first();
+       
+        return view('international-transfer::money-transfer.admin-approval', compact("transaction", "user", "masterAccount", "totalTransactionCompletedAmount", "totalTransactionBeneficaryAmount"));
+    }
+
+    public function transferDeclined(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->update(['status' => TransactionStatus::DECLINED]);
+
+        $limit = Setting::getValue('transaction_threshold_amount', []);
+
+        if ($transaction?->amount >=  $limit) {
+            $logs = Log::where('meta->transaction_id', '=', $transaction?->urn)->first();
+            $status = [
+                'transaction_id' => $transaction?->urn,
+                'transaction_amount' => $transaction?->amount,
+                'threshold_exceeded' => true,
+                'alert_status' => true,
+            ];
+
+            $meta = array_merge($transaction?->meta, $status);
+            if(!is_null($meta) && !is_null($logs))
+            {
+                $logs->meta = $meta;
+                $logs->update();
+            }
+
+        }
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
+            'status' => 'success',
+            'message' => 'The money transfer request declined .',
+        ]);
     }
 }
