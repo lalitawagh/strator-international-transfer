@@ -555,7 +555,7 @@ class MoneyTransferController extends Controller
             $status = [
                 'transaction_id' => $transaction?->urn,
                 'transaction_amount' => $transaction?->amount,
-                'threshold_exceeded' => false,
+                'threshold_exceeded' => true,
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
