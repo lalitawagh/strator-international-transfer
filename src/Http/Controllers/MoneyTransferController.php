@@ -666,7 +666,34 @@ class MoneyTransferController extends Controller
         $prepareCheckout = $service->prepare($data);
         $getData = get_object_vars($prepareCheckout);
         $checkoutId = $getData['id'];
+
+        $getStatus = $service->getPaymentStatus($checkoutId);
+        session(['checkoutId' => $checkoutId, 'transaction_id' => $transferDetails->id]);
+
         return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'checkoutId'));
+    }
+
+    public function storeTotalProcessingDetails(TotalProcessingService $service, Request $request)
+    {
+        $transferDetails = session('money_transfer_request.transaction');
+        $checkoutId = session('checkoutId');
+
+        $response = $service->getPaymentStatus($checkoutId);
+        $data = [
+            'checkoutId' => $checkoutId,
+            'response' => $response
+        ];
+
+        // dd($checkoutId, $response);
+        $meta = array_merge($transferDetails?->meta, $data);
+        $transferDetails->meta = $meta;
+        $transferDetails->status = 'accepted';
+        $transferDetails->update();
+
+        session(['transaction_id' => $transferDetails->id]);
+        session()->forget('money_transfer_request');
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.showFinal', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
     }
 
     public function adminApproval($transaction_id)
