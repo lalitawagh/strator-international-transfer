@@ -21,6 +21,7 @@ use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
 use Kanexy\PartnerFoundation\Core\Models\Log;
+use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -58,13 +59,11 @@ class MoneyTransferController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-    
-        if(!is_null($request->input('id')))
-        {
-            $transactionBeneficary= Transaction::find($request->input('id'));
-            $transactions = $transactions->where('meta->second_beneficiary_bank_account_number',$transactionBeneficary->meta['second_beneficiary_bank_account_number'])->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
-        }else
-        {
+
+        if (!is_null($request->input('id'))) {
+            $transactionBeneficary = Transaction::find($request->input('id'));
+            $transactions = $transactions->where('meta->second_beneficiary_bank_account_number', $transactionBeneficary->meta['second_beneficiary_bank_account_number'])->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+        } else {
             $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
         }
 
@@ -92,7 +91,7 @@ class MoneyTransferController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = $transactions->where('amount','>',$limit)->where("meta->transaction_type", 'money_transfer')->whereIn('status',[TransactionStatus::DRAFT,TransactionStatus::PENDING])->latest()->paginate();
+        $transactions = $transactions->where('amount', '>', $limit)->where("meta->transaction_type", 'money_transfer')->whereIn('status', [TransactionStatus::DRAFT, TransactionStatus::PENDING])->latest()->paginate();
 
         return view('international-transfer::money-transfer.transactionreviewlist', compact('transactions', 'user'));
     }
@@ -117,21 +116,20 @@ class MoneyTransferController extends Controller
         if (!is_null(session('money_transfer_request'))) {
 
             $data['beneficiary_id'] = isset($existSessionRequest['beneficiary_id'])
-                                        ? $existSessionRequest['beneficiary_id']
-                                        :null;
+                ? $existSessionRequest['beneficiary_id']
+                : null;
 
             $data['transaction'] = isset($existSessionRequest['transaction'])
-                                    ? $existSessionRequest['transaction']
-                                    : null;
+                ? $existSessionRequest['transaction']
+                : null;
 
             $data['payment_method'] = isset($existSessionRequest['payment_method'])
-                                    ? $existSessionRequest['payment_method']
-                                    : null;
+                ? $existSessionRequest['payment_method']
+                : null;
 
             $data['transfer_reason'] = isset($existSessionRequest['transfer_reason'])
-                                    ? $existSessionRequest['transfer_reason']
-                                    : null;
-
+                ? $existSessionRequest['transfer_reason']
+                : null;
         }
 
         session(['money_transfer_request' => $data]);
@@ -346,6 +344,47 @@ class MoneyTransferController extends Controller
             session(['money_transfer_request' => $transferDetails]);
 
             return redirect()->route('dashboard.international-transfer.money-transfer.stripe', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
+        } else if ($transferDetails['payment_method'] == PaymentMethod::TOTAL_PROCESSING) {
+            $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
+            $transaction = Transaction::updateOrCreate([
+                'id' => $transactionExist?->id,
+            ], [
+                'urn' => Transaction::generateUrn(),
+                'amount' => $transferDetails['amount'],
+                'workspace_id' => $transferDetails['workspace_id'],
+                'type' => 'debit',
+                'payment_method' => $transferDetails['payment_method'],
+                'note' => null,
+                'ref_id' =>  $user->id,
+                'ref_type' => 'money_transfer',
+                'settled_amount' => $transferDetails['amount'],
+                'settled_currency' => $sender['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'transaction_fee' => $transferDetails['fee_charge'],
+                'status' => TransactionStatus::DRAFT,
+                'meta' => [
+                    'reference_no' => MoneyTransfer::generateUrn(),
+                    'sender_id' => $workspace->id,
+                    'sender_name' => $workspace->name,
+                    'beneficiary_id' => $transferDetails['beneficiary_id'],
+                    'exchange_rate' => $transferDetails['guaranteed_rate'],
+                    'base_currency' => $sender['currency'],
+                    'exchange_currency' => $receiver['currency'],
+                    'recipient_amount' => $transferDetails['recipient_amount'],
+                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'reason' =>  $transferDetails['transfer_reason'],
+                    'transaction_type' => 'money_transfer',
+                ],
+            ]);
+
+            $transferDetails['transaction'] = $transaction;
+            session(['money_transfer_request' => $transferDetails]);
+
+            return redirect()->route('dashboard.international-transfer.money-transfer.total-processing', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
         } else if ($transferDetails['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
 
             $masterAccountDetails = collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', 231);
@@ -559,8 +598,7 @@ class MoneyTransferController extends Controller
                 'alert_status' => true,
             ];
             $meta = array_merge($transaction?->meta, $status);
-            if(!is_null($meta) && !is_null($logs))
-            {
+            if (!is_null($meta) && !is_null($logs)) {
                 $logs->meta = $meta;
                 $logs->update();
             }
@@ -606,15 +644,67 @@ class MoneyTransferController extends Controller
         return response()->streamDownload(fn () => print($view), "moneytransfer.pdf");
     }
 
+
+    /**
+     * totalProcessingRequest
+     *
+     * @return void
+     */
+
+
+    public function totalProcessingRequest(Request $request, TotalProcessingService $service)
+    {
+
+        $transferDetails = session('money_transfer_request.transaction');
+
+
+        $data = ([
+            "receiver_currency" => session('money_transfer_request.transaction.meta.exchange_currency') ? session('money_transfer_request.transaction.meta.exchange_currency') : null,
+            "receiver_amount" => session('money_transfer_request.transaction.meta.recipient_amount') ? session('money_transfer_request.transaction.meta.recipient_amount') : null
+        ]);
+
+        $prepareCheckout = $service->prepare($data);
+        $getData = get_object_vars($prepareCheckout);
+        $checkoutId = $getData['id'];
+
+        $getStatus = $service->getPaymentStatus($checkoutId);
+        session(['checkoutId' => $checkoutId, 'transaction_id' => $transferDetails->id]);
+
+        return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'checkoutId'));
+    }
+
+    public function storeTotalProcessingDetails(TotalProcessingService $service, Request $request)
+    {
+        $transferDetails = session('money_transfer_request.transaction');
+        $checkoutId = session('checkoutId');
+
+        $response = $service->getPaymentStatus($checkoutId);
+        $data = [
+            'checkoutId' => $checkoutId,
+            'response' => $response
+        ];
+
+        // dd($checkoutId, $response);
+        $meta = array_merge($transferDetails?->meta, $data);
+        $transferDetails->meta = $meta;
+        $transferDetails->status = 'accepted';
+        $transferDetails->update();
+
+        session(['transaction_id' => $transferDetails->id]);
+        session()->forget('money_transfer_request');
+
+        return redirect()->route('dashboard.international-transfer.money-transfer.showFinal', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
+    }
+
     public function adminApproval($transaction_id)
     {
         $transaction = Transaction::where('urn', $transaction_id)->first();
         $logs = Log::where('meta->transaction_id', $transaction_id)->first();
         $user = User::find($transaction->ref_id);
         $masterAccount = collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', 231);
-        $totalTransactionCompletedAmount = Transaction::where('workspace_id', $transaction->workspace_id)->where('status','completed')->selectRaw("SUM(amount) as total_amount")->first();
+        $totalTransactionCompletedAmount = Transaction::where('workspace_id', $transaction->workspace_id)->where('status', 'completed')->selectRaw("SUM(amount) as total_amount")->first();
         $totalTransactionBeneficaryAmount = Transaction::where('meta->second_beneficiary_bank_account_number', $transaction->meta['second_beneficiary_bank_account_number'])->selectRaw("SUM(amount) as total_amount")->first();
-       
+
         return view('international-transfer::money-transfer.admin-approval', compact("transaction", "user", "masterAccount", "totalTransactionCompletedAmount", "totalTransactionBeneficaryAmount"));
     }
 
@@ -635,12 +725,10 @@ class MoneyTransferController extends Controller
             ];
 
             $meta = array_merge($transaction?->meta, $status);
-            if(!is_null($meta) && !is_null($logs))
-            {
+            if (!is_null($meta) && !is_null($logs)) {
                 $logs->meta = $meta;
                 $logs->update();
             }
-
         }
 
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
