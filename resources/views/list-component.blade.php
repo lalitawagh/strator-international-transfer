@@ -91,7 +91,7 @@
                             </div>
                         </div>
 
-                        <button type="button"
+                        <button type="button" id="Print"
                             class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 btn box mr-2 flex items-center sm:ml-0">
                             <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print </button>
 
