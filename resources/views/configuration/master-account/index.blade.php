@@ -111,7 +111,7 @@
                 </thead>
                 <tbody>
                     @php
-                        $i = 1;
+                        $i = 0;
                     @endphp
                     @foreach ($account_details as $index => $master_account)
                         <tr>
