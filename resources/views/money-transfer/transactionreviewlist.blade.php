@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Money Transfer
+                        Compliance Alerts
                     </h2>
                 </div>
 
@@ -392,6 +392,9 @@
                                                         </tbody>
 
                                                     </table>
+                                                </div>
+                                                <div class="my-2">
+                                                    {{ $transactions->links() }}
                                                 </div>
                                             </div>
                                             <!-- END: HTML Table Data -->
