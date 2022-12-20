@@ -657,10 +657,9 @@ class MoneyTransferController extends Controller
 
         $transferDetails = session('money_transfer_request.transaction');
 
-
         $data = ([
-            "receiver_currency" => session('money_transfer_request.transaction.meta.exchange_currency') ? session('money_transfer_request.transaction.meta.exchange_currency') : null,
-            "receiver_amount" => session('money_transfer_request.transaction.meta.recipient_amount') ? session('money_transfer_request.transaction.meta.recipient_amount') : null
+            "receiver_currency" => session('money_transfer_request.transaction.settled_currency') ? session('money_transfer_request.transaction.settled_currency') : null,
+            "receiver_amount" => session('money_transfer_request.transaction.settled_amount') ? session('money_transfer_request.transaction.settled_amount') : null
         ]);
 
         $prepareCheckout = $service->prepare($data);
@@ -670,7 +669,9 @@ class MoneyTransferController extends Controller
         $getStatus = $service->getPaymentStatus($checkoutId);
         session(['checkoutId' => $checkoutId, 'transaction_id' => $transferDetails->id]);
 
-        return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'checkoutId'));
+        $base_url = config('totalprocessing.base_url');
+        $url = $base_url . 'paymentWidgets.js?checkoutId=' . $checkoutId;
+        return view('international-transfer::money-transfer.process.total-processing', compact('data', 'transferDetails', 'url'));
     }
 
     public function storeTotalProcessingDetails(TotalProcessingService $service, Request $request)
@@ -681,14 +682,26 @@ class MoneyTransferController extends Controller
         $response = $service->getPaymentStatus($checkoutId);
         $data = [
             'checkoutId' => $checkoutId,
-            'response' => $response
+            'result' => $response->result,
+            'card' => $response->card,
         ];
 
-        // dd($checkoutId, $response);
+        if ($response->result->code !== '000.000.000') {
+
+            $description = $response->result->description;
+            $meta = array_merge($transferDetails?->meta, $data);
+            $transferDetails->meta = $meta;
+            $transferDetails->status = TransactionStatus::PENDING;
+            $transferDetails->update();
+
+            return back()->with(['message' => "$description", 'status' => 'failed']);
+        }
+
         $meta = array_merge($transferDetails?->meta, $data);
         $transferDetails->meta = $meta;
-        $transferDetails->status = 'accepted';
+        $transferDetails->status = TransactionStatus::ACCEPTED;
         $transferDetails->update();
+
 
         session(['transaction_id' => $transferDetails->id]);
         session()->forget('money_transfer_request');
