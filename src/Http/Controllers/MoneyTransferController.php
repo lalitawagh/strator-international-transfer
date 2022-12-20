@@ -657,10 +657,9 @@ class MoneyTransferController extends Controller
 
         $transferDetails = session('money_transfer_request.transaction');
 
-
         $data = ([
-            "receiver_currency" => session('money_transfer_request.transaction.meta.exchange_currency') ? session('money_transfer_request.transaction.meta.exchange_currency') : null,
-            "receiver_amount" => session('money_transfer_request.transaction.meta.recipient_amount') ? session('money_transfer_request.transaction.meta.recipient_amount') : null
+            "receiver_currency" => session('money_transfer_request.transaction.settled_currency') ? session('money_transfer_request.transaction.settled_currency') : null,
+            "receiver_amount" => session('money_transfer_request.transaction.settled_amount') ? session('money_transfer_request.transaction.settled_amount') : null
         ]);
 
         $prepareCheckout = $service->prepare($data);
@@ -687,7 +686,7 @@ class MoneyTransferController extends Controller
             'card' => $response->card,
         ];
 
-        if (!($response->result->code == '000.000.000')) {
+        if ($response->result->code !== '000.000.000') {
 
             $description = $response->result->description;
             $meta = array_merge($transferDetails?->meta, $data);
