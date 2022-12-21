@@ -106,7 +106,7 @@
                                 @endphp
                             @else
                                 @php
-                                    $payment = 'Stripe';
+                                    $payment = 'Total Processing';
                                 @endphp
                             @endif
                             <div
