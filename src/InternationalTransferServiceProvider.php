@@ -103,22 +103,19 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('otp-verification-component', OtpVerification::class);
         Livewire::component('existing-beneficiary', ExistingBeneficiary::class);
         Livewire::component('transaction-detail-component', TransactionDetailComponent::class);
-        Livewire::component('transaction-log-component',TransactionLogComponent::class);
-        Livewire::component('transaction-track-component',TransactionTrackComponent::class);
-        Livewire::component('transaction-attachment-component',TransactionAttachmentComponent::class);
-        Livewire::component('transaction-kycdetails-component',TransactionKycdetailsComponent::class);
+        Livewire::component('transaction-log-component', TransactionLogComponent::class);
+        Livewire::component('transaction-track-component', TransactionTrackComponent::class);
+        Livewire::component('transaction-attachment-component', TransactionAttachmentComponent::class);
+        Livewire::component('transaction-kycdetails-component', TransactionKycdetailsComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if($user->is_banking_user == 2 && config('services.disable_banking') == true)
-            {
+            if ($user->is_banking_user == 2 && config('services.disable_banking') == true) {
                 return route('dashboard.international-transfer.money-transfer-dashboard');
-            }else if((!$user->isSubscriber()) && (config('services.disable_banking') == true))
-            {
+            } else if ((!$user->isSubscriber()) && (config('services.disable_banking') == true)) {
                 return route('dashboard.international-transfer.money-transfer-dashboard');
             }
         });
-
     }
 }
