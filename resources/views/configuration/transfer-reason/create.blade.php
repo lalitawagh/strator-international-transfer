@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2 self-center">
+                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
                     <label for="status" class="form-label sm:w-24">Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">
                         <select name="status" id="status" data-search="true"
