@@ -25,13 +25,9 @@ class DashboardController extends Controller
             $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
         }
         $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->latest()->take(5)->get();
-       $paidOut=Transaction::select([
-        DB::raw("count(id) As paidOut"),
-        DB::raw("DATE_FORMAT(date(created_at),'%M') As month"),
-        ])->groupBy("month")->orderBy("month")->get();
 
 
 
-        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'paidOut'));
+        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions'));
     }
 }
