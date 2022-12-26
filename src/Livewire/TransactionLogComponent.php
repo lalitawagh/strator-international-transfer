@@ -2,6 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
@@ -15,7 +16,7 @@ class TransactionLogComponent extends Component
 
     public $logSent;
 
-    public $logs = [];
+    public $logs;
 
     protected $listeners = [
         'showTransactionLog',
@@ -25,23 +26,22 @@ class TransactionLogComponent extends Component
 
     protected function rules()
     {
-        return  [
+        return [
             'description' => 'required|max:250',
         ];
 
     }
 
+    public function mount()
+    {
+        $this->transaction = new Transaction();
+    }
     public function showTransactionLog(Transaction $transaction)
     {
+
         $this->transaction = $transaction;
-        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
-    }
 
-    public function render()
-    {
-        return view('international-transfer::livewire.transaction-log-component');
     }
-
     public function transactionLogSubmit(Transaction $transaction)
     {
         $data = $this->validate();
@@ -52,17 +52,35 @@ class TransactionLogComponent extends Component
         $log->user_id = auth()->user()->id;
         $log->target()->associate($transaction);
         $log->save();
-        
+
         $this->logSent = true;
+
         $this->emit('clearInput');
-        
-        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
-       
+
+
     }
 
     public function clearInput()
     {
         $this->logSent = false;
         $this->description = null;
+    }
+
+    public function loadTransactionLogs(string $targetModel, int|null $targetId): Collection
+    {
+        return Log::query()
+            ->with('user')
+            ->where(['target_type' => $targetModel, 'target_id' => $targetId])
+            ->latest()
+            ->get();
+    }
+
+    public function render()
+    {
+        $transactionLogs = $this->loadTransactionLogs($this->transaction->getMorphClass(), $this->transaction->id);
+
+        return view('international-transfer::livewire.transaction-log-component', [
+            'transactionLogs' => $transactionLogs
+        ]);
     }
 }
