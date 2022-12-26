@@ -59,6 +59,14 @@
                                     <div class="side-menu__title"> Notifications </div>
                                 </a>
                             </li>
+                            @if(config('services.risk_management') == true)
+                            <li>
+                                <a href="{{ route('dashboard.international-transfer.riskManagement') }}" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title"> Risk Management </div>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
