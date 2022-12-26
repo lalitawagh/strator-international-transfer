@@ -63,7 +63,7 @@ class MasterAccountController extends Controller
             ]);
         }
 
-        if (config('services.disable_banking') == true) {
+        if (is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             $info['beneficiary_id'] = '';
             $settings = collect(Setting::getValue('money_transfer_master_account_details', []))->push($info);
 
@@ -188,7 +188,7 @@ class MasterAccountController extends Controller
             ]);
         }
 
-        if (config('services.disable_banking') == true) {
+        if (is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             $info['beneficiary_id'] = '';
 
             $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {

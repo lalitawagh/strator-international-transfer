@@ -198,16 +198,20 @@ class MoneyTransferController extends Controller
         $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
         $user = Auth::user();
         $workspace = $transferDetails ? Workspace::find($transferDetails['workspace_id']) : $request->input('filter.workspace_id');
-        $account = Account::forHolder($workspace)->first();
+
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
-//        if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
-//            if ($transferDetails['amount'] > $account?->balance) {
-//                return redirect()->route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
-//                    ['payment_method' => 'Insufficient account balance.']
-//                );
-//            }
-//        }
+        if (!is_null(PartnerFoundation::getBankingPayment($request)))
+        {
+            $account = Account::forHolder($workspace)->first();
+            if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
+                if ($transferDetails['amount'] > $account?->balance) {
+                    return redirect()->route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
+                        ['payment_method' => 'Insufficient account balance.']
+                    );
+                }
+            }
+        }
 
         if ($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER) {
             $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
@@ -294,7 +298,6 @@ class MoneyTransferController extends Controller
         $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
         $workspace = $transferDetails ? Workspace::find($transferDetails['workspace_id']) : $request->input('filter.workspace_id');
-        $account = Account::forHolder($workspace)->first();
 
         if ($transferDetails['payment_method'] == PaymentMethod::STRIPE) {
             $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
@@ -385,6 +388,8 @@ class MoneyTransferController extends Controller
             if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
                 $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
 
+
+                $account = Account::forHolder($workspace)->first();
                 /** @var Contact $beneficiary */
                 $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
 
