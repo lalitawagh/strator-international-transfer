@@ -30,6 +30,7 @@ class TransferTypeFeePolicy
 
     public function view(User $user)
     {
+        dd($user->roles()->first());
         return $user->hasPermissionTo(Permission::TRANSFER_TYPE_FEE_VIEW);
     }
 
