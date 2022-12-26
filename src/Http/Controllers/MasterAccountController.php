@@ -13,7 +13,7 @@ use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Http\Requests\StoreMasterAccountRequest;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\PartnerFoundation\Banking\Enums\ContactClassificationType;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
+use Kanexy\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
 use Kanexy\PartnerFoundation\Core\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
@@ -32,7 +32,7 @@ class MasterAccountController extends Controller
     public function index()
     {
         $this->authorize(MasterAccountPolicy::VIEW, MasterAccountConfiguration::class);
-        
+
         $account_details = Helper::paginate(collect(Setting::getValue('money_transfer_master_account_details', []))->reverse());
 
         return view("international-transfer::configuration.master-account.index", compact('account_details'));
@@ -43,7 +43,7 @@ class MasterAccountController extends Controller
         $info = $request->validated();
         $user = Auth::user();
         $info['id'] = now()->format('dmYHis');
-       
+
         $masterAccountExist = collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $request->input('country'));
         if(!is_null($masterAccountExist))
         {
@@ -52,7 +52,7 @@ class MasterAccountController extends Controller
 
         if($info['country'] != 231)
         {
-            $info['beneficiary_id'] = ''; 
+            $info['beneficiary_id'] = '';
             $settings = collect(Setting::getValue('money_transfer_master_account_details',[]))->push($info);
 
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
@@ -73,8 +73,8 @@ class MasterAccountController extends Controller
                 'status' => 'success',
                 'message' => 'Account details created successfully.',
             ]);
-        } 
-        else 
+        }
+        else
         {
 
             $account = Account::whereAccountNumber($info['account_number'])->first();
@@ -161,7 +161,7 @@ class MasterAccountController extends Controller
         $info = $request->validated();
         $user = Auth::user();
         $info['id'] = $id;
-       
+
         $masterAccountExist = collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $request->input('country'));
         if(!is_null($masterAccountExist) && ($id != $masterAccountExist['id']))
         {
@@ -170,16 +170,16 @@ class MasterAccountController extends Controller
 
         if($info['country'] != 231)
         {
-            $info['beneficiary_id'] = ''; 
+            $info['beneficiary_id'] = '';
 
             $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {
                 if ($item['id'] == $id) {
                     return $info;
                 }
-    
+
                 return $item;
             });
-    
+
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
             return redirect()->route('dashboard.international-transfer.master-account.index')->with([
@@ -189,24 +189,24 @@ class MasterAccountController extends Controller
         }
 
         if (config('services.disable_banking') == true) {
-            $info['beneficiary_id'] = ''; 
+            $info['beneficiary_id'] = '';
 
             $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {
                 if ($item['id'] == $id) {
                     return $info;
                 }
-    
+
                 return $item;
             });
-    
+
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
             return redirect()->route('dashboard.international-transfer.master-account.index')->with([
                 'status' => 'success',
                 'message' => 'Account details updated successfully.',
             ]);
-        } 
-        else 
+        }
+        else
         {
 
             $account = Account::whereAccountNumber($info['account_number'])->first();
@@ -261,10 +261,10 @@ class MasterAccountController extends Controller
                     if ($item['id'] == $id) {
                         return $info;
                     }
-        
+
                     return $item;
                 });
-        
+
                 Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
                 return redirect()->route('dashboard.international-transfer.master-account.index')->with([

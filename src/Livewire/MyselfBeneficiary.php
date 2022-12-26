@@ -26,8 +26,6 @@ class MyselfBeneficiary extends Component
 
     public $user;
 
-    public $account;
-
     public $first_name;
 
     public $middle_name;
@@ -122,12 +120,11 @@ class MyselfBeneficiary extends Component
     }
 
 
-    public function mount($countries, $defaultCountry, $user, $account, $workspace, $beneficiaryType)
+    public function mount($countries, $defaultCountry, $user, $workspace, $beneficiaryType)
     {
         $this->countries = $countries;
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
-        $this->account = $account;
         $this->workspace_id = $workspace->id;
         $this->beneficiaryType = $beneficiaryType;
         $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;

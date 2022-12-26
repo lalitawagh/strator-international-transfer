@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Kanexy\Banking\Controllers\PayoutController;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -16,12 +17,13 @@ use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
 use Kanexy\InternationalTransfer\Http\Requests\MoneyTransferRequest;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
-use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
-use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
+use Kanexy\PartnerFoundation\Core\Enums\TransactionStatus;
+use Kanexy\Banking\Models\Account;
+use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
+use Kanexy\PartnerFoundation\Core\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -32,12 +34,6 @@ use PDF;
 
 class MoneyTransferController extends Controller
 {
-    private PayoutService $payoutService;
-
-    public function __construct(PayoutService $payoutService)
-    {
-        $this->payoutService = $payoutService;
-    }
 
     public function index(Request $request)
     {
@@ -147,12 +143,11 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $account = Account::forHolder($workspace)->first();
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('money_transfer')->orderBy('id', 'desc')->take(5)->get();
 
-        return view('international-transfer::money-transfer.process.beneficiary', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'beneficiaries'));
+        return view('international-transfer::money-transfer.process.beneficiary', compact('user', 'countries', 'defaultCountry', 'workspace', 'beneficiaries'));
     }
 
     public function beneficiaryStore()
@@ -173,10 +168,8 @@ class MoneyTransferController extends Controller
 
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $account = Account::forHolder($workspace)->first();
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
-
         $transferDetails = session('money_transfer_request');
         $sender =  $transferDetails ? Country::find($transferDetails['currency_code_from']) : null;
         $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
@@ -184,7 +177,7 @@ class MoneyTransferController extends Controller
         $reasons = collect(Setting::getValue('money_transfer_reasons', []));
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', $sender->id);
 
-        return view('international-transfer::money-transfer.process.payment', compact('user', 'account', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons', 'masterAccount'));
+        return view('international-transfer::money-transfer.process.payment', compact('user', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons', 'masterAccount'));
     }
 
     public function transactionDetail(Request $request)
@@ -208,13 +201,13 @@ class MoneyTransferController extends Controller
         $account = Account::forHolder($workspace)->first();
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
-        if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
-            if ($transferDetails['amount'] > $account?->balance) {
-                return redirect()->route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
-                    ['payment_method' => 'Insufficient account balance.']
-                );
-            }
-        }
+//        if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
+//            if ($transferDetails['amount'] > $account?->balance) {
+//                return redirect()->route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]])->withErrors(
+//                    ['payment_method' => 'Insufficient account balance.']
+//                );
+//            }
+//        }
 
         if ($data['payment_method'] == PaymentMethod::MANUAL_TRANSFER) {
             $transactionExist = isset($transferDetails['transaction']) ?  $transferDetails['transaction'] : null;
@@ -289,7 +282,7 @@ class MoneyTransferController extends Controller
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver'));
     }
 
-    public function finalizeTransfer(Request $request)
+    public function finalizeTransfer(Request $request,WrappexService $wrappexService)
     {
         if (is_null(session('money_transfer_request'))) {
             return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
@@ -389,50 +382,56 @@ class MoneyTransferController extends Controller
 
             $masterAccountDetails = collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', 231);
 
-            /** @var Contact $beneficiary */
-            $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
+            if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+                $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
 
-            /** @var Account $senderAccount */
-            $senderAccount = Account::findOrFail($account->id);
+                /** @var Contact $beneficiary */
+                $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
 
-            $info = [
-                'sender_account_id' => $account->id,
-                'beneficiary_id'    => $beneficiary->id,
-                'amount'            => $transferDetails['amount']
-            ];
+                /** @var Account $senderAccount */
+                $senderAccount = Account::findOrFail($account->id);
 
-            $transaction = $this->payoutService->initialize($senderAccount, $beneficiary, $info);
+                $info = [
+                    'sender_account_id' => $account->id,
+                    'beneficiary_id' => $beneficiary->id,
+                    'amount' => $transferDetails['amount']
+                ];
 
-            $metaDetails = [
-                'second_beneficiary_id' => $secondBeneficiary?->id,
-                'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
-                'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
-                'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
-                'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
-                'exchange_rate' => $transferDetails['guaranteed_rate'],
-                'base_currency' => $sender['currency'],
-                'exchange_currency' => $receiver['currency'],
-                'recipient_amount' => $transferDetails['recipient_amount'],
-                'reason' =>  $transferDetails['transfer_reason'],
-                'transaction_type' => 'money_transfer',
-            ];
 
-            $meta = array_merge($transaction->meta, $metaDetails);
-            $transaction->transaction_fee = $transferDetails['fee_charge'];
-            $transaction->meta = $meta;
-            $transaction->update();
+                $transaction = $payoutService->initialize($senderAccount, $beneficiary, $info);
 
-            $transferDetails['transaction'] = $transaction;
-            session(['money_transfer_request' => $transferDetails]);
+                $metaDetails = [
+                    'second_beneficiary_id' => $secondBeneficiary?->id,
+                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'exchange_rate' => $transferDetails['guaranteed_rate'],
+                    'base_currency' => $sender['currency'],
+                    'exchange_currency' => $receiver['currency'],
+                    'recipient_amount' => $transferDetails['recipient_amount'],
+                    'reason' => $transferDetails['transfer_reason'],
+                    'transaction_type' => 'money_transfer',
+                ];
 
-            if (config('services.disable_sms_service') == false) {
-                $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-            } else {
-                $transaction->generateOtp("sms");
+                $meta = array_merge($transaction->meta, $metaDetails);
+                $transaction->transaction_fee = $transferDetails['fee_charge'];
+                $transaction->meta = $meta;
+                $transaction->update();
+
+                $transferDetails['transaction'] = $transaction;
+                session(['money_transfer_request' => $transferDetails]);
+
+                if (config('services.disable_sms_service') == false) {
+                    $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+                } else {
+                    $transaction->generateOtp("sms");
+                }
+
+                return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
+
             }
-
-            return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
         }
 
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
@@ -442,30 +441,33 @@ class MoneyTransferController extends Controller
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal', ['filter' => ['workspace_id' => $workspace->id]]);
     }
 
-    public function verify(Request $request)
+    public function verify(Request $request,WrappexService $wrappexService)
     {
-        $transaction = Transaction::find($request->query('id'));
+        if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+            $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
+            $transaction = Transaction::find($request->query('id'));
 
-        try {
-            $this->payoutService->process($transaction);
-        } catch (\Exception $exception) {
-            if ($exception->getCode() === 500) {
-                return redirect()->route("dashboard.international-transfer.money-transfer.preview", ["workspace_id" => $transaction->workspace_id])->with([
-                    'message' => 'Something went wrong. Please try again later.',
-                    'status' => 'failed',
-                ]);
+            try {
+                $payoutService->process($transaction);
+            } catch (\Exception $exception) {
+                if ($exception->getCode() === 500) {
+                    return redirect()->route("dashboard.international-transfer.money-transfer.preview", ["workspace_id" => $transaction->workspace_id])->with([
+                        'message' => 'Something went wrong. Please try again later.',
+                        'status' => 'failed',
+                    ]);
+                }
+
+                throw $exception;
             }
 
-            throw $exception;
+            session(['transaction_id' => $request->query('id')]);
+            session()->forget('money_transfer_request');
+
+            return redirect()->route('dashboard.international-transfer.money-transfer.showFinal', ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
+                'message' => 'Processing the payment. It may take a while.',
+                'status' => 'success',
+            ]);
         }
-
-        session(['transaction_id' => $request->query('id')]);
-        session()->forget('money_transfer_request');
-
-        return redirect()->route('dashboard.international-transfer.money-transfer.showFinal', ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
-            'message' => 'Processing the payment. It may take a while.',
-            'status' => 'success',
-        ]);
     }
 
     public function stripe()

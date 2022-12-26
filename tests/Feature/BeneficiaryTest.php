@@ -8,7 +8,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
 use Kanexy\InternationalTransfer\Tests\TestCase;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
+use Kanexy\Banking\Models\Account;
 use Livewire\Livewire;
 
 class BeneficiaryTest extends TestCase
