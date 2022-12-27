@@ -13,7 +13,7 @@
                         <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-tw-toggle="tab" data-tw-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
                     </div>
                     <div class="flex items-center md:ml-auto mb-2">
-                        <div
+                        <div id="SearchForm"
                             class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search sm:block lg:mr-2 lg:ml-auto">
                             <input type="text" list="browsers" name="browser" id="browser" placeholder="Search"
                                 class="search__input form-control border-transparent placeholder-theme-13">
@@ -21,10 +21,11 @@
                         </div>
 
 
-                        <a href="#"
+                        <a href="#" id="List"
                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300"> <i
                                 class="w-4 h-4" data-lucide="list"></i></a>
-                        <a href="#" class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300"> <svg
+                        <a id="Grid" href="#"
+                            class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300"> <svg
                                 xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#c1c4c9">
                                 <path
                                     d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -91,7 +92,7 @@
                             </div>
                         </div>
 
-                        <button type="button"
+                        <button type="button" id="Print"
                             class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 btn box mr-2 flex items-center sm:ml-0">
                             <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print </button>
 
