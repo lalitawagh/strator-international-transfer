@@ -7,7 +7,7 @@
             <div class="col-span-12 md:col-span-12 form-inline mt-2" style="align-items: inherit;">
                 <label class="form-label sm:w-28">Description <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <textarea wire:model.defer="description" class="form-control"></textarea>
+                    <textarea wire:model.defer="description" class="form-control" required></textarea>
                     @error('description')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
@@ -17,7 +17,7 @@
 
         </div>
         <div class="text-right mt-5">
-            <button wire:click="transactionLogSubmit({{ $transaction }})" type="button"
+            <button id="LogSave" type="button" wire:click="transactionLogSubmit({{ $transaction }})"
                 class="btn btn-sm btn-primary w-24 mr-1">Save</button>
         </div>
         <div class="flex mt-5">

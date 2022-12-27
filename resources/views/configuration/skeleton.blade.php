@@ -10,7 +10,7 @@
             <div class="configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
                 <div class="items-center p-0">
                     <div class="breadcrumb mr-auto p-3">
-                        <a href="" class="">Configuration</a>
+                        <a id="Configuration" href="" class="">Configuration</a>
                     </div>
                     <div class="side-nav pt-3 p-0 border-t border-gray-200 dark:border-dark-5">
                         <ul>
