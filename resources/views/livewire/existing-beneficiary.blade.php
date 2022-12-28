@@ -41,7 +41,7 @@
             @endforeach
         </div>
         <div class="intro-y col-span-12 lg:col-span-12 m-auto">
-            <button type="button" wire:click="load" class="btn btn-primary w-24 mb-10">Load More</button>
+            <button id="LoadMore" type="button" wire:click="load" class="btn btn-primary w-24 mb-10">Load More</button>
         </div>
 
         </div>

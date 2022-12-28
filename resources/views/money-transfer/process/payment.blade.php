@@ -237,9 +237,10 @@
 
             </div>
             <div class="text-right mt-5  py-4">
-                <a href="{{ route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => $workspace->id]]) }}"
+                <a id="PaymentPrevious"
+                    href="{{ route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => $workspace->id]]) }}"
                     class="btn btn-secondary w-24">Previous</a>
-                <button type="submit" class="btn btn-primary w-24 ml-2">Continue</button>
+                <button id="PaymentSubmit" type="submit" class="btn btn-primary w-24 ml-2">Continue</button>
             </div>
         </form>
     </div>
