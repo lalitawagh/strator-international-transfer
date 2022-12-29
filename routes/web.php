@@ -23,7 +23,6 @@ use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
 
 Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], function () {
         Route::group(['prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
-                Route::name('money-transfer-dashboard')->get('/', [DashboardController::class, 'index']);
                 Route::resource("transfer-reason", TransferReasonController::class);
                 Route::resource("master-account", MasterAccountController::class)->only(['index', 'store', 'create', 'edit', 'update', 'destroy']);
                 Route::resource("transfer-type-fee", TransferTypeFeeController::class);
@@ -53,5 +52,9 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get("money-transfer/total-processing/get-status", [MoneyTransferController::class, 'storeTotalProcessingDetails'])->name('total-processing.status');
                 Route::get("risk-management", [RiskManagementController::class, 'createRiskManagement'])->name('riskManagement');
                 Route::post("risk-management-store", [RiskManagementController::class, 'storeRiskCountry'])->name('risk-store-country');
+        });
+
+        Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class],'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
+                Route::name('money-transfer-dashboard')->get('/', [DashboardController::class, 'index']);
         });
 });
