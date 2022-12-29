@@ -17,7 +17,7 @@ class Helper
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, ['path' => request()->url()]);
     }
 
-    public static function getExchangeRateWithAmount($from,$to,$amount)
+    public static function getExchangeRateWithAmount($from, $to, $amount)
     {
         try {
             $exchange_rate = Currency::convert()->from($from)->to($to)->amount($amount)->get();
@@ -27,7 +27,7 @@ class Helper
         }
     }
 
-    public static function getExchangeRate($from,$to)
+    public static function getExchangeRate($from, $to)
     {
         try {
             $exchange_rate = Currency::convert()->from($from)->to($to)->get();
@@ -35,17 +35,15 @@ class Helper
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
     }
 
-    public static function getExchangeRateAmount($amount,$currency)
+    public static function getExchangeRateAmount($amount, $currency)
     {
         try {
-            $money = Money::parseByDecimal($amount,$currency);
+            $money = Money::parseByDecimal($amount, $currency);
             return $money;
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
-
 }

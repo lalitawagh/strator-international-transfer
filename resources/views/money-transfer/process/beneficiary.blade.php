@@ -46,9 +46,10 @@
             </div>
 
             <div class="text-right mt-5 py-4  w-12/12 md:w-9/12 lg:w-9/12 m-auto p-0 gap-5 mt-5 pt-3 text-right mt-5  py-4">
-                <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => $workspace->id]]) }}"
+                <a id="BenificaryPrevious"
+                    href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => $workspace->id]]) }}"
                     class="btn btn-secondary w-24">Previous</a>
-                <button class="btn btn-primary w-24 ml-2">Continue</button>
+                <button id="BenificarySubmit" class="btn btn-primary w-24 ml-2">Continue</button>
             </div>
         </form>
     </div>

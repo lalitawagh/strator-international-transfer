@@ -1,4 +1,4 @@
-@extends("international-transfer::configuration.skeleton")
+@extends('international-transfer::configuration.skeleton')
 
 @section('title', 'Money Transfer Collection Account Create')
 
@@ -12,14 +12,13 @@
             @csrf
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                 <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-                    <label for="country" class="form-label sm:w-60">Country <span
-                            class="text-theme-6">*</span></label>
+                    <label for="country" class="form-label sm:w-60">Country <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">
                         <select name="country" id="country" onchange="getCountry(this)" data-search="true"
                             class="w-full @error('country') border-theme-6 @enderror" required>
                             @foreach ($countries as $country)
-                                <option value="{{ $country->id }}"
-                                    @if (old('country', 231) == $country->id) selected @endif> {{ $country->name }}
+                                <option value="{{ $country->id }}" @if (old('country', 231) == $country->id) selected @endif>
+                                    {{ $country->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -30,8 +29,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                    <label for="status" class="form-label sm:w-60"> Status <span
-                            class="text-theme-6">*</span></label>
+                    <label for="status" class="form-label sm:w-60"> Status <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 tillselect-marging">
                         <select name="status" id="status" data-search="true" class="w-full">
                             <option value="">Select Status</option>
@@ -93,10 +91,8 @@
                         @enderror
                     </div>
                 </div>
-                <div id="sort_code"
-                    class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-                    <label for="sort_code" class="form-label sm:w-60">Sort Code <span
-                            class="text-theme-6">*</span></label>
+                <div id="sort_code" class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+                    <label for="sort_code" class="form-label sm:w-60">Sort Code <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="sort_code" name="sort_code" type="text"
                             class="form-control @error('sort_code') border-theme-6 @enderror"
@@ -107,11 +103,9 @@
                         @enderror
                     </div>
                 </div>
-                <div id="ifsc_code"
-                    class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2"
+                <div id="ifsc_code" class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2"
                     style="display: none;">
-                    <label for="ifsc_code" class="form-label sm:w-60">IFSC Code <span
-                            class="text-theme-6">*</span></label>
+                    <label for="ifsc_code" class="form-label sm:w-60">IFSC Code <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="ifsc_code" name="ifsc_code" type="text"
                             class="form-control @error('ifsc_code') border-theme-6 @enderror"
@@ -127,9 +121,9 @@
 
 
             <div class="text-right mt-5">
-                <a href="{{ route('dashboard.international-transfer.master-account.index') }}"
+                <a id="MasterAccountCancel" href="{{ route('dashboard.international-transfer.master-account.index') }}"
                     class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                <button type="submit" class="btn btn-primary w-24">Create</button>
+                <button id="MasterAccountSubmit" type="submit" class="btn btn-primary w-24">Create</button>
             </div>
         </form>
     </div>
