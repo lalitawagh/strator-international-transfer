@@ -91,7 +91,7 @@ class MyselfBeneficiary extends Component
             'note' => ['nullable'],
             'meta' => ['required', 'array'],
             'meta.iban_number' => ['required'],
-            'meta.bank_account_name' => ['required', 'string'],
+            'meta.bank_account_name' => ['required', 'regex:/^[\p{L}\s-]+$/u'],
             'meta.bank_account_number' => ['required', 'string', 'numeric'],
             'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
@@ -118,6 +118,7 @@ class MyselfBeneficiary extends Component
         return  [
             'meta.bank_code.required_if' => 'The sort code field is required.',
             'meta.iban_number.required' => 'The IFSC code/ IBAN field is required.',
+            'meta.bank_account_name.regex' =>'Account Name can`t contain Special Character and Number'
         ];
     }
 
