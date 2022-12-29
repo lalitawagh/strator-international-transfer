@@ -10,7 +10,7 @@
             <div class="configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
                 <div class="items-center p-0">
                     <div class="breadcrumb mr-auto p-3">
-                        <a href="" class="">Configuration</a>
+                        <a id="Configuration" href="" class="">Configuration</a>
                     </div>
                     <div class="side-nav pt-3 p-0 border-t border-gray-200 dark:border-dark-5">
                         <ul>
@@ -59,6 +59,14 @@
                                     <div class="side-menu__title"> Notifications </div>
                                 </a>
                             </li>
+                            @if(config('services.risk_management') == true)
+                            <li>
+                                <a href="{{ route('dashboard.international-transfer.riskManagement') }}" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title"> Risk Management </div>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

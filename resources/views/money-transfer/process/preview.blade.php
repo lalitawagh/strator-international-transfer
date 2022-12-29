@@ -106,7 +106,7 @@
                                 @endphp
                             @else
                                 @php
-                                    $payment = 'Stripe';
+                                    $payment = 'Total Processing';
                                 @endphp
                             @endif
                             <div
@@ -211,7 +211,7 @@
                     <a href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
                         class="btn btn-secondary text-center mr-1 mb-2 ml-auto">Cancel this transfer</a>
                 @endisset
-                <button type="submit" class="btn btn-primary w-24">Continue</button>
+                <button id="PreviewSubmit" type="submit" class="btn btn-primary w-24">Continue</button>
             </div>
         </form>
     </div>

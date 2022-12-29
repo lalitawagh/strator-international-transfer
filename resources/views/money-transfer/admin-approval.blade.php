@@ -8,7 +8,7 @@
 
 @section('content')
     @if (Auth::user()->isSuperAdmin())
-        <div>
+        <div class="">
             @if (!isset($transaction))
                 <div class="mt-5">
                     <svg width="25" viewBox="-2 -2 42 42" xmlns="http://www.w3.org/2000/svg" stroke="rgb(45, 55, 72)"
@@ -49,20 +49,47 @@
                     @endphp
                 @endisset
 
-                <div class="grid grid-cols-12 gap-4 mt-0">
+                <div class="box grid grid-cols-12 gap-4 mt-0">
                     <div
-                        class="dark:bg-darkmode-400 dark:border-darkmode-400 col-span-12 lg:col-span-6 xxl:col-span-6 bg-gray-200 mt-5 px-3 pb-5">
+                        class="dark:bg-darkmode-400 dark:border-darkmode-400 col-span-12 lg:col-span-6 xxl:col-span-6  mt-5 px-3 pb-5">
                         <div
-                            class="mb-2 mt-3 box flex flex-col lg:flex-row items-center px-0 py-2 border-b border-gray-200 dark:border-dark-5">
+                            class="mb-2 mt-3 box flex flex-col lg:flex-row items-center px-0 py-2 border-b  dark:border-dark-5">
                             <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
                                 <img alt="rounded-full" class="" src="{{ $user->avatar }}">
                             </div>
                             <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                                <a href=""
-                                    class="font-medium">{{ $transaction->meta['second_beneficiary_name'] }}</a>
+                                <a href="{{ route('dashboard.memberships.yoti-log',$transaction->workspace_id) }}"
+                                    class="font-medium">{{ @$transaction->meta['sender_name'] }}</a>
                                 <div class="text-gray-600 text-xs mt-0.5">{{ $transaction->urn }}</div>
                             </div>
+                            <div class="lg:ml-2 lg:mr-2 text-right lg:text-left mt-3 lg:mt-0">
+                                <div class="active-clr text-xs mt-0.5 ">Total Completed Transaction Amount</div>
+                                
+                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id ]]) }}" class="font-medium">
+                                   @if(!is_null($totalTransactionCompletedAmount?->total_amount))
+                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionCompletedAmount->total_amount, 'GBP') }}
+                                    @else
+                                        £ 0.00
+                                    @endif
+                                </a>
+                                
+                            </div>
 
+                            <div class="lg:ml-2 lg:mr-2 text-right lg:text-left mt-3 lg:mt-0">
+                                <div class="active-clr text-xs mt-0.5 ">Total Benficary Sent Amount</div>
+                                
+                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id,
+                                 ],'id' => $transaction?->id]) }}" class="font-medium">
+                                   @if(!is_null($totalTransactionBeneficaryAmount?->total_amount))
+                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionBeneficaryAmount->total_amount, 'GBP') }}
+                                    @else
+                                        £ 0.00
+                                    @endif
+                                </a>
+                                
+                            </div>
+                            
+                            
                         </div>
                         <div id="faq-accordion-1" class="box accordion accordion-boxed px-2 py-2">
                             <div class="accordion-item">
@@ -302,7 +329,7 @@
 
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6  bg-gray-200 mt-5 px-3 pb-5">
+                    <div class="col-span-12 lg:col-span-6 xxl:col-span-6  mt-5 px-3 pb-5">
                         <div class="intro-y col-span-12 lg:col-span-12 px-0">
 
                             <div class="flex flex-col lg:flex-row px-0 sm:px-0 py-0 mb-2">
