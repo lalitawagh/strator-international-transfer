@@ -1,3 +1,5 @@
+@extends('international-transfer::money-transfer.process.wizard-skeleton')
+
 @section('money-transfer-content')
     <script src="{{ $url }}"></script>
     <div class="px-5 sm:px-20 mt-3 pt-3 sm:mt-10 sm:pt-10 border-t border-gray-200">
