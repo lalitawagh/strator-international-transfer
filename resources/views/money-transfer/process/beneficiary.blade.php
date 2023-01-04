@@ -11,21 +11,21 @@
                     <h3 class="text-lg font-medium mb-4 sm:mb-2 text-left py-2">Select or Create Beneficiary</h3>
                     <div class="font-medium text-base col-span-12 sm:col-span-12 xxl:col-span-12 py-2"> New Beneficiary</div>
                     <div class="grid grid-cols-12 gap-6">
-                        <a data-tw-toggle="modal" data-tw-target="#myself-modal"
+                        <a id="Self" data-tw-toggle="modal" data-tw-target="#myself-modal"
                             class="col-span-12 sm:col-span-4 md:col-span-4 lg:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                             <div class="font-medium text-base">
                                 <img alt="" class="m-auto" src="{{ asset('dist/images/self-icon.png') }}">
                             </div>
                             <div class="font-medium text-center text-base mt-3 break-words">Self</div>
                         </a>
-                        <a data-tw-toggle="modal" data-tw-target="#someone-else-modal"
+                        <a id="AnotherPerson" data-tw-toggle="modal" data-tw-target="#someone-else-modal"
                             class="col-span-12 sm:col-span-4 md:col-span-4 lg:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                             <div class="font-medium text-base text-base">
                                 <img alt="" class="m-auto" src="{{ asset('dist/images/someone-els-icon.png') }}">
                             </div>
                             <div class="font-medium text-center text-base mt-3 break-words">Another Person</div>
                         </a>
-                        <a data-tw-toggle="modal" data-tw-target="#business-modal"
+                        <a id="BusinessWelfare" data-tw-toggle="modal" data-tw-target="#business-modal"
                             class="col-span-12 sm:col-span-4 md:col-span-4 lg:col-span-4 xxl:col-span-4 p-5 cursor-pointer zoom-in text-center border-l border border-gray-200 dark:border-dark-5 rounded">
                             <div class="font-medium text-base">
                                 <img alt="" class="m-auto" src="{{ asset('dist/images/business-c-icon.png') }}">

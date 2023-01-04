@@ -36,7 +36,7 @@
 
                     <div class="w-full sm:w-auto flex sm:mt-0 sm:mt-0 mb-2 justify-around">
                         <div class="dropdown mr-2">
-                            <button
+                            <button id="Filter"
                                 class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn box flex items-center"
                                 aria-expanded="false" data-tw-toggle="dropdown">
                                 <i data-lucide="filter" class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter
@@ -59,7 +59,7 @@
                                                     </option>
                                                 </select>
                                                 <span class="float-right ml-2 absolute plus" style="margin:0;">
-                                                    <a href="javascript:;"><i data-lucide="trash-2"
+                                                    <a id="trash2" href="javascript:;"><i data-lucide="trash-2"
                                                             class="w-4 h-4 mr-2"></i></a>
                                                 </span>
                                             </div>
@@ -73,10 +73,12 @@
                                         <div class="flex mt-3">
                                             <div class="w-full px-2">
                                                 <div class="form-inline">
-                                                    <button type="submit" class="btn btn-elevated-primary btn-sm mr-1">
+                                                    <button id="Apply" type="submit"
+                                                        class="btn btn-elevated-primary btn-sm mr-1">
                                                         <i data-lucide="file-text" class="w-5 h-5 mr-1"></i> Apply
                                                     </button>
-                                                    <a href="javascript:void(0);" class="btn btn-secondary btn-sm mr-1">
+                                                    <a id="AddCondition" href="javascript:void(0);"
+                                                        class="btn btn-secondary btn-sm mr-1">
                                                         <i data-lucide="plus-circle" class="w-5 h-5 mr-1"></i> Add a
                                                         condition
                                                     </a>
@@ -85,8 +87,9 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a href="" class="dropdown-item"> <i data-lucide="activity"
-                                                class="w-4 h-4 mr-2"></i> <span class="truncate">Indonesian</span> </a>
+                                        <a id="Indonesian" href="" class="dropdown-item"> <i
+                                                data-lucide="activity" class="w-4 h-4 mr-2"></i> <span
+                                                class="truncate">Indonesian</span> </a>
                                     </li>
                                 </ul>
                             </div>
@@ -97,7 +100,7 @@
                             <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print </button>
 
                         <div class="dropdown">
-                            <button
+                            <button id="Export"
                                 class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn btn-primary shadow-md flex items-center"
                                 aria-expanded="false" data-tw-toggle="dropdown">
                                 Export <i class="w-4 h-4 ml-2" data-lucide="chevron-down"></i>
