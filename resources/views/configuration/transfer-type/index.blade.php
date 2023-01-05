@@ -5,7 +5,7 @@
 @section('create-button')
     @can(\Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::CREATE,
         \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class)
-        <a href="{{ route('dashboard.international-transfer.transfer-type-fee.create') }}"
+        <a id="CreateNew" href="{{ route('dashboard.international-transfer.transfer-type-fee.create') }}"
             class="btn btn-sm btn-primary shadow-md">Create New</a>
     @endcan
 @endsection
@@ -119,83 +119,84 @@
                                 \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class))
                             <th class="flex" style="width:40px;">Action</th>
                         @endcan
-                    </tr>
-                </thead>
-                <tbody>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $i = 0;
+                @endphp
+                @foreach ($transfer_type_fees as $index => $transfer_type_fee)
                     @php
-                        $i = 0;
+                        $currency = \Kanexy\Cms\I18N\Models\Country::find($transfer_type_fee['currency']);
                     @endphp
-                    @foreach ($transfer_type_fees as $index => $transfer_type_fee)
-                        @php
-                            $currency = \Kanexy\Cms\I18N\Models\Country::find($transfer_type_fee['currency']);
-                        @endphp
-                        <tr>
-                            <td class="whitespace-nowrap text-left">{{ $transfer_type_fees->firstItem() + $i }}</td>
-                            <td class="whitespace-nowrap text-left">{{ $currency->currency }}</td>
+                    <tr>
+                        <td class="whitespace-nowrap text-left">{{ $transfer_type_fees->firstItem() + $i }}</td>
+                        <td class="whitespace-nowrap text-left">{{ $currency->currency }}</td>
+                        <td class="whitespace-nowrap text-left">
+                            {{ trans('international-transfer::configuration.' . $transfer_type_fee['type']) }}</td>
+                        <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['min_amount'] }}</td>
+                        <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['max_amount'] }}</td>
+                        <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['amount'] }}</td>
+                        <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['percentage'] }}</td>
+                        <td class="whitespace-nowrap text-left">{{ ucfirst($transfer_type_fee['status']) }}</td>
+                        @if (Gate::check(
+                            \Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::EDIT,
+                            \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class) ||
+                            Gate::check(
+                                \Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::DELETE,
+                                \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class))
                             <td class="whitespace-nowrap text-left">
-                                {{ trans('international-transfer::configuration.' . $transfer_type_fee['type']) }}</td>
-                            <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['min_amount'] }}</td>
-                            <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['max_amount'] }}</td>
-                            <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['amount'] }}</td>
-                            <td class="whitespace-nowrap text-right">{{ $transfer_type_fee['percentage'] }}</td>
-                            <td class="whitespace-nowrap text-left">{{ ucfirst($transfer_type_fee['status']) }}</td>
-                            @if (Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::EDIT,
-                                \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class) ||
-                                Gate::check(
-                                    \Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::DELETE,
-                                    \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class))
-                                <td class="whitespace-nowrap text-left">
-                                    <div class="dropdown">
-                                        <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                            data-tw-toggle="dropdown">
-                                            <span class="w-5 h-5 flex items-center justify-center">
-                                                <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
-                                            </span>
-                                        </button>
-                                        <div class="dropdown-menu w-40">
-                                            <ul class="dropdown-content">
-                                                @can(\Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::EDIT,
-                                                    \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class)
-                                                    <li>
-                                                        <a href="{{ route('dashboard.international-transfer.transfer-type-fee.edit', $transfer_type_fee['id']) }}"
-                                                            class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                            <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                        </a>
-                                                    </li>
-                                                @endcan
-                                                @can(\Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::DELETE,
-                                                    \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class)
-                                                    <li>
-                                                        <form
-                                                            action="{{ route('dashboard.international-transfer.transfer-type-fee.destroy', $transfer_type_fee['id']) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                        data-tw-toggle="dropdown">
+                                        <span class="w-5 h-5 flex items-center justify-center">
+                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                        </span>
+                                    </button>
+                                    <div class="dropdown-menu w-40">
+                                        <ul class="dropdown-content">
+                                            @can(\Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::EDIT,
+                                                \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class)
+                                                <li>
+                                                    <a id="Edit"
+                                                        href="{{ route('dashboard.international-transfer.transfer-type-fee.edit', $transfer_type_fee['id']) }}"
+                                                        class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                        <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can(\Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::DELETE,
+                                                \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class)
+                                                <li>
+                                                    <form
+                                                        action="{{ route('dashboard.international-transfer.transfer-type-fee.destroy', $transfer_type_fee['id']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
 
-                                                            <button type="submit"
-                                                                class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </li>
-                                                @endcan
-                                            </ul>
-                                        </div>
+                                                        <button id="Delete" type="submit"
+                                                            class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            @endcan
+                                        </ul>
                                     </div>
-                                </td>
-                            @endif
-                        </tr>
-                        @php
-                            $i++;
-                        @endphp
-                    @endforeach
-                </tbody>
-            </table>
+                                </div>
+                            </td>
+                        @endif
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
 
-        </div>
-        <div class="my-2">
-            {{ $transfer_type_fees->links() }}
-        </div>
     </div>
+    <div class="my-2">
+        {{ $transfer_type_fees->links() }}
+    </div>
+</div>
 @endsection

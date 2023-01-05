@@ -47,7 +47,7 @@
 
                                                                         <div class="ml-4 mr-auto"
                                                                             data-id="radio-switch-{{ $key }}">
-                                                                            <a class="font-medium"
+                                                                            <a id="BankAccountSwich" class="font-medium"
                                                                                 data-id="radio-switch-{{ $key }}">
                                                                                 {{ $payment['title'] }}
                                                                                 <br>
