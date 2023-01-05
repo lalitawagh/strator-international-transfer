@@ -5,7 +5,7 @@
 @section('create-button')
     @can(\Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::CREATE,
         \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class)
-        <a href="{{ route('dashboard.international-transfer.transfer-reason.create') }}"
+        <a id="CreateNew" href="{{ route('dashboard.international-transfer.transfer-reason.create') }}"
             class="btn btn-sm btn-primary shadow-md">Create New</a>
     @endcan
 @endsection
@@ -66,7 +66,7 @@
                                     \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class))
                                 <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
-                                        <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                        <button id="Settings" class="dropdown-toggle btn px-2 box" aria-expanded="false"
                                             data-tw-toggle="dropdown">
                                             <span class="w-5 h-5 flex items-center justify-center">
                                                 <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
@@ -77,7 +77,8 @@
                                                 @can(\Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::EDIT,
                                                     \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class)
                                                     <li>
-                                                        <a href="{{ route('dashboard.international-transfer.transfer-reason.edit', $money_transfer_reason['id']) }}"
+                                                        <a id="Edit"
+                                                            href="{{ route('dashboard.international-transfer.transfer-reason.edit', $money_transfer_reason['id']) }}"
                                                             class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                             <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                         </a>
@@ -92,7 +93,7 @@
                                                             @csrf
                                                             @method('DELETE')
 
-                                                            <button type="submit"
+                                                            <button id="Delete" type="submit"
                                                                 class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                 <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
                                                             </button>
