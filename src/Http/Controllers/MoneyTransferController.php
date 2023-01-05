@@ -22,7 +22,6 @@ use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -285,7 +284,7 @@ class MoneyTransferController extends Controller
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver'));
     }
 
-    public function finalizeTransfer(Request $request,WrappexService $wrappexService)
+    public function finalizeTransfer(Request $request)
     {
         if (is_null(session('money_transfer_request'))) {
             return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
@@ -385,6 +384,7 @@ class MoneyTransferController extends Controller
             $masterAccountDetails = collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', 231);
 
             if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+                $wrappexService =  new \Kanexy\Banking\Services\WrappexService();
                 $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
 
 
@@ -445,9 +445,10 @@ class MoneyTransferController extends Controller
         return redirect()->route('dashboard.international-transfer.money-transfer.showFinal', ['filter' => ['workspace_id' => $workspace->id]]);
     }
 
-    public function verify(Request $request,WrappexService $wrappexService)
+    public function verify(Request $request)
     {
         if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+            $wrappexService =  new \Kanexy\Banking\Services\WrappexService();
             $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
             $transaction = Transaction::find($request->query('id'));
 

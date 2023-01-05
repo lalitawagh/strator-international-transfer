@@ -4,6 +4,7 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\Status;
 use Kanexy\Cms\I18N\Models\Country;
@@ -14,8 +15,8 @@ use Kanexy\InternationalTransfer\Http\Requests\StoreMasterAccountRequest;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\PartnerFoundation\Banking\Enums\ContactClassificationType;
 use Kanexy\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Kanexy\Banking\Services\WrappexService;
+use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -106,9 +107,13 @@ class MasterAccountController extends Controller
                     $data['meta']['bank_account_name'] =  $info['account_holder_name'];
                     $data['email'] = $user->email;
 
-                    $beneficiaryRefId = $this->service->createBeneficiary(
-                        new CreateBeneficiaryDto($workspace->ref_id, $data)
-                    );
+                    if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+                        $wrappexService =  new \Kanexy\Banking\Services\WrappexService();
+
+                        $beneficiaryRefId = $wrappexService->createBeneficiary(
+                            new CreateBeneficiaryDto($workspace->ref_id, $data)
+                        );
+                    }
 
                     $data['workspace_id'] = $workspace->id;
                     $data['ref_id']       = $beneficiaryRefId;
