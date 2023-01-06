@@ -12,7 +12,6 @@
             </div>
         </div>
     </div>
-
     <script>
         var wpwlOptions = {
             style: "card",
@@ -45,7 +44,7 @@
             var holder = $('.wpwl-control-cardNumber').val();
             if (holder.trim().length < 2) {
                 $('.wpwl-control-cardNumber').addClass('wpwl-has-error').after(
-                    '<div class="wpwl-hint wpwl-hint-cardNumberError">Please enter card holder</div>');
+                    '<div class="wpwl-hint wpwl-hint-cardNumberError">Please enter card number</div>');
                 return false;
             }
             return true;
