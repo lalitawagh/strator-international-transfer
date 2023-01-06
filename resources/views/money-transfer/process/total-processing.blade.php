@@ -1,3 +1,10 @@
+@push('styles')
+    <style>
+        .wpwl-wrapper.wpwl-wrapper-brand {
+            width: 52%;
+        }
+    </style>
+@endpush
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
