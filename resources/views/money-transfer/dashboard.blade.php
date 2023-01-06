@@ -11,14 +11,14 @@
     <div class="intro-y col-span-12 lg:col-span-12">
         <div class="grid grid-cols-12 gap-4">
             <div class="intro-y col-span-12 md:col-span-6 lg:col-span-6 intro-y h-full ">
-                <livewire:transaction-graph-dashboard />
+                <livewire:international-transfer-graph />
             </div>
             <div class="intro-y col-span-12 md:col-span-6 lg:col-span-6 intro-y ">
                 <div class="box shadow-lg p-2 ">
                     <div class=" text-lg font-medium mr-auto mt-2">
                         Transaction Status
                     </div>
-                                                    
+
                     <div class="h-[310px]">
                         <canvas id="transactionPieChart"></canvas>
                         {{-- <canvas id="donut-chart-widget"></canvas> --}}
@@ -44,8 +44,10 @@
 @push('scripts')
     <!-- Chart line -->
     <script>
+           var chartLine =null;
         window.addEventListener('UpdateTransactionChart', event => {
             transactionChart();
+
         });
 
         function transactionChart(){
@@ -79,42 +81,29 @@
                 {
                     label: 'PAID OUT',
                     fill: false,
-                    borderColor: '#4baef1', // Add custom color border (Line)
+                    backgroundColor: '#002366',
+                    // borderColor: '#4baef1', // Add custom color border (Line)
+                    indexAxis: 'y',
                     data: JSON.parse(debitChartTransaction),
                 }]
             };
 
             const configLineChart = {
-                type: 'line',
+                type: 'bar',
                 data,
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                stepSize: 5,
-                                maxTicksLimit: 11
-                            },
-                            responsive: true, // Instruct chart js to respond nicely.
-                            maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
 
-                        }],
-                    },
-                    y: {
-                        suggestedMin: 50,
-                        suggestedMax: 100
-                    },
-                    parsing: {
-                        xAxisKey: "month",
-                        yAxisKey: "total"
-                    },
-                    responsive: true, // Instruct chart js to respond nicely.
-                    maintainAspectRatio: true // Add to prevent default behaviour of full-width/height
-                }
+
+
             };
 
-            var report_line_chart_data = document.getElementById("chartLine").getContext('2d');
-            var chartLine = new Chart(
+            report_line_chart_data = document.getElementById("chartLine").getContext('2d');
+
+            if(chartLine!==null)
+            {
+                chartLine.destroy();
+            }
+
+             chartLine = new Chart(
                 report_line_chart_data,
                 configLineChart
             );
@@ -151,6 +140,6 @@
             configTransactionDoughnut,
         );
     </script>
-    
+
 @endpush
 
