@@ -10,14 +10,14 @@
             <div class="configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
                 <div class="items-center p-0">
                     <div class="breadcrumb mr-auto p-3">
-                        <a href="" class="">Configuration</a>
+                        <a id="Configuration" href="" class="">Configuration</a>
                     </div>
                     <div class="side-nav pt-3 p-0 border-t border-gray-200 dark:border-dark-5">
                         <ul>
                             @can(\Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy::VIEW,
                                 \Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration::class)
                                 <li>
-                                    <a href="{{ route('dashboard.international-transfer.transfer-type-fee.index') }}"
+                                    <a id="TransferTypeFee"href="{{ route('dashboard.international-transfer.transfer-type-fee.index') }}"
                                         class="side-menu">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title">Transfer Type Fee </div>
@@ -27,7 +27,8 @@
                             @can(\Kanexy\InternationalTransfer\Policies\FeePolicy::VIEW,
                                 \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class)
                                 <li>
-                                    <a href="{{ route('dashboard.international-transfer.fee.index') }}" class="side-menu">
+                                    <a id="FeeSetup" href="{{ route('dashboard.international-transfer.fee.index') }}"
+                                        class="side-menu">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Fee Setup </div>
                                     </a>
@@ -36,7 +37,8 @@
                             @can(\Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::VIEW,
                                 \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class)
                                 <li>
-                                    <a href="{{ route('dashboard.international-transfer.transfer-reason.index') }}"
+                                    <a id="TransferReason"
+                                        href="{{ route('dashboard.international-transfer.transfer-reason.index') }}"
                                         class="side-menu">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Transfer Reason </div>
@@ -46,7 +48,8 @@
                             @can(\Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::VIEW,
                                 \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class)
                                 <li>
-                                    <a href="{{ route('dashboard.international-transfer.master-account.index') }}"
+                                    <a id="MTCAccount"
+                                        href="{{ route('dashboard.international-transfer.master-account.index') }}"
                                         class="side-menu">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> MTC Account </div>
@@ -54,17 +57,28 @@
                                 </li>
                             @endcan
                             <li>
-                                <a href="javascript:void(0);" class="side-menu">
+                                <a id="Notifications" href="javascript:void(0);" class="side-menu">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> Notifications </div>
                                 </a>
                             </li>
+                            @if (config('services.risk_management') == true)
+                                <li>
+                                    <a id="RiskManagement"
+                                        href="{{ route('dashboard.international-transfer.riskManagement') }}"
+                                        class="side-menu">
+                                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                        <div class="side-menu__title"> Risk Management </div>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
 
                 <div class="configarrow-toggle">
-                    <span x-on:click="toggle" class="w-5 h-5 block" href="javascript:;" aria-expanded="false">
+                    <span id="ArrowLeft" x-on:click="toggle" class="w-5 h-5 block" href="javascript:;"
+                        aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left block mx-auto block mx-auto">

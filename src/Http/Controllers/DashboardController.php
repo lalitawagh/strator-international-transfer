@@ -4,6 +4,7 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;

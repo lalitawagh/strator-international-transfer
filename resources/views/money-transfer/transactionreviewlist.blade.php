@@ -27,8 +27,9 @@
                                                     <x-list-view-filters />
                                                     @if ($user->isSubscriber())
                                                         @can(\Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy::CREATE,
-                                                        \Kanexy\InternationalTransfer\Contracts\MoneyTransfer::class)
-                                                            <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
+                                                            \Kanexy\InternationalTransfer\Contracts\MoneyTransfer::class)
+                                                            <a id="MoneyTransfer"
+                                                                href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
                                                                 class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Money
                                                                 Transfer</a>
                                                         @endcan
@@ -323,7 +324,8 @@
                                                                     <td class="whitespace-nowrap text-left"
                                                                         style="box-shadow: none;">
                                                                         <div class="dropdown">
-                                                                            <button class="dropdown-toggle btn px-2 box"
+                                                                            <button id="Toggle"
+                                                                                class="dropdown-toggle btn px-2 box"
                                                                                 aria-expanded="false"
                                                                                 data-tw-toggle="dropdown">
                                                                                 <span
@@ -337,7 +339,7 @@
                                                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
                                                                                         @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::CANCELLED)
                                                                                             @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
+                                                                                                <li><a id="Completed" href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-check-circle
                                                                                                             class="w-4 h-4 mr-1" />
@@ -346,7 +348,7 @@
                                                                                             @endif
                                                                                             @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
                                                                                                 $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
+                                                                                                <li><a id="Accepted" href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-check
                                                                                                             class="w-4 h-4 mr-1" />
@@ -356,7 +358,7 @@
                                                                                             @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
                                                                                                 $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING &&
                                                                                                 $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
+                                                                                                <li><a id="Pending" href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-alert-circle
                                                                                                             class="w-4 h-4 mr-1" />
@@ -365,7 +367,8 @@
                                                                                             @endif
                                                                                         @endif
                                                                                     @endif
-                                                                                    <li><a href="javascript:void(0)"
+                                                                                    <li><a id="Track"
+                                                                                            href="javascript:void(0)"
                                                                                             onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"
                                                                                             data-tw-toggle="modal"
                                                                                             data-tw-target="#superlarge-slide-over-size-preview"
@@ -374,7 +377,8 @@
                                                                                                 class="w-4 h-4 mr-1" />
                                                                                             Track
                                                                                         </a></li>
-                                                                                    <li><a href="javascript:void(0)"
+                                                                                    <li><a id="Show"
+                                                                                            href="javascript:void(0)"
                                                                                             href="javascript:void(0);"
                                                                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});"
                                                                                             class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">

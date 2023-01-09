@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-                            <button type="submit" class="btn btn-primary w-24">Submit</button>
+                            <button id="StripSubmit" type="submit" class="btn btn-primary w-24">Submit</button>
                         </div>
                     </form>
                 </div>

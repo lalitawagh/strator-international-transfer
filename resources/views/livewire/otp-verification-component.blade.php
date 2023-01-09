@@ -50,13 +50,15 @@
                         @error('code')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
-                        <a wire:click="resendOtp()" class="block active-clr mt-2" style="cursor: pointer;">Resend OTP
+                        <a id="ResendOTP" wire:click="resendOtp()" class="block active-clr mt-2"
+                            style="cursor: pointer;">Resend OTP
                         </a>
                     </div>
                 </div>
             </div>
             <div class="text-right mt-5">
-                <button wire:click="verifyOtp" type="button" class="btn btn-primary w-24">Submit</button>
+                <button id="verifyOtpSubmit" wire:click="verifyOtp" type="button"
+                    class="btn btn-primary w-24">Submit</button>
             </div>
         </div>
     </div>
