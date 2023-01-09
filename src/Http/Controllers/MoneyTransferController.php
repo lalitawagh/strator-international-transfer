@@ -289,6 +289,7 @@ class MoneyTransferController extends Controller
         $transferReason = collect(Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transferDetails['transfer_reason']);
 
 
+        if(config('services.risk_management') == true){
             $country = Country::findOrFail($user->country_id);
             $iplogdata = IPlogs::where('holder_id', $user->id)->first();
 
@@ -299,27 +300,19 @@ class MoneyTransferController extends Controller
                     'residence_country' => $country->name,
                 ];
 
-                $log = new Log();
-                $log->id = Str::uuid();
-                $log->text = 'ip_address_transaction';
-                $log->user_id = auth()->user()->id;
-                $log->meta = $meta;
-                $log->target()->associate($transaction);
-                $log->save();
-
-                // $logid = Str::uuid();
-                // $iplogdata = Log::updateOrCreate(['target_type' => $user->getMorphClass(),
-                //     'target_id' =>  $user->getKey()]
-                //     ,[
-                //     'target_type' => $user->getMorphClass(),
-                //     'target_id' =>  $user->getKey(),
-                //     'id' => $logid,
-                //     'text' => 'ip_address',
-                //     'user_id' => auth()->user()->id,
-                //     'meta' => $meta,
-                // ]);
+                $iplogdata = Log::updateOrCreate(['target_type' => $transaction->getMorphClass(),
+                    'target_id' =>  $transaction->getKey()]
+                    ,[
+                    'target_type' => $transaction->getMorphClass(),
+                    'target_id' =>  $transaction->getKey(),
+                    'id' => rand(11111, 99999),
+                    'text' => 'ip_address_transaction',
+                    'user_id' => auth()->user()->id,
+                    'meta' => $meta,
+                ]);
 
             }
+        }
 
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver'));
     }
