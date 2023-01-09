@@ -55,7 +55,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::post("risk-management-store", [RiskManagementController::class, 'storeRiskCountry'])->name('risk-store-country');
         });
 
-        Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class],'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
+        Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
                 Route::name('money-transfer-dashboard')->get('/', [DashboardController::class, 'index']);
         });
 });
