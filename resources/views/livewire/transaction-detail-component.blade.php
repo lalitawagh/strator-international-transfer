@@ -39,7 +39,7 @@
             @php
                 $sender = NULL;
                 if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
-                    $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
+                    $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
                 }
                     $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
             @endphp
