@@ -13,7 +13,7 @@ use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Http\Requests\StoreMasterAccountRequest;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
-use Kanexy\PartnerFoundation\Banking\Enums\ContactClassificationType;
+use Kanexy\PartnerFoundation\Cxrm\Enums\ContactClassificationType;
 use Kanexy\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
