@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="font-medium text-gray-700 dark:text-gray-500">
-                    <a href="javascript:;" class="w-5 h-5 ml-5 flex items-center justify-center"><svg
+                    <a id="CurrentColor" href="javascript:;" class="w-5 h-5 ml-5 flex items-center justify-center"><svg
                             xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right w-4 h-4 w-4 h-4">
@@ -126,9 +126,11 @@
                                         </div>
                                     </div>
                                     <div class="flex p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
-                                        <a data-dismiss="modal" class="text-primary pt-3 active-clr cursor">Select another recipient</a>
+                                        <a id="SelectAnotherRecipient" data-dismiss="modal"
+                                            class="text-primary pt-3 active-clr cursor">Select another recipient</a>
                                         <br>
-                                        <a href="{{ route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $workspace->id]]) }}"
+                                        <a id="Continue"
+                                            href="{{ route('dashboard.international-transfer.money-transfer.payment', ['filter' => ['workspace_id' => $workspace->id]]) }}"
                                             class="btn w-24 mt-0 btn-primary ml-auto">Continue</a>
                                     </div>
                                 </div>
