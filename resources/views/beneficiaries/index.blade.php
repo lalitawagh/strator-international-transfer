@@ -19,7 +19,7 @@
                             @can(\Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy::CREATE,
                                 \Kanexy\PartnerFoundation\Cxrm\Models\Contact::class)
                                 <a id="CreateBeneficiary"
-                                    href="{{ route('dashboard.banking.beneficiaries.create', ['workspace_id' => $workspace->id]) }}"
+                                    href="{{ route('dashboard.international-transfer.beneficiaries.create', ['workspace_id' => $workspace->id]) }}"
                                     class="btn btn-sm btn-primary shadow-md py-2 sm:ml-1 sm:-mt-2 sm:mb-0 mb-2 py-2">Create New
                                 </a>
                             @endcan
@@ -164,7 +164,7 @@
                                                             $beneficiary)
                                                             <li>
                                                                 <a id="Edit"
-                                                                    href="{{ route('dashboard.banking.beneficiaries.edit', $beneficiary->id) }}"
+                                                                    href="{{ route('dashboard.international-transfer.beneficiaries.edit', $beneficiary->id) }}"
                                                                     class="flex items-center block dropdown-item block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                     <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                                 </a>
@@ -175,7 +175,7 @@
                                                             @can(\Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy::DELETE,
                                                                 $beneficiary)
                                                                 <form
-                                                                    action="{{ route('dashboard.banking.beneficiaries.destroy', $beneficiary->id) }}"
+                                                                    action="{{ route('dashboard.international-transfer.beneficiaries.destroy', $beneficiary->id) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')

@@ -54,7 +54,7 @@ class InternationalTransferMenu extends Item
         }
 
         if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'money_transfer']));
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
         }
 
         return $menus;

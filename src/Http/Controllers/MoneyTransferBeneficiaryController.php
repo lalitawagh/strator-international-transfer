@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\PartnerFoundation\Banking\Controllers;
+namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
@@ -63,7 +63,7 @@ class MoneyTransferBeneficiaryController extends Controller
 
         $accounts = Account::whereNotNull('account_number')->latest()->get(['id', 'name', 'account_number']);
 
-        return view("partner-foundation::banking.beneficiaries.create", compact('countries', 'defaultCountry', 'workspace', 'accounts'));
+        return view("international-transfer::beneficiaries.create", compact('countries', 'defaultCountry', 'workspace', 'accounts'));
     }
 
     public function store(StoreBeneficiaryRequest $request)
@@ -88,13 +88,8 @@ class MoneyTransferBeneficiaryController extends Controller
 
         $data['workspace_id'] = $workspace->id;
         $data['ref_id']       = $beneficiaryRefId;
+        $data['ref_type']     = 'money_transfer';
 
-        if ($request->has('beneficiary_type')) {
-            $data['ref_type']     = $request->input('beneficiary_type');
-        } else {
-
-            $data['ref_type']     = 'wrappex';
-        }
 
         /** @var Contact $contact */
         $contact = Contact::create($data);
@@ -114,7 +109,7 @@ class MoneyTransferBeneficiaryController extends Controller
             return $contact->redirectForVerification(request()->input('callback_url'), 'sms');
         }
 
-        return $contact->redirectForVerification(route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => $workspace->id]]), 'sms');
+        return $contact->redirectForVerification(route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => $workspace->id]]), 'sms');
     }
 
     public function edit(Contact $beneficiary)
@@ -124,7 +119,7 @@ class MoneyTransferBeneficiaryController extends Controller
         $countries = Country::get();
         $defaultCountry = Setting::getValue('default_country');
 
-        return view("partner-foundation::banking.beneficiaries.edit", compact('beneficiary', 'countries', 'defaultCountry'));
+        return view("international-transfer::beneficiaries.edit", compact('beneficiary', 'countries', 'defaultCountry'));
     }
 
     public function update(UpdateBeneficiaryRequest $request, Contact $beneficiary)
@@ -143,7 +138,7 @@ class MoneyTransferBeneficiaryController extends Controller
 
         $beneficiary->update($data);
 
-        return redirect()->route("dashboard.banking.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
+        return redirect()->route("dashboard.international-transfer.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
             'message' => 'The beneficiary updated successfully.',
         ]);
@@ -159,7 +154,7 @@ class MoneyTransferBeneficiaryController extends Controller
 
         event(new ContactDeleted($beneficiary));
 
-        return redirect()->route("dashboard.banking.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
+        return redirect()->route("dashboard.international-transfer.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
             'message' => 'The beneficiary deleted successfully.',
         ]);

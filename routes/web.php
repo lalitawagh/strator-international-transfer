@@ -6,6 +6,7 @@ use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
+use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferBeneficiaryController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferController;
 use Kanexy\InternationalTransfer\Http\Controllers\RiskManagementController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferReasonController;
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get("money-transfer/total-processing/get-status", [MoneyTransferController::class, 'storeTotalProcessingDetails'])->name('total-processing.status');
                 Route::get("risk-management", [RiskManagementController::class, 'createRiskManagement'])->name('riskManagement');
                 Route::post("risk-management-store", [RiskManagementController::class, 'storeRiskCountry'])->name('risk-store-country');
+                Route::resource('beneficiaries', MoneyTransferBeneficiaryController::class);
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

@@ -12,7 +12,7 @@
                     </h2>
                 </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.banking.beneficiaries.store') }}" method="POST"
+                    <form action="{{ route('dashboard.international-transfer.beneficiaries.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
 
@@ -243,7 +243,7 @@
 
                         <div class="text-right mt-5">
                             <a id="BeneficiaryCancel"
-                                href="{{ route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => $workspace->id]]) }}"
+                                href="{{ route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => $workspace->id]]) }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button id="BeneficiaryCreate" type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
@@ -293,4 +293,3 @@
         });
     </script>
 @endpush
-
