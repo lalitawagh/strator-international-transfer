@@ -53,9 +53,9 @@ class InternationalTransferMenu extends Item
             $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.international-transfer.transfer-type-fee.index'));
         }
 
-        if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'money_transfer']));
-        }
+        // if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
+        //     $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'money_transfer']));
+        // }
 
         return $menus;
     }
