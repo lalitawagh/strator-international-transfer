@@ -37,8 +37,11 @@
         <div class="clearfix"></div>
         @isset($transaction->meta['sender_id'])
             @php
-                $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
-                $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
+                $sender = NULL;
+                if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+                    $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
+                }
+                    $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
             @endphp
         @endisset
 
@@ -471,7 +474,7 @@
 
                         <div class="edit-transaction-content col-span-12 lg:col-span-12 xxl:col-span-12 mt-2 hidden">
                             <form id="transaction-form"
-                                action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}"
+                                action="{{ route('dashboard.transaction-attachment', $transaction->getKey()) }}"
                                 method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
