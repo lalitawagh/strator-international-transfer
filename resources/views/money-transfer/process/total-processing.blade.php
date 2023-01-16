@@ -1,3 +1,10 @@
+@push('styles')
+    <style>
+        .wpwl-wrapper.wpwl-wrapper-brand {
+            width: 52%;
+        }
+    </style>
+@endpush
 @extends('international-transfer::money-transfer.process.wizard-skeleton')
 
 @section('money-transfer-content')
@@ -12,7 +19,6 @@
             </div>
         </div>
     </div>
-
     <script>
         var wpwlOptions = {
             style: "card",
@@ -45,7 +51,7 @@
             var holder = $('.wpwl-control-cardNumber').val();
             if (holder.trim().length < 2) {
                 $('.wpwl-control-cardNumber').addClass('wpwl-has-error').after(
-                    '<div class="wpwl-hint wpwl-hint-cardNumberError">Please enter card holder</div>');
+                    '<div class="wpwl-hint wpwl-hint-cardNumberError">Please enter card number</div>');
                 return false;
             }
             return true;

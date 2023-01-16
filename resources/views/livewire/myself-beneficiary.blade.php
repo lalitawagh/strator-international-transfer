@@ -222,8 +222,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
-                                type="text" class="form-control" value="{{ $account?->iban_number }}"
-                                required="required">
+                                type="text" class="form-control" required="required">
                             @error('meta.iban_number')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
