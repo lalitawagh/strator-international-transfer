@@ -52,44 +52,40 @@
                             </td>
                         </tr>
 
-                        @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
-                            <tr>
-                                <td><span>{{ $transaction->updated_at->format('d M Y') }},
-                                        {{ $transaction->updated_at->format('H:i A') }} </span></td>
-                                <td class="list-dot"></td>
-                                <td style="padding-left: 60px;">
-                                    <p>
-                                        Transaction cancelled successfully.
-                                    </p>
-                                </td>
-                            </tr>
+                        @if($transaction->status == \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::CANCELLED)
+                        <tr>
+                            <td><span>{{ $transaction->updated_at->format('d M Y') }}, {{ $transaction->updated_at->format('H:i A') }} </span></td>
+                            <td class="list-dot"></td>
+                            <td style="padding-left: 60px;">
+                                <p>
+                                    Transaction cancelled successfully.
+                                </p>
+                            </td>
+                        </tr>
                         @endif
 
-                        @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED &&
-                            $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
-                            <tr>
-                                <td><span>{{ $transaction->updated_at->format('d M Y') }},
-                                        {{ $transaction->updated_at->format('H:i A') }} </span></td>
-                                <td class="list-dot"></td>
-                                <td style="padding-left: 60px;">
-                                    <p>
-                                        Transaction {{ $transaction->status }}.
-                                    </p>
-                                </td>
-                            </tr>
+                        @if($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED && $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::CANCELLED)
+                        <tr>
+                            <td><span>{{ $transaction->updated_at->format('d M Y') }}, {{ $transaction->updated_at->format('H:i A') }} </span></td>
+                            <td class="list-dot"></td>
+                            <td style="padding-left: 60px;">
+                                <p>
+                                    Transaction {{ $transaction->status }}.
+                                </p>
+                            </td>
+                        </tr>
                         @endif
 
-                        @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                            <tr>
-                                <td><span>{{ $transaction->updated_at->format('d M Y') }},
-                                        {{ $transaction->updated_at->format('H:i A') }} </span></td>
-                                <td class="list-dot"></td>
-                                <td style="padding-left: 60px;">
-                                    <p>
-                                        Transaction completed Sucessfully.
-                                    </p>
-                                </td>
-                            </tr>
+                        @if($transaction->status == \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                        <tr>
+                            <td><span>{{ $transaction->updated_at->format('d M Y') }}, {{ $transaction->updated_at->format('H:i A') }} </span></td>
+                            <td class="list-dot"></td>
+                            <td style="padding-left: 60px;">
+                                <p>
+                                    Transaction completed Sucessfully.
+                                </p>
+                            </td>
+                        </tr>
                         @endif
                     </table>
                 </div>

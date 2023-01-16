@@ -9,7 +9,6 @@ use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
-use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
 use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -25,8 +24,6 @@ class MyselfBeneficiary extends Component
     public $defaultCountry;
 
     public $user;
-
-    public $account;
 
     public $first_name;
 
@@ -123,12 +120,11 @@ class MyselfBeneficiary extends Component
     }
 
 
-    public function mount($countries, $defaultCountry, $user, $account, $workspace, $beneficiaryType)
+    public function mount($countries, $defaultCountry, $user, $workspace, $beneficiaryType)
     {
         $this->countries = $countries;
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
-        $this->account = $account;
         $this->workspace_id = $workspace->id;
         $this->beneficiaryType = $beneficiaryType;
         $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;
@@ -198,7 +194,7 @@ class MyselfBeneficiary extends Component
             $currencyDetails = [
                 'sending_currency' => session('money_transfer_request.currency_code_from'),
                 'receiving_currency' => session('money_transfer_request.currency_code_to'),
-                'bank_code_type' => BankEnum::SORTCODE,
+                'bank_code_type' => 'sort-code',
                 'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
             ];
 

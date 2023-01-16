@@ -3,7 +3,7 @@
 namespace Kanexy\InternationalTransfer\Livewire;
 
 use Kanexy\Cms\Models\UserSetting;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Livewire\Component;
 
 class TransactionKycdetailsComponent extends Component
