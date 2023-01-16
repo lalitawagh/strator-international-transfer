@@ -47,7 +47,9 @@
                 <div class="clearfix"></div>
                 @isset($transaction->meta['sender_id'])
                     @php
+                    if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
                         $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
+                    }
                         $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
                     @endphp
                 @endisset
