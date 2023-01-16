@@ -33,7 +33,7 @@
                 <h2 class="text-lg font-medium truncate mr-5">
 
                 </h2>
-                <a href="" class="ml-auto text-theme-1 dark:text-theme-10 truncate"></a>
+                <a id="Truncate" href="" class="ml-auto text-theme-1 dark:text-theme-10 truncate"></a>
             </div>
             @if (!isset($transactionLogs))
                 <div class="mt-5">
