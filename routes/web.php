@@ -7,6 +7,7 @@ use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferController;
 use Kanexy\InternationalTransfer\Http\Controllers\RiskManagementController;
+use Kanexy\InternationalTransfer\Http\Controllers\RiskMgmtQuestionController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferReasonController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
 
@@ -24,6 +25,7 @@ use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
 Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], function () {
         Route::group(['prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
                 Route::name('money-transfer-dashboard')->get('/', [DashboardController::class, 'index']);
+                Route::resource("risk-management-questions", RiskMgmtQuestionController::class);
                 Route::resource("transfer-reason", TransferReasonController::class);
                 Route::resource("master-account", MasterAccountController::class)->only(['index', 'store', 'create', 'edit', 'update', 'destroy']);
                 Route::resource("transfer-type-fee", TransferTypeFeeController::class);
