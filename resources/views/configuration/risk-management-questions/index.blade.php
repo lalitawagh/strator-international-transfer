@@ -56,7 +56,7 @@
                     @foreach ($risk_mgmnt_questions as $index => $risk_mgmnt_question)
                         <tr>
                             <td class="whitespace-nowrap text-left">{{ $risk_mgmnt_questions->firstItem() + $i }}</td>
-                            <td class="whitespace-nowrap text-left">{{ $risk_mgmnt_question['questions'] }}</td>
+                            <td class="row-wrap text-left">{{ $risk_mgmnt_question['questions'] }}</td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($risk_mgmnt_question['status']) }}</td>
                             @if (Gate::check(
                                 \Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy::EDIT,
