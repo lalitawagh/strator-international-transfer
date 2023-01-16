@@ -1,4 +1,4 @@
-@extends("international-transfer::configuration.skeleton")
+@extends('international-transfer::configuration.skeleton')
 
 @section('title', 'Risk Management')
 
@@ -19,10 +19,8 @@
                             class="w-full @error('high_risk_country') border-theme-6 @enderror" multiple>
                             @foreach ($countries as $key => $value)
                                 <option value="{{ $key }}"
-                                    @if (!is_null($highriskcountry))
-                                        @if (in_array($key, $highriskcountry)) 
-                                        selected 
-                                        @endif
+                                    @if (!is_null($highriskcountry)) @if (in_array($key, $highriskcountry)) 
+                                        selected @endif
                                     @endif
                                     >
                                     {{ $value }}
@@ -42,10 +40,8 @@
                             class="w-full @error('low_risk_country') border-theme-6 @enderror" multiple>
                             @foreach ($countries as $key => $value)
                                 <option value="{{ $key }}"
-                                    @if (!is_null($lowriskcountry))
-                                        @if (in_array($key, $lowriskcountry)) 
-                                            selected 
-                                        @endif
+                                    @if (!is_null($lowriskcountry)) @if (in_array($key, $lowriskcountry)) 
+                                            selected @endif
                                     @endif
                                     >
                                     {{ $value }}
@@ -59,7 +55,7 @@
                 </div>
             </div>
             <div class="text-right mt-5">
-                <button type="submit" class="btn btn-primary w-24">Update </button>
+                <button id="ActionSubmit" type="submit" class="btn btn-primary w-24">Update </button>
             </div>
         </form>
     </div>

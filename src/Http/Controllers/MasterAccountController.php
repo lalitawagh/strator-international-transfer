@@ -4,6 +4,7 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\Status;
 use Kanexy\Cms\I18N\Models\Country;
@@ -12,27 +13,19 @@ use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Http\Requests\StoreMasterAccountRequest;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
-use Kanexy\PartnerFoundation\Banking\Enums\ContactClassificationType;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Kanexy\PartnerFoundation\Cxrm\Enums\ContactClassificationType;
+use Kanexy\Banking\Models\Account;
+use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class MasterAccountController extends Controller
 {
-    private WrappexService $service;
-
-    public function __construct(WrappexService $service)
-    {
-        $this->service = $service;
-    }
-
     public function index()
     {
         $this->authorize(MasterAccountPolicy::VIEW, MasterAccountConfiguration::class);
-        
+
         $account_details = Helper::paginate(collect(Setting::getValue('money_transfer_master_account_details', []))->reverse());
 
         return view("international-transfer::configuration.master-account.index", compact('account_details'));
@@ -43,7 +36,7 @@ class MasterAccountController extends Controller
         $info = $request->validated();
         $user = Auth::user();
         $info['id'] = now()->format('dmYHis');
-       
+
         $masterAccountExist = collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $request->input('country'));
         if(!is_null($masterAccountExist))
         {
@@ -52,7 +45,7 @@ class MasterAccountController extends Controller
 
         if($info['country'] != 231)
         {
-            $info['beneficiary_id'] = ''; 
+            $info['beneficiary_id'] = '';
             $settings = collect(Setting::getValue('money_transfer_master_account_details',[]))->push($info);
 
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
@@ -63,7 +56,7 @@ class MasterAccountController extends Controller
             ]);
         }
 
-        if (config('services.disable_banking') == true) {
+        if (is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             $info['beneficiary_id'] = '';
             $settings = collect(Setting::getValue('money_transfer_master_account_details', []))->push($info);
 
@@ -73,8 +66,8 @@ class MasterAccountController extends Controller
                 'status' => 'success',
                 'message' => 'Account details created successfully.',
             ]);
-        } 
-        else 
+        }
+        else
         {
 
             $account = Account::whereAccountNumber($info['account_number'])->first();
@@ -106,9 +99,13 @@ class MasterAccountController extends Controller
                     $data['meta']['bank_account_name'] =  $info['account_holder_name'];
                     $data['email'] = $user->email;
 
-                    $beneficiaryRefId = $this->service->createBeneficiary(
-                        new CreateBeneficiaryDto($workspace->ref_id, $data)
-                    );
+                    if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+                        $wrappexService =  new \Kanexy\Banking\Services\WrappexService();
+
+                        $beneficiaryRefId = $wrappexService->createBeneficiary(
+                            new CreateBeneficiaryDto($workspace->ref_id, $data)
+                        );
+                    }
 
                     $data['workspace_id'] = $workspace->id;
                     $data['ref_id']       = $beneficiaryRefId;
@@ -161,7 +158,7 @@ class MasterAccountController extends Controller
         $info = $request->validated();
         $user = Auth::user();
         $info['id'] = $id;
-       
+
         $masterAccountExist = collect(Setting::getValue('money_transfer_master_account_details',[]))->firstWhere('country', $request->input('country'));
         if(!is_null($masterAccountExist) && ($id != $masterAccountExist['id']))
         {
@@ -170,16 +167,16 @@ class MasterAccountController extends Controller
 
         if($info['country'] != 231)
         {
-            $info['beneficiary_id'] = ''; 
+            $info['beneficiary_id'] = '';
 
             $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {
                 if ($item['id'] == $id) {
                     return $info;
                 }
-    
+
                 return $item;
             });
-    
+
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
             return redirect()->route('dashboard.international-transfer.master-account.index')->with([
@@ -188,25 +185,25 @@ class MasterAccountController extends Controller
             ]);
         }
 
-        if (config('services.disable_banking') == true) {
-            $info['beneficiary_id'] = ''; 
+        if (is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
+            $info['beneficiary_id'] = '';
 
             $settings = collect(Setting::getValue('money_transfer_master_account_details'))->map(function ($item) use ($id,$info) {
                 if ($item['id'] == $id) {
                     return $info;
                 }
-    
+
                 return $item;
             });
-    
+
             Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
             return redirect()->route('dashboard.international-transfer.master-account.index')->with([
                 'status' => 'success',
                 'message' => 'Account details updated successfully.',
             ]);
-        } 
-        else 
+        }
+        else
         {
 
             $account = Account::whereAccountNumber($info['account_number'])->first();
@@ -238,9 +235,13 @@ class MasterAccountController extends Controller
                     $data['meta']['bank_account_name'] =  $info['account_holder_name'];
                     $data['email'] = $user->email;
 
-                    $beneficiaryRefId = $this->service->createBeneficiary(
-                        new CreateBeneficiaryDto($workspace->ref_id, $data)
-                    );
+                    if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+                        $wrappexService =  new \Kanexy\Banking\Services\WrappexService();
+
+                        $beneficiaryRefId = $wrappexService->createBeneficiary(
+                            new CreateBeneficiaryDto($workspace->ref_id, $data)
+                        );
+                    }
 
                     $data['workspace_id'] = $workspace->id;
                     $data['ref_id']       = $beneficiaryRefId;
@@ -261,10 +262,10 @@ class MasterAccountController extends Controller
                     if ($item['id'] == $id) {
                         return $info;
                     }
-        
+
                     return $item;
                 });
-        
+
                 Setting::updateOrCreate(['key' => 'money_transfer_master_account_details'], ['value' => $settings]);
 
                 return redirect()->route('dashboard.international-transfer.master-account.index')->with([

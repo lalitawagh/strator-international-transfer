@@ -37,8 +37,11 @@
         <div class="clearfix"></div>
         @isset($transaction->meta['sender_id'])
             @php
-                $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
-                $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
+                $sender = NULL;
+                if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+                    $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
+                }
+                    $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
             @endphp
         @endisset
 
@@ -51,7 +54,8 @@
                         <img alt="rounded-full" class="" src="../../dist/images/icons/2.png">
                     </div>
                     <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">{{ $transaction->meta['second_beneficiary_name'] }}</a>
+                        <a id="SecondBeneficiary" href=""
+                            class="font-medium">{{ $transaction->meta['second_beneficiary_name'] }}</a>
                         <div class="text-gray-600 text-xs mt-0.5">{{ $transaction->urn }}</div>
                     </div>
 
@@ -470,7 +474,7 @@
 
                         <div class="edit-transaction-content col-span-12 lg:col-span-12 xxl:col-span-12 mt-2 hidden">
                             <form id="transaction-form"
-                                action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}"
+                                action="{{ route('dashboard.transaction-attachment', $transaction->getKey()) }}"
                                 method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')

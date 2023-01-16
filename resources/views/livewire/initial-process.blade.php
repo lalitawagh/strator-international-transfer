@@ -60,7 +60,8 @@
                         <div class="intro-x dropdown mr-auto sm:mr-3">
                             <div class="dropdown-toggle notification cursor-pointer" role="button"
                                 aria-expanded="false" data-tw-toggle="dropdown">
-                                <button type="button" class="btn btn-sm btn-secondary mr-4 mb-0">
+                                <button id="InternationalTransfer" type="button"
+                                    class="btn btn-sm btn-secondary mr-4 mb-0">
                                     @isset($fees)
                                         @if (array_search('payment_type', array_column($fees, 'type')) === 0)
                                             {{ trans('international-transfer::configuration.payment_methods') }}

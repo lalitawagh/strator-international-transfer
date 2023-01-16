@@ -139,7 +139,8 @@
                                                 @can(\Kanexy\InternationalTransfer\Policies\FeePolicy::EDIT,
                                                     \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class)
                                                     <li>
-                                                        <a href="{{ route('dashboard.international-transfer.fee.edit', $fee['id']) }}"
+                                                        <a id="Edit"
+                                                            href="{{ route('dashboard.international-transfer.fee.edit', $fee['id']) }}"
                                                             class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                             <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                         </a>

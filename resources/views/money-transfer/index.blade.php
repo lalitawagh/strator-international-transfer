@@ -336,28 +336,28 @@
                                                                             <div class="dropdown-menu w-40">
                                                                                 <ul class="dropdown-content">
                                                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
-                                                                                        @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
+                                                                                        @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::CANCELLED)
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                                                                                                <li><a id="Completed" href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-check-circle
                                                                                                             class="w-4 h-4 mr-1" />
                                                                                                         Completed
                                                                                                     </a></li>
                                                                                             @endif
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
-                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
+                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                                                                                                <li><a id="Accepted" href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-check
                                                                                                             class="w-4 h-4 mr-1" />
                                                                                                         Accepted
                                                                                                     </a></li>
                                                                                             @endif
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
-                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING &&
-                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
+                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING &&
+                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                                                                                                <li><a id="Pending" href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-alert-circle
                                                                                                             class="w-4 h-4 mr-1" />
@@ -366,7 +366,8 @@
                                                                                             @endif
                                                                                         @endif
                                                                                     @endif
-                                                                                    <li><a href="javascript:void(0)"
+                                                                                    <li><a id="Track"
+                                                                                            href="javascript:void(0)"
                                                                                             onclick="Livewire.emit('showTransactionTrack', {{ $transaction->getKey() }});"
                                                                                             data-tw-toggle="modal"
                                                                                             data-tw-target="#superlarge-slide-over-size-preview"
@@ -375,7 +376,8 @@
                                                                                                 class="w-4 h-4 mr-1" />
                                                                                             Track
                                                                                         </a></li>
-                                                                                    <li><a href="javascript:void(0)"
+                                                                                    <li><a id="Show"
+                                                                                            href="javascript:void(0)"
                                                                                             href="javascript:void(0);"
                                                                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }});Livewire.emit('showTransactionLog', {{ $transaction->getKey() }});Livewire.emit('showTransactionAttachment', {{ $transaction->getKey() }});Livewire.emit('showTransactionKYCDetails', {{ $transaction->getKey() }});"
                                                                                             class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
