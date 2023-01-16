@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                @livewire('myself-beneficiary', ['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'account' => $account, 'workspace' => $workspace, 'beneficiaryType' => $beneficiaryType])
+                @livewire('myself-beneficiary', ['countries' => $countries, 'defaultCountry' => $defaultCountry, 'user' => $user, 'workspace' => $workspace, 'beneficiaryType' => $beneficiaryType])
             </div>
         </div>
     </div>

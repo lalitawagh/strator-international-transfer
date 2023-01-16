@@ -27,15 +27,18 @@
                 </div>
             @else
                 <div class="flex float-right">
-                    <a class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-dark ml-2 tooltip"
+                    <a id="Edit"
+                        class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-dark ml-2 tooltip"
                         title="Edit" onclick="openfileattachment()">
                         <x-feathericon-edit width="24" height="24" />
                     </a>
-                    <a class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
+                    <a id="Save"
+                        class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
                         title="Save" onclick="savefileattachment()">
                         <x-feathericon-save width="24" height="24" />
                     </a>
-                    <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
+                    <a id="Download"
+                        class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
                         title="Download PDF"
                         href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', ['transaction_id' => $transaction->getKey()]) }}">
                         <x-feathericon-download width="24" height="24" />
@@ -44,7 +47,9 @@
                 <div class="clearfix"></div>
                 @isset($transaction->meta['sender_id'])
                     @php
-                        $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
+                    if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+                        $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
+                    }
                         $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
                     @endphp
                 @endisset
@@ -58,38 +63,45 @@
                                 <img alt="rounded-full" class="" src="{{ $user->avatar }}">
                             </div>
                             <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                                <a href="{{ route('dashboard.memberships.yoti-log',$transaction->workspace_id) }}"
+                                <a id="SenderName"
+                                    href="{{ route('dashboard.memberships.yoti-log', $transaction->workspace_id) }}"
                                     class="font-medium">{{ @$transaction->meta['sender_name'] }}</a>
                                 <div class="text-gray-600 text-xs mt-0.5">{{ $transaction->urn }}</div>
                             </div>
                             <div class="lg:ml-2 lg:mr-2 text-right lg:text-left mt-3 lg:mt-0">
                                 <div class="active-clr text-xs mt-0.5 ">Total Completed Transaction Amount</div>
-                                
-                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id ]]) }}" class="font-medium">
-                                   @if(!is_null($totalTransactionCompletedAmount?->total_amount))
-                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionCompletedAmount->total_amount, 'GBP') }}
+
+                                <a id="ExchangeRateAmount"
+                                    href="{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => $transaction->workspace_id]]) }}"
+                                    class="font-medium">
+                                    @if (!is_null($totalTransactionCompletedAmount?->total_amount))
+                                        {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionCompletedAmount->total_amount, 'GBP') }}
                                     @else
                                         £ 0.00
                                     @endif
                                 </a>
-                                
+
                             </div>
 
                             <div class="lg:ml-2 lg:mr-2 text-right lg:text-left mt-3 lg:mt-0">
                                 <div class="active-clr text-xs mt-0.5 ">Total Benficary Sent Amount</div>
-                                
-                                <a href="{{ route('dashboard.international-transfer.money-transfer.index',['filter' => ['workspace_id' => $transaction->workspace_id,
-                                 ],'id' => $transaction?->id]) }}" class="font-medium">
-                                   @if(!is_null($totalTransactionBeneficaryAmount?->total_amount))
-                                    {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionBeneficaryAmount->total_amount, 'GBP') }}
+
+                                <a id="TotalAmount"
+                                    href="{{ route('dashboard.international-transfer.money-transfer.index', [
+                                        'filter' => ['workspace_id' => $transaction->workspace_id],
+                                        'id' => $transaction?->id,
+                                    ]) }}"
+                                    class="font-medium">
+                                    @if (!is_null($totalTransactionBeneficaryAmount?->total_amount))
+                                        {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionBeneficaryAmount->total_amount, 'GBP') }}
                                     @else
                                         £ 0.00
                                     @endif
                                 </a>
-                                
+
                             </div>
-                            
-                            
+
+
                         </div>
                         <div id="faq-accordion-1" class="box accordion accordion-boxed px-2 py-2">
                             <div class="accordion-item">
@@ -170,9 +182,10 @@
                             @if ($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::MANUAL_TRANSFER)
                                 <div class="accordion-item">
                                     <div id="faq-accordion-content-3" class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-tw-toggle="collapse"
-                                            data-tw-target="#faq-accordion-collapse-3" aria-expanded="false"
-                                            aria-controls="faq-accordion-collapse-3"> Manual Bank Deposit Account Details
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-tw-toggle="collapse" data-tw-target="#faq-accordion-collapse-3"
+                                            aria-expanded="false" aria-controls="faq-accordion-collapse-3"> Manual Bank
+                                            Deposit Account Details
                                         </button>
                                     </div>
                                     <div id="faq-accordion-collapse-3" class="accordion-collapse collapse show"
@@ -259,9 +272,10 @@
 
                             <div class="accordion-item">
                                 <div id="faq-accordion-content-2" class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-tw-toggle="collapse"
-                                        data-tw-target="#faq-accordion-collapse-2" aria-expanded="false"
-                                        aria-controls="faq-accordion-collapse-2"> Receiver Account</button>
+                                    <button id="ReceiverAccount" class="accordion-button collapsed" type="button"
+                                        data-tw-toggle="collapse" data-tw-target="#faq-accordion-collapse-2"
+                                        aria-expanded="false" aria-controls="faq-accordion-collapse-2"> Receiver
+                                        Account</button>
                                 </div>
                                 <div id="faq-accordion-collapse-2" class="accordion-collapse collapse show"
                                     aria-labelledby="faq-accordion-content-2" data-tw-parent="#faq-accordion-1">
@@ -481,7 +495,8 @@
                                 <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                                     <div class="flex flex-col lg:flex-row mt-1">
                                         <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <a href={{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
+                                            <a id="Approve"
+                                                href={{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
                                                 class="btn btn-success w-32 mr-2 mb-2">
                                                 <i data-lucide="send" class="w-4 h-4 mr-2"></i> Approve
                                             </a>
@@ -491,7 +506,8 @@
                                 <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
                                     <div class="flex flex-col lg:flex-row mt-1">
                                         <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <a href="{{ route('dashboard.international-transfer.money-transfer.transferDeclined', $transaction->getKey()) }}"
+                                            <a id="Decline"
+                                                href="{{ route('dashboard.international-transfer.money-transfer.transferDeclined', $transaction->getKey()) }}"
                                                 class="btn btn-danger w-32 mr-2 mb-2">
                                                 <i data-lucide="x" class="w-4 h-4 mr-2"></i> Decline
                                             </a>
