@@ -60,7 +60,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6 tillselect-marging">
                             <input type="number" name="high_risk_score" id="high_risk_score" class="form-control"
-                                value="{{ old('high_risk_score', $riskscores['high_risk_score']) }}">
+                                value="{{ old('high_risk_score', @$riskscores['high_risk_score']) }}">
 
                             @error('high_risk_score')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -73,7 +73,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6 tillselect-marging">
                             <input type="number" name="medium_risk_score" id="medium_risk_score" class="form-control"
-                                value="{{ old('medium_risk_score', $riskscores['medium_risk_score']) }}">
+                                value="{{ old('medium_risk_score', @$riskscores['medium_risk_score']) }}">
 
                             @error('medium_risk_score')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -87,7 +87,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6 tillselect-marging">
                             <input type="number" name="low_risk_score" id="low_risk_score" class="form-control"
-                                value="{{ old('low_risk_score', $riskscores['low_risk_score']) }}">
+                                value="{{ old('low_risk_score', @$riskscores['low_risk_score']) }}">
 
                             @error('low_risk_score')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
