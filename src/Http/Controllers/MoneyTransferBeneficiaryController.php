@@ -3,16 +3,16 @@
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
+use Kanexy\Banking\Models\Account;
+use Kanexy\Banking\Services\WrappexService;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Banking\Requests\StoreBeneficiaryRequest;
-use Kanexy\PartnerFoundation\Banking\Requests\UpdateBeneficiaryRequest;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Kanexy\InternationalTransfer\Http\Requests\StoreBeneficiaryRequest;
+use Kanexy\InternationalTransfer\Http\Requests\UpdateBeneficiaryRequest;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleted;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleting;
