@@ -7,6 +7,7 @@ use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\InternationalTransfer\Enums\Permission;
 use Kanexy\PartnerFoundation\Core\Enums\Permission as EnumsPermission;
+use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Kanexy\PartnerFoundation\Core\Helper;
 
 
