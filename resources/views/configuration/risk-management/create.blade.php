@@ -19,7 +19,7 @@
                             class="w-full @error('high_risk_country') border-theme-6 @enderror" multiple>
                             @foreach ($countries as $key => $value)
                                 <option value="{{ $key }}"
-                                    @if (!is_null($highriskcountry)) @if (in_array($key, $highriskcountry)) 
+                                    @if (!is_null($highriskcountry)) @if (in_array($key, $highriskcountry))
                                         selected @endif
                                     @endif
                                     >
@@ -40,7 +40,7 @@
                             class="w-full @error('low_risk_country') border-theme-6 @enderror" multiple>
                             @foreach ($countries as $key => $value)
                                 <option value="{{ $key }}"
-                                    @if (!is_null($lowriskcountry)) @if (in_array($key, $lowriskcountry)) 
+                                    @if (!is_null($lowriskcountry)) @if (in_array($key, $lowriskcountry))
                                             selected @endif
                                     @endif
                                     >
@@ -54,6 +54,47 @@
                     </div>
                 </div>
             </div>
+                <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+                    <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+                        <label for="high_risk_score" class="form-label sm:w-60">High Risk Score <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6 tillselect-marging">
+                            <input type="number" name="high_risk_score" id="high_risk_score" class="form-control"
+                                value="{{ old('high_risk_score', $riskscores['high_risk_score']) }}">
+
+                            @error('high_risk_score')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+                        <label for="medium_risk_score" class="form-label sm:w-60">Medium Risk Score <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6 tillselect-marging">
+                            <input type="number" name="medium_risk_score" id="medium_risk_score" class="form-control"
+                                value="{{ old('medium_risk_score', $riskscores['medium_risk_score']) }}">
+
+                            @error('medium_risk_score')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+                    <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+                        <label for="low_risk_score" class="form-label sm:w-60">Low Risk Score <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6 tillselect-marging">
+                            <input type="number" name="low_risk_score" id="low_risk_score" class="form-control"
+                                value="{{ old('low_risk_score', $riskscores['low_risk_score']) }}">
+
+                            @error('low_risk_score')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             <div class="text-right mt-5">
                 <button id="ActionSubmit" type="submit" class="btn btn-primary w-24">Update </button>
             </div>
