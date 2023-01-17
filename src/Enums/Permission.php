@@ -27,4 +27,9 @@ class Permission
     public const MONEY_TRANSFER_VIEW   = 'international-transfer::money_transfer.view';
     public const MONEY_TRANSFER_CREATE = 'international-transfer::money_transfer.create';
 
+    public const RISK_MGMT_QUESTION_VIEW   = 'international-transfer::risk-management-questions.view';
+    public const RISK_MGMT_QUESTION_CREATE = 'international-transfer::risk-management-questions.create';
+    public const RISK_MGMT_QUESTION_EDIT   = 'international-transfer::risk-management-questions.edit';
+    public const RISK_MGMT_QUESTION_DELETE = 'international-transfer::risk-management-questions.delete';
+
 }
