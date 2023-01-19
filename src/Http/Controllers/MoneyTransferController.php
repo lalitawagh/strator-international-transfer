@@ -3,6 +3,8 @@
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -10,6 +12,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
+use Kanexy\Cms\Models\IpLogs;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
@@ -257,7 +260,7 @@ class MoneyTransferController extends Controller
         return redirect()->route('dashboard.international-transfer.money-transfer.preview', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
     }
 
-    public function preview()
+    public function preview(Request $request)
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
@@ -280,6 +283,34 @@ class MoneyTransferController extends Controller
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', $sender->id);
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transferReason = collect(Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transferDetails['transfer_reason']);
+
+
+        if(config('services.risk_management') == true){
+            if (!App::environment('local')) {
+                $country = Country::findOrFail($user->country_id);
+                $iplogdata = IPlogs::where('holder_id', $user->id)->first();
+
+                if($country->name !== $iplogdata->ip_country)
+                {
+                    $meta = [
+                        'login_country' => $iplogdata->ip_country,
+                        'residence_country' => $country->name,
+                    ];
+
+                    $iplogdata = Log::updateOrCreate(['target_type' => $transaction->getMorphClass(),
+                        'target_id' =>  $transaction->getKey()]
+                        ,[
+                        'target_type' => $transaction->getMorphClass(),
+                        'target_id' =>  $transaction->getKey(),
+                        'id' => rand(11111, 99999),
+                        'text' => 'ip_address_transaction',
+                        'user_id' => auth()->user()->id,
+                        'meta' => $meta,
+                    ]);
+
+                }
+            }
+        }
 
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver'));
     }
