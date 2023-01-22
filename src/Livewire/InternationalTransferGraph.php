@@ -35,7 +35,7 @@ class InternationalTransferGraph extends Component
         $user = Auth::user();
 
 
-        $currentWorkspaceId = Helper::activeWorkspaceId();
+        $currentWorkspaceId = app('activeWorkspaceId');
 
         $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->get();
 
