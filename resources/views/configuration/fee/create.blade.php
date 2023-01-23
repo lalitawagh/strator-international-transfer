@@ -4,6 +4,9 @@
 
 @section('config-content')
     <div class="p-5">
+        @if (Session::has('error'))
+            <span class="block text-theme-6">{{ Session::get('error') }}</span>
+        @endif
         <form action="{{ route('dashboard.international-transfer.fee.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">

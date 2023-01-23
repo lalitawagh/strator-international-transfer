@@ -4,7 +4,7 @@ namespace Kanexy\InternationalTransfer\Livewire;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Livewire\Component;
 
@@ -57,6 +57,7 @@ class TransactionLogComponent extends Component
 
         $this->emit('clearInput');
 
+        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
 
     }
 
