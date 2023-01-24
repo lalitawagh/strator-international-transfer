@@ -39,7 +39,7 @@ class InternationalTransferMenu extends Item
         $menus = [];
 
         if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE) && !$user->isSuperAdmin()) {
-            $menus[] = new MenuItem('Money Transfer', 'activity', url: route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]));
+            $menus[] = new MenuItem('Money Transfer', 'activity', url: route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && $user->isSuperAdmin()) {
@@ -57,7 +57,7 @@ class InternationalTransferMenu extends Item
         if (!is_null(PartnerFoundation::getBankingPayment(request())))
         {
             if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
-                $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'money_transfer']));
+                $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'money_transfer']));
             }
         }
 
