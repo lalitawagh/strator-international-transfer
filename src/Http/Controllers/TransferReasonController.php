@@ -23,7 +23,7 @@ class TransferReasonController extends Controller
     public function create()
     {
         $this->authorize(TransferReasonPolicy::CREATE, TransferReasonConfiguration::class);
-
+        
         $statuses = Status::toArray();
         return view("international-transfer::configuration.transfer-reason.create",compact('statuses'));
     }
@@ -32,6 +32,13 @@ class TransferReasonController extends Controller
     {
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
+
+        $money_transfer_reason_exists = collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('reason', $data['reason']);
+
+        if(!is_null($money_transfer_reason_exists))
+        {
+            return back()->withError('Transfer reason already exists');
+        }
 
         $settings = collect(Setting::getValue('money_transfer_reasons',[]))->push($data);
 
@@ -57,6 +64,14 @@ class TransferReasonController extends Controller
     {
         $data = $request->validated();
         $data['id'] = $id;
+
+        $money_transfer_reason_exists = collect(Setting::getValue('money_transfer_reasons',[]))->firstWhere('reason', $data['reason']);
+
+        if(!is_null($money_transfer_reason_exists) && $money_transfer_reason_exists['id'] != $id)
+        {
+            return back()->withError('Transfer reason already exists');
+        }
+
 
         $settings = collect(Setting::getValue('money_transfer_reasons'))->map(function ($item) use ($id,$data) {
             if ($item['id'] == $id) {
