@@ -48,13 +48,14 @@ class InternationalTransferMenu extends Item
             $menus[] = new MenuItem('Compliance Alerts', 'activity', url: route('dashboard.international-transfer.money-transfer-review'));
         }
 
+        if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
+        }
+
         if ($user->hasAnyPermission(Permission::TRANSFER_REASON_CREATE, Permission::TRANSFER_REASON_VIEW, Permission::TRANSFER_TYPE_FEE_VIEW, Permission::TRANSFER_TYPE_FEE_CREATE, Permission::FEE_VIEW, Permission::FEE_CREATE, Permission::MASTER_ACCOUNT_VIEW, Permission::MASTER_ACCOUNT_CREATE)) {
             $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.international-transfer.transfer-type-fee.index'));
         }
 
-        if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
-        }
 
         return $menus;
     }
