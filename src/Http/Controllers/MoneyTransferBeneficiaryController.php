@@ -86,15 +86,4 @@ class MoneyTransferBeneficiaryController extends Controller
             'message' => 'The beneficiary deleted successfully.',
         ]);
     }
-
-    public function getPartnerAccount(Request $request)
-    {
-        $account_id = $request->input('account_id') ?? '';
-
-        if (!empty($account_id)) {
-            $account_details = Account::with('workspaces')->findOrFail($account_id);
-        }
-
-        return $account_details->toArray();
-    }
 }
