@@ -3,7 +3,7 @@
 namespace Kanexy\InternationalTransfer\Exports;
 
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
