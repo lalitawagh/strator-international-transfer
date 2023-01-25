@@ -4,6 +4,9 @@
 
 @section('config-content')
     <div class="p-5">
+        @if (Session::has('error'))
+            <span class="block text-theme-6">{{ Session::get('error') }}</span>
+        @endif
         <form action="{{ route('dashboard.international-transfer.fee.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
@@ -129,9 +132,9 @@
             </div>
 
             <div class="text-right mt-5">
-                <a href="{{ route('dashboard.international-transfer.fee.index') }}"
+                <a id="FeeCancel" href="{{ route('dashboard.international-transfer.fee.index') }}"
                     class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                <button type="submit" class="btn btn-primary w-24">Create</button>
+                <button id="FeeSubmit" type="submit" class="btn btn-primary w-24">Create</button>
             </div>
         </form>
     </div>

@@ -4,7 +4,7 @@ namespace Kanexy\InternationalTransfer\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 
@@ -16,7 +16,7 @@ class StoreMasterAccountRequest extends FormRequest
         {
             return $this->user()->can(MasterAccountPolicy::CREATE, MasterAccountConfiguration::class);
         }
-        
+
         return $this->user()->can(MasterAccountPolicy::EDIT, MasterAccountConfiguration::class);
     }
 
@@ -25,12 +25,11 @@ class StoreMasterAccountRequest extends FormRequest
         return [
             'country'               =>    ['required','exists:countries,id'],
             'status'                =>    ['required'],
-            'account_holder_name'   =>    ['required','string'],
+            'account_holder_name'   =>    ['required','string', new AlphaSpaces()],
             'account_branch'        =>    ['required','string'],
             'account_number'        =>    ['required','numeric'],
             'sort_code'             =>    [Rule::requiredIf(request()->get('country') == 231),'nullable','numeric','digits:6'],
             'ifsc_code'             =>    [Rule::requiredIf(request()->get('country') != 231),'nullable'],
         ];
     }
-
 }

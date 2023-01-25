@@ -18,7 +18,7 @@ return [
     'sending_anchor'      => 'Sending Anchor',
     'receiving_anchor'    => 'Receiving Anchor',
     'exchange_fees'       => 'Exchange Fees',
-    'exchange_fee'       => 'Exchange Fee',
+    'exchange_fee'        => 'Exchange Fee',
     'transfer_type'       => 'Transfer Type',
     'myself'              => 'Self',
     'someone-else'        => 'Another Person',
@@ -36,5 +36,6 @@ return [
     'stripe'              => 'Stripe',
     'active'              => 'Active',
     'inactive'            => 'Inactive',
-    'declined'            => 'Declined'
+    'declined'            => 'Declined',
+    'total_processing'    => 'Total Processing'
 ];

@@ -42,16 +42,16 @@
                                                                             class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
                                                                             <img alt="" class="rounded-full"
                                                                                 style="padding:7px;"
-                                                                                src="{{ $payment['image'] }}">
+                                                                                src="{{ $payment['image'] ?? '' }}">
                                                                         </div>
 
                                                                         <div class="ml-4 mr-auto"
                                                                             data-id="radio-switch-{{ $key }}">
-                                                                            <a class="font-medium"
+                                                                            <a id="BankAccountSwich" class="font-medium"
                                                                                 data-id="radio-switch-{{ $key }}">
                                                                                 {{ $payment['title'] }}
                                                                                 <br>
-                                                                                @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account')
+                                                                                @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
                                                                                     <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">For
@@ -59,7 +59,7 @@
                                                                                         payment method, you need to open a
                                                                                         bank account.</span><br>
                                                                                 @endif
-                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'bank_account')
+                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'bank_account' &&  is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
                                                                                     <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">The
@@ -68,6 +68,16 @@
                                                                                         GBP</span><br>
                                                                                 @endif
                                                                                 @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
+                                                                                    <span style="color:red;">The Stripe
+                                                                                        payment option are applicable only,
+                                                                                        If the transfer is from
+                                                                                        GBP</span><br>
+                                                                                @endif
+                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
+                                                                                    <span style="color:red;">The Total
+                                                                                        payment option are applicable only,
+                                                                                        If the transfer is from
+                                                                                        GBP</span><br>
                                                                                     <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">The
@@ -102,7 +112,7 @@
                                                                                     class="form-check-input" type="radio"
                                                                                     name="payment_method"
                                                                                     value="{{ $payment['method'] }}"
-                                                                                    @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
+                                                                                    @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' &&  is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account' &&  is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
                                                                                 <label class="form-check-label"
                                                                                     for="radio-switch-{{ $key }}"></label>
                                                                             </div>
@@ -227,9 +237,10 @@
 
             </div>
             <div class="text-right mt-5  py-4">
-                <a href="{{ route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => $workspace->id]]) }}"
+                <a id="PaymentPrevious"
+                    href="{{ route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => $workspace->id]]) }}"
                     class="btn btn-secondary w-24">Previous</a>
-                <button type="submit" class="btn btn-primary w-24 ml-2">Continue</button>
+                <button id="PaymentSubmit" type="submit" class="btn btn-primary w-24 ml-2">Continue</button>
             </div>
         </form>
     </div>

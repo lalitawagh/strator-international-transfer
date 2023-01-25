@@ -17,20 +17,31 @@
         </div>
     @else
         <div class="flex float-right">
-                <a class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-dark ml-2 tooltip"
-                        title="Edit" onclick="openfileattachment()"> <x-feathericon-edit width="24" height="24" /> </a>
-                <a class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
-                        title="Save" onclick="savefileattachment()"> <x-feathericon-save width="24" height="24" /> </a>
-                <a class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
-                title="Download PDF" href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', ['transaction_id' => $transaction->getKey()]) }}" >
+            <a id="moneyTransferDetailEdit"
+                class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-dark ml-2 tooltip"
+                title="Edit" onclick="openfileattachment()">
+                <x-feathericon-edit width="24" height="24" />
+            </a>
+            <a id="moneyTransferDetailSave"
+                class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
+                title="Save" onclick="savefileattachment()">
+                <x-feathericon-save width="24" height="24" />
+            </a>
+            <a id="moneyTransferDetailPdf"
+                class="intro-x w-8 h-8 cursor-pointer  flex items-center justify-center rounded-full bg-theme-14 text-dark ml-2 tooltip"
+                title="Download PDF"
+                href="{{ route('dashboard.international-transfer.money-transfer.moneytransfersPdf', ['transaction_id' => $transaction->getKey()]) }}">
                 <x-feathericon-download width="24" height="24" />
             </a>
         </div>
         <div class="clearfix"></div>
         @isset($transaction->meta['sender_id'])
             @php
-                $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
-                $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
+                $sender = NULL;
+                if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+                    $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
+                }
+                    $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
             @endphp
         @endisset
 
@@ -43,7 +54,8 @@
                         <img alt="rounded-full" class="" src="../../dist/images/icons/2.png">
                     </div>
                     <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">{{ $transaction->meta['second_beneficiary_name'] }}</a>
+                        <a id="SecondBeneficiary" href=""
+                            class="font-medium">{{ $transaction->meta['second_beneficiary_name'] }}</a>
                         <div class="text-gray-600 text-xs mt-0.5">{{ $transaction->urn }}</div>
                     </div>
 
@@ -159,34 +171,36 @@
                                             </span>
                                         </div>
                                     </div>
-                                    @if(@$masterAccount['country'] == 231)
-                                    <div class="sm:flex lg:flex-row mt-2">
-                                        <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                            <span>
-                                                Sort Code
-                                            </span>
+                                    @if (@$masterAccount['country'] == 231)
+                                        <div class="sm:flex lg:flex-row mt-2">
+                                            <div
+                                                class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                                <span>
+                                                    Sort Code
+                                                </span>
+                                            </div>
+                                            <div
+                                                class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
+                                                <span class="font-medium">
+                                                    {{ @$masterAccount['sort_code'] }}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div
-                                            class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
-                                            <span class="font-medium">
-                                                {{ @$masterAccount['sort_code'] }}
-                                            </span>
-                                        </div>
-                                    </div>
                                     @else
-                                    <div class="sm:flex lg:flex-row mt-2">
-                                        <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
-                                            <span>
-                                                IFSC Code
-                                            </span>
+                                        <div class="sm:flex lg:flex-row mt-2">
+                                            <div
+                                                class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
+                                                <span>
+                                                    IFSC Code
+                                                </span>
+                                            </div>
+                                            <div
+                                                class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
+                                                <span class="font-medium">
+                                                    {{ @$masterAccount['ifsc_code'] }}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div
-                                            class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
-                                            <span class="font-medium">
-                                                {{ @$masterAccount['ifsc_code'] }}
-                                            </span>
-                                        </div>
-                                    </div>
                                     @endif
                                     <div class="sm:flex lg:flex-row mt-2">
                                         <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
@@ -460,7 +474,7 @@
 
                         <div class="edit-transaction-content col-span-12 lg:col-span-12 xxl:col-span-12 mt-2 hidden">
                             <form id="transaction-form"
-                                action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}"
+                                action="{{ route('dashboard.transaction-attachment', $transaction->getKey()) }}"
                                 method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
@@ -504,7 +518,8 @@
         $(".edit-transaction").removeClass('hidden');
         $(".edit-transaction").addClass('flex');
         $(".save-transaction").addClass('hidden');
-        function savefileattachment(){
+
+        function savefileattachment() {
             $("#transaction-form").submit();
         }
 
@@ -515,7 +530,7 @@
         // });
 
 
-        function openfileattachment(){
+        function openfileattachment() {
             $(".edit-transaction").addClass('hidden');
             $("#attachment").val('');
             $("#note").val('');
@@ -525,6 +540,5 @@
             $(".save-transaction").addClass('flex');
             $(".saved-transaction").addClass('hidden');
         }
-
     </script>
 @endpush
