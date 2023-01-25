@@ -12,19 +12,7 @@
                     </h2>
                 </div>
                 <div class="px-5 py-3">
-                    <div class="intro-y mt-0">
-                        <div
-                            class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                            <x-list-view-filters />
-                            @can(\Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy::CREATE,
-                                \Kanexy\PartnerFoundation\Cxrm\Models\Contact::class)
-                                <a id="CreateBeneficiary"
-                                    href="{{ route('dashboard.international-transfer.beneficiaries.create', ['workspace_id' => $workspace->id]) }}"
-                                    class="btn btn-sm btn-primary shadow-md py-2 sm:ml-1 sm:-mt-2 sm:mb-0 mb-2 py-2">Create New
-                                </a>
-                            @endcan
-                        </div>
-                    </div>
+
                     <div class="overflow-x-auto overflow-y-hidden">
                         <table class="shroting display table table-report -mt-2">
                             <thead class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">

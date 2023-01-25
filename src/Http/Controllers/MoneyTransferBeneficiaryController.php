@@ -66,51 +66,7 @@ class MoneyTransferBeneficiaryController extends Controller
         return view("international-transfer::beneficiaries.create", compact('countries', 'defaultCountry', 'workspace', 'accounts'));
     }
 
-    public function store(StoreBeneficiaryRequest $request)
-    {
-        $data = $request->validated();
 
-        $workspace = Workspace::findOrFail($request->input('workspace_id'));
-
-        if ($data['type'] == 'company') {
-            $data['display_name'] = Helper::removeExtraSpace($data['company_name']);
-        } else {
-            $data['display_name'] = Helper::removeExtraSpace(implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]));
-        }
-
-        if ($request->hasFile('avatar')) {
-            $data['avatar'] = $request->file('avatar')->store('Images', 'azure');
-        }
-
-        $beneficiaryRefId = $this->service->createBeneficiary(
-            new CreateBeneficiaryDto($workspace->ref_id, $data)
-        );
-
-        $data['workspace_id'] = $workspace->id;
-        $data['ref_id']       = $beneficiaryRefId;
-        $data['ref_type']     = 'money_transfer';
-
-
-        /** @var Contact $contact */
-        $contact = Contact::create($data);
-
-        event(new ContactCreated($contact));
-
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        //$user->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
-        if (config('services.disable_sms_service') == false) {
-            $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-        } else {
-            $contact->generateOtp("sms");
-        }
-
-        if (request()->has('callback_url') && request()->input('callback_url')) {
-            return $contact->redirectForVerification(request()->input('callback_url'), 'sms');
-        }
-
-        return $contact->redirectForVerification(route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => $workspace->id]]), 'sms');
-    }
 
     public function edit(Contact $beneficiary)
     {
