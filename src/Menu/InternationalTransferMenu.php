@@ -7,8 +7,6 @@ use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\InternationalTransfer\Enums\Permission;
 use Kanexy\PartnerFoundation\Core\Enums\Permission as EnumsPermission;
-use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
-use Kanexy\PartnerFoundation\Core\Helper;
 
 
 class InternationalTransferMenu extends Item
@@ -54,10 +52,8 @@ class InternationalTransferMenu extends Item
             $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.international-transfer.transfer-type-fee.index'));
         }
 
-        if (!is_null(PartnerFoundation::getBankingPayment(request()))) {
-            if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
-                $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'money_transfer']));
-            }
+        if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         return $menus;

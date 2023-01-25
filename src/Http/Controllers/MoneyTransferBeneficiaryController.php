@@ -3,17 +3,12 @@
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
 use Kanexy\Banking\Models\Account;
-use Kanexy\Banking\Services\WrappexService;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\I18N\Models\Country;
-use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\InternationalTransfer\Http\Requests\StoreBeneficiaryRequest;
 use Kanexy\InternationalTransfer\Http\Requests\UpdateBeneficiaryRequest;
-use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleted;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleting;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -24,12 +19,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class MoneyTransferBeneficiaryController extends Controller
 {
-    private WrappexService $service;
-
-    public function __construct(WrappexService $service)
-    {
-        $this->service = $service;
-    }
 
     public function index(Request $request)
     {
@@ -44,29 +33,11 @@ class MoneyTransferBeneficiaryController extends Controller
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
-
-
-            $beneficiaries = $contacts->beneficiaries()->where('ref_type', 'money_transfer')->verified()->latest()->paginate();
+            $beneficiaries = $contacts->beneficiaries()->where('workspace_id', $workspace->id)->where('ref_type', 'money_transfer')->verified()->latest()->paginate();
         }
 
         return view("international-transfer::beneficiaries.index", compact('beneficiaries', 'workspace'));
     }
-
-    public function create(Request $request)
-    {
-        $this->authorize(ContactPolicy::CREATE, Contact::class);
-
-        $workspace = Workspace::findOrFail($request->input('workspace_id'));
-
-        $countries = Country::get();
-        $defaultCountry = Setting::getValue('default_country');
-
-        $accounts = Account::whereNotNull('account_number')->latest()->get(['id', 'name', 'account_number']);
-
-        return view("international-transfer::beneficiaries.create", compact('countries', 'defaultCountry', 'workspace', 'accounts'));
-    }
-
-
 
     public function edit(Contact $beneficiary)
     {
