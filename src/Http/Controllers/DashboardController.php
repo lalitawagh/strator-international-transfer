@@ -20,8 +20,8 @@ class DashboardController extends Controller
 
         $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
 
-        if (Helper::activeWorkspaceId()) {
-            $workspace = Workspace::findOrFail(Helper::activeWorkspaceId());
+        if (app('activeWorkspaceId')) {
+            $workspace = Workspace::findOrFail(app('activeWorkspaceId'));
             $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
         }
         $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->latest()->take(5)->get();

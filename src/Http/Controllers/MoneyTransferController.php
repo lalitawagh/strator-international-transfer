@@ -139,7 +139,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         if (is_null(session('money_transfer_request'))) {
-            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]);
         }
 
         $user = Auth::user();
@@ -164,7 +164,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         if (is_null(session('money_transfer_request'))) {
-            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]);
         }
 
         $user = Auth::user();
@@ -186,7 +186,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         if (is_null(session('money_transfer_request'))) {
-            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]);
         }
 
         $data = $request->validate([
@@ -202,8 +202,7 @@ class MoneyTransferController extends Controller
 
         $secondBeneficiary = $transferDetails ? Contact::find($transferDetails['beneficiary_id']) : null;
 
-        if (!is_null(PartnerFoundation::getBankingPayment($request)))
-        {
+        if (!is_null(PartnerFoundation::getBankingPayment($request))) {
             $account = Account::forHolder($workspace)->first();
             if ($data['payment_method'] == PaymentMethod::BANK_ACCOUNT) {
                 if ($transferDetails['amount'] > $account?->balance) {
@@ -265,7 +264,7 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
 
         if (is_null(session('money_transfer_request'))) {
-            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]);
         }
 
         $user = Auth::user();
@@ -285,29 +284,31 @@ class MoneyTransferController extends Controller
         $transferReason = collect(Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transferDetails['transfer_reason']);
 
 
-        if(config('services.risk_management') == true){
+        if (config('services.risk_management') == true) {
             if (!App::environment('local')) {
                 $country = Country::findOrFail($user->country_id);
                 $iplogdata = IPlogs::where('holder_id', $user->id)->first();
 
-                if($country->name !== $iplogdata->ip_country)
-                {
+                if ($country->name !== $iplogdata->ip_country) {
                     $meta = [
                         'login_country' => $iplogdata->ip_country,
                         'residence_country' => $country->name,
                     ];
 
-                    $iplogdata = Log::updateOrCreate(['target_type' => $transaction->getMorphClass(),
-                        'target_id' =>  $transaction->getKey()]
-                        ,[
-                        'target_type' => $transaction->getMorphClass(),
-                        'target_id' =>  $transaction->getKey(),
-                        'id' => rand(11111, 99999),
-                        'text' => 'ip_address_transaction',
-                        'user_id' => auth()->user()->id,
-                        'meta' => $meta,
-                    ]);
-
+                    $iplogdata = Log::updateOrCreate(
+                        [
+                            'target_type' => $transaction->getMorphClass(),
+                            'target_id' =>  $transaction->getKey()
+                        ],
+                        [
+                            'target_type' => $transaction->getMorphClass(),
+                            'target_id' =>  $transaction->getKey(),
+                            'id' => rand(11111, 99999),
+                            'text' => 'ip_address_transaction',
+                            'user_id' => auth()->user()->id,
+                            'meta' => $meta,
+                        ]
+                    );
                 }
             }
         }
@@ -318,7 +319,7 @@ class MoneyTransferController extends Controller
     public function finalizeTransfer(Request $request)
     {
         if (is_null(session('money_transfer_request'))) {
-            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]);
         }
 
         $transferDetails = session('money_transfer_request');
@@ -465,7 +466,6 @@ class MoneyTransferController extends Controller
                 }
 
                 return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
-
             }
         }
 
@@ -510,7 +510,7 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         if (is_null(session('money_transfer_request'))) {
-            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+            return redirect()->route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]);
         }
 
         $details = session('money_transfer_request.transaction');
