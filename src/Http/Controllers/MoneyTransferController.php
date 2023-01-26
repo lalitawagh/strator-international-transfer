@@ -25,6 +25,7 @@ use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
+use Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
@@ -103,6 +104,13 @@ class MoneyTransferController extends Controller
 
     public function store(MoneyTransferRequest $request)
     {
+        $workspace = Workspace::findOrFail($request->input('workspace_id'));
+
+        if ($workspace->status == WorkspaceStatus::INACTIVE){
+
+              return redirect()->back();
+        }
+
         $data = $request->validated();
 
         $existSessionRequest = session('money_transfer_request');
