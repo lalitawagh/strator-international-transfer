@@ -17,6 +17,7 @@ class TransactionTrackComponent extends Component
     public function showTransactionTrack(Transaction $transaction)
     {
         $this->transaction = $transaction;
+        $this->dispatchBrowserEvent('show-transaction-track');
     }
 
     public function render()
