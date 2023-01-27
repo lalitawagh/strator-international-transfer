@@ -131,23 +131,23 @@ class MoneyTransfer extends Transaction
                 if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin()){
                     if ($model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::CANCELLED){
                         if ($model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED){
-                            $actions[] = ['icon' => '<x-feathericon-check-circle class="w-4 h-4 mr-2" />','isOverlay' => '0','route' => route('dashboard.international-transfer.money-transfer.transferCompleted', $value),'action' => 'Completed'];
+                            $actions[] = ['icon' => '<i data-lucide="check-circle" class="w-4 h-4 mr-2"></i>','isOverlay' => '0','route' => route('dashboard.international-transfer.money-transfer.transferCompleted', $value),'action' => 'Completed'];
 
                         }
                         if ($model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
                             $model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED){
-                            $actions[] = ['isOverlay' => '0','route' => route('dashboard.international-transfer.money-transfer.transferAccepted', $value),'action' => 'Accepted'];
+                            $actions[] = ['icon' => '<i data-lucide="check" class="w-4 h-4 mr-2"></i>','isOverlay' => '0','route' => route('dashboard.international-transfer.money-transfer.transferAccepted', $value),'action' => 'Accepted'];
 
                         }
                         if ($model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
                             $model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING &&
                             $model->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED){
-                                $actions[] = ['isOverlay' => '0','route' => route('dashboard.international-transfer.money-transfer.transferPending', $value),'action' => 'Pending'];
+                                $actions[] = ['icon' => '<i data-lucide="alert-circle" class="w-4 h-4 mr-2"></i>','isOverlay' => '0','route' => route('dashboard.international-transfer.money-transfer.transferPending', $value),'action' => 'Pending'];
                         }
                     }
                 }
-                $actions[] = ['isOverlay' => 'true','action' => 'Track','route' => "Livewire.emit('showTransactionTrack', $model->id);"];
-                $actions[] = ['isOverlay' => 'true','action' => 'Show','route' => "Livewire.emit('showTransactionDetail',$model->id);Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionAttachment', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);"];
+                $actions[] = ['icon' => '<i data-lucide="navigation-2" class="w-4 h-4 mr-2"></i>','isOverlay' => 'true','action' => 'Track','route' => "Livewire.emit('showTransactionTrack', $model->id);"];
+                $actions[] = ['icon' => '<i data-lucide="eye" class="w-4 h-4 mr-2"></i>','isOverlay' => 'true','action' => 'Show','route' => "Livewire.emit('showTransactionDetail',$model->id);Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionAttachment', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);"];
 
                 return view('cms::livewire.datatable-actions', ['actions' => $actions])->withUser($row);
             }),
