@@ -38,7 +38,7 @@
         window.onload = function() {
             setTimeout(function() {
                 window.location.href =
-                    '{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}';
+                    '{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}';
             }, 10000);
         }
     </script>
