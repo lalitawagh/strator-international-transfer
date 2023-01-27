@@ -97,11 +97,11 @@
                             </th>
                             <th class="whitespace-nowrap text-left">Status</th>
                             @if (Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\FeePolicy::EDIT,
-                                \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class) ||
-                                Gate::check(
-                                    \Kanexy\InternationalTransfer\Policies\FeePolicy::DELETE,
-                                    \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class))
+                                    \Kanexy\InternationalTransfer\Policies\FeePolicy::EDIT,
+                                    \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class) ||
+                                    Gate::check(
+                                        \Kanexy\InternationalTransfer\Policies\FeePolicy::DELETE,
+                                        \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class))
                                 <th class="flex" style="width:40px;">Action</th>
                             @endcan
                     </tr>
@@ -121,11 +121,11 @@
                             <td class="whitespace-nowrap text-right">{{ $fee['percentage'] }}</td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($fee['status']) }}</td>
                             @if (Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\FeePolicy::EDIT,
-                                \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class) ||
-                                Gate::check(
-                                    \Kanexy\InternationalTransfer\Policies\FeePolicy::DELETE,
-                                    \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class))
+                                    \Kanexy\InternationalTransfer\Policies\FeePolicy::EDIT,
+                                    \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class) ||
+                                    Gate::check(
+                                        \Kanexy\InternationalTransfer\Policies\FeePolicy::DELETE,
+                                        \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class))
                                 <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
                                         <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
@@ -149,17 +149,12 @@
                                                 @can(\Kanexy\InternationalTransfer\Policies\FeePolicy::DELETE,
                                                     \Kanexy\InternationalTransfer\Contracts\FeeConfiguration::class)
                                                     <li>
-                                                        <form
-                                                            action="{{ route('dashboard.international-transfer.fee.destroy', $fee['id']) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-
-                                                            <button type="submit" id="Delete"
-                                                                class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                            </button>
-                                                        </form>
+                                                        <button type="button" x-data={}
+                                                            onclick="Livewire.emit('showModal','{{ route('dashboard.international-transfer.fee.destroy', $fee['id']) }}','DELETE', 'x-circle','Delete');"
+                                                            class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                            Delete
+                                                        </button>
                                                     </li>
                                                 @endcan
                                             </ul>

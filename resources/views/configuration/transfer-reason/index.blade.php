@@ -40,11 +40,11 @@
                         </th>
                         <th class="whitespace-nowrap text-left">Status</th>
                         @if (Gate::check(
-                            \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::EDIT,
-                            \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class) ||
-                            Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::DELETE,
-                                \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class))
+                                \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::EDIT,
+                                \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class) ||
+                                Gate::check(
+                                    \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::DELETE,
+                                    \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class))
                             <th class="w-20" style="width:40px;">Action</th>
                         @endif
                     </tr>
@@ -59,11 +59,11 @@
                             <td class="whitespace-nowrap text-left">{{ $money_transfer_reason['reason'] }}</td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($money_transfer_reason['status']) }}</td>
                             @if (Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::EDIT,
-                                \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class) ||
-                                Gate::check(
-                                    \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::DELETE,
-                                    \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class))
+                                    \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::EDIT,
+                                    \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class) ||
+                                    Gate::check(
+                                        \Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::DELETE,
+                                        \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class))
                                 <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
                                         <button id="Settings" class="dropdown-toggle btn px-2 box" aria-expanded="false"
@@ -87,17 +87,12 @@
                                                 @can(\Kanexy\InternationalTransfer\Policies\TransferReasonPolicy::DELETE,
                                                     \Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration::class)
                                                     <li>
-                                                        <form
-                                                            action="{{ route('dashboard.international-transfer.transfer-reason.destroy', $money_transfer_reason['id']) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-
-                                                            <button id="Delete" type="submit"
-                                                                class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                            </button>
-                                                        </form>
+                                                        <button type="button" x-data={}
+                                                            onclick="Livewire.emit('showModal','{{ route('dashboard.international-transfer.transfer-reason.destroy', $money_transfer_reason['id']) }}','DELETE', 'x-circle','Delete');"
+                                                            class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                            Delete
+                                                        </button>
                                                     </li>
                                                 @endcan
                                             </ul>
