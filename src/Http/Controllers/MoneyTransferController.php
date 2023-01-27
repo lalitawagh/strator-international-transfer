@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\Cms\Helper;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Models\IpLogs;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -57,14 +58,16 @@ class MoneyTransferController extends Controller
         }
 
 
-        if (!is_null($request->input('id'))) {
-            $transactionBeneficary = Transaction::find($request->input('id'));
-            $transactions = $transactions->where('meta->second_beneficiary_bank_account_number', $transactionBeneficary->meta['second_beneficiary_bank_account_number'])->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
-        } else {
+        if(!is_null($request->input('id')))
+        {
+            $transactionBeneficary= Transaction::find($request->input('id'));
+            $transactions = $transactions->where('meta->second_beneficiary_bank_account_number',$transactionBeneficary->meta['second_beneficiary_bank_account_number'])->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
+        }else
+        {
             $transactions = $transactions->where("meta->transaction_type", 'money_transfer')->latest()->paginate();
         }
 
-        return view('international-transfer::money-transfer.index', compact('transactions', 'user'));
+        return view('international-transfer::money-transfer.index', compact('transactions','user','workspace'));
     }
 
     public function review(Request $request)
@@ -240,7 +243,7 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
-                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_name' => Helper::removeExtraSpace($secondBeneficiary?->meta['bank_account_name']),
                     'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
                     'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
