@@ -72,7 +72,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('dashboard.international-transfer.risk-management-questions.index') }}" class="side-menu">
+                                    <a href="{{ route('dashboard.international-transfer.risk-management-questions.index') }}"
+                                        class="side-menu">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Risk Management Questions</div>
                                     </a>
@@ -105,6 +106,7 @@
             </div>
         </div>
     </div>
+    @livewire('confirmation-modal')
 @endsection
 
 
