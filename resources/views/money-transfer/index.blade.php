@@ -8,6 +8,15 @@
                     <h2 class="font-medium text-base mr-auto">
                         Money Transfer
                     </h2>
+                    @if ($user->isSubscriber())
+                        @can(\Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy::CREATE,
+                            \Kanexy\InternationalTransfer\Contracts\MoneyTransfer::class)
+                            <a id="MoneyTransfer"
+                                href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
+                                class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Money
+                                Transfer</a>
+                        @endcan
+                    @endif
                 </div>
 
                 <div class="Livewire-datatable-modal pb-3">
