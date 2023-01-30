@@ -96,7 +96,7 @@ class MoneyTransfer extends Transaction
 
             Column::make("Transaction Id", "urn")
                 ->sortable()->format(function ($value, $model) {
-                    return view('cms::livewire.datatable-link', ['user' => $value, 'overlay' => "Livewire.emit('showTransactionDetail', $model->id);Livewire.emit('showTransactionAttachment', $model->id );Livewire.emit('showTransactionLog', $model->id);"]);
+                    return view('cms::livewire.datatable-link', ['user' => $value, 'overlay' => "Livewire.emit('showTransactionDetail', $model->id);Livewire.emit('showTransactionAttachment', $model->id );Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);"]);
                 })
                 ->searchable()
                 ->secondaryHeaderFilter('urn'),
