@@ -20,6 +20,11 @@ class DashboardList extends Transaction
         return false;
     }
 
+    public static function setBulkActions()
+    {
+        return false;
+    }
+
     public static function setBuilder($workspace_id,$type): Builder
     {
         if (!$workspace_id) {
@@ -28,32 +33,6 @@ class DashboardList extends Transaction
 
         return Transaction::query()->where("meta->transaction_type", 'money_transfer')->whereWorkspaceId($workspace_id)->latest()->take(15);
     }
-
-    // public static function downloadExcel($records)
-    // {
-    //     return Excel::download(new DashboardExport($records), 'dashboard.xlsx');
-    // }
-
-    // public static function downloadCsv($records)
-    // {
-    //     return Excel::download(new DashboardExport($records), 'dashboard.csv');
-    // }
-
-    // public static function downloadPdf($records)
-    // {
-    //     $transactions = collect();
-    //     foreach ($records as $record) {
-    //         $transactions->push(Transaction::find($record));
-    //     }
-
-    //     $account = auth()->user()->workspaces()->first()?->account()->first();
-    //     $user = Auth::user();
-    //     $view = PDF::loadView('partner-foundation::dashboardpdf', compact('transactions','account','user'))
-    //         ->setPaper(array(0, 0, 700, 600), 'landscape')
-    //         ->output();
-
-    //     return response()->streamDownload(fn () => print($view), "transactions.pdf");
-    // }
 
     public static function columns()
     {

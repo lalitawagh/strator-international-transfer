@@ -5,6 +5,7 @@ namespace Kanexy\InternationalTransfer\Contracts;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Kanexy\Banking\Exports\Export;
 use Kanexy\InternationalTransfer\Exports\MoneyTransferExport;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,14 +26,51 @@ class MoneyTransfer extends Transaction
          return Transaction::query()->where("meta->transaction_type", 'money_transfer')->whereWorkspaceId($workspace_id)->latest();
     }
 
-    public static function downloadExcel($records)
+    public static function setBulkActions()
     {
-        return Excel::download(new MoneyTransferExport($records), 'transactions.xlsx');
+        return true;
     }
 
-    public static function downloadCsv($records)
+    public static function setPagination()
     {
-        return Excel::download(new MoneyTransferExport($records), 'transactions.csv');
+        return true;
+    }
+
+    public static function setRecordsToDownload($records, $type)
+    {
+        $list = collect();
+        $columnsValue = [];
+
+        foreach ($records as $record) {
+            $transaction = Transaction::find($record);
+            $list->push($transaction);
+
+            $columnDetail = [
+                $transaction->urn,
+                $transaction->created_at,
+                @$transaction->meta['sender_name'],
+                @$transaction->meta['base_currency'],
+                @$transaction->meta['second_beneficiary_name'],
+                @$transaction->meta['exchange_currency'],
+                $transaction->payment_method,
+                $transaction->status,
+            ];
+
+            array_push($columnsValue, $columnDetail);
+        }
+
+        $columnsHeading = [
+            'TRANSACTION ID',
+            'DATE & TIME',
+            'SENDER NAME',
+            'SENDING CURRENCY',
+            'RECEIVER NAME',
+            'RECEIVING CURRENCY',
+            'SOURCE',
+            'STATUS',
+        ];
+
+        return Excel::download(new Export($list, $columnsValue, $columnsHeading), 'transactions.' . $type . '');
     }
 
     public static function downloadPdf($records)
