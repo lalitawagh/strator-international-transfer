@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
-use Kanexy\PartnerFoundation\Exports\Export;
+use Kanexy\PartnerFoundation\Core\Exports\Export;
 use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
