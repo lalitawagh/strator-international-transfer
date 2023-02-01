@@ -7,8 +7,6 @@ use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\InternationalTransfer\Enums\Permission;
 use Kanexy\PartnerFoundation\Core\Enums\Permission as EnumsPermission;
-use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
-use Kanexy\PartnerFoundation\Core\Helper;
 
 
 class InternationalTransferMenu extends Item
@@ -39,7 +37,7 @@ class InternationalTransferMenu extends Item
         $menus = [];
 
         if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE) && !$user->isSuperAdmin()) {
-            $menus[] = new MenuItem('Money Transfer', 'activity', url: route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]));
+            $menus[] = new MenuItem('Money Transfer', 'activity', url: route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && $user->isSuperAdmin()) {
@@ -50,16 +48,14 @@ class InternationalTransferMenu extends Item
             $menus[] = new MenuItem('Compliance Alerts', 'activity', url: route('dashboard.international-transfer.money-transfer-review'));
         }
 
+        if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.international-transfer.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
+        }
+
         if ($user->hasAnyPermission(Permission::TRANSFER_REASON_CREATE, Permission::TRANSFER_REASON_VIEW, Permission::TRANSFER_TYPE_FEE_VIEW, Permission::TRANSFER_TYPE_FEE_CREATE, Permission::FEE_VIEW, Permission::FEE_CREATE, Permission::MASTER_ACCOUNT_VIEW, Permission::MASTER_ACCOUNT_CREATE)) {
             $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.international-transfer.transfer-type-fee.index'));
         }
 
-        if (!is_null(PartnerFoundation::getBankingPayment(request())))
-        {
-            if ($user->hasAnyPermission(EnumsPermission::CONTACT_VIEW)) {
-                $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'money_transfer']));
-            }
-        }
 
         return $menus;
     }

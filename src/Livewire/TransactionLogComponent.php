@@ -57,7 +57,14 @@ class TransactionLogComponent extends Component
 
         $this->emit('clearInput');
 
-        $this->logs = Log::where(['target_type' => $transaction->getMorphClass(),'target_id' => $transaction->id])->latest()->get();
+        $this->logs = Log::query()
+            ->where([
+                'target_type' => $transaction->getMorphClass(),
+                'target_id' => $transaction->id
+            ])
+            ->whereNull('meta')
+            ->latest()
+            ->get();
 
     }
 
@@ -71,7 +78,11 @@ class TransactionLogComponent extends Component
     {
         return Log::query()
             ->with('user')
-            ->where(['target_type' => $targetModel, 'target_id' => $targetId])
+            ->where([
+                'target_type' => $targetModel,
+                'target_id' => $targetId,
+            ])
+            ->whereNull('meta')
             ->latest()
             ->get();
     }

@@ -103,11 +103,11 @@
                             </span>
                         </th>
                         @if (Gate::check(
-                            \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::EDIT,
-                            \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class) ||
-                            Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::DELETE,
-                                \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class))
+                                \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::EDIT,
+                                \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class) ||
+                                Gate::check(
+                                    \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::DELETE,
+                                    \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class))
                             <th class="whitespace-nowrap text-left">Action</th>
                         @endif
                     </tr>
@@ -136,11 +136,11 @@
                                 {{ trans('international-transfer::configuration.' . $master_account['status']) }}
                             </td>
                             @if (Gate::check(
-                                \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::EDIT,
-                                \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class) ||
-                                Gate::check(
-                                    \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::DELETE,
-                                    \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class))
+                                    \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::EDIT,
+                                    \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class) ||
+                                    Gate::check(
+                                        \Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::DELETE,
+                                        \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class))
                                 <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
                                         <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
@@ -165,18 +165,12 @@
                                                 @can(\Kanexy\InternationalTransfer\Policies\MasterAccountPolicy::DELETE,
                                                     \Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration::class)
                                                     <li>
-                                                        <form
-                                                            action="{{ route('dashboard.international-transfer.master-account.destroy', $master_account['id']) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-
-                                                            <button id="Delete" type="submit"
-                                                                class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                Delete
-                                                            </button>
-                                                        </form>
+                                                        <button type="button" x-data={}
+                                                            onclick="Livewire.emit('showModal','{{ route('dashboard.international-transfer.master-account.destroy', $master_account['id']) }}','DELETE', 'x-circle','Delete');"
+                                                            class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                            Delete
+                                                        </button>
                                                     </li>
                                                 @endcan
                                             </ul>
