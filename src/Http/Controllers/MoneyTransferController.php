@@ -29,6 +29,7 @@ use Kanexy\PartnerFoundation\Core\Services\TotalProcessingService;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
+use Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
@@ -109,6 +110,13 @@ class MoneyTransferController extends Controller
 
     public function store(MoneyTransferRequest $request)
     {
+        $workspace = Workspace::findOrFail($request->input('workspace_id'));
+
+        if ($workspace->status == WorkspaceStatus::INACTIVE){
+
+              return redirect()->back();
+        }
+
         $data = $request->validated();
 
         $existSessionRequest = session('money_transfer_request');
@@ -286,35 +294,6 @@ class MoneyTransferController extends Controller
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transferReason = collect(Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transferDetails['transfer_reason']);
 
-
-        if (config('services.risk_management') == true) {
-            if (!App::environment('local')) {
-                $country = Country::findOrFail($user->country_id);
-                $iplogdata = IPlogs::where('holder_id', $user->id)->first();
-
-                if ($country->name !== $iplogdata->ip_country) {
-                    $meta = [
-                        'login_country' => $iplogdata->ip_country,
-                        'residence_country' => $country->name,
-                    ];
-
-                    $iplogdata = Log::updateOrCreate(
-                        [
-                            'target_type' => $transaction->getMorphClass(),
-                            'target_id' =>  $transaction->getKey()
-                        ],
-                        [
-                            'target_type' => $transaction->getMorphClass(),
-                            'target_id' =>  $transaction->getKey(),
-                            'id' => rand(11111, 99999),
-                            'text' => 'ip_address_transaction',
-                            'user_id' => auth()->user()->id,
-                            'meta' => $meta,
-                        ]
-                    );
-                }
-            }
-        }
 
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver'));
     }
@@ -596,6 +575,36 @@ class MoneyTransferController extends Controller
             Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
         }
 
+        
+        if (config('services.risk_management') == true) {
+            if (!App::environment('local')) {
+                $country = Country::findOrFail($user->country_id);
+                $iplogdata = IPlogs::where('holder_id', $user->id)->first();
+
+                if ($country->name !== $iplogdata?->ip_country) {
+                    $meta = [
+                        'login_country' => $iplogdata?->ip_country,
+                        'residence_country' => $country->name,
+                    ];
+
+                    $iplogdata = Log::updateOrCreate(
+                        [
+                            'target_type' => $transaction?->getMorphClass(),
+                            'target_id' =>  $transaction?->getKey()
+                        ],
+                        [
+                            'target_type' => $transaction->getMorphClass(),
+                            'target_id' =>  $transaction->getKey(),
+                            'id' => rand(11111, 99999),
+                            'text' => 'ip_address_transaction',
+                            'user_id' => auth()->user()->id,
+                            'meta' => $meta,
+                        ]
+                    );
+                }
+            }
+        }
+
         return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
 
@@ -702,12 +711,14 @@ class MoneyTransferController extends Controller
             "receiver_currency" => session('money_transfer_request.transaction.settled_currency') ? session('money_transfer_request.transaction.settled_currency') : null,
             "receiver_amount" => session('money_transfer_request.transaction.settled_amount') ? session('money_transfer_request.transaction.settled_amount') : null
         ]);
+       
 
         $prepareCheckout = $service->prepare($data);
         $getData = get_object_vars($prepareCheckout);
         $checkoutId = $getData['id'];
 
         $getStatus = $service->getPaymentStatus($checkoutId);
+       
         session(['checkoutId' => $checkoutId, 'transaction_id' => $transferDetails->id]);
 
         $base_url = config('totalprocessing.base_url');
