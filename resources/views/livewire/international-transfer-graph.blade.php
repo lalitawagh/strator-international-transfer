@@ -1,4 +1,4 @@
-<div class="box shadow-lg box p-2">
+<div class="box shadow-lg box p-2 h-full">
     <div class="hidden" id="updateDebit">{{ $debitTransactionGraphData }}</div>
     <div class="flex flex-col xl:flex-row xl:items-center">
         <div class="flex">
