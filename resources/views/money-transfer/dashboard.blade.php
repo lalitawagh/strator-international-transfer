@@ -8,6 +8,25 @@
     </div>
     <br> --}}
 
+    <!-- BEGIN: Profile Info -->
+    <div class="intro-y box px-5 pt-5 mb-3">
+        <div class="flex flex-col lg:flex-row border-b border-slate-200/60 dark:border-darkmode-400 pb-5 -mx-5">
+            <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+                    <img alt="" class="rounded-full" src="/dist/images/profile-11.jpg">
+
+                </div>
+                <div class="ml-5">
+                    <div class="truncate sm:whitespace-normal font-medium text-lg">Welcome Back Diane Ward!
+                    </div>
+                    <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END: Profile Info -->
+
     <div class="intro-y col-span-12 lg:col-span-12">
         <div class="grid grid-cols-12 gap-4">
             <div class="col-span-12 lg:col-span-8 xl:col-span-6 mt-2 h-full ">
