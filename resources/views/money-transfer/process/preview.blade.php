@@ -21,8 +21,8 @@
                                             %0D%0A Bank Account Name:- {{ $masterAccount['account_holder_name'] }} %0D%0A Account Number :- {{ $masterAccount['account_number'] }} %0D%0A @if ($masterAccount['country'] == 231) Sort Code :- {{ $masterAccount['sort_code'] }} @else IFSC Code :- {{ $masterAccount['ifsc_code'] }} @endif   ">
                                         <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
-                                    <a id="GetPdf" href="javascript:void(0);" onclick="get_pdf('manual')"><i data-lucide="download"
-                                            class="dark:text-gray-300 block mx-auto mr-2"></i></a>
+                                    <a id="GetPdf" href="javascript:void(0);" onclick="get_pdf('manual')"><i
+                                            data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a id="AccountHolder" onclick="copyData(this)"
                                         data-copy="Manual transfer Account Details- Beneficiary :- {{ $beneficiary->display_name }}  Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }}  Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
                                             Bank Account Name:- {{ $masterAccount['account_holder_name'] }}  Account Number :- {{ $masterAccount['account_number'] }}  @if ($masterAccount['country'] == 231) Sort Code :- {{ $masterAccount['sort_code'] }} @else IFSC Code :- {{ $masterAccount['ifsc_code'] }} @endif  "
@@ -120,8 +120,9 @@
                                             %0D%0A Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }} %0D%0A Payment Method :- {{ $transferDetails['payment_method'] }} %0D%0A Transfer Reason :- {{ @$transferReason['reason'] }}  ">
                                         <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
-                                    <a id="Download" href="javascript:void(0);" onclick="get_pdf('{{ $payment }}')"><i
-                                            data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
+                                    <a id="Download" href="javascript:void(0);"
+                                        onclick="get_pdf('{{ $payment }}')"><i data-lucide="download"
+                                            class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a id="AccountDetailsRecipient" onclick="copyData(this)"
                                         data-copy="{{ $payment }} transfer Account Details- Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }}  Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }}  @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number'])Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }}  Payment Method :- {{ $payment }}  Transfer Reason :- {{ @$transferReason['reason'] }} "
                                         href="javascript:void(0);">
@@ -208,7 +209,8 @@
             </div>
             <div class="text-right mt-3 py-4">
                 @isset($transferDetails['transaction'])
-                    <a id="CancelTransfer" href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
+                    <a id="CancelTransfer"
+                        href="{{ route('dashboard.international-transfer.money-transfer.cancelTransfer', $transferDetails['transaction']->id) }}"
                         class="btn btn-secondary text-center mr-1 mb-2 ml-auto">Cancel this transfer</a>
                 @endisset
                 <button id="PreviewSubmit" type="submit" class="btn btn-primary w-24">Continue</button>

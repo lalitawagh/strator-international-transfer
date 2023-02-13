@@ -29,7 +29,7 @@
                                                         @can(\Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy::CREATE,
                                                             \Kanexy\InternationalTransfer\Contracts\MoneyTransfer::class)
                                                             <a id="MoneyTransfer"
-                                                                href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
+                                                                href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}"
                                                                 class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Money
                                                                 Transfer</a>
                                                         @endcan
@@ -337,31 +337,28 @@
                                                                             <div class="dropdown-menu w-40">
                                                                                 <ul class="dropdown-content">
                                                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSuperadmin())
-                                                                                        @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::CANCELLED)
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a id="Completed"
-                                                                                                        href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
+                                                                                        @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::CANCELLED)
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                                                                                                <li><a id="Completed" href="{{ route('dashboard.international-transfer.money-transfer.transferCompleted', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-check-circle
                                                                                                             class="w-4 h-4 mr-1" />
                                                                                                         Completed
                                                                                                     </a></li>
                                                                                             @endif
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
-                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a id="Accepted"
-                                                                                                        href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
+                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                                                                                                <li><a id="Accepted" href="{{ route('dashboard.international-transfer.money-transfer.transferAccepted', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-check
                                                                                                             class="w-4 h-4 mr-1" />
                                                                                                         Accepted
                                                                                                     </a></li>
                                                                                             @endif
-                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::ACCEPTED &&
-                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING &&
-                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::COMPLETED)
-                                                                                                <li><a id="Pending"
-                                                                                                        href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
+                                                                                            @if ($transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::ACCEPTED &&
+                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING &&
+                                                                                                $transaction->status != \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::COMPLETED)
+                                                                                                <li><a id="Pending" href="{{ route('dashboard.international-transfer.money-transfer.transferPending', $transaction->getKey()) }}"
                                                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-alert-circle
                                                                                                             class="w-4 h-4 mr-1" />

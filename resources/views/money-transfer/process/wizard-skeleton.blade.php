@@ -23,16 +23,18 @@
                                         <div class="ml-auto pos">
                                             <ul class="nav nav-pills w-7/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto"
                                                 role="tablist">
+                                                @if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
                                                 <li id="local-tab" class="nav-item flex-1" role="presentation">
-                                                    <a href="{{ route('dashboard.banking.payouts.index', ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]) }}"
+                                                    <a href="{{ route('dashboard.banking.payouts.index', ['workspace_id' => app('activeWorkspaceId')]) }}"
                                                         class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill"
                                                         data-tw-target="#local" type="button" role="tab"
                                                         aria-controls="local" aria-selected="true">
                                                         Local
                                                     </a>
                                                 </li>
+                                                @endif
                                                 <li id="international-tab" class="nav-item flex-1" role="presentation">
-                                                    <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}"
+                                                    <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}"
                                                         class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill"
                                                         data-tw-target="#international" type="button" role="tab"
                                                         aria-controls="international" aria-selected="true">
