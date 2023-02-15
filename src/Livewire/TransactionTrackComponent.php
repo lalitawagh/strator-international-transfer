@@ -2,7 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Livewire\Component;
 
 class TransactionTrackComponent extends Component
@@ -17,6 +17,7 @@ class TransactionTrackComponent extends Component
     public function showTransactionTrack(Transaction $transaction)
     {
         $this->transaction = $transaction;
+        $this->dispatchBrowserEvent('show-transaction-track');
     }
 
     public function render()

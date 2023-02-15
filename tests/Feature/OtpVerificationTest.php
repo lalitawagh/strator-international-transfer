@@ -7,7 +7,7 @@ use Kanexy\Cms\Models\User;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Livewire\OtpVerification;
 use Kanexy\InternationalTransfer\Tests\TestCase;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
+use Kanexy\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Livewire;
 
