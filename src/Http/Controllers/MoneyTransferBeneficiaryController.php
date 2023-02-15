@@ -65,6 +65,13 @@ class MoneyTransferBeneficiaryController extends Controller
 
         $beneficiary->update($data);
 
+        if (auth()->user()->isSuperAdmin()) {
+            return redirect()->route("dashboard.international-transfer.beneficiaries.index")->with([
+                'status' => 'success',
+                'message' => 'The beneficiary updated successfully.',
+            ]);
+        }
+
         return redirect()->route("dashboard.international-transfer.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
             'message' => 'The beneficiary updated successfully.',
@@ -80,6 +87,12 @@ class MoneyTransferBeneficiaryController extends Controller
         $beneficiary->delete();
 
         event(new ContactDeleted($beneficiary));
+        if (auth()->user()->isSuperAdmin()) {
+            return redirect()->route("dashboard.international-transfer.beneficiaries.index")->with([
+                'status' => 'success',
+                'message' => 'The beneficiary deleted successfully.',
+            ]);
+        }
 
         return redirect()->route("dashboard.international-transfer.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
