@@ -575,7 +575,7 @@ class MoneyTransferController extends Controller
             Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
         }
 
-        
+        $user = Auth::user();
         if (config('services.risk_management') == true) {
             if (!App::environment('local')) {
                 $country = Country::findOrFail($user->country_id);
