@@ -3,7 +3,6 @@
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\I18N\Models\Country;
@@ -34,6 +33,8 @@ class MoneyTransferBeneficiaryController extends Controller
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
             $beneficiaries = $contacts->beneficiaries()->where('workspace_id', $workspace->id)->where('ref_type', 'money_transfer')->verified()->latest()->paginate();
+        } else {
+            $beneficiaries = $contacts->beneficiaries()->where('ref_type', 'money_transfer')->verified()->latest()->paginate();
         }
 
         return view("international-transfer::beneficiaries.index", compact('beneficiaries', 'workspace'));
@@ -45,7 +46,6 @@ class MoneyTransferBeneficiaryController extends Controller
 
         $countries = Country::get();
         $defaultCountry = Setting::getValue('default_country');
-
         return view("international-transfer::beneficiaries.edit", compact('beneficiary', 'countries', 'defaultCountry'));
     }
 
@@ -65,6 +65,13 @@ class MoneyTransferBeneficiaryController extends Controller
 
         $beneficiary->update($data);
 
+        if (auth()->user()->isSuperAdmin()) {
+            return redirect()->route("dashboard.international-transfer.beneficiaries.index")->with([
+                'status' => 'success',
+                'message' => 'The beneficiary updated successfully.',
+            ]);
+        }
+
         return redirect()->route("dashboard.international-transfer.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
             'message' => 'The beneficiary updated successfully.',
@@ -80,6 +87,12 @@ class MoneyTransferBeneficiaryController extends Controller
         $beneficiary->delete();
 
         event(new ContactDeleted($beneficiary));
+        if (auth()->user()->isSuperAdmin()) {
+            return redirect()->route("dashboard.international-transfer.beneficiaries.index")->with([
+                'status' => 'success',
+                'message' => 'The beneficiary deleted successfully.',
+            ]);
+        }
 
         return redirect()->route("dashboard.international-transfer.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
