@@ -13,6 +13,7 @@ use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\RiskMgmtQueConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
+use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
@@ -116,6 +117,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-attachment-component', TransactionAttachmentComponent::class);
         Livewire::component('transaction-kycdetails-component', TransactionKycdetailsComponent::class);
         Livewire::component('international-transfer-graph', InternationalTransferGraph::class);
+        Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
 
