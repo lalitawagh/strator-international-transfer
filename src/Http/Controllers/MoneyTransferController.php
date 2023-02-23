@@ -345,6 +345,7 @@ class MoneyTransferController extends Controller
                     'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
                     'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'transaction_type' => 'money_transfer',
                     'reason' =>  $transferDetails['transfer_reason'],
                 ],
             ]);

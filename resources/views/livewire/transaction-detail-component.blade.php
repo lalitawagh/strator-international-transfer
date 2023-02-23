@@ -555,7 +555,6 @@
             $("#attachment").val('');
             $("#note").val('');
             $(".edit-transaction-content").removeClass('hidden');
-            $(".nn").removeClass('hidden');
             $(".edit-transaction-content").addClass('flex');
             $(".save-transaction").removeClass('hidden');
             $(".save-transaction").addClass('flex');
