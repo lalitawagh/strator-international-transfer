@@ -203,6 +203,7 @@ class MoneyTransferController extends Controller
         $data = $request->validate([
             'transfer_reason' => ['required', 'string'],
             'payment_method'  => ['required', 'string'],
+            'delivery_method'  => ['required', 'string'],
         ]);
 
         $transferDetails = session('money_transfer_request');
@@ -258,6 +259,7 @@ class MoneyTransferController extends Controller
                     'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
                     'reason' =>  $data['transfer_reason'],
                     'transaction_type' => 'money_transfer',
+                    'delivery_method'=>$data['delivery_method']
                 ],
             ]);
             $transferDetails['transaction'] = $transaction;
@@ -344,7 +346,6 @@ class MoneyTransferController extends Controller
                     'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
                     'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
                     'reason' =>  $transferDetails['transfer_reason'],
-                    'transaction_type' => 'money_transfer',
                 ],
             ]);
 
@@ -386,6 +387,7 @@ class MoneyTransferController extends Controller
                     'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
                     'reason' =>  $transferDetails['transfer_reason'],
                     'transaction_type' => 'money_transfer',
+                    'delivery_method'=>'Total_Processing'
                 ],
             ]);
 
@@ -431,6 +433,7 @@ class MoneyTransferController extends Controller
                     'recipient_amount' => $transferDetails['recipient_amount'],
                     'reason' => $transferDetails['transfer_reason'],
                     'transaction_type' => 'money_transfer',
+                    'delivery_method'=>'Bank'
                 ];
 
                 $meta = array_merge($transaction->meta, $metaDetails);
