@@ -273,7 +273,7 @@ class MoneyTransferController extends Controller
                 $transaction->status = 'pending-review';
                 $transaction->update();
                 $secondBeneficiary->notify(new RiskAssessmentNotification($user));
-                dd('xxx');
+                
             }
         }
 
