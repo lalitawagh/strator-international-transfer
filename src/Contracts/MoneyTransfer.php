@@ -38,10 +38,10 @@ class MoneyTransfer extends Transaction
     public static function setRecordsToDownload($records, $type)
     {
         $list = collect();
-       
+
         foreach ($records as $record) {
             $transaction = Transaction::find($record);
-            
+
             $columnDetail = [
                 $transaction->urn,
                 $transaction->created_at,
@@ -94,7 +94,7 @@ class MoneyTransfer extends Transaction
 
             Column::make("Transaction Id", "urn")
                 ->sortable()->format(function ($value, $model) {
-                    return view('cms::livewire.datatable-link', ['user' => $value, 'overlay' => "Livewire.emit('showTransactionDetail', $model->id);Livewire.emit('showTransactionAttachment', $model->id );Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);"]);
+                    return view('cms::livewire.datatable-link', ['user' => $value, 'overlay' => "Livewire.emit('showTransactionDetail', $model->id);Livewire.emit('showTransactionAttachment', $model->id );Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);Livewire.emit('showCurrencyCloudPayout', $model->id);"]);
                 })
                 ->searchable()
                 ->secondaryHeaderFilter('urn'),
@@ -182,7 +182,7 @@ class MoneyTransfer extends Transaction
                     }
                 }
                 $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="navigation-2" data-lucide="navigation-2" class="lucide lucide-navigation-2 w-4 h-4 mr-2"><polygon points="12 2 19 21 12 17 5 21 12 2"></polygon></svg>','isOverlay' => 'true','action' => 'Track','route' => "Livewire.emit('showTransactionTrack', $model->id);"];
-                $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="eye" data-lucide="eye" class="lucide lucide-eye w-4 h-4 mr-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>','isOverlay' => 'true','action' => 'Show','route' => "Livewire.emit('showTransactionDetail',$model->id);Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionAttachment', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);"];
+                $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="eye" data-lucide="eye" class="lucide lucide-eye w-4 h-4 mr-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>','isOverlay' => 'true','action' => 'Show','route' => "Livewire.emit('showTransactionDetail',$model->id);Livewire.emit('showTransactionLog', $model->id);Livewire.emit('showTransactionAttachment', $model->id);Livewire.emit('showTransactionKYCDetails', $model->id);Livewire.emit('showCurrencyCloudPayout', $model->id);"];
 
                 return view('cms::livewire.datatable-actions', ['actions' => $actions])->withUser($row);
             }),
