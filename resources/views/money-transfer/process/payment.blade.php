@@ -51,7 +51,10 @@
                                                                                 data-id="radio-switch-{{ $key }}">
                                                                                 {{ $payment['title'] }}
                                                                                 <br>
-                                                                                @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
+                                                                                @if (
+                                                                                    $user->is_banking_user != 1 &&
+                                                                                        $payment['method'] == 'bank_account' &&
+                                                                                        is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
                                                                                     <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">For
@@ -59,7 +62,10 @@
                                                                                         payment method, you need to open a
                                                                                         bank account.</span><br>
                                                                                 @endif
-                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'bank_account' &&  is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
+                                                                                @if (
+                                                                                    $sender->code != 'UK' &&
+                                                                                        $payment['method'] == 'bank_account' &&
+                                                                                        is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
                                                                                     <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">The
@@ -112,7 +118,13 @@
                                                                                     class="form-check-input" type="radio"
                                                                                     name="payment_method"
                                                                                     value="{{ $payment['method'] }}"
-                                                                                    @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' &&  is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'bank_account' &&  is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
+                                                                                    @if (
+                                                                                        $user->is_banking_user != 1 &&
+                                                                                            $payment['method'] == 'bank_account' &&
+                                                                                            is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif (
+                                                                                        $sender->code != 'UK' &&
+                                                                                            $payment['method'] == 'bank_account' &&
+                                                                                            is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
                                                                                 <label class="form-check-label"
                                                                                     for="radio-switch-{{ $key }}"></label>
                                                                             </div>
@@ -214,7 +226,23 @@
                                                 @enderror
                                             </div>
                                         </div>
-
+                                        <div class="col-span-12 md:col-span-6 mt-4 form-inline">
+                                            <label for="delivery_method" class="form-label sm:w-72"> Delivery Method <span
+                                                    class="text-theme-6">*</span></label>
+                                            <div class="sm:w-1/5 lg:w-5/6 delivery-method ml-auto">
+                                                <select name="delivery_method" data-search="true" class="w-full"
+                                                    required>
+                                                    @foreach (Kanexy\InternationalTransfer\Enums\DeliveryMethod::DELIVERY_METHOD as $index => $typeName)
+                                                        <option wire:key="{{ $index }}" value="{{ $index }}">
+                                                            {{ $typeName }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('delivery_method')
+                                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="flex mt-5">
                                     </div>
