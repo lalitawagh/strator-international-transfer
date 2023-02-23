@@ -194,7 +194,7 @@ class MyselfBeneficiary extends Component
             $currencyDetails = [
                 'sending_currency' => session('money_transfer_request.currency_code_from'),
                 'receiving_currency' => session('money_transfer_request.currency_code_to'),
-                'bank_code_type' => 'sort-code',
+                'bank_code_type' => 'ifsc',
                 'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
             ];
 
