@@ -30,6 +30,8 @@ use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus;
+use Kanexy\InternationalTransfer\Notifications\RiskAssessmentNotification;
+use Kanexy\PartnerFoundation\Core\Models\UserMeta;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
@@ -261,6 +263,16 @@ class MoneyTransferController extends Controller
                 ],
             ]);
             $transferDetails['transaction'] = $transaction;
+
+            $limit = Setting::getValue('transaction_threshold_amount', []);
+            $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
+            if($transferDetails['amount'] > $limit && is_null($additional_info))
+            {
+                $transaction->status = 'pending-review';
+                $transaction->update();
+                $secondBeneficiary->notify(new RiskAssessmentNotification($user));
+                dd('xxx');
+            }
         }
 
         $transferDetails['payment_method'] = $data['payment_method'];
