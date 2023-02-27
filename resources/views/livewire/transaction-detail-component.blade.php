@@ -1,3 +1,4 @@
+
 <div>
     @if (!isset($transaction))
         <div class="mt-5">

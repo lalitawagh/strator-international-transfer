@@ -67,7 +67,7 @@
                                     <li id="CurrencycloudPayout-tab" class="nav-item flex-1" role="presentation">
                                         <a data-tw-toggle="pill" data-tw-target="#CurrencycloudPayout" href="javascript:;"
                                             class="nav-link w-full py-2" role="tab" aria-controls="CurrencycloudPayout"
-                                            aria-selected="false">Currency Cloud Payout</a>
+                                            aria-selected="false">CC Payout</a>
                                     </li>
                                 @endif
                             </ul>
