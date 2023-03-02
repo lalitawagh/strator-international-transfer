@@ -34,6 +34,7 @@ use Kanexy\InternationalTransfer\Notifications\RiskAssessmentNotification;
 use Kanexy\PartnerFoundation\Core\Models\UserMeta;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use Stripe;
 use PDF;
 
@@ -211,6 +212,7 @@ class MoneyTransferController extends Controller
         $transferDetails = session('money_transfer_request');
         $sender =  $transferDetails ? Country::find($transferDetails['currency_code_from']) : null;
         $receiver = $transferDetails ? Country::find($transferDetails['currency_code_to']) : null;
+         /** @var \App\Models\User $user */
         $user = Auth::user();
         $workspace = $transferDetails ? Workspace::find($transferDetails['workspace_id']) : $request->input('filter.workspace_id');
 
@@ -266,17 +268,20 @@ class MoneyTransferController extends Controller
             ]);
             $transferDetails['transaction'] = $transaction;
 
-            $limit = Setting::getValue('transaction_threshold_amount', []);
+
+            $riskDetails = Setting::getValue('risk_assessment',[]);
+            $limit = @$riskDetails['profile_risk_threshold'] ? @$riskDetails['profile_risk_threshold'] : 0;
             $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
-            if($transferDetails['amount'] > $limit && is_null($additional_info))
+            $totalTransaction = Transaction::select(DB::raw('SUM(amount) AS totalAmount'))->where(['workspace_id' => $workspace->id,'ref_type' => 'money_transfer'])->first();
+           
+            if($totalTransaction->totalAmount > $limit && is_null($additional_info))
             {
                 $transaction->status = 'pending-review';
                 $transaction->update();
-                $secondBeneficiary->notify(new RiskAssessmentNotification($user));
-                
+                $user->notify(new RiskAssessmentNotification($user));
             }
         }
-
+      
         $transferDetails['payment_method'] = $data['payment_method'];
         $transferDetails['transfer_reason'] = $data['transfer_reason'];
         session(['money_transfer_request' => $transferDetails]);
