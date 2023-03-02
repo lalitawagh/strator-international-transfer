@@ -8,6 +8,7 @@ use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
 use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
+use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
 use Livewire\Component;
 
 class InitialProcess extends Component
@@ -145,7 +146,7 @@ class InitialProcess extends Component
         : Country::whereCode('IN')->first()->currency;
 
         $exchangeRateIntegration = Setting::where('key', 'exhange_rate_integration')->first();
-        if($exchangeRateIntegration->value == 'currency Cloud')
+        if($exchangeRateIntegration->value == ExchangeCurrencyEnum::CURRENCY_CLOUD)
         {
             $service = new CurrencyCloudApiService();
 
