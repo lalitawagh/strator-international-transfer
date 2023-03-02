@@ -46,7 +46,7 @@
         </div>
     </div> --}}
     <div class="py-5">
-        <form action="{{ route("currencycloudpayout.store")}}" method="POST">
+        <form action="" method="POST">
             @csrf
             @method('POST')
             <input type="hidden" value="{{ $transaction?->id }}" name="payment">

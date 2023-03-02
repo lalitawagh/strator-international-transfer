@@ -266,14 +266,15 @@ class MoneyTransferController extends Controller
             ]);
             $transferDetails['transaction'] = $transaction;
 
-            $limit = Setting::getValue('transaction_threshold_amount', []);
+
+            $riskDetails = Setting::getValue('risk_assessment',[]);
+            $limit = @$riskDetails['profile_risk_threshold'] ? @$riskDetails['profile_risk_threshold'] : 0;
             $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
             if($transferDetails['amount'] > $limit && is_null($additional_info))
             {
                 $transaction->status = 'pending-review';
                 $transaction->update();
                 $secondBeneficiary->notify(new RiskAssessmentNotification($user));
-                
             }
         }
 
