@@ -4,10 +4,12 @@ namespace Kanexy\InternationalTransfer\Livewire;
 
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\I18N\Models\Country;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Rules\MobileNumber;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
 use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
 use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
@@ -221,12 +223,24 @@ class MyselfBeneficiary extends Component
             /** @var \App\Models\User $user */
             $user = auth()->user();
             $this->contact = $contact;
-            if(config('services.disable_sms_service') == false){
-                $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-            }
-            else
+            $transactionOtpService = Setting::getValue('transaction_otp_service');
+
+            if($transactionOtpService == 'email')
             {
-                $contact->generateOtp("sms");
+                if (config('services.disable_email_service') == false) {
+                    $contact->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
+                }else
+                {
+                    $contact->generateOtp("email");
+                }
+            }else
+            {
+                if (config('services.disable_sms_service') == false) {
+                    $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                }else
+                {
+                    $contact->generateOtp("sms");
+                }
             }
             $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
 
