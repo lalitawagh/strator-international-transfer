@@ -16,9 +16,40 @@ class TransactionKycdetailsComponent extends Component
 
     public $documents;
 
+    public $flag;
+
+    public $success_status = false;
+
+    public $error_status = false;
+
+    public $message;
+
     protected $listeners = [
         'showTransactionKYCDetails',
     ];
+
+    protected function rules()
+    {
+        return  [
+            'flag' => ['required', 'string']
+        ];
+    }
+
+    protected $validationAttributes = [
+        'flag' => 'Flag',
+    ];
+
+    protected function messages()
+    {
+        return  [
+            'flag.required' => 'The flag is required.'
+        ];
+    }
+
+    public function handleflagChange($values)
+    {
+        $this->flag = $values;
+    }
 
     public function showTransactionKYCDetails($workspaceId)
     {
@@ -28,6 +59,29 @@ class TransactionKycdetailsComponent extends Component
         $this->yotiLog = UserSetting::whereUserId($this->user?->id)->first();
         $this->documents = $this->user?->documents()->get();
         $this->dispatchBrowserEvent('show-transactionkyc-details');
+    }
+
+    public function updateFlag(){
+
+        $this->success_status = false;
+
+        $this->validate();
+
+        $data=[
+            'user_id' => $this->user?->id, 
+            'key' => 'kyc_flag',
+            'value'=>str_replace('"','',$this->flag)
+        ];
+
+        UserSetting::updateOrCreate(
+            ['user_id' => $this->user?->id, 'key' => 'kyc_flag'],
+            $data
+        );
+
+        $this->message = 'Flag Updated Successfully';
+
+        $this->success_status = true;
+
     }
 
     public function render()
