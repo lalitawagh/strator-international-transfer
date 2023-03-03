@@ -426,13 +426,28 @@ class MoneyTransferController extends Controller
             $transferDetails['transaction'] = $transaction;
             session(['money_transfer_request' => $transferDetails]);
 
-            if (config('services.disable_sms_service') == false) {
-                $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-            } else {
-                $transaction->generateOtp("sms");
-            }
+            $transactionOtpService = Setting::getValue('transaction_otp_service');
 
-            return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
+            if($transactionOtpService == 'email')
+            {
+                if (config('services.disable_email_service') == false) {
+                    $transaction->notify(new EmailOneTimePasswordNotification($transaction->generateOtp("email")));
+                }else
+                {
+                    $transaction->generateOtp("email");
+                }
+            }else
+            {
+                if (config('services.disable_sms_service') == false) {
+                    $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+                }else
+                {
+                    $transaction->generateOtp("sms");
+                }
+            }
+           
+            return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), $transactionOtpService);
+            
         }
 
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
