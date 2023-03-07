@@ -190,8 +190,9 @@ class MoneyTransferController extends Controller
         $totalAmount =  $transferDetails ? ($transferDetails['amount'] - $transferDetails['fee_charge']) : 0;
         $reasons = collect(Setting::getValue('money_transfer_reasons', []));
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', $sender->id);
+        $riskInfo = collect(Setting::getValue('risk_assessment',[]));
 
-        return view('international-transfer::money-transfer.process.payment', compact('user', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons', 'masterAccount'));
+        return view('international-transfer::money-transfer.process.payment', compact('user', 'countries', 'defaultCountry', 'workspace', 'sender', 'receiver', 'transferDetails', 'totalAmount', 'reasons', 'masterAccount', 'riskInfo'));
     }
 
     public function transactionDetail(Request $request)
@@ -206,6 +207,7 @@ class MoneyTransferController extends Controller
             'transfer_reason' => ['required', 'string'],
             'payment_method'  => ['required', 'string'],
             'delivery_method'  => ['required', 'string'],
+            'source_of_fund' => ['nullable', 'string']
         ]);
 
         $transferDetails = session('money_transfer_request');
@@ -279,6 +281,8 @@ class MoneyTransferController extends Controller
 
         $transferDetails['payment_method'] = $data['payment_method'];
         $transferDetails['transfer_reason'] = $data['transfer_reason'];
+        $transferDetails['source_of_fund'] = $data['source_of_fund'];
+        
         session(['money_transfer_request' => $transferDetails]);
 
         return redirect()->route('dashboard.international-transfer.money-transfer.preview', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);

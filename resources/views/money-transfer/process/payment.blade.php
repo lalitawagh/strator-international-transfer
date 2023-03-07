@@ -212,7 +212,7 @@
                                         <div class="col-span-12 md:col-span-6 mt-4 form-inline">
                                             <label for="bank_country" class="form-label sm:w-72"> Transfer Reason <span
                                                     class="text-theme-6">*</span></label>
-                                            <div class="sm:w-1/5 lg:w-5/6 Transfer-reason ml-auto">
+                                            <div class="sm:w-1/5 lg:w-3/5 Transfer-reason ml-auto">
                                                 <select name="transfer_reason" data-search="true" class="w-full">
                                                     @foreach ($reasons as $reason)
                                                         @if ($reason['status'] == \Kanexy\InternationalTransfer\Enums\Status::ACTIVE)
@@ -229,7 +229,7 @@
                                         <div class="col-span-12 md:col-span-6 mt-4 form-inline">
                                             <label for="delivery_method" class="form-label sm:w-72"> Delivery Method <span
                                                     class="text-theme-6">*</span></label>
-                                            <div class="sm:w-1/5 lg:w-5/6 delivery-method ml-auto">
+                                            <div class="sm:w-1/5 lg:w-3/5 delivery-method ml-auto">
                                                 <select name="delivery_method" data-search="true" class="w-full"
                                                     required>
                                                     @foreach (Kanexy\InternationalTransfer\Enums\DeliveryMethod::DELIVERY_METHOD as $index => $typeName)
@@ -243,6 +243,24 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+                                        @if ($riskInfo['transaction_risk_status'] == 'active' && $riskInfo['transaction_risk_source_of_fund'] == 'yes' && $riskInfo['transaction_risk_threshold'] <= $totalAmount)
+                                        <div class="col-span-12 md:col-span-6 mt-4 form-inline">
+                                            <label for="source_of_fund" class="form-label sm:w-72"> Source Of Funds</label>
+                                            <div class="sm:w-1/5 lg:w-3/5 source_of_fund ml-auto">
+                                                <select name="source_of_fund" data-search="true" class="w-auto"
+                                                    required>
+                                                        <option value="Salaries, Operating Income, Return on Investment, Interests">Salaries, Operating Income,Return on Investment, Interests</option>
+                                                        <option value="Customers own funds, Investments, Property sale, Inheritances, Lottery.">Customers own funds, Investments, Property sale, Inheritances, Lottery.</option>
+                                                        <option value="Others">Others</option>
+                                                </select>
+                                                @error('source_of_fund')
+                                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        @endif
+                                        
                                     </div>
                                     <div class="flex mt-5">
                                     </div>
