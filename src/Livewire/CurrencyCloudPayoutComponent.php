@@ -2,7 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
-use Kanexy\Cms\Models\UserSetting;
+use Illuminate\Support\Facades\Auth;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Livewire\Component;
 
@@ -23,7 +23,6 @@ class CurrencyCloudPayoutComponent extends Component
 
     public function render()
     {
-
        return view('international-transfer::livewire.currency-cloud-payout-component');
     }
 }

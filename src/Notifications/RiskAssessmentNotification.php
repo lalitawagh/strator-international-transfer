@@ -40,7 +40,8 @@ class RiskAssessmentNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->subject('Risk Assessment Info')
+        
+        return (new MailMessage)->subject('Payment Pending - Action Needed')
                     ->markdown('international-transfer::notification.risk-assessment-notification', ['user' => $this->user]);
     }
 
