@@ -40,7 +40,7 @@ class InternationalTransferMenu extends Item
             $menus[] = new MenuItem('Money Transfer', 'activity', url: route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
-        if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && $user->isSuperAdmin()) {
+        if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && !$user->isSubscriber()) {
             $menus[] = new MenuItem('Transactions', 'activity', url: route('dashboard.international-transfer.money-transfer.index'));
         }
 

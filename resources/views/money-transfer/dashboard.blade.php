@@ -305,13 +305,12 @@
             datasets: [{
                 label: 'Transactions',
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(235, 54, 79)',
                     'rgb(139, 195, 74)',
-                    'rgb(0, 188, 212)'
-
+                    'rgb(235, 54, 79)',
+                    'rgb(76, 175, 80)',
+                    'rgb(255, 87, 34)',
+                    'rgb(255, 152, 0)',
+                    'rgb(255, 193, 7)',
                 ],
                 data: {!! json_encode($pieChartTransactions->pluck('data')) !!},
             }]
