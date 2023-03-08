@@ -18,7 +18,7 @@ class GeneralAmountSettingForm extends Item
 
     public function render()
     {
-        $settings = app('settingDetails');
+        $settings = Setting::pluck('value', 'key');
 
         return view("international-transfer::configuration.settingform", compact('settings'));
     }

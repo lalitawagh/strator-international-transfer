@@ -49,10 +49,7 @@ class MoneyTransferController extends Controller
 
         session()->forget('money_transfer_request');
 
-        $transactions = QueryBuilder::for(Transaction::class)
-            ->allowedFilters([
-                AllowedFilter::exact('workspace_id'),
-            ]);
+        $transactions = QueryBuilder::for(Transaction::class);
 
         $user = Auth::user();
         $workspace = null;
