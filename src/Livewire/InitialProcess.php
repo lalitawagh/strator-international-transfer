@@ -151,8 +151,8 @@ class InitialProcess extends Component
             $service = new CurrencyCloudApiService();
 
             $param = [
-                'buy_currency' => $this->to,
-                'sell_currency' => $this->from,
+                'buy_currency' => $this->from,
+                'sell_currency' => $this->to,
                 'amount' => $this->amount,
                 'fixed_side' => 'sell',
             ];
