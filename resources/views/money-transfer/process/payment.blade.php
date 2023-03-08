@@ -244,12 +244,13 @@
                                             </div>
                                         </div>
 
-                                        @if ($riskInfo['transaction_risk_status'] == 'active' && $riskInfo['transaction_risk_source_of_fund'] == 'yes' && $riskInfo['transaction_risk_threshold'] <= $totalAmount)
+                                        @if ( @$riskInfo['transaction_risk_status'] == 'active' && @$riskInfo['transaction_risk_source_of_fund'] == 'yes' && @$riskInfo['transaction_risk_threshold'] <= $totalAmount)
                                         <div class="col-span-12 md:col-span-6 mt-4 form-inline">
                                             <label for="source_of_fund" class="form-label sm:w-72"> Source Of Funds</label>
                                             <div class="sm:w-1/5 lg:w-3/5 source_of_fund ml-auto">
                                                 <select name="source_of_fund" data-search="true" class="w-auto"
                                                     required>
+                                                        <option value="">Select Source Of Funds</option>
                                                         <option value="Salaries, Operating Income, Return on Investment, Interests">Salaries, Operating Income,Return on Investment, Interests</option>
                                                         <option value="Customers own funds, Investments, Property sale, Inheritances, Lottery.">Customers own funds, Investments, Property sale, Inheritances, Lottery.</option>
                                                         <option value="Others">Others</option>

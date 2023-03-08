@@ -146,7 +146,7 @@ class InitialProcess extends Component
         : Country::whereCode('IN')->first()->currency;
 
         $exchangeRateIntegration = Setting::where('key', 'exhange_rate_integration')->first();
-        if($exchangeRateIntegration->value == ExchangeCurrencyEnum::CURRENCY_CLOUD)
+        if($exchangeRateIntegration?->value == ExchangeCurrencyEnum::CURRENCY_CLOUD)
         {
             $service = new CurrencyCloudApiService();
 

@@ -10,7 +10,7 @@
       <!-- Visually Hidden Preheader Text : BEGIN -->
       <div style="width:100%; margin: auto;font-family: box-shadow: 0px 3px 20px #0000000b; border-radius: 0.375rem;">
          <!-- Email Body : BEGIN -->
-            @if($user->isSuperAdmin())
+            @if(!$user->isSubscriber())
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="background-color: #fff; max-width: 6000px;">
                 <!-- Hero Image, Flush : BEGIN -->
                 <tbody>
@@ -28,7 +28,7 @@
                 </tbody>
             </table>
             @endif
-         @if(!$user->isSuperAdmin())
+         @if($user->isSubscriber())
          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="background-color: #fff; max-width: 6000px;">
             <!-- Hero Image, Flush : BEGIN -->
             <tbody>
@@ -45,12 +45,12 @@
             </tr>
             <tr style="padding-left: 2.5rem; padding-left: 2.5rem;">
                 <td style="text-align:left;padding:20px 20px;">
-                    <div>
+                    {{-- <div>
                         <div style="font-size: 1.5rem;line-height: 2rem; font-weight:600; padding-bottom:10px">Sender Name:&nbsp; {{ $account?->name }}</div>
                         <div style="font-size: 1rem;line-height:1.5; font-weight:500;">Account No:&nbsp; {{ $account?->account_number }}<br>
                             <div style="font-size: 1rem;line-height:1.5; font-weight:500;">Sort Code:&nbsp; {{ $account?->bank_code }}<br>
                         </div>
-                    </div>
+                    </div> --}}
                 </td>
                 <td style="text-align:right;padding:20px 20px;">
                     <div class="lg:text-right mt-10 lg:mt-0 lg:ml-auto">

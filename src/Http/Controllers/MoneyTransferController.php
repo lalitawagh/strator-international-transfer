@@ -710,7 +710,12 @@ class MoneyTransferController extends Controller
     {
         $user = Auth::user();
         $transaction = Transaction::find($request->transaction_id);
-        $account = auth()->user()->workspaces()->first()?->accounts()->first();
+        if (!is_null(PartnerFoundation::getBankingPayment($request))) {
+            $account = auth()->user()->workspaces()->first()?->accounts()->first();
+        }else
+        {
+            $account = auth()->user()->workspaces()->first();
+        }
 
         $view = PDF::loadView('international-transfer::money-transfer.moneytransferpdf', compact('account', 'transaction', 'user'))
             ->setPaper(array(0, 0, 1000, 900), 'landscape')

@@ -58,7 +58,7 @@
                                         class="nav-link w-full py-2" role="tab" aria-controls="Attachments"
                                         aria-selected="false">Attachments</a>
                                 </li>
-                                @if (Auth::user()->isSuperAdmin())
+                                @if (!Auth::user()->isSubscriber())
                                     <li id="KYC-documents-tab" class="nav-item flex-1" role="presentation">
                                         <a data-tw-toggle="pill" data-tw-target="#KYCdocuments" href="javascript:;"
                                             class="nav-link w-full py-2" role="tab" aria-controls="KYCdocuments"
