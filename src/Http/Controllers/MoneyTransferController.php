@@ -286,7 +286,11 @@ class MoneyTransferController extends Controller
       
         $transferDetails['payment_method'] = $data['payment_method'];
         $transferDetails['transfer_reason'] = $data['transfer_reason'];
-        $transferDetails['source_of_fund'] = $data['source_of_fund'];
+
+        if(!is_null(@$data['source_of_fund']))
+        {
+            $transferDetails['source_of_fund'] = @$data['source_of_fund'];
+        }
         
         session(['money_transfer_request' => $transferDetails]);
 
@@ -760,7 +764,7 @@ class MoneyTransferController extends Controller
     {
         $transferDetails = session('money_transfer_request.transaction');
         $checkoutId = session('checkoutId');
-
+        $user = Auth::user();
         $response = $service->getPaymentStatus($checkoutId);
         $data = [
             'checkoutId' => $checkoutId,
@@ -783,6 +787,23 @@ class MoneyTransferController extends Controller
         $transferDetails->meta = $meta;
         $transferDetails->status = TransactionStatus::ACCEPTED;
         $transferDetails->update();
+
+        $riskDetails = Setting::getValue('risk_assessment',[]);
+        $limit = @$riskDetails['profile_risk_threshold'] ? @$riskDetails['profile_risk_threshold'] : 0;
+        $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
+        $totalTransaction = Transaction::select(DB::raw('SUM(amount) AS totalAmount'))->where(['workspace_id' => $transferDetails->workspace_id,'ref_type' => 'money_transfer'])->first();
+       
+        if($totalTransaction->totalAmount > $limit && is_null($additional_info))
+        {
+            $transferDetails->status = 'pending-review';
+            $transferDetails->update();
+            $user->notify(new RiskAssessmentNotification($user));
+        }
+        
+        if(!is_null(@$data['source_of_fund']))
+        {
+            $transferDetails['source_of_fund'] = @$data['source_of_fund'];
+        }
 
 
         session(['transaction_id' => $transferDetails->id]);
