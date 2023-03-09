@@ -616,7 +616,8 @@ class MoneyTransferController extends Controller
                     $iplogdata = Log::updateOrCreate(
                         [
                             'target_type' => $transaction?->getMorphClass(),
-                            'target_id' =>  $transaction?->getKey()
+                            'target_id' =>  $transaction?->getKey(),
+                            'text' => 'ip_address_transaction',
                         ],
                         [
                             'target_type' => $transaction->getMorphClass(),
