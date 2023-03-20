@@ -2,9 +2,11 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
-use Kanexy\Cms\Models\UserSetting;
-use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
+use Kanexy\Cms\Models\UserSetting;
+use Kanexy\InternationalTransfer\Enums\FlagStatus;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 
 class TransactionKycdetailsComponent extends Component
 {
@@ -31,7 +33,7 @@ class TransactionKycdetailsComponent extends Component
     protected function rules()
     {
         return  [
-            'flag' => ['required', 'string']
+            'flag' => ['required', 'string', Rule::in(FlagStatus::FLAG_STATUS)]
         ];
     }
 
@@ -61,16 +63,17 @@ class TransactionKycdetailsComponent extends Component
         $this->dispatchBrowserEvent('show-transactionkyc-details');
     }
 
-    public function updateFlag(){
+    public function updateFlag()
+    {
 
         $this->success_status = false;
 
         $this->validate();
 
-        $data=[
-            'user_id' => $this->user?->id, 
+        $data = [
+            'user_id' => $this->user?->id,
             'key' => 'kyc_flag',
-            'value'=>str_replace('"','',$this->flag)
+            'value' => str_replace('"', '', $this->flag)
         ];
 
         UserSetting::updateOrCreate(
@@ -81,12 +84,11 @@ class TransactionKycdetailsComponent extends Component
         $this->message = 'Flag Updated Successfully';
 
         $this->success_status = true;
-
     }
 
     public function render()
     {
 
-       return view('international-transfer::livewire.transaction-kycdetails-component');
+        return view('international-transfer::livewire.transaction-kycdetails-component');
     }
 }
