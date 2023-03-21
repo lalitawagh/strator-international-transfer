@@ -7,6 +7,9 @@
         @if (Session::has('error'))
             <span class="block text-theme-6">{{ Session::get('error') }}</span>
         @endif
+        @error('alreadyexists')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+        @enderror
         <form action="{{ route('dashboard.international-transfer.transfer-type-fee.update', $transfer_type_fee['id']) }}"
             method="POST">
             @csrf

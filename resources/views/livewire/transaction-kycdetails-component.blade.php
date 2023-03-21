@@ -7,17 +7,13 @@
                     @isset($documents)
 
                         @foreach ($documents as $document)
-
-                            @if ($document->type == 'id_proof1' ||
-                                $document->type == 'id_proof2' ||
-                                $document->type == 'address_proof' ||
-                                $document->type == 'verification_image'
-                                )
-
+                            @if (
+                                $document->type == 'id_proof1' ||
+                                    $document->type == 'id_proof2' ||
+                                    $document->type == 'address_proof' ||
+                                    $document->type == 'verification_image')
                                 @isset($yotiLog)
-
                                     @if ($yotiLog->value['id_proof'] == 'PASSPORT' && $document->type == 'id_proof2')
-
                                     @else
                                         <div class="col-span-12 sm:col-span-6 lg:col-span-4 xxl:col-span-3">
                                             <div
@@ -39,7 +35,7 @@
                                                 </div>
                                                 @php
                                                     $extension = substr($document->media, strpos($document->media, '.') + 1);
-
+                                                    
                                                 @endphp
                                                 <div
                                                     class="h-40 min-h-full relative image-fit cursor-pointer zoom-in mx-auto selfievideo">
@@ -66,6 +62,37 @@
                             @endif
                         @endforeach
                     @endisset
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-5">
+        @if ($success_status == true)
+            <h4 class="text-success font-weight-bold mb-2 mt-5">{{ $message }}</h4>
+        @endif
+        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
+            <div class="col-span-12 md:col-span-12 form-inline mt-1" style="align-items: inherit;">
+                <div class="sm:w-5/6">
+                    <label for="flag" class="form-label sm:w-28">Flag<span class="text-theme-6"> *</span></label>
+                    <select id="flag" wire:change="handleflagChange($event.target.value)" data-search="true"
+                        class="form-select mt-2 sm:mr-2 @error('flag') border-theme-6 @enderror" autocomplete="off">
+                        <option value="" selected>Select Flag</option>
+                        @foreach (Kanexy\InternationalTransfer\Enums\FlagStatus::FLAG_STATUS as $index => $typeName)
+                            <option wire:key="{{ $index }}" value="{{ $index }}"
+                                {{ $flag == $index ? 'selected' : '' }}>{{ $typeName }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('flag')
+                        <span class="block text-theme-6 mt-2 mb-5">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="sm:w-5/6 mt-5">
+                    <button id="updateFlag" type="button" wire:loading.remove class="btn btn-primary w-34 ml-2 mt-5"
+                        wire:click="updateFlag">Update Flag</button>
+                    <button wire:loading wire:target="updateFlag" type="button" class="btn btn-primary w-30 ml-2 mt-5">
+                        Generating...
+                    </button>
                 </div>
             </div>
         </div>
