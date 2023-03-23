@@ -73,7 +73,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <a href=""
+                            <a href="{{ route('dashboard.international-transfer.money-transfer.index') }}"
                                 class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View
                                 More</a>
                         </div>
@@ -108,7 +108,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <a href=""
+                            <a href="{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}"
                                 class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View
                                 More</a>
                         </div>
