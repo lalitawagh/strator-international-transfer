@@ -54,6 +54,8 @@ class InternationalTransferGraph extends Component
 
 
         $this->dispatchBrowserEvent('UpdateTransactionChart');
+
+        $this->emit('closeDropdown');
     }
 
     public function render()
