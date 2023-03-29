@@ -34,10 +34,9 @@ class DashboardController extends Controller
             $check_document_results = $this->getCheckResultData($yotiLog);
         }
 
-        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'user', 'yotiLog', 'check_document_results'));
         $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->latest()->take(15)->get();
         $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
 
-        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'recentTransactions', 'user', 'recentUserTransactions'));
+        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'recentTransactions', 'user','yotiLog', 'check_document_results', 'recentUserTransactions'));
     }
 }
