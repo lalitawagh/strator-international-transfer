@@ -35,6 +35,7 @@ use Kanexy\PartnerFoundation\Core\Models\UserMeta;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\DB;
+use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Stripe;
 use PDF;
 
@@ -279,6 +280,7 @@ class MoneyTransferController extends Controller
                 $transaction->update();
                 $user->notify(new RiskAssessmentNotification($user));
             }
+
         }
 
         $transferDetails['payment_method'] = $data['payment_method'];
@@ -573,32 +575,43 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         $transaction = Transaction::find(session('transaction_id'));
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
+        $skipKycStatus = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
 
         $limit = Setting::getValue('transaction_threshold_amount', []);
 
         if ($transaction->amount >=  $limit) {
 
-            $transaction->update(['status' => TransactionStatus::PENDING]);
+            if($skipKycStatus?->value == 'true')
+            {
+                    $transaction->status = 'pending-kyc';
+                    $transaction->update();
+            }
+            else
+            {
+                $transaction->update(['status' => TransactionStatus::PENDING]);
 
-            $metaDetails = [
-                'transaction_id' => $transaction->urn,
-                'threshold_exceeded' => true,
-                'transaction_amount' => $transaction->amount,
-                'alert_status' => false,
-            ];
-            $meta = array_merge($transaction?->meta, $metaDetails);
-            $log = new Log();
-            $log->id = Str::uuid();
-            $log->text = $transaction->urn;
-            $log->user_id = auth()->user()->id;
-            $log->meta = $meta;
-            $log->target()->associate($transaction);
-            $log->save();
+                $metaDetails = [
+                    'transaction_id' => $transaction->urn,
+                    'threshold_exceeded' => true,
+                    'transaction_amount' => $transaction->amount,
+                    'alert_status' => false,
+                ];
+                $meta = array_merge($transaction?->meta, $metaDetails);
+                $log = new Log();
+                $log->id = Str::uuid();
+                $log->text = $transaction->urn;
+                $log->user_id = auth()->user()->id;
+                $log->meta = $meta;
+                $log->target()->associate($transaction);
+                $log->save();
 
-            $admin = User::whereHas("roles", function ($q) {
-                $q->where("name", "super_admin");
-            })->get();
-            Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
+                $admin = User::whereHas("roles", function ($q) {
+                    $q->where("name", "super_admin");
+                })->get();
+                Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
+            }
         }
 
         $user = Auth::user();
