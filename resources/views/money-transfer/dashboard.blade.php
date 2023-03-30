@@ -21,9 +21,15 @@
                     </div>
                     <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
                 </div>
-                @if(!is_null($user))
-                <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
-                    class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Submit KYC</a>
+                @if (config('services.registration_changed') == false)
+                    @if ($kycSkip?->value == 'true')
+                        <div class="ml-auto">
+                            @if(!is_null($user))
+                            <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
+                                class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Submit KYC</a>
+                            @endif
+                        </div>
+                    @endif
                 @endif
             </div>
 
