@@ -22,7 +22,7 @@
                     <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
                 </div>
                 @if (config('services.registration_changed') == false)
-                    @if ($kycSkip?->value == 'true')
+                    @if ($kycSkip?->value == 'false')
                         <div class="ml-auto">
                             @if(!is_null($user))
                             <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
