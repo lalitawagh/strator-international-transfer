@@ -17,8 +17,6 @@ class OtpVerification extends Component
 
     public $user;
 
-    public $account;
-
     public $workspace;
 
     public $mobile;
@@ -29,12 +27,11 @@ class OtpVerification extends Component
 
     public $sent_resend_otp;
 
-    public function mount($countries, $defaultCountry, $user, $account, $workspace)
+    public function mount($countries, $defaultCountry, $user, $workspace)
     {
         $this->countries = $countries;
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
-        $this->account = $account;
         $this->workspace_id = $workspace->id;
         $this->mobile = $user->phone;
     }

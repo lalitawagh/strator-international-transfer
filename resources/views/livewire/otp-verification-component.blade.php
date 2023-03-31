@@ -65,6 +65,7 @@
                         </a>
                     </div>
                 </div>
+                
             </div>
             <div class="text-right mt-5">
                 <button id="verifyOtpSubmit" wire:click="verifyOtp" type="button"

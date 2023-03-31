@@ -4,6 +4,9 @@
 
 @section('config-content')
     <div class="p-5">
+        @if (Session::has('error'))
+            <span class="block text-theme-6">{{ Session::get('error') }}</span>
+        @endif
         <form action="{{ route('dashboard.international-transfer.transfer-reason.update', $money_transfer_reason['id']) }}"
             method="POST">
             @csrf

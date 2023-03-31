@@ -10,8 +10,10 @@ use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
+use Kanexy\InternationalTransfer\Contracts\RiskMgmtQueConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
+use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
 use Kanexy\InternationalTransfer\Livewire\MyselfBeneficiary;
@@ -27,6 +29,7 @@ use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
+use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
 use Livewire\Livewire;
@@ -52,6 +55,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         MasterAccountConfiguration::class => MasterAccountPolicy::class,
         FeeConfiguration::class => FeePolicy::class,
         MoneyTransfer::class => MoneyTransferPolicy::class,
+        RiskMgmtQueConfiguration::class => RiskMgmtQuePolicy::class,
     ];
 
     public function registerDefaultPolicies()
@@ -113,6 +117,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-attachment-component', TransactionAttachmentComponent::class);
         Livewire::component('transaction-kycdetails-component', TransactionKycdetailsComponent::class);
         Livewire::component('international-transfer-graph', InternationalTransferGraph::class);
+        Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
 

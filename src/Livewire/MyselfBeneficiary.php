@@ -8,11 +8,8 @@ use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
-use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
-use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
-use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -27,8 +24,6 @@ class MyselfBeneficiary extends Component
     public $defaultCountry;
 
     public $user;
-
-    public $account;
 
     public $first_name;
 
@@ -93,7 +88,7 @@ class MyselfBeneficiary extends Component
             'note' => ['nullable'],
             'meta' => ['required', 'array'],
             'meta.iban_number' => ['required'],
-            'meta.bank_account_name' => ['required', 'regex:/^[\p{L}\s-]+$/u'],
+            'meta.bank_account_name' => ['required', new AlphaSpaces,'max:40'],
             'meta.bank_account_number' => ['required', 'string', 'numeric'],
             'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
@@ -120,17 +115,16 @@ class MyselfBeneficiary extends Component
         return  [
             'meta.bank_code.required_if' => 'The sort code field is required.',
             'meta.iban_number.required' => 'The IFSC code/ IBAN field is required.',
-            'meta.bank_account_name.regex' =>'Account Name can`t contain Special Character and Number'
+            'meta.bank_account_name.regex' =>'Account Name contains Letters and Spaces Only'
         ];
     }
 
 
-    public function mount($countries, $defaultCountry, $user, $account, $workspace, $beneficiaryType)
+    public function mount($countries, $defaultCountry, $user, $workspace, $beneficiaryType)
     {
         $this->countries = $countries;
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
-        $this->account = $account;
         $this->workspace_id = $workspace->id;
         $this->beneficiaryType = $beneficiaryType;
         $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;
@@ -200,7 +194,7 @@ class MyselfBeneficiary extends Component
             $currencyDetails = [
                 'sending_currency' => session('money_transfer_request.currency_code_from'),
                 'receiving_currency' => session('money_transfer_request.currency_code_to'),
-                'bank_code_type' => BankEnum::SORTCODE,
+                'bank_code_type' => 'ifsc',
                 'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
             ];
 
@@ -242,6 +236,7 @@ class MyselfBeneficiary extends Component
                     $contact->generateOtp("sms");
                 }
             }
+
             $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
 
             session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);

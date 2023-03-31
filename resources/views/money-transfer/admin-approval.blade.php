@@ -47,7 +47,9 @@
                 <div class="clearfix"></div>
                 @isset($transaction->meta['sender_id'])
                     @php
-                        $sender = \Kanexy\PartnerFoundation\Banking\Models\Account::find($transaction->meta['sender_id']);
+                    if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+                        $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
+                    }
                         $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
                     @endphp
                 @endisset
@@ -70,7 +72,7 @@
                                 <div class="active-clr text-xs mt-0.5 ">Total Completed Transaction Amount</div>
 
                                 <a id="ExchangeRateAmount"
-                                    href="{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => $transaction->workspace_id]]) }}"
+                                    href="{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => $transaction->workspace_id],'table'=> ['filters' => ['status' => 'completed']]]) }}"
                                     class="font-medium">
                                     @if (!is_null($totalTransactionCompletedAmount?->total_amount))
                                         {{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($totalTransactionCompletedAmount->total_amount, 'GBP') }}
@@ -87,7 +89,7 @@
                                 <a id="TotalAmount"
                                     href="{{ route('dashboard.international-transfer.money-transfer.index', [
                                         'filter' => ['workspace_id' => $transaction->workspace_id],
-                                        'id' => $transaction?->id,
+                                        'table'=> ['filters' => ['meta->second_beneficiary_name' => $transaction->meta['second_beneficiary_name']]]
                                     ]) }}"
                                     class="font-medium">
                                     @if (!is_null($totalTransactionBeneficaryAmount?->total_amount))
@@ -96,9 +98,7 @@
                                         £ 0.00
                                     @endif
                                 </a>
-
                             </div>
-
 
                         </div>
                         <div id="faq-accordion-1" class="box accordion accordion-boxed px-2 py-2">
@@ -546,7 +546,7 @@
                                 <div
                                     class="edit-transaction-content col-span-12 lg:col-span-12 xxl:col-span-12 mt-2 hidden">
                                     <form id="transaction-form"
-                                        action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}"
+                                        action="{{ route('dashboard.transaction-attachment', $transaction->getKey()) }}"
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')

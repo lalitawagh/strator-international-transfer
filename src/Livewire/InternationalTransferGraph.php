@@ -3,10 +3,7 @@
 namespace Kanexy\InternationalTransfer\Livewire;
 
 use Illuminate\Support\Facades\Auth;
-use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
-use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
-use Kanexy\PartnerFoundation\Banking\Enums\TransactionType;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Helper;
 use Livewire\Component;
 
@@ -38,7 +35,7 @@ class InternationalTransferGraph extends Component
         $user = Auth::user();
 
 
-        $currentWorkspaceId = Helper::activeWorkspaceId();
+        $currentWorkspaceId = app('activeWorkspaceId');
 
         $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->get();
 
