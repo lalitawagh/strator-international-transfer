@@ -141,7 +141,7 @@ class MoneyTransfer extends Transaction
                 ->secondaryHeaderFilter('meta->exchange_currency'),
 
             Column::make("Receiving Amount", "meta->recipient_amount")->format(function ($value, $model) {
-                return '<span class="px-6 py-4 whitespace-nowrap text-sm text-right text-right text-success">'.\Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($model?->amount, $model['meta->exchange_currency']).'</span>';
+                return '<span class="px-6 py-4 whitespace-nowrap text-sm text-right text-right text-success">'.\Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($model['meta->recipient_amount'], $model['meta->exchange_currency']).'</span>';
                 })
                     ->searchable()
                     ->sortable()
