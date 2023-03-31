@@ -431,10 +431,10 @@ class MoneyTransferController extends Controller
 
 
                 $account = Account::forHolder($workspace)->first();
-               
+
                 /** @var Contact $beneficiary */
                 $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
-               
+
                 /** @var Account $senderAccount */
                 $senderAccount = Account::findOrFail($account->id);
 
@@ -490,7 +490,7 @@ class MoneyTransferController extends Controller
                         $transaction->generateOtp("sms");
                     }
                 }
-               
+
                 return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), $transactionOtpService);
             }
         }
@@ -603,31 +603,31 @@ class MoneyTransferController extends Controller
             {
                     $transaction->status = 'pending-kyc';
                     $transaction->update();
+
             }
             else
             {
                 $transaction->update(['status' => TransactionStatus::PENDING]);
-
-                $metaDetails = [
-                    'transaction_id' => $transaction->urn,
-                    'threshold_exceeded' => true,
-                    'transaction_amount' => $transaction->amount,
-                    'alert_status' => false,
-                ];
-                $meta = array_merge($transaction?->meta, $metaDetails);
-                $log = new Log();
-                $log->id = Str::uuid();
-                $log->text = $transaction->urn;
-                $log->user_id = auth()->user()->id;
-                $log->meta = $meta;
-                $log->target()->associate($transaction);
-                $log->save();
-
-                $admin = User::whereHas("roles", function ($q) {
-                    $q->where("name", "super_admin");
-                })->get();
-                Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
             }
+            $metaDetails = [
+                'transaction_id' => $transaction->urn,
+                'threshold_exceeded' => true,
+                'transaction_amount' => $transaction->amount,
+                'alert_status' => false,
+            ];
+            $meta = array_merge($transaction?->meta, $metaDetails);
+            $log = new Log();
+            $log->id = Str::uuid();
+            $log->text = $transaction->urn;
+            $log->user_id = auth()->user()->id;
+            $log->meta = $meta;
+            $log->target()->associate($transaction);
+            $log->save();
+
+            $admin = User::whereHas("roles", function ($q) {
+                $q->where("name", "super_admin");
+            })->get();
+            Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
         }
 
         $user = Auth::user();
