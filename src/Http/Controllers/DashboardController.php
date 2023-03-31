@@ -28,7 +28,7 @@ class DashboardController extends Controller
         }
         $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->latest()->take(5)->get();
         $yotiLog = UserSetting::whereUserId($user?->id)->first();
-        $kycSkip = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
+        $kycSkip = WorkspaceMeta::where(['workspace_id' => $workspace?->id, 'key' => 'skip_kyc'])->first();
 
         $check_document_results = null;
         if (config('services.registration_changed') == false)
@@ -41,7 +41,6 @@ class DashboardController extends Controller
                     dd($check_document_results);
                 }
             }
-
         }
 
         $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->latest()->take(15)->get();
