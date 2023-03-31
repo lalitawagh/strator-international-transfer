@@ -120,6 +120,7 @@ class DashboardList extends Transaction
                     'cancelled' => 'Cancelled',
                     'accepted' => 'Accepted',
                     'completed' => 'Completed',
+                    'pending'   => 'Pending',
                 ])
                 ->filter(function (Builder $builder, string $value) {
 
