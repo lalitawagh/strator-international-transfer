@@ -31,6 +31,7 @@ use Kanexy\PartnerFoundation\Dashboard\Notification\ThresholdExceededNotificatio
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus;
 use Kanexy\InternationalTransfer\Notifications\RiskAssessmentNotification;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\PartnerFoundation\Core\Models\UserMeta;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -428,9 +429,10 @@ class MoneyTransferController extends Controller
 
 
                 $account = Account::forHolder($workspace)->first();
+               
                 /** @var Contact $beneficiary */
                 $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
-
+               
                 /** @var Account $senderAccount */
                 $senderAccount = Account::findOrFail($account->id);
 
@@ -467,13 +469,27 @@ class MoneyTransferController extends Controller
                 $transferDetails['transaction'] = $transaction;
                 session(['money_transfer_request' => $transferDetails]);
 
-                if (config('services.disable_sms_service') == false) {
-                    $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-                } else {
-                    $transaction->generateOtp("sms");
-                }
+                $transactionOtpService = Setting::getValue('transaction_otp_service');
 
-                return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
+                if($transactionOtpService == 'email')
+                {
+                    if (config('services.disable_email_service') == false) {
+                        $transaction->notify(new EmailOneTimePasswordNotification($transaction->generateOtp("email")));
+                    }else
+                    {
+                        $transaction->generateOtp("email");
+                    }
+                }else
+                {
+                    if (config('services.disable_sms_service') == false) {
+                        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+                    }else
+                    {
+                        $transaction->generateOtp("sms");
+                    }
+                }
+               
+                return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), $transactionOtpService);
             }
         }
 
