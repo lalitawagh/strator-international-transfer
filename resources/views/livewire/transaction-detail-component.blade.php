@@ -1,3 +1,4 @@
+
 <div>
     @if (!isset($transaction))
         <div class="mt-5">
@@ -37,11 +38,11 @@
         <div class="clearfix"></div>
         @isset($transaction->meta['sender_id'])
             @php
-                $sender = NULL;
-                if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+                $sender = null;
+                if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
                     $sender = \Kanexy\Banking\Models\Account::find($transaction->meta['sender_id']);
                 }
-                    $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
+                $reference = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transaction->meta['reason']);
             @endphp
         @endisset
 
@@ -83,8 +84,9 @@
                                     </div>
                                 </div>
 
-                                @if ($transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE ||
-                                    $transaction->payment_method == 'bank')
+                                @if (
+                                    $transaction->payment_method == \Kanexy\InternationalTransfer\Enums\PaymentMethod::STRIPE ||
+                                        $transaction->payment_method == 'bank')
                                     <div class="sm:flex lg:flex-row mt-2">
                                         <div class="truncate sm:whitespace-normal sm:w-1/2 w-auto flex items-center">
                                             <span>
@@ -471,7 +473,6 @@
                                 </div>
                             @endisset
                         </div>
-
                         <div class="edit-transaction-content col-span-12 lg:col-span-12 xxl:col-span-12 mt-2 hidden">
                             <form id="transaction-form"
                                 action="{{ route('dashboard.transaction-attachment', $transaction->getKey()) }}"
@@ -490,6 +491,26 @@
                                             @endisset
                                             <input type="file" id="attachment" name="attachment"
                                                 class="ml-2 w-full" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-12 lg:col-span-6 xxl:col-span-6 mt-2">
+                                    <p class="text-sm tracking-wide font-medium uppercase">Flag</p>
+                                    <div class="flex flex-col lg:flex-row mt-1">
+                                        <div class="truncate sm:whitespace-normal flex items-center w-full">
+                                            <select name="flag" class="form-control" data-search="true"
+                                                required>
+                                                @foreach (Kanexy\InternationalTransfer\Enums\FlagStatus::FLAG_STATUS as $index => $typeName)
+                                                    <option wire:key="{{ $index }}" class="text-dark font-bold"
+                                                        value="{{ $index }}">
+                                                        {{ $typeName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('delivery_method')
+                                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

@@ -26,7 +26,10 @@ class DashboardController extends Controller
         }
         $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->latest()->take(5)->get();
 
+        $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->latest()->take(15)->get();
+        $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
+            //dd($recentTransactions);
 
-        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions'));
+        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'recentTransactions', 'user', 'recentUserTransactions'));
     }
 }

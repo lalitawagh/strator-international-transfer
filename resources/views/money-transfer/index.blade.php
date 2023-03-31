@@ -58,11 +58,16 @@
                                         class="nav-link w-full py-2" role="tab" aria-controls="Attachments"
                                         aria-selected="false">Attachments</a>
                                 </li>
-                                @if (Auth::user()->isSuperAdmin())
+                                @if (!Auth::user()->isSubscriber())
                                     <li id="KYC-documents-tab" class="nav-item flex-1" role="presentation">
                                         <a data-tw-toggle="pill" data-tw-target="#KYCdocuments" href="javascript:;"
                                             class="nav-link w-full py-2" role="tab" aria-controls="KYCdocuments"
                                             aria-selected="false">KYC Documents</a>
+                                    </li>
+                                    <li id="CurrencycloudPayout-tab" class="nav-item flex-1" role="presentation">
+                                        <a data-tw-toggle="pill" data-tw-target="#CurrencycloudPayout" href="javascript:;"
+                                            class="nav-link w-full py-2" role="tab" aria-controls="CurrencycloudPayout"
+                                            aria-selected="false">CC Payout</a>
                                     </li>
                                 @endif
                             </ul>
@@ -84,6 +89,10 @@
 
                         <div id="KYCdocuments" class="tab-pane" role="tabpanel" aria-labelledby="KYC-documents-tab">
                             @livewire('transaction-kycdetails-component')
+                        </div>
+
+                        <div id="CurrencycloudPayout" class="tab-pane" role="tabpanel" aria-labelledby="CurrencycloudPayout-tab">
+                            @livewire('currency-cloud-payout-component')
                         </div>
                     </div>
                 </div>

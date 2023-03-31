@@ -185,17 +185,18 @@
             <select class="tail-select w-full" id='tabcuntery-selection2'
                 wire:change="changeToCurrency($event.target.value)" name="currency_code_to">
                 @foreach ($countries as $country)
-                    <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                        @isset($currency_to) 
-                    @if ($country->id == $currency_to)
-                        selected
+                    @if($country?->risk_score != 3)                                                           
+                        <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                            @isset($currency_to) 
+                        @if ($country->id == $currency_to)
+                            selected
+                        @endif
+                        @else @if ($country->code == 'IN')
+                            selected
+                        @endif @endisset>
+                            {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                        </option>
                     @endif
-                    @else @if ($country->code == 'IN')
-                        selected
-                    @endif
-                @endisset>
-                        {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
-                    </option>
                 @endforeach
             </select>
         </div>

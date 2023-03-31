@@ -2,10 +2,14 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
+use Carbon\Carbon;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
+use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
+use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
 use Livewire\Component;
 
 class InitialProcess extends Component
@@ -142,7 +146,31 @@ class InitialProcess extends Component
         ? Country::Find($this->currency_to)?->currency
         : Country::whereCode('IN')->first()->currency;
 
-        $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
+        $exchangeRateIntegration = Setting::where('key', 'exhange_rate_integration')->first();
+        if($exchangeRateIntegration?->value == ExchangeCurrencyEnum::CURRENCY_CLOUD)
+        {
+            $service = new CurrencyCloudApiService();
+
+            $param = [
+                'buy_currency' => $this->from,
+                'sell_currency' => $this->to,
+                'amount' => $this->amount,
+                'fixed_side' => 'sell',
+                'conversion_date' => Carbon::now()->format('Y-m-d'),
+            ];
+            $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
+
+            if($response['code'] == 200)
+            {
+                $exchangeRate = $response['core_rate'];
+            }else{
+                $exchangeRate = 1;
+            }
+
+        }else{
+            $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
+        }
+
 
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;
