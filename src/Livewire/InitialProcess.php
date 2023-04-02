@@ -157,14 +157,14 @@ class InitialProcess extends Component
                 'fixed_side' => 'sell',
             ];
             $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
-         
+
             if($response['code'] == 200)
             {
                 $exchangeRate = $response['core_rate'];
             }else{
                 $exchangeRate = 1;
             }
-            
+
         }else{
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
         }

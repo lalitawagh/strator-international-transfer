@@ -33,7 +33,7 @@ $data =  [
 
     [
         'method' => PaymentMethod::TOTAL_PROCESSING,
-        'title' => 'Total Processing',
+        'title' => 'Card',
         'heading' => 'Total charges will be applied',
         'description' => 'This payment can be made through a card. Total Processing charges are applied.',
         'image' => asset('dist/images/CardPay-Debit.png'),

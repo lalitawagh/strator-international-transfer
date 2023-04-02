@@ -2,7 +2,7 @@
 
 @section('money-transfer-content')
     <div class="px-3 sm:px-5 mt-0 pt-5 border-t border-gray-200">
-        <form method="POST"
+        <form method="POST" name="form"
             action="{{ route('dashboard.international-transfer.money-transfer.transactionDetail', ['filter' => ['workspace_id' => $workspace->id]]) }}">
             @csrf
             <div id="Transactions" class="grid grid-cols-12 gap-3" role="tabpanel" aria-labelledby="Transactions-tab">
@@ -44,18 +44,20 @@
                                                                                 style="padding:7px;"
                                                                                 src="{{ $payment['image'] ?? '' }}">
                                                                         </div>
-
                                                                         <div class="ml-4 mr-auto"
                                                                             data-id="radio-switch-{{ $key }}">
                                                                             <a id="BankAccountSwich" class="font-medium"
                                                                                 data-id="radio-switch-{{ $key }}">
                                                                                 {{ $payment['title'] }}
+                                                                                {{-- @if ($user->is_banking_user == 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
+                                                                                @endif --}}
                                                                                 <br>
+
                                                                                 @if (
                                                                                     $user->is_banking_user != 1 &&
                                                                                         $payment['method'] == 'bank_account' &&
                                                                                         is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
-                                                                                    <span
+                                                                                    <span>
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">For
                                                                                         the banking
@@ -118,17 +120,19 @@
                                                                                     class="form-check-input" type="radio"
                                                                                     name="payment_method"
                                                                                     value="{{ $payment['method'] }}"
-                                                                                    @if (
+                                                                                    @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
+
+                                                                                    @elseif (
                                                                                         $user->is_banking_user != 1 &&
                                                                                             $payment['method'] == 'bank_account' &&
                                                                                             is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif (
                                                                                         $sender->code != 'UK' &&
                                                                                             $payment['method'] == 'bank_account' &&
                                                                                             is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
+
                                                                                 <label class="form-check-label"
                                                                                     for="radio-switch-{{ $key }}"></label>
                                                                             </div>
-
                                                                         </div>
                                                                     </div>
                                                                 </button>
@@ -233,7 +237,8 @@
                                                 <select name="delivery_method" data-search="true" class="w-full"
                                                     required>
                                                     @foreach (Kanexy\InternationalTransfer\Enums\DeliveryMethod::DELIVERY_METHOD as $index => $typeName)
-                                                        <option wire:key="{{ $index }}" value="{{ $index }}">
+                                                        <option wire:key="{{ $index }}"
+                                                            value="{{ $index }}">
                                                             {{ $typeName }}
                                                         </option>
                                                     @endforeach
@@ -244,24 +249,34 @@
                                             </div>
                                         </div>
 
-                                        @if ( @$riskInfo['transaction_risk_status'] == 'active' && @$riskInfo['transaction_risk_source_of_fund'] == 'yes' && @$riskInfo['transaction_risk_threshold'] <= $totalAmount)
-                                        <div class="col-span-12 md:col-span-6 mt-4 form-inline">
-                                            <label for="source_of_fund" class="form-label sm:w-72"> Source Of Funds</label>
-                                            <div class="sm:w-1/5 lg:w-3/5 source_of_fund ml-auto">
-                                                <select name="source_of_fund" data-search="true" class="w-auto"
-                                                    required>
+                                        @if (
+                                            @$riskInfo['transaction_risk_status'] == 'active' &&
+                                                @$riskInfo['transaction_risk_source_of_fund'] == 'yes' &&
+                                                @$riskInfo['transaction_risk_threshold'] <= $totalAmount)
+                                            <div class="col-span-12 md:col-span-6 mt-4 form-inline">
+                                                <label for="source_of_fund" class="form-label sm:w-72"> Source Of
+                                                    Funds</label>
+                                                <div class="sm:w-1/5 lg:w-3/5 source_of_fund ml-auto">
+                                                    <select name="source_of_fund" data-search="true" class="w-auto"
+                                                        required>
                                                         <option value="">Select Source Of Funds</option>
-                                                        <option value="Salaries, Operating Income, Return on Investment, Interests">Salaries, Operating Income,Return on Investment, Interests</option>
-                                                        <option value="Customers own funds, Investments, Property sale, Inheritances, Lottery.">Customers own funds, Investments, Property sale, Inheritances, Lottery.</option>
+                                                        <option
+                                                            value="Salaries, Operating Income, Return on Investment, Interests">
+                                                            Salaries, Operating Income,Return on Investment, Interests
+                                                        </option>
+                                                        <option
+                                                            value="Customers own funds, Investments, Property sale, Inheritances, Lottery.">
+                                                            Customers own funds, Investments, Property sale, Inheritances,
+                                                            Lottery.</option>
                                                         <option value="Others">Others</option>
-                                                </select>
-                                                @error('source_of_fund')
-                                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                                @enderror
+                                                    </select>
+                                                    @error('source_of_fund')
+                                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div>
                                         @endif
-                                        
+
                                     </div>
                                     <div class="flex mt-5">
                                     </div>
