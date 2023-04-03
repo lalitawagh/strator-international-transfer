@@ -107,16 +107,19 @@ class MoneyTransferController extends Controller
         $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
-        return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace'));
+        $workspaceMeta = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
+        return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace', 'workspaceMeta'));
     }
 
     public function store(MoneyTransferRequest $request)
     {
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
+        $workspaceMeta = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
 
         if ($workspace->status == WorkspaceStatus::INACTIVE){
-
-              return redirect()->back();
+            if($workspaceMeta?->value == 'false'){
+                return redirect()->back();
+            }
         }
 
         $data = $request->validated();

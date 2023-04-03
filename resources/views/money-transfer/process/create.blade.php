@@ -40,9 +40,10 @@
             </form>
         </div>
     </div>
-
-    @includeWhen($workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
-        'partner-foundation::core.inactive-account-alert')
+    @if($workspaceMeta?->value == 'false')
+        @includeWhen($workspace->status == \Kanexy\PartnerFoundation\Workspace\Enums\WorkspaceStatus::INACTIVE,
+            'partner-foundation::core.inactive-account-alert')
+    @endif
 @endsection
 
 @push('scripts')

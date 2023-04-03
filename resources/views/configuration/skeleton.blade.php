@@ -62,7 +62,7 @@
                                     <div class="side-menu__title"> Notifications </div>
                                 </a>
                             </li>
-                            @if (config('services.risk_management') == true)
+                            {{-- @if (config('services.risk_management') == true)
                                 <li>
                                     <a id="RiskManagement"
                                         href="{{ route('dashboard.international-transfer.riskManagement') }}"
@@ -78,7 +78,7 @@
                                         <div class="side-menu__title"> Risk Management Questions</div>
                                     </a>
                                 </li>
-                            @endif
+                            @endif --}}
                         </ul>
                     </div>
                 </div>
