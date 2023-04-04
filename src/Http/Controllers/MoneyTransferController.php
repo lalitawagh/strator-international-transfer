@@ -104,23 +104,26 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         session()->forget('transaction_id');
 
+        $user = Auth::user();
         $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
-        $workspaceMeta = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
-        return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace', 'workspaceMeta'));
+
+        return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace', 'user'));
     }
 
     public function store(MoneyTransferRequest $request)
     {
+        $user = Auth::user();
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $workspaceMeta = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
 
-        if ($workspace->status == WorkspaceStatus::INACTIVE){
-            if($workspaceMeta?->value == 'false'){
-                return redirect()->back();
+        if($user->is_banking_user != 2){
+            if ($workspace->status == WorkspaceStatus::INACTIVE){
+                    return redirect()->back();
             }
         }
+
 
         $data = $request->validated();
 
