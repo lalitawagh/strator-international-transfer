@@ -49,15 +49,12 @@
                                                                             <a id="BankAccountSwich" class="font-medium"
                                                                                 data-id="radio-switch-{{ $key }}">
                                                                                 {{ $payment['title'] }}
-                                                                                {{-- @if ($user->is_banking_user == 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
-                                                                                @endif --}}
                                                                                 <br>
-
                                                                                 @if (
                                                                                     $user->is_banking_user != 1 &&
                                                                                         $payment['method'] == 'bank_account' &&
                                                                                         is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
-                                                                                    <span>
+                                                                                    <span
                                                                                         data-id="radio-switch-{{ $key }}"
                                                                                         class="paymentoption_error_message">For
                                                                                         the banking
