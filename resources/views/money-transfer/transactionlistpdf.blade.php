@@ -61,7 +61,7 @@
          </table>
          @endif
          <h2 style="text-align: center">Transactions</h2>
-        <table role="presentation" cellspacing="0" cellpadding="10" border="0" >
+        <table role="presentation" cellspacing="0" cellpadding="10" border="0">
         <thead style="text-align:left; font-size: 16px;font-weight: 600;">
             <tr>
                 <th style="white-space: nowrap;">Transaction Id</th>
