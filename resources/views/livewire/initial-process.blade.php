@@ -98,7 +98,7 @@
                                                 @endphp
                                                 @if ($amount >= $fee['min_amount'] && $amount <= $fee['max_amount'])
                                                     <div
-                                                        class="dark:bg-darkmode-400 dark:border-darkmode-400 cursor-pointer relative items-center cursor-pointer relative items-center px-3 py-1 cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
+                                                        class="dark:bg-darkmode-400 dark:border-darkmode-400 cursor-pointer relative items-center cursor-pointer relative items-center px-1 py-1 break-all cursor-pointer transition duration-300 ease-in-out bg-white dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-1 rounded-md  ">
                                                         <div class="ml-0 overflow-hidden">
                                                             <div class="flex flex-col sm:flex-row mt-2 m-2">
                                                                 <div class="form-check mr-2">
@@ -185,7 +185,7 @@
             <select class="tail-select w-full" id='tabcuntery-selection2'
                 wire:change="changeToCurrency($event.target.value)" name="currency_code_to">
                 @foreach ($countries as $country)
-                    @if($country?->risk_score != 3)                                                           
+                    @if ($country?->risk_score != 3)
                         <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                             @isset($currency_to) 
                         @if ($country->id == $currency_to)
