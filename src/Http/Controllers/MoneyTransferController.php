@@ -36,6 +36,7 @@ use Kanexy\PartnerFoundation\Core\Models\UserMeta;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\DB;
+use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Stripe;
 use PDF;
 
@@ -103,20 +104,26 @@ class MoneyTransferController extends Controller
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         session()->forget('transaction_id');
 
+        $user = Auth::user();
         $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
-        return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace'));
+
+        return view('international-transfer::money-transfer.process.create', compact('countries', 'defaultCountry', 'workspace', 'user'));
     }
 
     public function store(MoneyTransferRequest $request)
     {
+        $user = Auth::user();
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
+        $workspaceMeta = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
 
-        if ($workspace->status == WorkspaceStatus::INACTIVE){
-
-              return redirect()->back();
+        if($user->is_banking_user != 2){
+            if ($workspace->status == WorkspaceStatus::INACTIVE){
+                    return redirect()->back();
+            }
         }
+
 
         $data = $request->validated();
 
@@ -273,15 +280,16 @@ class MoneyTransferController extends Controller
             $limit = @$riskDetails['profile_risk_threshold'] ? @$riskDetails['profile_risk_threshold'] : 0;
             $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
             $totalTransaction = Transaction::select(DB::raw('SUM(amount) AS totalAmount'))->where(['workspace_id' => $workspace->id,'ref_type' => 'money_transfer'])->first();
-           
+
             if($totalTransaction->totalAmount > $limit && is_null($additional_info))
             {
                 $transaction->status = 'pending-review';
                 $transaction->update();
                 $user->notify(new RiskAssessmentNotification($user));
             }
+
         }
-      
+
         $transferDetails['payment_method'] = $data['payment_method'];
         $transferDetails['transfer_reason'] = $data['transfer_reason'];
 
@@ -289,7 +297,7 @@ class MoneyTransferController extends Controller
         {
             $transferDetails['source_of_fund'] = @$data['source_of_fund'];
         }
-        
+
         session(['money_transfer_request' => $transferDetails]);
 
         return redirect()->route('dashboard.international-transfer.money-transfer.preview', ['filter' => ['workspace_id' => $transferDetails['workspace_id']]]);
@@ -429,10 +437,10 @@ class MoneyTransferController extends Controller
 
 
                 $account = Account::forHolder($workspace)->first();
-               
+
                 /** @var Contact $beneficiary */
                 $beneficiary = Contact::findOrFail($masterAccountDetails['beneficiary_id']);
-               
+
                 /** @var Account $senderAccount */
                 $senderAccount = Account::findOrFail($account->id);
 
@@ -488,7 +496,7 @@ class MoneyTransferController extends Controller
                         $transaction->generateOtp("sms");
                     }
                 }
-               
+
                 return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.international-transfer.money-transfer.verify', now()->addMinutes(30), ["id" => $transaction->id]), $transactionOtpService);
             }
         }
@@ -589,13 +597,24 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         $transaction = Transaction::find(session('transaction_id'));
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
+        $skipKycStatus = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
 
         $limit = Setting::getValue('transaction_threshold_amount', []);
 
         if ($transaction->amount >=  $limit) {
 
-            $transaction->update(['status' => TransactionStatus::PENDING]);
+            if($skipKycStatus?->value == 'true')
+            {
+                    $transaction->status = 'pending-kyc';
+                    $transaction->update();
 
+            }
+            else
+            {
+                $transaction->update(['status' => TransactionStatus::PENDING]);
+            }
             $metaDetails = [
                 'transaction_id' => $transaction->urn,
                 'threshold_exceeded' => true,
@@ -759,14 +778,14 @@ class MoneyTransferController extends Controller
             "receiver_currency" => session('money_transfer_request.transaction.settled_currency') ? session('money_transfer_request.transaction.settled_currency') : null,
             "receiver_amount" => session('money_transfer_request.transaction.settled_amount') ? session('money_transfer_request.transaction.settled_amount') : null
         ]);
-       
+
 
         $prepareCheckout = $service->prepare($data);
         $getData = get_object_vars($prepareCheckout);
         $checkoutId = $getData['id'];
 
         $getStatus = $service->getPaymentStatus($checkoutId);
-       
+
         session(['checkoutId' => $checkoutId, 'transaction_id' => $transferDetails->id]);
 
         $base_url = config('totalprocessing.base_url');
@@ -806,14 +825,14 @@ class MoneyTransferController extends Controller
         $limit = @$riskDetails['profile_risk_threshold'] ? @$riskDetails['profile_risk_threshold'] : 0;
         $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
         $totalTransaction = Transaction::select(DB::raw('SUM(amount) AS totalAmount'))->where(['workspace_id' => $transferDetails->workspace_id,'ref_type' => 'money_transfer'])->first();
-       
+
         if($totalTransaction->totalAmount > $limit && is_null($additional_info))
         {
             $transferDetails->status = 'pending-review';
             $transferDetails->update();
             $user->notify(new RiskAssessmentNotification($user));
         }
-        
+
         if(!is_null(@$data['source_of_fund']))
         {
             $transferDetails['source_of_fund'] = @$data['source_of_fund'];

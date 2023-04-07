@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
+use Kanexy\Cms\Setting\Models\Setting;
 
 class RiskAssessmentNotification extends Notification
 {
@@ -40,7 +41,6 @@ class RiskAssessmentNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        
         return (new MailMessage)->subject('Payment Pending - Action Needed')
                     ->markdown('international-transfer::notification.risk-assessment-notification', ['user' => $this->user]);
     }

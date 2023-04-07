@@ -35,16 +35,27 @@
                                                 </div>
                                                 @php
                                                     $extension = substr($document->media, strpos($document->media, '.') + 1);
-                                                    
+
                                                 @endphp
                                                 <div
                                                     class="h-40 min-h-full relative image-fit cursor-pointer zoom-in mx-auto selfievideo">
 
-                                                    @if ($extension == 'application/octet-stream')
+                                                    {{-- @if ($extension == 'application/octet-stream')
                                                         <img class="rounded-md proof-default" alt=""
                                                             src="{{ asset('img/pdf.png') }}">
                                                     @else
                                                         <img class="rounded-md proof-default" alt=""
+                                                            src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($document->media, now()->addMinutes(5)) }}">
+                                                    @endif --}}
+
+                                                    @if ($extension == 'application/pdf')
+                                                        {{-- <img class="rounded-md proof-default"
+                                                            alt=""
+                                                            src="{{ asset('img/pdf.png') }}"> --}}
+                                                            <object data="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($document->media, now()->addMinutes(5)) }}" width="350" height="200"></object>
+                                                    @else
+                                                        <img class="rounded-md proof-default"
+                                                            alt=""
                                                             src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($document->media, now()->addMinutes(5)) }}">
                                                     @endif
 
