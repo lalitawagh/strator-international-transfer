@@ -12,7 +12,7 @@
                         class="w-4 h-4 ml-2"></i></span>
             </button>
             <div class="dropdown-menu w-40">
-                <ul class="dropdown-content">
+                <ul class="dropdown-content" id="year-dropdown">
                     <li>
                         @foreach ($years as $year)
                             <a id="SelectYear" wire:click="selectYear({{ $year }})"
@@ -27,3 +27,11 @@
     </div>
     <canvas id="chartLine" class="h-full w-full"></canvas>
 </div>
+
+<script>
+    document.addEventListener('livewire:load', function() {
+        Livewire.on('closeDropdown', function() {
+            $("#year-dropdown").dropdown("hide");
+        });
+    });
+</script>

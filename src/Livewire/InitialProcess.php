@@ -2,6 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Livewire;
 
+use Carbon\Carbon;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
@@ -155,16 +156,17 @@ class InitialProcess extends Component
                 'sell_currency' => $this->to,
                 'amount' => $this->amount,
                 'fixed_side' => 'sell',
+                'conversion_date' => Carbon::now()->format('Y-m-d'),
             ];
             $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
-         
+
             if($response['code'] == 200)
             {
                 $exchangeRate = $response['core_rate'];
             }else{
                 $exchangeRate = 1;
             }
-            
+
         }else{
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
         }
