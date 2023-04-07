@@ -38,7 +38,7 @@ class DashboardController extends Controller
                 if(! empty($yotiLog))
                 {
                     $check_document_results = $this->getCheckResultData($yotiLog);
-                    dd($check_document_results);
+                   
                 }
             }
         }
