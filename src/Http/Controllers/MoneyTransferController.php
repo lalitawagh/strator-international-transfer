@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -19,6 +20,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Enums\PaymentMethod;
 use Kanexy\InternationalTransfer\Http\Requests\MoneyTransferRequest;
+use Kanexy\InternationalTransfer\Mail\InternationalTransferDebitAlertEmail;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\PartnerFoundation\Core\Enums\TransactionStatus;
 use Kanexy\Banking\Models\Account;
@@ -286,6 +288,7 @@ class MoneyTransferController extends Controller
                 $transaction->status = 'pending-review';
                 $transaction->update();
                 $user->notify(new RiskAssessmentNotification($user));
+
             }
 
         }
@@ -687,6 +690,9 @@ class MoneyTransferController extends Controller
     {
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::COMPLETED]);
+
+        Mail::to(auth()->user()->email)
+        ->queue(new InternationalTransferDebitAlertEmail(auth()->user()->email, $transaction));
 
         return redirect()->route('dashboard.international-transfer.money-transfer.index')->with([
             'status' => 'success',
