@@ -52,8 +52,6 @@ class InternationalTransferGraph extends Component
 
             return 0;
         });
-        //dd($debitTransactionGraphData);
-
 
         $this->debitTransactionGraphData = $debitTransactionGraphData;
 
