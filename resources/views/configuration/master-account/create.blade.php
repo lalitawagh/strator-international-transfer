@@ -82,9 +82,9 @@
                     <label for="account_number" class="form-label sm:w-60">Account Number <span
                             class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="account_number" name="account_number" type="text"
+                        <input id="account_number" name="account_number" type="number"
                             class="form-control @error('account_number') border-theme-6 @enderror"
-                            value="{{ old('account_number') }}" required>
+                            value="{{ old('account_number') }}" maxlength="8" required>
 
                         @error('account_number')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
