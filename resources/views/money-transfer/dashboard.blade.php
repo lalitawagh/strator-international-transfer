@@ -11,22 +11,23 @@
     <!-- BEGIN: Profile Info -->
     <div class="intro-y box px-5 pt-5 mb-3">
         <div class="flex flex-col lg:flex-row border-b border-slate-200/60 dark:border-darkmode-400 pb-5 -mx-5">
-            <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
-                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+            <div class="flex flex-1 flex-wrap px-5 items-center gap-3 justify-center lg:justify-start">
+                <div class="w-16 h-16 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
                     <img alt="{{ auth()->user()->getFullName() }}" class="rounded-full" src="{{ auth()->user()->avatar }}">
 
                 </div>
-                <div class="ml-5">
-                    <div class="truncate sm:whitespace-normal font-medium text-lg">Welcome {{ auth()->user()->getFullName() }}
+                <div class="sm:ml-5 text-center sm:text-left">
+                    <div class="truncate sm:whitespace-normal font-medium text-lg">Welcome
+                        {{ auth()->user()->getFullName() }}
                     </div>
                     <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
                 </div>
                 @if (config('services.registration_changed') == true)
                     @if ($kycSkip?->value == 'true')
-                        <div class="ml-auto">
-                            @if(!is_null($user))
-                            <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
-                                class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Submit KYC</a>
+                        <div class="sm:ml-auto">
+                            @if (!is_null($user))
+                                <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
+                                    class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Submit KYC</a>
                             @endif
                         </div>
                     @endif
@@ -55,7 +56,7 @@
                 </div>
             </div>
             <!--Static Code-->
-            @if(!$user->isSubscriber())
+            @if (!$user->isSubscriber())
                 <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
 
                     <div class="intro-y mt-0">
@@ -75,10 +76,14 @@
                                                 <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
                                             </div>
                                             <div class="ml-3 mr-auto">
-                                                <div class="font-medium">{{ $recentTransaction['meta']['sender_name'] }}</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">{{ $recentTransaction['created_at'] }}</div>
+                                                <div class="font-medium">{{ $recentTransaction['meta']['sender_name'] }}
+                                                </div>
+                                                <div class="text-slate-500 text-xs mt-0.5">
+                                                    {{ $recentTransaction['created_at'] }}</div>
                                             </div>
-                                            <div class="text-danger">-{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentTransaction->amount, $recentTransaction->meta['base_currency']) }}</div>
+                                            <div class="text-danger">
+                                                -{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentTransaction->amount, $recentTransaction->meta['base_currency']) }}
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -90,7 +95,7 @@
                     </div>
                 </div>
             @endif
-            @if($user->isSubscriber())
+            @if ($user->isSubscriber())
                 <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
 
                     <div class="intro-y mt-0">
@@ -110,10 +115,14 @@
                                                 <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
                                             </div>
                                             <div class="ml-3 mr-auto">
-                                                <div class="font-medium">{{ $recentUserTransaction->meta['second_beneficiary_name'] }}</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">{{ $recentUserTransaction->created_at }}</div>
+                                                <div class="font-medium">
+                                                    {{ $recentUserTransaction->meta['second_beneficiary_name'] }}</div>
+                                                <div class="text-slate-500 text-xs mt-0.5">
+                                                    {{ $recentUserTransaction->created_at }}</div>
                                             </div>
-                                            <div class="text-danger">-{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentUserTransaction->amount, $recentUserTransaction->meta['base_currency']) }}</div>
+                                            <div class="text-danger">
+                                                -{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentUserTransaction->amount, $recentUserTransaction->meta['base_currency']) }}
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
