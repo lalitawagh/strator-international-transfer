@@ -18,7 +18,7 @@ class MoneyTransferRequest extends FormRequest
     {
         return [
             'currency_code_from' => ['required', 'exists:countries,id'],
-            'currency_code_to' => ['required', 'exists:countries,id'],
+            'currency_code_to' => ['required', 'exists:countries,id','in:178,105,234,77'],
             'amount' => ['required','numeric','min:0.50','max:10000000'],
             'fee_charge' => ['required'],
             'guaranteed_rate' => ['required'],
@@ -42,10 +42,10 @@ class MoneyTransferRequest extends FormRequest
             $sender = Country::find($this->input('currency_code_from'));
             $receiver = Country::find($this->input('currency_code_to'));
 
-            // if($sender->code != 'UK')
-            // {
-            //     $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
-            // }
+            if($sender->code != 'UK')
+            {
+                $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
+            }
 
             if($sender->code == 'UK' && $receiver->code == 'UK')
             {
