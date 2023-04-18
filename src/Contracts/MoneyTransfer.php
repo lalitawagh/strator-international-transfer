@@ -147,6 +147,20 @@ class MoneyTransfer extends Transaction
                     ->sortable()
                     ->html(),
 
+            Column::make("Reference", "meta->reference")->format(function ($value) {
+                return ucfirst($value);
+            })
+                ->searchable()
+                ->sortable()
+                ->secondaryHeaderFilter('meta->reference'),
+
+            Column::make("Purpose of Transfer", "meta->account")->format(function ($value) {
+                return ucfirst($value);
+            })
+                ->searchable()
+                ->sortable()
+                ->secondaryHeaderFilter('meta->account'),
+
             Column::make("Source", "payment_method")->format(function ($value) {
                 return ucfirst($value);
             })
