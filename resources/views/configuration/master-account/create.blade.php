@@ -84,7 +84,7 @@
                     <div class="sm:w-5/6">
                         <input id="account_number" name="account_number" type="number"
                             class="form-control @error('account_number') border-theme-6 @enderror"
-                            value="{{ old('account_number') }}" maxlength="8" required>
+                            value="{{ old('account_number') }}" required>
 
                         @error('account_number')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
