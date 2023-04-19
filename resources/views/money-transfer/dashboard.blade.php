@@ -22,7 +22,7 @@
                     </div>
                     <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
                 </div>
-                @if (config('services.registration_changed') == true)
+                @if (config('services.registration_changed') == false)
                     @if ($kycSkip?->value == 'true')
                         <div class="sm:ml-auto">
                             @if (!is_null($user))
