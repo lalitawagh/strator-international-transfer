@@ -13,7 +13,7 @@
             @method('PUT')
             <div class="grid grid-cols-12 md:gap-3 mt-0">
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mb-2">
-                    <label for="reason" class="form-label sm:w-24">Type <span class="text-theme-6">*</span></label>
+                    <label for="reason" class="form-label sm:w-24">Reason <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="reason" name="reason" type="reason"
                             class="form-control @error('reason') border-theme-6 @enderror"
