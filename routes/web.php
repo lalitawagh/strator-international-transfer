@@ -6,6 +6,7 @@ use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
+use Kanexy\InternationalTransfer\Http\Controllers\MembershipComponentController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferBeneficiaryController;
 use Kanexy\InternationalTransfer\Http\Controllers\MoneyTransferController;
 use Kanexy\InternationalTransfer\Http\Controllers\RiskManagementController;
@@ -58,9 +59,15 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get("risk-management", [RiskManagementController::class, 'createRiskManagement'])->name('riskManagement');
                 Route::post("risk-management-store", [RiskManagementController::class, 'storeRiskCountry'])->name('risk-store-country');
                 Route::resource('beneficiaries', MoneyTransferBeneficiaryController::class);
+                Route::get('workspaces/{workspace}/exchangerate-information', [MembershipComponentController::class, 'showExchangeRateInfo'])->name('membership-exchangerate-information');
+                Route::post('exchangerate-information/{workspace}', [MembershipComponentController::class, 'updateExchangeRateInformation'])->name('membership.store.exchangerate-information');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
                 Route::name('money-transfer-dashboard')->get('/', [DashboardController::class, 'index']);
+        });
+        Route::group(['prefix' => 'dashboard/workspaces/{workspace?}', 'as' => 'dashboard.workspaces.'], function () {
+            Route::get('exchangerate-information', [MembershipComponentController::class, 'showExchangeRateInfo'])->name('membership-exchangerate-information');
+
         });
 });
