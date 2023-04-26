@@ -10,7 +10,10 @@ use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
+use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
+
+use function PHPUnit\Framework\isEmpty;
 
 class InitialProcess extends Component
 {
@@ -171,6 +174,26 @@ class InitialProcess extends Component
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
         }
 
+        $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+        //dd($exchangeRateInfo);
+
+        if(isEmpty($exchangeRates == 'exchangerate_info')){
+            if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+            {
+                $exchangeRate = @$exchangeRates->value['customized_rate'];
+            }
+            else
+            {
+                $percentage = @$exchangeRates->value['percentage'];
+                $percent = $percentage / 100  * $exchangeRate;
+                if( @$exchangeRates->value['percentage_rate'] == 'plus')
+                {
+                    $exchangeRate = $exchangeRate + $percent;
+                }else{
+                    $exchangeRate = $exchangeRate - $percent;
+                }
+            }
+        }
 
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;
