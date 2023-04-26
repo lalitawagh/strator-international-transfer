@@ -174,23 +174,25 @@ class InitialProcess extends Component
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
         }
 
-        $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
-        //dd($exchangeRateInfo);
+        if (config('services.registration_changed') == true)
+        {
+            $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
-        if(isEmpty($exchangeRates == 'exchangerate_info')){
-            if(@$exchangeRates->value['rate_type'] == 'customize_rate')
-            {
-                $exchangeRate = @$exchangeRates->value['customized_rate'];
-            }
-            else
-            {
-                $percentage = @$exchangeRates->value['percentage'];
-                $percent = $percentage / 100  * $exchangeRate;
-                if( @$exchangeRates->value['percentage_rate'] == 'plus')
+            if(isEmpty($exchangeRates == 'exchangerate_info')){
+                if(@$exchangeRates->value['rate_type'] == 'customize_rate')
                 {
-                    $exchangeRate = $exchangeRate + $percent;
-                }else{
-                    $exchangeRate = $exchangeRate - $percent;
+                    $exchangeRate = @$exchangeRates->value['customized_rate'];
+                }
+                else
+                {
+                    $percentage = @$exchangeRates->value['percentage'];
+                    $percent = $percentage / 100  * $exchangeRate;
+                    if( @$exchangeRates->value['percentage_rate'] == 'plus')
+                    {
+                        $exchangeRate = $exchangeRate + $percent;
+                    }else{
+                        $exchangeRate = $exchangeRate - $percent;
+                    }
                 }
             }
         }
