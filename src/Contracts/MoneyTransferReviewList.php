@@ -14,7 +14,7 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 use PDF;
 
-class MoneyTransfer extends Transaction
+class MoneyTransferReviewList extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
@@ -35,41 +35,6 @@ class MoneyTransfer extends Transaction
         return true;
     }
 
-    public static function setRecordsToDownload($records, $type)
-    {
-        $list = collect();
-
-        foreach ($records as $record) {
-            $transaction = Transaction::find($record);
-
-            $columnDetail = [
-                $transaction->urn,
-                $transaction->created_at,
-                @$transaction->meta['sender_name'],
-                @$transaction->meta['base_currency'],
-                @$transaction->meta['second_beneficiary_name'],
-                @$transaction->meta['exchange_currency'],
-                $transaction->payment_method,
-                $transaction->status,
-            ];
-
-            $list->push($columnDetail);
-        }
-
-        $columnsHeading = [
-            'TRANSACTION ID',
-            'DATE & TIME',
-            'SENDER NAME',
-            'SENDING CURRENCY',
-            'RECEIVER NAME',
-            'RECEIVING CURRENCY',
-            'SOURCE',
-            'STATUS',
-        ];
-
-        return Excel::download(new Export($list, $columnsHeading), 'transactions.' . $type . '');
-    }
-
     public static function downloadPdf($records)
     {
         $transactions = collect();
@@ -79,7 +44,7 @@ class MoneyTransfer extends Transaction
 
         $account = auth()->user()->workspaces()->first()?->account()->first();
         $user = Auth::user();
-        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','account','user'))
+        $view = PDF::loadView('international-transfer::money-transfer.transactionpdf', compact('transactions','account','user'))
             ->setPaper(array(0, 0, 1000, 800), 'landscape')
             ->output();
 
@@ -98,7 +63,7 @@ class MoneyTransfer extends Transaction
                 })
                 ->searchable()
                 ->secondaryHeaderFilter('urn'),
-
+            
             Column::make("Date & Time", "created_at")->format(function($value){
                 return Carbon::parse($value)->format('d-m-Y  H:i');
             })
@@ -154,6 +119,20 @@ class MoneyTransfer extends Transaction
                 ->searchable()
                 ->secondaryHeaderFilter('payment_method'),
 
+            Column::make("Purpose of Transfer", "reasons")->format(function ($value) {
+                return ucfirst($value);
+            })
+                ->searchable()
+                ->sortable()
+                ->secondaryHeaderFilter('reasons'),
+            
+            Column::make("Reference", "meta->reference")->format(function ($value) {
+                return ucfirst($value);
+            })
+                ->searchable()
+                ->sortable()
+                ->secondaryHeaderFilter('meta->reference'),
+            
             Column::make("Status", "status")->format(function ($value) {
                 return ucfirst($value);
             })
