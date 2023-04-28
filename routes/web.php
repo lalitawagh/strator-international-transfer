@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
+use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
 use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
@@ -61,6 +62,9 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource('beneficiaries', MoneyTransferBeneficiaryController::class);
                 Route::get('workspaces/{workspace}/exchangerate-information', [MembershipComponentController::class, 'showExchangeRateInfo'])->name('membership-exchangerate-information');
                 Route::post('exchangerate-information/{workspace}', [MembershipComponentController::class, 'updateExchangeRateInformation'])->name('membership.store.exchangerate-information');
+                Route::get('agent-requests', [AgentController::class, 'agentRequest'])->name('agent-request');
+                Route::resource('agent', AgentController::class);
+        
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
