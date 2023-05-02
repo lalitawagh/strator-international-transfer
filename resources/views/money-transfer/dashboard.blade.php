@@ -183,12 +183,6 @@
             const data = {
                 labels: labels,
                 datasets: [
-                    //     {
-                    //     label: 'PAID IN',
-                    //     fill: false,
-                    //     borderColor: '#002366', // Add custom color border (Line)
-                    //     data: JSON.parse(creditChartTransaction),
-                    // },
                     {
                         label: 'PAID OUT',
                         fill: false,
@@ -204,11 +198,9 @@
                 type: 'bar',
                 data,
 
-
-
             };
 
-            report_line_chart_data = document.getElementById("chartLine").getContext('2d');
+            var report_line_chart_data = document.getElementById("chartLine").getContext('2d');
 
             if (chartLine !== null) {
                 chartLine.destroy();
@@ -218,12 +210,16 @@
                 report_line_chart_data,
                 configLineChart
             );
+
         }
 
         $(function() {
             transactionChart();
         });
+
     </script>
+
+
     <script>
         const dataTransactionDoughnut = {
             labels: {!! json_encode($pieChartTransactions->pluck('label')) !!},

@@ -24,7 +24,7 @@
                     <li>
                         @foreach ($years as $year)
                             <a id="SelectYear" wire:click="selectYear({{ $year }})"
-                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                class="flex items-center block p-2 transition duration-300 duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                 {{ $year }}
                             </a>
                         @endforeach
