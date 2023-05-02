@@ -71,7 +71,7 @@
                             <div class="overflow-y-auto h-64 overflow-x-hidden scrollbar-hidden pr-1 pt-1 mt-0 pb-3">
                                 @foreach ($recentTransactions as $recentTransaction)
                                     <div class="intro-x">
-                                        <div class="box px-0 py-2 mb-2 flex items-center zoom-in">
+                                        <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
                                             <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                                 <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
                                             </div>
@@ -110,7 +110,7 @@
                             <div class="overflow-y-auto h-64 overflow-x-hidden scrollbar-hidden pr-1 pt-1 mt-0 pb-3">
                                 @foreach ($recentUserTransactions as $recentUserTransaction)
                                     <div class="intro-x">
-                                        <div class="box px-0 py-2 mb-2 flex items-center zoom-in">
+                                        <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
                                             <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                                 <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
                                             </div>
