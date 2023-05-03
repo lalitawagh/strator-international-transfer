@@ -24,6 +24,7 @@ use Kanexy\InternationalTransfer\Livewire\TransactionLogComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
+use Kanexy\InternationalTransfer\Membership\MembershipComponent;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
@@ -120,6 +121,8 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
+        \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
+
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
             if ($user->is_banking_user == 2 && config('services.disable_banking') == true) {
