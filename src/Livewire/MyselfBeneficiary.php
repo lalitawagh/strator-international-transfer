@@ -89,7 +89,7 @@ class MyselfBeneficiary extends Component
             'avatar' => ['nullable', 'max:5120', 'mimes:png,jpg,jpeg', 'file'],
             'note' => ['nullable'],
             'meta' => ['required', 'array'],
-            'meta.benficiary_address' => ['required',new AlphaSpaces,'max:40'],
+            'meta.benficiary_address' => ['required','max:40'],
             'meta.benficiary_city' => ['required',new AlphaSpaces,'max:40'],
             'meta.iban_number' => ['required'],
             'meta.bank_account_name' => ['required', new AlphaSpaces,'max:40'],
