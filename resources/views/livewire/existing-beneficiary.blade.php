@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="flex p-5 text-center border-t border-slate-200/60 dark:border-darkmode-400">
-                                        <a id="SelectAnotherRecipient" data-dismiss="modal"
+                                        <a id="SelectAnotherRecipient" data-tw-dismiss="modal"
                                             class="text-primary pt-3 active-clr cursor">Select another recipient</a>
                                         <br>
                                         <a id="Continue"
