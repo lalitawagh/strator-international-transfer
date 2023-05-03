@@ -152,18 +152,20 @@ class InitialProcess extends Component
             $service = new CurrencyCloudApiService();
 
             $param = [
-                'buy_currency' => $this->from,
-                'sell_currency' => $this->to,
+                'buy_currency' => $this->to,
+                'sell_currency' => $this->from,
                 'amount' => $this->amount,
                 'fixed_side' => 'sell',
                 'conversion_date' => Carbon::now()->format('Y-m-d'),
             ];
-            $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
 
+            $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
+            //dd($response);
             if($response['code'] == 200)
             {
                 $exchangeRate = $response['core_rate'];
-            }else{
+            }
+            else{
                 $exchangeRate = 1;
             }
 
