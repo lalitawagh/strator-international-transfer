@@ -47,6 +47,8 @@ class InitialProcess extends Component
 
     public $feeMethod;
 
+    public $countryCurrency;
+
     protected $listeners = [
         'changeToMethod',
     ];
@@ -68,6 +70,8 @@ class InitialProcess extends Component
         $this->currency_from = Country::whereCode('UK')->first()->id;
 
         $this->currency_to =  Country::whereCode('IN')->first()->id;
+
+        $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
 
         $this->getDetails();
 
@@ -163,14 +167,22 @@ class InitialProcess extends Component
             ];
 
             $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
-            //dd($response);
-            if($response['code'] == 200)
+            Setting::updateOrCreate(['key' => 'currency_cloud_exchange_rate'],['key' => 'currency_cloud_exchange_rate', 'value' => $response['core_rate']]);
+            $currencyCloudExchnageRate = Setting::getValue('currency_cloud_exchange_rate');
+            if(!is_null($currencyCloudExchnageRate))
             {
-                $exchangeRate = $response['core_rate'];
+                $exchangeRate = $currencyCloudExchnageRate;
             }
             else{
                 $exchangeRate = 1;
             }
+            // if($response['code'] == 200)
+            // {
+            //     $exchangeRate = $response['core_rate'];
+            // }
+            // else{
+            //     $exchangeRate = 1;
+            // }
 
         }else{
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);

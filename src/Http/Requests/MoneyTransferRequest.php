@@ -18,7 +18,7 @@ class MoneyTransferRequest extends FormRequest
     {
         return [
             'currency_code_from' => ['required', 'exists:countries,id'],
-            'currency_code_to' => ['required', 'exists:countries,id','in:178,105,234,77'],
+            'currency_code_to' => ['required', 'exists:countries,id'],
             'amount' => ['required','numeric','min:0.50','max:10000000'],
             'fee_charge' => ['required'],
             'guaranteed_rate' => ['required'],
