@@ -167,22 +167,29 @@ class InitialProcess extends Component
             ];
 
             $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
-            Setting::updateOrCreate(['key' => 'currency_cloud_exchange_rate'],['key' => 'currency_cloud_exchange_rate', 'value' => $response['core_rate']]);
-            $currencyCloudExchnageRate = Setting::getValue('currency_cloud_exchange_rate');
-            if(!is_null($currencyCloudExchnageRate))
+            if($response['code'] == 200)
             {
-                $exchangeRate = $currencyCloudExchnageRate;
+                Setting::updateOrCreate(['key' => 'currency_cloud_exchange_rate'],['key' => 'currency_cloud_exchange_rate', 'value' => $response['core_rate']]);
+                $currencyCloudExchnageRate = Setting::getValue('currency_cloud_exchange_rate');
+                if(!is_null($currencyCloudExchnageRate))
+                {
+                    $exchangeRate = $currencyCloudExchnageRate;
+                }
+                else{
+                    $exchangeRate = 1;
+                }
             }
-            else{
-                $exchangeRate = 1;
+            else
+            {
+                $currencyCloudExchnageRate = Setting::getValue('currency_cloud_exchange_rate');
+                if(!is_null($currencyCloudExchnageRate))
+                {
+                    $exchangeRate = $currencyCloudExchnageRate;
+                }
+                else{
+                    $exchangeRate = 1;
+                }
             }
-            // if($response['code'] == 200)
-            // {
-            //     $exchangeRate = $response['core_rate'];
-            // }
-            // else{
-            //     $exchangeRate = 1;
-            // }
 
         }else{
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
