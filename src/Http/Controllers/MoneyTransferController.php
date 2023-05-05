@@ -280,13 +280,23 @@ class MoneyTransferController extends Controller
             $limit = @$riskDetails['profile_risk_threshold'] ? @$riskDetails['profile_risk_threshold'] : 0;
             $additional_info = UserMeta::where(['key' =>'risk_mgt_additional_info','user_id' => $user->id])->first();
             $totalTransaction = Transaction::select(DB::raw('SUM(amount) AS totalAmount'))->where(['workspace_id' => $workspace->id,'ref_type' => 'money_transfer'])->first();
+            $skipKycStatus = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
 
-            if($totalTransaction->totalAmount > $limit && is_null($additional_info))
+            if($skipKycStatus?->value == 'true')
             {
-                $transaction->status = 'pending-review';
-                $transaction->update();
-                $user->notify(new RiskAssessmentNotification($user));
+                    $transaction->status = 'pending-kyc';
+                    $transaction->update();
             }
+            else
+            {
+                if($totalTransaction->totalAmount > $limit && is_null($additional_info))
+                {
+                    $transaction->status = 'pending-review';
+                    $transaction->update();
+                    $user->notify(new RiskAssessmentNotification($user));
+                }
+            }
+
 
         }
 
@@ -605,16 +615,16 @@ class MoneyTransferController extends Controller
 
         if ($transaction->amount >=  $limit) {
 
-            if($skipKycStatus?->value == 'true')
-            {
-                    $transaction->status = 'pending-kyc';
-                    $transaction->update();
+            // if($skipKycStatus?->value == 'true')
+            // {
+            //         $transaction->status = 'pending-kyc';
+            //         $transaction->update();
 
-            }
-            else
-            {
+            // }
+            // else
+            // {
                 $transaction->update(['status' => TransactionStatus::PENDING]);
-            }
+            //}
             $metaDetails = [
                 'transaction_id' => $transaction->urn,
                 'threshold_exceeded' => true,
@@ -635,7 +645,12 @@ class MoneyTransferController extends Controller
             })->get();
             Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
         }
+        if($skipKycStatus?->value == 'true')
+            {
+                    $transaction->status = 'pending-kyc';
+                    $transaction->update();
 
+            }
         $user = Auth::user();
         if (config('services.risk_management') == true) {
             if (!App::environment('local')) {
