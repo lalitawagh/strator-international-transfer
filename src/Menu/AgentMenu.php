@@ -18,7 +18,7 @@ class AgentMenu extends Item
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
+        dd('xx');
         if (!$user->isSubscriber()) {
             return true;
         }
