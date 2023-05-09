@@ -21,7 +21,17 @@
                 });
                 $(".wpwl-control-brand").change(function() {
                     $('.wpwl-hint').remove();
+                });
 
+                $('.wpwl-control-cardHolder').on("input", function() {
+                    var inputVal = $(this).val();
+                    if (/^[a-z]+$/i.test(inputVal)) {
+                        $('.wpwl-hint').remove();
+                    } else {
+                        $('.wpwl-control-cardHolder').addClass('wpwl-has-error').after(
+                            '<div class="wpwl-hint wpwl-hint-cardHolderError">Please enter alphabets only.</div>'
+                        );
+                    }
                 });
             },
             onBeforeSubmitCard: function(e) {
