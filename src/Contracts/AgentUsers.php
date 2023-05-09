@@ -5,14 +5,17 @@ namespace Kanexy\InternationalTransfer\Contracts;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
-class AgentRequest extends Transaction
+class AgentUsers extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-        return User::query()->where("type", 'agent')->where('status' ,'!=' ,'approved')->with('membershipUser')->latest();
+        $workspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace_id)->pluck('id');
+   
+        return User::query()->whereIn('id',$workspace->toArray())->latest();
     }
 
     public static function setBulkActions()
@@ -49,12 +52,6 @@ class AgentRequest extends Transaction
                 ->searchable()
                 ->secondaryHeaderFilter('phone'),
 
-
-            Column::make('Actions','id')->format(function($value, $model, $row) {
-                $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="check-circle" data-lucide="check-circle" class="lucide lucide-check-circle w-4 h-4 mr-2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>','isOverlay' => '0','method' => 'GET','route' => route('dashboard.international-transfer.agent-detail', $value),'action' => 'Approve Agent'];
-             
-                return view('cms::livewire.datatable-actions', ['actions' => $actions])->withUser($row);
-            })
         ];
     }
 

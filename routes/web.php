@@ -64,6 +64,10 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::post('exchangerate-information/{workspace}', [MembershipComponentController::class, 'updateExchangeRateInformation'])->name('membership.store.exchangerate-information');
                 Route::get('agent-requests', [AgentController::class, 'agentRequest'])->name('agent-request');
                 Route::resource('agent', AgentController::class);
+                Route::get('agent-detail/{id}', [AgentController::class, 'agentDetail'])->name('agent-detail');
+                Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
+                
+                
         
         });
 
