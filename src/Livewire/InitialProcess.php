@@ -224,7 +224,7 @@ class InitialProcess extends Component
             dd($exchangeRates);
 
             if(isEmpty($exchangeRates == 'exchangerate_info')){
-                if(@$exchangeRates->value['rate_type'] == 'ccc_customize_rate')
+                if(@$exchangeRates->value['rate_type'] == 'cc_customize_rate')
                 {
                     $exchangeRate = @$exchangeRates->value['cc_customized_rate'];
                 }
