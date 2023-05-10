@@ -33,7 +33,7 @@ class MembershipComponentController extends Controller
 
         WorkspaceMeta::updateOrCreate(['key' => 'exchangerate_info', 'workspace_id' => app('activeWorkspaceId')], ['key' => 'exchangerate_info', 'workspace_id' => app('activeWorkspaceId'), 'value' => $data]);
 
-        return redirect()->back()->with(['message' => 'Personal details updated successfully.', 'status' => 'success']);
+        return redirect()->back()->with(['message' => ' Exchange rate updated successfully.', 'status' => 'success']);
     }
 
 }
