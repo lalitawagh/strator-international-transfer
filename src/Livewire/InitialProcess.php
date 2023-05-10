@@ -195,20 +195,44 @@ class InitialProcess extends Component
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
         }
 
+        // if (config('services.registration_changed') == true)
+        // {
+        //     $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+
+        //     if(isEmpty($exchangeRates == 'exchangerate_info')){
+        //         if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+        //         {
+        //             $exchangeRate = @$exchangeRates->value['customized_rate'];
+        //         }
+        //         else
+        //         {
+        //             $percentage = @$exchangeRates->value['percentage'];
+        //             $percent = $percentage / 100  * $exchangeRate;
+        //             if( @$exchangeRates->value['percentage_rate'] == 'plus')
+        //             {
+        //                 $exchangeRate = $exchangeRate + $percent;
+        //             }else{
+        //                 $exchangeRate = $exchangeRate - $percent;
+        //             }
+        //         }
+        //     }
+        // }
+
         if (config('services.registration_changed') == true)
         {
-            $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+            $exchangeRates = collect(Setting::getValue('cc_rate_type',[]));
+            dd($exchangeRates);
 
             if(isEmpty($exchangeRates == 'exchangerate_info')){
-                if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+                if(@$exchangeRates->value['rate_type'] == 'ccc_customize_rate')
                 {
-                    $exchangeRate = @$exchangeRates->value['customized_rate'];
+                    $exchangeRate = @$exchangeRates->value['cc_customized_rate'];
                 }
                 else
                 {
-                    $percentage = @$exchangeRates->value['percentage'];
+                    $percentage = @$exchangeRates->value['cc_percentage'];
                     $percent = $percentage / 100  * $exchangeRate;
-                    if( @$exchangeRates->value['percentage_rate'] == 'plus')
+                    if( @$exchangeRates->value['cc_percentage_rate'] == 'plus')
                     {
                         $exchangeRate = $exchangeRate + $percent;
                     }else{

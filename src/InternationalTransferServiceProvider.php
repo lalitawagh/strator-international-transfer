@@ -32,6 +32,7 @@ use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
+use Kanexy\InternationalTransfer\Setting\GeneralSettingForm;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -121,6 +122,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
+        \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralSettingForm::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
 
 
