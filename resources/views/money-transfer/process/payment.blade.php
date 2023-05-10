@@ -5,9 +5,9 @@
         <form method="POST" name="form"
             action="{{ route('dashboard.international-transfer.money-transfer.transactionDetail', ['filter' => ['workspace_id' => $workspace->id]]) }}">
             @csrf
-            <div id="Transactions" class="grid grid-cols-12 gap-3" role="tabpanel" aria-labelledby="Transactions-tab">
+            <div id="Transactions" class="sm:flex gap-3" role="tabpanel" aria-labelledby="Transactions-tab">
 
-                <div class="col-span-12 lg:col-span-8 xxl:col-span-8 mt-4">
+                <div class="sm:w-2/3 mt-4">
                     <div class="grid grid-cols-12 gap-3">
                         <!-- BEGIN: -->
                         <div class="intro-y box col-span-12 xxl:col-span-12">
@@ -26,8 +26,8 @@
                                             <div class="preview">
                                                 <div id="faq-accordion-money-transfer" class="accordion">
                                                     @foreach (trans('international-transfer::payment') as $key => $payment)
-                                                        @if(config('services.registration_changed') == true )
-                                                            @if($payment['method'] != 'bank_account')
+                                                        @if (config('services.registration_changed') == true)
+                                                            @if ($payment['method'] != 'bank_account')
                                                                 <div class="accordion-item"
                                                                     id="faq-accordion-cover-content-{{ $key }}">
                                                                     <div id="faq-accordion-content-{{ $key }}"
@@ -48,7 +48,8 @@
                                                                                 </div>
                                                                                 <div class="ml-4 mr-auto"
                                                                                     data-id="radio-switch-{{ $key }}">
-                                                                                    <a id="BankAccountSwich" class="font-medium"
+                                                                                    <a id="BankAccountSwich"
+                                                                                        class="font-medium"
                                                                                         data-id="radio-switch-{{ $key }}">
                                                                                         {{ $payment['title'] }}
                                                                                         <br>
@@ -60,7 +61,8 @@
                                                                                                 data-id="radio-switch-{{ $key }}"
                                                                                                 class="paymentoption_error_message">For
                                                                                                 the banking
-                                                                                                payment method, you need to open a
+                                                                                                payment method, you need to
+                                                                                                open a
                                                                                                 bank account.</span><br>
                                                                                         @endif
                                                                                         @if (
@@ -70,34 +72,43 @@
                                                                                             <span
                                                                                                 data-id="radio-switch-{{ $key }}"
                                                                                                 class="paymentoption_error_message">The
-                                                                                                Bank payment option are applicable
-                                                                                                only, If the transfer is from
+                                                                                                Bank payment option are
+                                                                                                applicable
+                                                                                                only, If the transfer is
+                                                                                                from
                                                                                                 GBP</span><br>
                                                                                         @endif
 
                                                                                         @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
-                                                                                            <span style="color:red;">The Stripe
-                                                                                                payment option are applicable only,
+                                                                                            <span style="color:red;">The
+                                                                                                Stripe
+                                                                                                payment option are
+                                                                                                applicable only,
                                                                                                 If the transfer is from
                                                                                                 GBP</span><br>
                                                                                         @endif
                                                                                         @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
-                                                                                            <span style="color:red;">The Total
-                                                                                                payment option are applicable only,
+                                                                                            <span style="color:red;">The
+                                                                                                Total
+                                                                                                payment option are
+                                                                                                applicable only,
                                                                                                 If the transfer is from
                                                                                                 GBP</span><br>
                                                                                             <span
                                                                                                 data-id="radio-switch-{{ $key }}"
                                                                                                 class="paymentoption_error_message">The
-                                                                                                Stripe payment option are applicable
-                                                                                                only, If the transfer is from
+                                                                                                Stripe payment option are
+                                                                                                applicable
+                                                                                                only, If the transfer is
+                                                                                                from
                                                                                                 GBP</span><br>
                                                                                         @endif
                                                                                         @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer')
                                                                                             <span
                                                                                                 data-id="radio-switch-{{ $key }}"
                                                                                                 class="paymentoption_error_message">The
-                                                                                                Manual Transfer payment option is
+                                                                                                Manual Transfer payment
+                                                                                                option is
                                                                                                 not applicable for this
                                                                                                 {{ $sender->code }} money
                                                                                                 transfer.</span><br>
@@ -117,7 +128,8 @@
                                                                                     <div class="form-check mt-2">
                                                                                         <input
                                                                                             id="radio-switch-{{ $key }}"
-                                                                                            class="form-check-input" type="radio"
+                                                                                            class="form-check-input"
+                                                                                            type="radio"
                                                                                             name="payment_method"
                                                                                             value="{{ $payment['method'] }}"
                                                                                             @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
@@ -182,7 +194,8 @@
                                                                                             data-id="radio-switch-{{ $key }}"
                                                                                             class="paymentoption_error_message">For
                                                                                             the banking
-                                                                                            payment method, you need to open a
+                                                                                            payment method, you need to open
+                                                                                            a
                                                                                             bank account.</span><br>
                                                                                     @endif
                                                                                     @if (
@@ -192,26 +205,30 @@
                                                                                         <span
                                                                                             data-id="radio-switch-{{ $key }}"
                                                                                             class="paymentoption_error_message">The
-                                                                                            Bank payment option are applicable
+                                                                                            Bank payment option are
+                                                                                            applicable
                                                                                             only, If the transfer is from
                                                                                             GBP</span><br>
                                                                                     @endif
 
                                                                                     @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
                                                                                         <span style="color:red;">The Stripe
-                                                                                            payment option are applicable only,
+                                                                                            payment option are applicable
+                                                                                            only,
                                                                                             If the transfer is from
                                                                                             GBP</span><br>
                                                                                     @endif
                                                                                     @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
                                                                                         <span style="color:red;">The Total
-                                                                                            payment option are applicable only,
+                                                                                            payment option are applicable
+                                                                                            only,
                                                                                             If the transfer is from
                                                                                             GBP</span><br>
                                                                                         <span
                                                                                             data-id="radio-switch-{{ $key }}"
                                                                                             class="paymentoption_error_message">The
-                                                                                            Stripe payment option are applicable
+                                                                                            Stripe payment option are
+                                                                                            applicable
                                                                                             only, If the transfer is from
                                                                                             GBP</span><br>
                                                                                     @endif
@@ -219,7 +236,8 @@
                                                                                         <span
                                                                                             data-id="radio-switch-{{ $key }}"
                                                                                             class="paymentoption_error_message">The
-                                                                                            Manual Transfer payment option is
+                                                                                            Manual Transfer payment option
+                                                                                            is
                                                                                             not applicable for this
                                                                                             {{ $sender->code }} money
                                                                                             transfer.</span><br>
@@ -239,7 +257,8 @@
                                                                                 <div class="form-check mt-2">
                                                                                     <input
                                                                                         id="radio-switch-{{ $key }}"
-                                                                                        class="form-check-input" type="radio"
+                                                                                        class="form-check-input"
+                                                                                        type="radio"
                                                                                         name="payment_method"
                                                                                         value="{{ $payment['method'] }}"
                                                                                         @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
@@ -291,8 +310,7 @@
 
                 </div>
                 <!-- BEGIN: Profile Menu -->
-                <div
-                    class="mt-4 bg-gray-400 dark:bg-darkmode-400 col-span-12 lg:col-span-4 xxl:col-span-4 flex lg:block flex-col-reverse">
+                <div class="mt-4 bg-gray-400 dark:bg-darkmode-400 sm:w-2/5 flex lg:block flex-col-reverse">
                     <div class="intro-y bg-transparent mt-5 lg:mt-0 p-3">
                         <!-- BEGIN: Ticket -->
                         <div class="col-span-12 lg:col-span-4">
