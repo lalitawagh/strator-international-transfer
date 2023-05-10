@@ -13,19 +13,7 @@ use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 
 class CustomerRegistrationForm extends Item
 {
-    public function validationRules(): array
-    {
-        return [
-            'type' => ['nullable'],
-        ];
-    }
-
-    public function validationMessages(): array
-    {
-        return [
-            
-        ];
-    }
+    
 
     public function render()
     {
