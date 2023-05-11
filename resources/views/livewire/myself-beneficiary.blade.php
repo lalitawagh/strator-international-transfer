@@ -216,33 +216,68 @@
                             @enderror
                         </div>
                     </div>
-
-                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                    
+                    @if ($receiving_country == 'IN')
+                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="iban_number" class="form-label sm:w-40">IFSC Code / IBAN <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
-                                type="text" class="form-control" required="required">
+                                type="text" class="form-control" required="required" value="{{ $country->id }}">
                             @error('meta.iban_number')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-
-                    @if ($receiving_country == 'UK')
-                        <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                            <label for="bank_code" class="form-label sm:w-40">Sort Code <span
-                                    class="text-theme-6">*</span></label>
-                            <div class="sm:w-5/6">
-                                <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
-                                    type="text" class="form-control" required="required">
-                                @error('meta.bank_code')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                @enderror
-                            </div>
+                    @elseif ($receiving_country == 'PK')
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="iban_number" class="form-label sm:w-40">IBAN Code<span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
+                                type="text" class="form-control" required="required" value="{{ $country->id }}">
+                            @error('meta.iban_number')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
                         </div>
+                    </div>
+                    @elseif ($receiving_country == 'AD')
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="iban_number" class="form-label sm:w-40">IBAN Code<span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
+                                type="text" class="form-control" required="required" value="{{ $country->id }}">
+                            @error('meta.iban_number')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @elseif ($receiving_country == 'AS')
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="ach_routing_number" class="form-label sm:w-40">ACH Routing Number <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="ach_routing_number" wire:model.defer="meta.ach_routing_number" name="ach_routing_number"
+                                type="text" class="form-control" required="required">
+                            @error('meta.ach_routing_number')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @else
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="bank_code" class="form-label sm:w-40">Sort Code <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
+                                type="text" class="form-control" required="required">
+                            @error('meta.bank_code')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>  
                     @endif
-
 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="avatar" class="form-label sm:w-40">Avatar</label>
@@ -274,3 +309,6 @@
     </div>
 
 </div>
+
+    
+
