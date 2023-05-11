@@ -23,12 +23,21 @@
             <select class="tail-select w-full" id='tabcuntery-selection1' style='width: 210px;'
                 wire:change="changeFromCurrency($event.target.value)" class="" name="currency_code_from">
                 @foreach ($countries as $country)
-                    <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                        @isset($currency_from) @if ($country->id == $currency_from)
-                                selected @endif
-                @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
-                        {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
-                    </option>
+                    @if(config('services.registration_changed') == true && $country->code == 'UK')
+                        <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                            @isset($currency_from) @if ($country->id == $currency_from)
+                                    selected @endif
+                        @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
+                            {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                        </option>
+                    @else
+                        <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                            @isset($currency_from) @if ($country->id == $currency_from)
+                                    selected @endif
+                        @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
+                            {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                        </option>
+                    @endif
                 @endforeach
 
             </select>
@@ -93,7 +102,7 @@
                                                     @endphp
                                                 @endif
                                                 @php
-                                                    
+
                                                     $country = \Kanexy\Cms\I18N\Models\Country::find($currency_from);
                                                 @endphp
                                                 @if ($amount >= $fee['min_amount'] && $amount <= $fee['max_amount'])
@@ -184,20 +193,37 @@
             </span>
             <select class="tail-select w-full" id='tabcuntery-selection2'
                 wire:change="changeToCurrency($event.target.value)" name="currency_code_to">
-                @foreach ($countries as $country)
-                    @if ($country?->risk_score != 3)
-                        <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                            @isset($currency_to) 
-                        @if ($country->id == $currency_to)
-                            selected
+                @if(config('services.registration_changed') == true)
+                    @foreach ($countryCurrency as $country)
+                        @if ($country?->risk_score != 3)
+                            <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                                @isset($currency_to)
+                            @if ($country->id == $currency_to)
+                                selected
+                            @endif
+                            @else @if ($country->code == 'IN')
+                                selected
+                            @endif @endisset>
+                                {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                            </option>
                         @endif
-                        @else @if ($country->code == 'IN')
-                            selected
-                        @endif @endisset>
-                            {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
-                        </option>
-                    @endif
-                @endforeach
+                    @endforeach
+                @else
+                    @foreach ($countries as $country)
+                        @if ($country?->risk_score != 3)
+                            <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                                @isset($currency_to)
+                            @if ($country->id == $currency_to)
+                                selected
+                            @endif
+                            @else @if ($country->code == 'IN')
+                                selected
+                            @endif @endisset>
+                                {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                            </option>
+                        @endif
+                    @endforeach
+                @endif
             </select>
         </div>
     </div>

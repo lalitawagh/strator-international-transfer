@@ -5,9 +5,9 @@
         <form method="POST" name="form"
             action="{{ route('dashboard.international-transfer.money-transfer.transactionDetail', ['filter' => ['workspace_id' => $workspace->id]]) }}">
             @csrf
-            <div id="Transactions" class="grid grid-cols-12 gap-3" role="tabpanel" aria-labelledby="Transactions-tab">
+            <div id="Transactions" class="sm:flex gap-3" role="tabpanel" aria-labelledby="Transactions-tab">
 
-                <div class="col-span-12 lg:col-span-8 xxl:col-span-8 mt-4">
+                <div class="sm:w-2/3 mt-4">
                     <div class="grid grid-cols-12 gap-3">
                         <!-- BEGIN: -->
                         <div class="intro-y box col-span-12 xxl:col-span-12">
@@ -26,125 +26,270 @@
                                             <div class="preview">
                                                 <div id="faq-accordion-money-transfer" class="accordion">
                                                     @foreach (trans('international-transfer::payment') as $key => $payment)
-                                                        <div class="accordion-item"
-                                                            id="faq-accordion-cover-content-{{ $key }}">
-                                                            <div id="faq-accordion-content-{{ $key }}"
-                                                                class="accordion-header">
-                                                                <button class="accordion-button" type="button"
-                                                                    id="btn-faq-accordion-collapse-{{ $key }}"
-                                                                    data-tw-toggle="collapse"
-                                                                    data-tw-target="#faq-accordion-collapse-{{ $key }}"
-                                                                    aria-expanded="true"
-                                                                    aria-controls="faq-accordion-collapse-{{ $key }}">
-                                                                    <div class="relative flex items-center pb-0"
-                                                                        data-id="radio-switch-{{ $key }}">
-                                                                        <div
-                                                                            class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
-                                                                            <img alt="" class="rounded-full"
-                                                                                style="padding:7px;"
-                                                                                src="{{ $payment['image'] ?? '' }}">
-                                                                        </div>
-                                                                        <div class="ml-4 mr-auto"
-                                                                            data-id="radio-switch-{{ $key }}">
-                                                                            <a id="BankAccountSwich" class="font-medium"
+                                                        @if (config('services.registration_changed') == true)
+                                                            @if ($payment['method'] != 'bank_account')
+                                                                <div class="accordion-item"
+                                                                    id="faq-accordion-cover-content-{{ $key }}">
+                                                                    <div id="faq-accordion-content-{{ $key }}"
+                                                                        class="accordion-header">
+                                                                        <button class="accordion-button" type="button"
+                                                                            id="btn-faq-accordion-collapse-{{ $key }}"
+                                                                            data-tw-toggle="collapse"
+                                                                            data-tw-target="#faq-accordion-collapse-{{ $key }}"
+                                                                            aria-expanded="true"
+                                                                            aria-controls="faq-accordion-collapse-{{ $key }}">
+                                                                            <div class="relative flex items-center pb-0"
                                                                                 data-id="radio-switch-{{ $key }}">
-                                                                                {{ $payment['title'] }}
-                                                                                <br>
-                                                                                @if (
-                                                                                    $user->is_banking_user != 1 &&
-                                                                                        $payment['method'] == 'bank_account' &&
-                                                                                        is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
-                                                                                    <span
-                                                                                        data-id="radio-switch-{{ $key }}"
-                                                                                        class="paymentoption_error_message">For
-                                                                                        the banking
-                                                                                        payment method, you need to open a
-                                                                                        bank account.</span><br>
-                                                                                @endif
-                                                                                @if (
-                                                                                    $sender->code != 'UK' &&
-                                                                                        $payment['method'] == 'bank_account' &&
-                                                                                        is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
-                                                                                    <span
-                                                                                        data-id="radio-switch-{{ $key }}"
-                                                                                        class="paymentoption_error_message">The
-                                                                                        Bank payment option are applicable
-                                                                                        only, If the transfer is from
-                                                                                        GBP</span><br>
-                                                                                @endif
-                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
-                                                                                    <span style="color:red;">The Stripe
-                                                                                        payment option are applicable only,
-                                                                                        If the transfer is from
-                                                                                        GBP</span><br>
-                                                                                @endif
-                                                                                @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
-                                                                                    <span style="color:red;">The Total
-                                                                                        payment option are applicable only,
-                                                                                        If the transfer is from
-                                                                                        GBP</span><br>
-                                                                                    <span
-                                                                                        data-id="radio-switch-{{ $key }}"
-                                                                                        class="paymentoption_error_message">The
-                                                                                        Stripe payment option are applicable
-                                                                                        only, If the transfer is from
-                                                                                        GBP</span><br>
-                                                                                @endif
-                                                                                @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer')
-                                                                                    <span
-                                                                                        data-id="radio-switch-{{ $key }}"
-                                                                                        class="paymentoption_error_message">The
-                                                                                        Manual Transfer payment option is
-                                                                                        not applicable for this
-                                                                                        {{ $sender->code }} money
-                                                                                        transfer.</span><br>
-                                                                                @endif
-                                                                            </a>
-                                                                            {{-- <div
-                                                                                class="w-full flex-column text-gray-600 text-xs sm:text-sm">
-                                                                                <div class="mr-2">
-                                                                                    {{ $payment['heading'] }}
+                                                                                <div
+                                                                                    class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                                                                                    <img alt="" class="rounded-full"
+                                                                                        style="padding:7px;"
+                                                                                        src="{{ $payment['image'] ?? '' }}">
+                                                                                </div>
+                                                                                <div class="ml-4 mr-auto"
+                                                                                    data-id="radio-switch-{{ $key }}">
+                                                                                    <a id="BankAccountSwich"
+                                                                                        class="font-medium"
+                                                                                        data-id="radio-switch-{{ $key }}">
+                                                                                        {{ $payment['title'] }}
+                                                                                        <br>
+                                                                                        @if (
+                                                                                            $user->is_banking_user != 1 &&
+                                                                                                $payment['method'] == 'bank_account' &&
+                                                                                                is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
+                                                                                            <span
+                                                                                                data-id="radio-switch-{{ $key }}"
+                                                                                                class="paymentoption_error_message">For
+                                                                                                the banking
+                                                                                                payment method, you need to
+                                                                                                open a
+                                                                                                bank account.</span><br>
+                                                                                        @endif
+                                                                                        @if (
+                                                                                            $sender->code != 'UK' &&
+                                                                                                $payment['method'] == 'bank_account' &&
+                                                                                                is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
+                                                                                            <span
+                                                                                                data-id="radio-switch-{{ $key }}"
+                                                                                                class="paymentoption_error_message">The
+                                                                                                Bank payment option are
+                                                                                                applicable
+                                                                                                only, If the transfer is
+                                                                                                from
+                                                                                                GBP</span><br>
+                                                                                        @endif
+
+                                                                                        @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
+                                                                                            <span style="color:red;">The
+                                                                                                Stripe
+                                                                                                payment option are
+                                                                                                applicable only,
+                                                                                                If the transfer is from
+                                                                                                GBP</span><br>
+                                                                                        @endif
+                                                                                        @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
+                                                                                            <span style="color:red;">The
+                                                                                                Total
+                                                                                                payment option are
+                                                                                                applicable only,
+                                                                                                If the transfer is from
+                                                                                                GBP</span><br>
+                                                                                            <span
+                                                                                                data-id="radio-switch-{{ $key }}"
+                                                                                                class="paymentoption_error_message">The
+                                                                                                Stripe payment option are
+                                                                                                applicable
+                                                                                                only, If the transfer is
+                                                                                                from
+                                                                                                GBP</span><br>
+                                                                                        @endif
+                                                                                        @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer')
+                                                                                            <span
+                                                                                                data-id="radio-switch-{{ $key }}"
+                                                                                                class="paymentoption_error_message">The
+                                                                                                Manual Transfer payment
+                                                                                                option is
+                                                                                                not applicable for this
+                                                                                                {{ $sender->code }} money
+                                                                                                transfer.</span><br>
+                                                                                        @endif
+                                                                                    </a>
+                                                                                    {{-- <div
+                                                                                        class="w-full flex-column text-gray-600 text-xs sm:text-sm">
+                                                                                        <div class="mr-2">
+                                                                                            {{ $payment['heading'] }}
+                                                                                        </div>
+
+                                                                                    </div> --}}
                                                                                 </div>
 
-                                                                            </div> --}}
-                                                                        </div>
+                                                                                <div data-id="radio-switch-{{ $key }}"
+                                                                                    class="font-medium text-gray-700 dark:text-gray-500">
+                                                                                    <div class="form-check mt-2">
+                                                                                        <input
+                                                                                            id="radio-switch-{{ $key }}"
+                                                                                            class="form-check-input"
+                                                                                            type="radio"
+                                                                                            name="payment_method"
+                                                                                            value="{{ $payment['method'] }}"
+                                                                                            @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
 
-                                                                        <div data-id="radio-switch-{{ $key }}"
-                                                                            class="font-medium text-gray-700 dark:text-gray-500">
-                                                                            <div class="form-check mt-2">
-                                                                                <input
-                                                                                    id="radio-switch-{{ $key }}"
-                                                                                    class="form-check-input" type="radio"
-                                                                                    name="payment_method"
-                                                                                    value="{{ $payment['method'] }}"
-                                                                                    @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
+                                                                                            @elseif (
+                                                                                                $user->is_banking_user != 1 &&
+                                                                                                    $payment['method'] == 'bank_account' &&
+                                                                                                    is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif (
+                                                                                                $sender->code != 'UK' &&
+                                                                                                    $payment['method'] == 'bank_account' &&
+                                                                                                    is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
 
-                                                                                    @elseif (
-                                                                                        $user->is_banking_user != 1 &&
-                                                                                            $payment['method'] == 'bank_account' &&
-                                                                                            is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif (
-                                                                                        $sender->code != 'UK' &&
-                                                                                            $payment['method'] == 'bank_account' &&
-                                                                                            is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
-
-                                                                                <label class="form-check-label"
-                                                                                    for="radio-switch-{{ $key }}"></label>
+                                                                                        <label class="form-check-label"
+                                                                                            for="radio-switch-{{ $key }}"></label>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div id="faq-accordion-collapse-{{ $key }}"
+                                                                        data-id="radio-switch-{{ $key }}"
+                                                                        class="accordion-collapse collapse "
+                                                                        aria-labelledby="faq-accordion-content-{{ $key }}"
+                                                                        data-tw-parent="#faq-accordion-{{ $key }}">
+                                                                        <div data-id="radio-switch-{{ $key }}"
+                                                                            class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
+                                                                            {{ $payment['description'] }}
                                                                         </div>
                                                                     </div>
-                                                                </button>
-                                                            </div>
-                                                            <div id="faq-accordion-collapse-{{ $key }}"
-                                                                data-id="radio-switch-{{ $key }}"
-                                                                class="accordion-collapse collapse "
-                                                                aria-labelledby="faq-accordion-content-{{ $key }}"
-                                                                data-tw-parent="#faq-accordion-{{ $key }}">
-                                                                <div data-id="radio-switch-{{ $key }}"
-                                                                    class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
-                                                                    {{ $payment['description'] }}
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            <div class="accordion-item"
+                                                                id="faq-accordion-cover-content-{{ $key }}">
+                                                                <div id="faq-accordion-content-{{ $key }}"
+                                                                    class="accordion-header">
+                                                                    <button class="accordion-button" type="button"
+                                                                        id="btn-faq-accordion-collapse-{{ $key }}"
+                                                                        data-tw-toggle="collapse"
+                                                                        data-tw-target="#faq-accordion-collapse-{{ $key }}"
+                                                                        aria-expanded="true"
+                                                                        aria-controls="faq-accordion-collapse-{{ $key }}">
+                                                                        <div class="relative flex items-center pb-0"
+                                                                            data-id="radio-switch-{{ $key }}">
+                                                                            <div
+                                                                                class="w-16 h-16 flex-none image-fit w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full">
+                                                                                <img alt="" class="rounded-full"
+                                                                                    style="padding:7px;"
+                                                                                    src="{{ $payment['image'] ?? '' }}">
+                                                                            </div>
+                                                                            <div class="ml-4 mr-auto"
+                                                                                data-id="radio-switch-{{ $key }}">
+                                                                                <a id="BankAccountSwich" class="font-medium"
+                                                                                    data-id="radio-switch-{{ $key }}">
+                                                                                    {{ $payment['title'] }}
+                                                                                    <br>
+                                                                                    @if (
+                                                                                        $user->is_banking_user != 1 &&
+                                                                                            $payment['method'] == 'bank_account' &&
+                                                                                            is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
+                                                                                        <span
+                                                                                            data-id="radio-switch-{{ $key }}"
+                                                                                            class="paymentoption_error_message">For
+                                                                                            the banking
+                                                                                            payment method, you need to open
+                                                                                            a
+                                                                                            bank account.</span><br>
+                                                                                    @endif
+                                                                                    @if (
+                                                                                        $sender->code != 'UK' &&
+                                                                                            $payment['method'] == 'bank_account' &&
+                                                                                            is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request())))
+                                                                                        <span
+                                                                                            data-id="radio-switch-{{ $key }}"
+                                                                                            class="paymentoption_error_message">The
+                                                                                            Bank payment option are
+                                                                                            applicable
+                                                                                            only, If the transfer is from
+                                                                                            GBP</span><br>
+                                                                                    @endif
+
+                                                                                    @if ($sender->code != 'UK' && $payment['method'] == 'stripe')
+                                                                                        <span style="color:red;">The Stripe
+                                                                                            payment option are applicable
+                                                                                            only,
+                                                                                            If the transfer is from
+                                                                                            GBP</span><br>
+                                                                                    @endif
+                                                                                    @if ($sender->code != 'UK' && $payment['method'] == 'total_processing')
+                                                                                        <span style="color:red;">The Total
+                                                                                            payment option are applicable
+                                                                                            only,
+                                                                                            If the transfer is from
+                                                                                            GBP</span><br>
+                                                                                        <span
+                                                                                            data-id="radio-switch-{{ $key }}"
+                                                                                            class="paymentoption_error_message">The
+                                                                                            Stripe payment option are
+                                                                                            applicable
+                                                                                            only, If the transfer is from
+                                                                                            GBP</span><br>
+                                                                                    @endif
+                                                                                    @if (is_null($masterAccount) && $payment['method'] == 'manual_transfer')
+                                                                                        <span
+                                                                                            data-id="radio-switch-{{ $key }}"
+                                                                                            class="paymentoption_error_message">The
+                                                                                            Manual Transfer payment option
+                                                                                            is
+                                                                                            not applicable for this
+                                                                                            {{ $sender->code }} money
+                                                                                            transfer.</span><br>
+                                                                                    @endif
+                                                                                </a>
+                                                                                {{-- <div
+                                                                                    class="w-full flex-column text-gray-600 text-xs sm:text-sm">
+                                                                                    <div class="mr-2">
+                                                                                        {{ $payment['heading'] }}
+                                                                                    </div>
+
+                                                                                </div> --}}
+                                                                            </div>
+
+                                                                            <div data-id="radio-switch-{{ $key }}"
+                                                                                class="font-medium text-gray-700 dark:text-gray-500">
+                                                                                <div class="form-check mt-2">
+                                                                                    <input
+                                                                                        id="radio-switch-{{ $key }}"
+                                                                                        class="form-check-input"
+                                                                                        type="radio"
+                                                                                        name="payment_method"
+                                                                                        value="{{ $payment['method'] }}"
+                                                                                        @if ($user->is_banking_user != 1 && $payment['method'] == 'bank_account' && config('services.disable_banking') == true) hidden
+
+                                                                                        @elseif (
+                                                                                            $user->is_banking_user != 1 &&
+                                                                                                $payment['method'] == 'bank_account' &&
+                                                                                                is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif (
+                                                                                            $sender->code != 'UK' &&
+                                                                                                $payment['method'] == 'bank_account' &&
+                                                                                                is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'stripe') disabled @elseif ($sender->code != 'UK' && $payment['method'] == 'total_processing') disabled @elseif (is_null($masterAccount) && $payment['method'] == 'manual_transfer') disabled @endif>
+
+                                                                                    <label class="form-check-label"
+                                                                                        for="radio-switch-{{ $key }}"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </button>
+                                                                </div>
+                                                                <div id="faq-accordion-collapse-{{ $key }}"
+                                                                    data-id="radio-switch-{{ $key }}"
+                                                                    class="accordion-collapse collapse "
+                                                                    aria-labelledby="faq-accordion-content-{{ $key }}"
+                                                                    data-tw-parent="#faq-accordion-{{ $key }}">
+                                                                    <div data-id="radio-switch-{{ $key }}"
+                                                                        class="accordion-body text-gray-700 dark:text-gray-600 leading-relaxed">
+                                                                        {{ $payment['description'] }}
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                     @endforeach
                                                     @error('payment_method')
                                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -165,8 +310,7 @@
 
                 </div>
                 <!-- BEGIN: Profile Menu -->
-                <div
-                    class="mt-4 bg-gray-400 dark:bg-darkmode-400 col-span-12 lg:col-span-4 xxl:col-span-4 flex lg:block flex-col-reverse">
+                <div class="mt-4 bg-gray-400 dark:bg-darkmode-400 sm:w-2/5 flex lg:block flex-col-reverse">
                     <div class="intro-y bg-transparent mt-5 lg:mt-0 p-3">
                         <!-- BEGIN: Ticket -->
                         <div class="col-span-12 lg:col-span-4">

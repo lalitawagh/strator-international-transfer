@@ -289,6 +289,28 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="benficiary_address" class="form-label sm:w-40">Address <span
+                            class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="benficiary_address" wire:model.defer="meta.benficiary_address"
+                                name="benficiary_address" type="text" class="form-control">
+                            @error('meta.benficiary_address')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="benficiary_city" class="form-label sm:w-40">City <span
+                            class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="benficiary_city" wire:model.defer="meta.benficiary_city"
+                                name="benficiary_city" type="text" class="form-control">
+                            @error('meta.benficiary_city')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="col-span-12 md:col-span-6 form-inline mt-2" style="align-items: initial;">
                         <label for="note" class="form-label sm:w-40">Notes </label>
                         <div class="sm:w-5/6">
