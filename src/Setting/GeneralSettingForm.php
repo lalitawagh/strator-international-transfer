@@ -24,6 +24,10 @@ class GeneralSettingForm extends Item
     public function render()
     {
         $settings = Setting::pluck('value', 'key');
-        return view("international-transfer::setting.general-setting-form", compact('settings'));
+        $rate_type = Setting::getValue('cc_rate_type',[]);
+            $customized_rate = Setting::getValue('cc_customized_rate',[]);
+            $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
+            $percentage = Setting::getValue('cc_percentage',[]);
+        return view("international-transfer::setting.general-setting-form", compact('settings','rate_type','customized_rate','percentage_rate','percentage'));
     }
 }

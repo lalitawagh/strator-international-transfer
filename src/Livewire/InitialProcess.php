@@ -197,27 +197,49 @@ class InitialProcess extends Component
 
         if (config('services.registration_changed') == true)
         {
-            $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+            $exchangeRate = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
-            if(isEmpty($exchangeRates == 'exchangerate_info')){
-                if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+            $rate_type = Setting::getValue('cc_rate_type',[]);
+            $customized_rate = Setting::getValue('cc_customized_rate',[]);
+            $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
+            $percentage = Setting::getValue('cc_percentage',[]);
+
+            // if(isEmpty($exchangeRates == 'exchangerate_info')){
+            //     if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+            //     {
+            //         $exchangeRate = @$exchangeRates->value['customized_rate'];
+            //     }
+            //     else
+            //     {
+            //         $percentage = @$exchangeRates->value['percentage'];
+            //         $percent = $percentage / 100  * $exchangeRate;
+            //         if( @$exchangeRates->value['percentage_rate'] == 'plus')
+            //         {
+            //             $exchangeRate = $exchangeRate + $percent;
+            //         }else{
+            //             $exchangeRate = $exchangeRate - $percent;
+            //         }
+            //     }
+            // }
+            // else{
+                if($rate_type == 'cc_customize_rate')
                 {
-                    $exchangeRate = @$exchangeRates->value['customized_rate'];
+                    $exchangeRate = $customized_rate;
                 }
                 else
                 {
-                    $percentage = @$exchangeRates->value['percentage'];
+                    $percentage = $percentage;
                     $percent = $percentage / 100  * $exchangeRate;
-                    if( @$exchangeRates->value['percentage_rate'] == 'plus')
+                    if( @$percentage_rate == 'plus')
                     {
                         $exchangeRate = $exchangeRate + $percent;
                     }else{
                         $exchangeRate = $exchangeRate - $percent;
                     }
                 }
-            }
-        }
 
+
+        }
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;
         $this->guaranteed_rate = number_format((float) $this->guaranteed_rate, 2, '.', '');
