@@ -1,5 +1,17 @@
 @extends('international-transfer::layouts.master')
 <link rel="stylesheet" href="{{ asset('dist/css/money-transfer.css') }}">
+    <style>
+        span.recent-activity {
+        justify-content: center;
+        display: flex;
+        align-self: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+    }
+    </style>
 @section('content')
     {{-- <div class="grid grid-cols-3 gap-4">
         <div>
@@ -72,8 +84,24 @@
                                 @foreach ($recentTransactions as $recentTransaction)
                                     <div class="intro-x">
                                         <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
+                                            <div class="w-8 h-8 mr-2">
+                                                @php
+                                                    $str = $recentTransaction['meta']['sender_name'];
+                                                    $strname = preg_replace('/\s+/', ' ', $str);
+                                                    list($firstname, $lastname) = explode(' ', $strname);
+                                                    $fname = trim($firstname);
+                                                    $lname = trim($lastname);
+                                                @endphp
+                                                <div
+                                                    class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 bg-theme-14 text-theme-10 w-10 h-10 relative rounded-full">
+                                                    <span class="recent-activity">
+                                                        @isset($recentTransaction['meta']['sender_name']) {{ ucfirst(substr($fname, 0, 1)) }}
+                                                            {{ ucfirst(substr($lname, 0, 1)) }}
+                                                        @else
+                                                            {{ ucfirst(substr($recentTransaction['meta']['sender_name'], 0, 1)) }}
+                                                        @endif
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div class="ml-3 mr-auto">
                                                 <div class="font-medium">{{ $recentTransaction['meta']['sender_name'] }}
@@ -111,8 +139,23 @@
                                 @foreach ($recentUserTransactions as $recentUserTransaction)
                                     <div class="intro-x">
                                         <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
+                                            <div class="w-8 h-8 mr-2">
+                                                @php
+                                                    $str = $recentUserTransaction->meta['second_beneficiary_name'];
+                                                    list($firstname, $lastname) = explode(' ', $str);
+                                                    $fname = trim($firstname);
+                                                    $lname = trim($lastname);
+                                                @endphp
+                                                <div
+                                                    class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 bg-theme-14 text-theme-10 w-10 h-10 relative rounded-full">
+                                                    <span class="recent-activity">
+                                                        @isset($recentUserTransaction->meta['second_beneficiary_name']) {{ ucfirst(substr($fname, 0, 1)) }}
+                                                            {{ ucfirst(substr($lname, 0, 1)) }}
+                                                        @else
+                                                            {{ ucfirst(substr($recentUserTransaction->meta['second_beneficiary_name'], 0, 1)) }}
+                                                        @endif
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div class="ml-3 mr-auto">
                                                 <div class="font-medium">
