@@ -88,15 +88,15 @@
                                                 @php
                                                     $str = $recentTransaction['meta']['sender_name'];
                                                     $strname = preg_replace('/\s+/', ' ', $str);
-                                                    list($firstname, $lastname) = explode(' ', $strname);
-                                                    $fname = trim($firstname);
-                                                    $lname = trim($lastname);
+                                                    $name = explode(' ', $strname);
+                                                    $fname = substr($name[0], 0, 1);
+                                                    $lname = substr(@$name[1], 0, 1);
                                                 @endphp
                                                 <div
                                                     class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 bg-theme-14 text-theme-10 w-10 h-10 relative rounded-full">
                                                     <span class="recent-activity">
-                                                        @isset($recentTransaction['meta']['sender_name']) {{ ucfirst(substr($fname, 0, 1)) }}
-                                                            {{ ucfirst(substr($lname, 0, 1)) }}
+                                                        @isset($recentTransaction['meta']['sender_name']) {{ ucfirst($fname) }}
+                                                            {{ ucfirst($lname) }}
                                                         @else
                                                             {{ ucfirst(substr($recentTransaction['meta']['sender_name'], 0, 1)) }}
                                                         @endif
@@ -142,15 +142,15 @@
                                             <div class="w-8 h-8 mr-2">
                                                 @php
                                                     $str = $recentUserTransaction->meta['second_beneficiary_name'];
-                                                    list($firstname, $lastname) = explode(' ', $str);
-                                                    $fname = trim($firstname);
-                                                    $lname = trim($lastname);
+                                                    $name = explode(' ', $str);
+                                                    $fname = substr($name[0], 0, 1);
+                                                    $lname = substr(@$name[1], 0, 1);
                                                 @endphp
                                                 <div
                                                     class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 bg-theme-14 text-theme-10 w-10 h-10 relative rounded-full">
                                                     <span class="recent-activity">
-                                                        @isset($recentUserTransaction->meta['second_beneficiary_name']) {{ ucfirst(substr($fname, 0, 1)) }}
-                                                            {{ ucfirst(substr($lname, 0, 1)) }}
+                                                        @isset($recentUserTransaction->meta['second_beneficiary_name']) {{ ucfirst($fname) }}
+                                                            {{ ucfirst($lname) }}
                                                         @else
                                                             {{ ucfirst(substr($recentUserTransaction->meta['second_beneficiary_name'], 0, 1)) }}
                                                         @endif
