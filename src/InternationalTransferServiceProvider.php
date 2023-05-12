@@ -25,6 +25,7 @@ use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
 use Kanexy\InternationalTransfer\Membership\MembershipComponent;
+use Kanexy\InternationalTransfer\Menu\AgentMenu;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
@@ -33,6 +34,7 @@ use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Kanexy\InternationalTransfer\Setting\GeneralSettingForm;
+use Kanexy\InternationalTransfer\Registration\CustomerRegistrationForm;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -104,6 +106,8 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
+
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
@@ -123,6 +127,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralSettingForm::class);
+        \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
 
 
