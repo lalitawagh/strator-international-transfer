@@ -204,22 +204,24 @@ class InitialProcess extends Component
             $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
             $percentage = Setting::getValue('cc_percentage',[]);
 
-            if(is_null($exchangeRates)){
-                        if($rate_type == 'cc_customize_rate')
-                        {
-                            $exchangeRate = $customized_rate;
-                        }
-                        else
-                        {
-                            $percentage = $percentage;
-                            $percent = $percentage / 100  * $exchangeRate;
-                            if( @$percentage_rate == 'plus')
-                            {
-                                $exchangeRate = $exchangeRate + $percent;
-                            }else{
-                                $exchangeRate = $exchangeRate - $percent;
-                            }
-                        }
+            if(is_null($exchangeRates))
+            {
+                if($rate_type == 'cc_customize_rate')
+                {
+                    $exchangeRate = $customized_rate;
+                }
+                else
+                {
+                    $percentage = $percentage;
+                    $percent = $percentage / 100  * $exchangeRate;
+                    if( @$percentage_rate == 'plus')
+                    {
+                        $exchangeRate = $exchangeRate + $percent;
+                    }else
+                    {
+                        $exchangeRate = $exchangeRate - $percent;
+                    }
+                }
             }
             else{
                 if(@$exchangeRates->value['rate_type'] == 'customize_rate')
