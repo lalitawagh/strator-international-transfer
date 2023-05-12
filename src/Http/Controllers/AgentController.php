@@ -37,7 +37,7 @@ class AgentController extends Controller
         return view("international-transfer::agents.agent-detail", compact('user', 'countries', 'roles', 'defaultCountry', 'countryWithFlags'));
     }
 
-    public function update(Request $request,$id)
+    public function show($id)
     {
         $agentRole = Role::whereName(EnumsRole::AGENT)->first();
         $user = User::find($id);
@@ -48,14 +48,10 @@ class AgentController extends Controller
 
         $user->status = 'approved';
         $user->update();
-        
-        $workspaceMeta = WorkspaceMeta::updateOrCreate([
-            'workspace_id' =>  $workspace->id, 'key' => 'agentUrl'
-        ], ['workspace_id' =>  $workspace->id, 'key' => 'agentUrl', 'value' => $request->input('url')]);
-      
+
         return redirect()->route('dashboard.international-transfer.agent.index')->with([
             'status' => 'success',
-            'message' => 'Agent detail approve successfully'
+            'message' => 'Agent approve successfully'
         ]);
     }
 

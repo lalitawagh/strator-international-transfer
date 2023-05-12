@@ -13,8 +13,8 @@ class AgentUsers extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-        $workspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace_id)->pluck('id');
-   
+        $workspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace_id)->pluck('admin_id');
+        
         return User::query()->whereIn('id',$workspace->toArray())->latest();
     }
 
