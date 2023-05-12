@@ -91,9 +91,11 @@ class MyselfBeneficiary extends Component
             'avatar' => ['nullable', 'max:5120', 'mimes:png,jpg,jpeg', 'file'],
             'note' => ['nullable'],
             'meta' => ['required', 'array'],
+            'meta.benficiary_address' => ['required','max:40'],
+            'meta.benficiary_city' => ['required',new AlphaSpaces,'max:40'],
             'meta.iban_number' => ['required'],
             'meta.bank_account_name' => ['required', new AlphaSpaces,'max:40'],
-            'meta.bank_account_number' => ['required', 'string', 'numeric'],
+            'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits_between:8,16'],
             'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
             'meta.ach_routing_number' => ['string', 'numeric'],
@@ -113,6 +115,8 @@ class MyselfBeneficiary extends Component
         'meta.bank_account_name' => 'bank account name',
         'meta.iban_number' => 'IBAN Number',
         'meta.bank_country' => 'country',
+        'meta.benficiary_address' => 'Address',
+        'meta.benficiary_city' => 'City',
         'meta.ach_routing_number' => 'ACH Routing Number',
     ];
 
@@ -122,6 +126,7 @@ class MyselfBeneficiary extends Component
             'meta.bank_code.required_if' => 'The sort code field is required.',
             'meta.iban_number.required' => 'The IFSC code/ IBAN field is required.',
             'meta.bank_account_name.regex' =>'Account Name contains Letters and Spaces Only',
+            'meta.beneficiary_address.required' => 'The address field is required',
             'meta.ach_routing_number' => 'The ACH Routing Number field is required',
         ];
     }
