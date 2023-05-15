@@ -1,4 +1,4 @@
-@if(auth()->user()->isSuperadmin())
+@if(!auth()->user()->isSubscriber())
 @if (config('services.registration_changed') == true)
     <li id="ExchangeRate-tab" class="nav-item flex-1" role="presentation">
         <a data-tw-toggle="pill" data-tw-target="#ExchangeRate-tab" type="button" role="tab"
