@@ -25,7 +25,10 @@ use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
 use Kanexy\InternationalTransfer\Membership\MembershipComponent;
+use Kanexy\InternationalTransfer\Menu\BeneficiariesMenu;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
+use Kanexy\InternationalTransfer\Menu\MoneyTransferMenu;
+use Kanexy\InternationalTransfer\Menu\TransactionMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
@@ -103,6 +106,9 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new MoneyTransferMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new BeneficiariesMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
