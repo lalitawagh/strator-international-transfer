@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
+use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
 use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
@@ -66,7 +67,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource('agent', AgentController::class);
                 Route::get('agent-detail/{id}', [AgentController::class, 'agentDetail'])->name('agent-detail');
                 Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
-                
+                Route::resource('cc-partners', CurrencyCloudPartnerController::class);
                 
         
         });
