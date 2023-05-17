@@ -1,5 +1,17 @@
 @extends('international-transfer::layouts.master')
 <link rel="stylesheet" href="{{ asset('dist/css/money-transfer.css') }}">
+    <style>
+        span.recent-activity {
+        justify-content: center;
+        display: flex;
+        align-self: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+    }
+    </style>
 @section('content')
     {{-- <div class="grid grid-cols-3 gap-4">
         <div>
@@ -11,22 +23,23 @@
     <!-- BEGIN: Profile Info -->
     <div class="intro-y box px-5 pt-5 mb-3">
         <div class="flex flex-col lg:flex-row border-b border-slate-200/60 dark:border-darkmode-400 pb-5 -mx-5">
-            <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
-                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+            <div class="flex flex-1 flex-wrap px-5 items-center gap-3 justify-center lg:justify-start">
+                <div class="w-16 h-16 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
                     <img alt="{{ auth()->user()->getFullName() }}" class="rounded-full" src="{{ auth()->user()->avatar }}">
 
                 </div>
-                <div class="ml-5">
-                    <div class="truncate sm:whitespace-normal font-medium text-lg">Welcome {{ auth()->user()->getFullName() }}
+                <div class="sm:ml-5 text-center sm:text-left">
+                    <div class="truncate sm:whitespace-normal font-medium text-lg">Welcome
+                        {{ auth()->user()->getFullName() }}
                     </div>
                     <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
                 </div>
                 @if (config('services.registration_changed') == true)
                     @if ($kycSkip?->value == 'true')
-                        <div class="ml-auto">
-                            @if(!is_null($user))
-                            <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
-                                class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Submit KYC</a>
+                        <div class="sm:ml-auto">
+                            @if (!is_null($user))
+                                <a id="SubmitKYC" href="{{ route('dashboard.reupload-document', $user?->id) }}"
+                                    class="btn btn-sm btn-primary sm:ml-2 py-2 sm:mb-2 mb-2">Submit KYC</a>
                             @endif
                         </div>
                     @endif
@@ -55,7 +68,7 @@
                 </div>
             </div>
             <!--Static Code-->
-            @if(!$user->isSubscriber())
+            @if (!$user->isSubscriber())
                 <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
 
                     <div class="intro-y mt-0">
@@ -70,15 +83,35 @@
                             <div class="overflow-y-auto h-64 overflow-x-hidden scrollbar-hidden pr-1 pt-1 mt-0 pb-3">
                                 @foreach ($recentTransactions as $recentTransaction)
                                     <div class="intro-x">
-                                        <div class="box px-0 py-2 mb-2 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
+                                        <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
+                                            <div class="w-8 h-8 mr-2">
+                                                @php
+                                                    $str = $recentTransaction['meta']['sender_name'];
+                                                    $strname = preg_replace('/\s+/', ' ', $str);
+                                                    $name = explode(' ', $strname);
+                                                    $fname = substr($name[0], 0, 1);
+                                                    $lname = substr(@$name[1], 0, 1);
+                                                @endphp
+                                                <div
+                                                    class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 bg-theme-14 text-theme-10 w-10 h-10 relative rounded-full">
+                                                    <span class="recent-activity">
+                                                        @isset($recentTransaction['meta']['sender_name']) {{ ucfirst($fname) }}
+                                                            {{ ucfirst($lname) }}
+                                                        @else
+                                                            {{ ucfirst(substr($recentTransaction['meta']['sender_name'], 0, 1)) }}
+                                                        @endif
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div class="ml-3 mr-auto">
-                                                <div class="font-medium">{{ $recentTransaction['meta']['sender_name'] }}</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">{{ $recentTransaction['created_at'] }}</div>
+                                                <div class="font-medium">{{ $recentTransaction['meta']['sender_name'] }}
+                                                </div>
+                                                <div class="text-slate-500 text-xs mt-0.5">
+                                                    {{ $recentTransaction['created_at'] }}</div>
                                             </div>
-                                            <div class="text-danger">-{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentTransaction->amount, $recentTransaction->meta['base_currency']) }}</div>
+                                            <div class="text-danger">
+                                                -{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentTransaction->amount, $recentTransaction->meta['base_currency']) }}
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -90,7 +123,7 @@
                     </div>
                 </div>
             @endif
-            @if($user->isSubscriber())
+            @if ($user->isSubscriber())
                 <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
 
                     <div class="intro-y mt-0">
@@ -105,15 +138,34 @@
                             <div class="overflow-y-auto h-64 overflow-x-hidden scrollbar-hidden pr-1 pt-1 mt-0 pb-3">
                                 @foreach ($recentUserTransactions as $recentUserTransaction)
                                     <div class="intro-x">
-                                        <div class="box px-0 py-2 mb-2 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="Midone - HTML Admin Template" src="/dist/images/profile-9.jpg">
+                                        <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
+                                            <div class="w-8 h-8 mr-2">
+                                                @php
+                                                    $str = $recentUserTransaction->meta['second_beneficiary_name'];
+                                                    $name = explode(' ', $str);
+                                                    $fname = substr($name[0], 0, 1);
+                                                    $lname = substr(@$name[1], 0, 1);
+                                                @endphp
+                                                <div
+                                                    class="dark:bg-darkmode-400 dark:border-darkmode-400 bg-gray-200 bg-theme-14 text-theme-10 w-10 h-10 relative rounded-full">
+                                                    <span class="recent-activity">
+                                                        @isset($recentUserTransaction->meta['second_beneficiary_name']) {{ ucfirst($fname) }}
+                                                            {{ ucfirst($lname) }}
+                                                        @else
+                                                            {{ ucfirst(substr($recentUserTransaction->meta['second_beneficiary_name'], 0, 1)) }}
+                                                        @endif
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div class="ml-3 mr-auto">
-                                                <div class="font-medium">{{ $recentUserTransaction->meta['second_beneficiary_name'] }}</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">{{ $recentUserTransaction->created_at }}</div>
+                                                <div class="font-medium">
+                                                    {{ $recentUserTransaction->meta['second_beneficiary_name'] }}</div>
+                                                <div class="text-slate-500 text-xs mt-0.5">
+                                                    {{ $recentUserTransaction->created_at }}</div>
                                             </div>
-                                            <div class="text-danger">-{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentUserTransaction->amount, $recentUserTransaction->meta['base_currency']) }}</div>
+                                            <div class="text-danger">
+                                                -{{ \Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($recentUserTransaction->amount, $recentUserTransaction->meta['base_currency']) }}
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -174,12 +226,6 @@
             const data = {
                 labels: labels,
                 datasets: [
-                    //     {
-                    //     label: 'PAID IN',
-                    //     fill: false,
-                    //     borderColor: '#002366', // Add custom color border (Line)
-                    //     data: JSON.parse(creditChartTransaction),
-                    // },
                     {
                         label: 'PAID OUT',
                         fill: false,
@@ -195,11 +241,9 @@
                 type: 'bar',
                 data,
 
-
-
             };
 
-            report_line_chart_data = document.getElementById("chartLine").getContext('2d');
+            var report_line_chart_data = document.getElementById("chartLine").getContext('2d');
 
             if (chartLine !== null) {
                 chartLine.destroy();
@@ -209,12 +253,16 @@
                 report_line_chart_data,
                 configLineChart
             );
+
         }
 
         $(function() {
             transactionChart();
         });
+
     </script>
+
+
     <script>
         const dataTransactionDoughnut = {
             labels: {!! json_encode($pieChartTransactions->pluck('label')) !!},

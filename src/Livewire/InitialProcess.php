@@ -10,7 +10,10 @@ use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
+use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
+
+use function PHPUnit\Framework\isEmpty;
 
 class InitialProcess extends Component
 {
@@ -44,6 +47,8 @@ class InitialProcess extends Component
 
     public $feeMethod;
 
+    public $countryCurrency;
+
     protected $listeners = [
         'changeToMethod',
     ];
@@ -65,6 +70,8 @@ class InitialProcess extends Component
         $this->currency_from = Country::whereCode('UK')->first()->id;
 
         $this->currency_to =  Country::whereCode('IN')->first()->id;
+
+        $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
 
         $this->getDetails();
 
@@ -152,25 +159,64 @@ class InitialProcess extends Component
             $service = new CurrencyCloudApiService();
 
             $param = [
-                'buy_currency' => $this->from,
-                'sell_currency' => $this->to,
+                'buy_currency' => $this->to,
+                'sell_currency' => $this->from,
                 'amount' => $this->amount,
                 'fixed_side' => 'sell',
                 'conversion_date' => Carbon::now()->format('Y-m-d'),
             ];
-            $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
 
+            $response = $service->getDetailedRate(new RateDetailedExchangeDto($param));
             if($response['code'] == 200)
             {
-                $exchangeRate = $response['core_rate'];
-            }else{
-                $exchangeRate = 1;
+                Setting::updateOrCreate(['key' => 'currency_cloud_exchange_rate'],['key' => 'currency_cloud_exchange_rate', 'value' => $response['core_rate']]);
+                $currencyCloudExchnageRate = Setting::getValue('currency_cloud_exchange_rate');
+                if(!is_null($currencyCloudExchnageRate))
+                {
+                    $exchangeRate = $currencyCloudExchnageRate;
+                }
+                else{
+                    $exchangeRate = 1;
+                }
+            }
+            else
+            {
+                $currencyCloudExchnageRate = Setting::getValue('currency_cloud_exchange_rate');
+                if(!is_null($currencyCloudExchnageRate))
+                {
+                    $exchangeRate = $currencyCloudExchnageRate;
+                }
+                else{
+                    $exchangeRate = 1;
+                }
             }
 
         }else{
             $exchangeRate = Helper::getExchangeRate($this->from, $this->to);
         }
 
+        if (config('services.registration_changed') == true)
+        {
+            $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+
+            if(isEmpty($exchangeRates == 'exchangerate_info')){
+                if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+                {
+                    $exchangeRate = @$exchangeRates->value['customized_rate'];
+                }
+                else
+                {
+                    $percentage = @$exchangeRates->value['percentage'];
+                    $percent = $percentage / 100  * $exchangeRate;
+                    if( @$exchangeRates->value['percentage_rate'] == 'plus')
+                    {
+                        $exchangeRate = $exchangeRate + $percent;
+                    }else{
+                        $exchangeRate = $exchangeRate - $percent;
+                    }
+                }
+            }
+        }
 
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;

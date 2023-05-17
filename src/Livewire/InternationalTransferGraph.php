@@ -11,7 +11,9 @@ class InternationalTransferGraph extends Component
 {
     private $months = [];
 
-    public $selectedYear, $creditTransactionGraphData, $debitTransactionGraphData;
+    public $selectedYear, $creditTransactionGraphData;
+
+    public $debitTransactionGraphData;
 
     public $years = [];
 
@@ -37,10 +39,12 @@ class InternationalTransferGraph extends Component
 
         $currentWorkspaceId = app('activeWorkspaceId');
 
-        $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->get();
+
+        $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->get();
 
         $debitTransactionGraphData = collect($this->months)->map(function ($month) use ($debitTransactionGraph) {
             $record = $debitTransactionGraph->where('label', $month)->first();
+
 
             if (!is_null($record)) {
                 return $record->data;
@@ -48,7 +52,6 @@ class InternationalTransferGraph extends Component
 
             return 0;
         });
-
 
         $this->debitTransactionGraphData = $debitTransactionGraphData;
 

@@ -8,7 +8,6 @@ use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\InternationalTransfer\Enums\Permission;
 use Kanexy\PartnerFoundation\Core\Enums\Permission as EnumsPermission;
 
-
 class InternationalTransferMenu extends Item
 {
     public int $priority = 9999;
@@ -35,7 +34,6 @@ class InternationalTransferMenu extends Item
         $user = Auth::user();
 
         $menus = [];
-
         if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE) && !$user->isSuperAdmin()) {
             $menus[] = new MenuItem('Money Transfer', 'activity', url: route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
@@ -55,7 +53,6 @@ class InternationalTransferMenu extends Item
         if ($user->hasAnyPermission(Permission::TRANSFER_REASON_CREATE, Permission::TRANSFER_REASON_VIEW, Permission::TRANSFER_TYPE_FEE_VIEW, Permission::TRANSFER_TYPE_FEE_CREATE, Permission::FEE_VIEW, Permission::FEE_CREATE, Permission::MASTER_ACCOUNT_VIEW, Permission::MASTER_ACCOUNT_CREATE)) {
             $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.international-transfer.transfer-type-fee.index'));
         }
-
 
         return $menus;
     }
