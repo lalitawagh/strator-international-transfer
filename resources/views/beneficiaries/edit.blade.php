@@ -88,7 +88,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="email" class="form-label sm:w-30">Email Address</label>
                                 <div class="sm:w-5/6">
@@ -102,7 +101,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0 contact-company hidden">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="company_name" class="form-label sm:w-30">Company Name <span
@@ -111,28 +109,13 @@
                                     <input id="company_name" name="company_name" type="text"
                                         class="form-control @error('company_name') border-theme-6 @enderror"
                                         value="{{ old('company_name', $beneficiary->display_name) }}">
-
                                     @error('company_name')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="email" class="form-label sm:w-30">Email Address</label>
-                                <div class="sm:w-5/6">
-                                    <input id="email" name="email" type="email"
-                                        class="form-control @error('email') border-theme-6 @enderror"
-                                        value="{{ old('email', $beneficiary->email) }}">
-
-                                    @error('email')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
-
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
+                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="landline" class="form-label sm:w-30">Landline No.</label>
                                 <div class="sm:w-5/6">
@@ -160,7 +143,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="bank_account_name" class="form-label sm:w-30"> Account Name <span
@@ -192,7 +174,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="bank_code" class="form-label sm:w-30"> Sort Code <span
@@ -224,8 +205,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
+                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="avatar" class="form-label sm:w-30">Avatar</label>
                                 <div class="sm:w-5/6">
@@ -267,6 +247,7 @@
                                 </div>
                             </div>
                         </div>
+                           
 
                         <div class="text-right mt-5">
                             <a id="BeneficiaryEditeCancel"
