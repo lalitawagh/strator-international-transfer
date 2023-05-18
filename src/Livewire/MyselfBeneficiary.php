@@ -86,9 +86,6 @@ class MyselfBeneficiary extends Component
 
     public $cnaps_number;
 
-
-
-
     protected function rules()
     {
         return  [
