@@ -112,6 +112,8 @@ class MyselfBeneficiary extends Component
             'meta.ach_routing_number' => ['string', 'numeric'],
             'meta.bsb_number' => ['string', 'numeric'],
             'meta.aba_number' => ['string', 'numeric'],
+            'meta.bic_number' => ['string', 'numeric'],
+            'meta.cnaps_number' => ['string', 'numeric'],
         ];
     }
 
@@ -133,6 +135,8 @@ class MyselfBeneficiary extends Component
         'meta.ach_routing_number' => 'ACH Routing Number',
         'meta.bsb_number' => 'BSB Number',
         'meta.aba_number' => 'ABA Number',
+        'meta.bic_number' => 'BIC Number',
+        'meta.cnaps_number' => 'CNAPS Number',
     ];
 
     protected function messages()
@@ -145,6 +149,8 @@ class MyselfBeneficiary extends Component
             'meta.ach_routing_number' => 'The ACH Routing Number field is required',
             'meta.bsb_number' => 'The BSB Number field is required',
             'meta.aba_number' => 'The ABA Number field is required',
+            'meta.bic_number' => 'The BIC Number field is required',
+            'meta.cnaps_number' => 'The CNAPS Number field is required',
         ];
     }
 
