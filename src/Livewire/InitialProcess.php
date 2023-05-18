@@ -199,7 +199,31 @@ class InitialProcess extends Component
         {
             $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
-            if(isEmpty($exchangeRates == 'exchangerate_info')){
+            $rate_type = Setting::getValue('cc_rate_type',[]);
+            $customized_rate = Setting::getValue('cc_customized_rate',[]);
+            $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
+            $percentage = Setting::getValue('cc_percentage',[]);
+
+            if(is_null($exchangeRates))
+            {
+                if($rate_type == 'cc_customize_rate')
+                {
+                    $exchangeRate = $customized_rate;
+                }
+                else
+                {
+                    $percentage = $percentage;
+                    $percent = $percentage / 100  * $exchangeRate;
+                    if( @$percentage_rate == 'plus')
+                    {
+                        $exchangeRate = $exchangeRate + $percent;
+                    }else
+                    {
+                        $exchangeRate = $exchangeRate - $percent;
+                    }
+                }
+            }
+            else{
                 if(@$exchangeRates->value['rate_type'] == 'customize_rate')
                 {
                     $exchangeRate = @$exchangeRates->value['customized_rate'];
@@ -216,8 +240,8 @@ class InitialProcess extends Component
                     }
                 }
             }
-        }
 
+        }
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;
         $this->guaranteed_rate = number_format((float) $this->guaranteed_rate, 2, '.', '');
