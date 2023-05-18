@@ -12,13 +12,13 @@
                         class="w-4 h-4 ml-2"></i></span>
             </button> --}}
             <select id="countryWithPhone" name="country_code" wire:click="selectYear($event.target.value)" data-search="true"
-            class="tail-select" autocomplete="off">
-            @foreach ($years as $year)
-                <option  value=" {{ $year }}">
-                    {{ $year }}
-                </option>
-            @endforeach
-        </select>
+                class="tail-select" autocomplete="off">
+                @foreach ($years as $year)
+                    <option  value="{{ $year }}">
+                        {{ $year }}
+                    </option>
+                @endforeach
+            </select>
             {{-- <div class="dropdown-menu w-40">
                 <ul class="dropdown-content" id="year-dropdown">
                     <li>
