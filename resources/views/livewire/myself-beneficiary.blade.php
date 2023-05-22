@@ -343,7 +343,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
-                                type="text" class="form-control" required="required">
+                                type="text" class="form-control" required="required" value="">
                             @error('meta.bank_code')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
@@ -355,7 +355,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="cnaps_number" wire:model.defer="meta.cnaps_number" name="cnaps_number"
-                                type="text" class="form-control" required="required">
+                                type="text" class="form-control" required="required" value="">
                             @error('meta.cnaps_number')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
@@ -367,7 +367,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
-                                type="text" class="form-control" required="required">
+                                type="text" class="form-control" required="required" value="">
                             @error('meta.bank_code')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
@@ -379,7 +379,7 @@
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="ach_routing_number" wire:model.defer="meta.ach_routing_number" name="ach_routing_number"
-                                type="text" class="form-control" required="required">
+                                type="text" class="form-control" required="required" value="">
                             @error('meta.ach_routing_number')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
