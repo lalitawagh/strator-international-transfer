@@ -216,20 +216,20 @@
                             @enderror
                         </div>
                     </div>
-                   
-                    @if ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::IB)
+                    
+                    @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::IB]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="bsb_number" class="form-label sm:w-40">BSB Code<span
+                        <label for="iban_number" class="form-label sm:w-40">IBAN <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
-                            <input id="bsb_number" wire:model.defer="meta.bsb_number" name="bsb_number"
+                            <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
                                 type="text" class="form-control" required="required" value="">
-                            @error('meta.bsb_number')
+                            @error('meta.iban_number')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BIA) 
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BIA])) 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bic_number" class="form-label sm:w-40">BIC/SWIFT<span
                                 class="text-theme-6">*</span></label>
@@ -241,7 +241,7 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BAP)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BAP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bsb_number" class="form-label sm:w-40">BSB Code<span
                                 class="text-theme-6">*</span></label>
@@ -253,7 +253,7 @@
                             @enderror
                         </div>
                     </div> 
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::AASP)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::AASP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="aba_number" class="form-label sm:w-40">ABA Code <span
                                 class="text-theme-6">*</span></label>
@@ -265,7 +265,7 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BBSP)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBSP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bank_code" class="form-label sm:w-40">Bank Code <span
                                 class="text-theme-6">*</span></label>
@@ -277,9 +277,9 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::I)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::I]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="iban_number" class="form-label sm:w-40">IFSC Code / IBAN <span
+                        <label for="iban_number" class="form-label sm:w-40">IBAN <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
@@ -289,7 +289,7 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BASP)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BASP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bic_number" class="form-label sm:w-40">BIC/SWIFT<span
                                 class="text-theme-6">*</span></label>
@@ -301,7 +301,7 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BA)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BA]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bank_code" class="form-label sm:w-40">Bank Code <span
                                 class="text-theme-6">*</span></label>
@@ -313,19 +313,19 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BCSP)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BCSP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="bic_number" class="form-label sm:w-40">BIC<span
+                        <label for="bic_number" class="form-label sm:w-40">BIC/SWIFT<span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
-                                type="text" class="form-control" required="required">
+                                type="text" class="form-control" required="required" value="">
                             @error('meta.bic_number')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::AI)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::AI]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="iban_number" class="form-label sm:w-40">IFSC Code / IBAN <span
                                 class="text-theme-6">*</span></label>
@@ -337,7 +337,7 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BBA)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBA]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bank_code" class="form-label sm:w-40">Bank Code <span
                                 class="text-theme-6">*</span></label>
@@ -349,7 +349,7 @@
                             @enderror
                         </div>
                     </div>
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::CB)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::CB]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="cnaps_number" class="form-label sm:w-40">CNAPS<span
                                 class="text-theme-6">*</span></label>
@@ -361,7 +361,7 @@
                             @enderror
                         </div>
                     </div> 
-                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::SA)
+                    @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::SA]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bank_code" class="form-label sm:w-40">Sort Code <span
                                 class="text-theme-6">*</span></label>
@@ -373,7 +373,7 @@
                             @enderror
                         </div>
                     </div>
-                    else
+                    @else
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="ach_routing_number" class="form-label sm:w-40">ACH Routing<span
                                 class="text-theme-6">*</span></label>
