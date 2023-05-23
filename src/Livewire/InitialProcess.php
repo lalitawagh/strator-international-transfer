@@ -199,10 +199,10 @@ class InitialProcess extends Component
         {
             $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
-            $rate_type = Setting::getValue('cc_rate_type',[]);
-            $customized_rate = Setting::getValue('cc_customized_rate',[]);
-            $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
-            $percentage = Setting::getValue('cc_percentage',[]);
+            $rate_type = Setting::getValue('cc_rate_type');
+            $customized_rate = Setting::getValue('cc_customized_rate');
+            $percentage_rate = Setting::getValue('cc_percentage_rate');
+            $percentage = Setting::getValue('cc_percentage');
 
             if(is_null($exchangeRates))
             {
