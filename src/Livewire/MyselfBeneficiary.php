@@ -151,7 +151,6 @@ class MyselfBeneficiary extends Component
         ];
     }
 
-
     public function mount($countries, $defaultCountry, $user, $workspace, $beneficiaryType)
     {
         $this->countries = $countries;
