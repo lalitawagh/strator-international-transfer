@@ -20,10 +20,10 @@ class ShortCode extends Enum
     public const CB = 'Cb';
     public const SA = 'Sa';
 
-    public const SHORT_CODE = 
-    [
+    public const SHORT_CODE = [
+
         self::IB => ['AE','CH','CZ','IL','PL','SA','BG','BH','QA','TR','PK','LI'],
-        self::BIA => ['ID','JP','PH','SG','TH','ZA','NZ','OM','UG'],
+        self::BIA => ['SG','TH','ZA','NZ','OM','UG','ID','JP','PH'],
         self::BAP => ['AU'],
         self::AASP => ['US'],
         self::BBSP => ['CA'],

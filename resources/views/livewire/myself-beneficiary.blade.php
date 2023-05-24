@@ -292,7 +292,7 @@
                     </div>
                     @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BASP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="bic_number" class="form-label sm:w-40">BIC/SWIFT<span
+                        <label for="bic_number" class="form-label sm:w-40">BIC / SWIFT<span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
@@ -316,7 +316,7 @@
                     </div>
                     @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BCSP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="bic_number" class="form-label sm:w-40">BIC/SWIFT<span
+                        <label for="bic_number" class="form-label sm:w-40">BIC / SWIFT<span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
@@ -387,6 +387,7 @@
                         <div>
                     </div>
                     @endif
+                    
 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="avatar" class="form-label sm:w-40">Avatar</label>
