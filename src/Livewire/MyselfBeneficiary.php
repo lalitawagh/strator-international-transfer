@@ -8,9 +8,9 @@ use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
-use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
+use Kanexy\InternationalTransfer\Enums\ShortCode;
 use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -53,6 +53,8 @@ class MyselfBeneficiary extends Component
 
     public $sort_no;
 
+    public $ach_routing_number;
+
     public $note;
 
     public $avatar;
@@ -75,6 +77,16 @@ class MyselfBeneficiary extends Component
 
     public $receiving_country;
 
+    public $bsb_number;
+
+    public $aba_number;
+
+    public $bic_number;
+
+    public $cnaps_number;
+
+
+
 
     protected function rules()
     {
@@ -96,6 +108,9 @@ class MyselfBeneficiary extends Component
             'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits_between:8,16'],
             'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
+            'meta.ach_routing_number' => ['string', 'numeric'],
+            'meta.bsb_number' => ['string', 'numeric'],
+            'meta.aba_number' => ['string', 'numeric'],
         ];
     }
 
@@ -114,6 +129,9 @@ class MyselfBeneficiary extends Component
         'meta.bank_country' => 'country',
         'meta.benficiary_address' => 'Address',
         'meta.benficiary_city' => 'City',
+        'meta.ach_routing_number' => 'ACH Routing Number',
+        'meta.bsb_number' => 'BSB Number',
+        'meta.aba_number' => 'ABA Number',
     ];
 
     protected function messages()
@@ -122,7 +140,10 @@ class MyselfBeneficiary extends Component
             'meta.bank_code.required_if' => 'The sort code field is required.',
             'meta.iban_number.required' => 'The IFSC code/ IBAN field is required.',
             'meta.bank_account_name.regex' =>'Account Name contains Letters and Spaces Only',
-            'meta.beneficiary_address.required' => 'The address field is required'
+            'meta.beneficiary_address.required' => 'The address field is required',
+            'meta.ach_routing_number' => 'The ACH Routing Number field is required',
+            'meta.bsb_number' => 'The BSB Number field is required',
+            'meta.aba_number' => 'The ABA Number field is required',
         ];
     }
 
@@ -164,7 +185,7 @@ class MyselfBeneficiary extends Component
     {
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $data =  $this->validate();
-
+        
         if(isset($data['meta']['bank_code']))
         {
             $contactExist = Contact::beneficiaries()->verified()
@@ -172,11 +193,41 @@ class MyselfBeneficiary extends Component
             ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
             ->where('meta->bank_code', $data['meta']['bank_code'])
             ->first();
-        }else{
+        }elseif (isset($data['meta']['iban_number'])){
             $contactExist = Contact::beneficiaries()->verified()
             ->where("workspace_id", $this->workspace_id)
             ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
             ->where('meta->iban_number', $data['meta']['iban_number'])
+            ->first();
+        }elseif (isset($data['meta']['bsb_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->bsb_number', $data['meta']['bsb_number'])
+            ->first();
+        }elseif (isset($data['meta']['aba_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->aba_number', $data['meta']['aba_number'])
+            ->first();
+        }elseif (isset($data['meta']['bic_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->bic_number', $data['meta']['bic_number'])
+            ->first();
+        }elseif (isset($data['meta']['cnaps_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->cnaps_number', $data['meta']['cnaps_number'])
+            ->first();
+        }else{
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
             ->first();
         }
 
@@ -224,7 +275,6 @@ class MyselfBeneficiary extends Component
             /** @var \App\Models\User $user */
             $user = auth()->user();
             $this->contact = $contact;
-
             $transactionOtpService = Setting::getValue('transaction_otp_service');
 
             if($transactionOtpService == 'email')
@@ -262,3 +312,4 @@ class MyselfBeneficiary extends Component
         return view('international-transfer::livewire.myself-beneficiary');
     }
 }
+ 

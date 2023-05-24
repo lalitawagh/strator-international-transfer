@@ -217,20 +217,152 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="iban_number" class="form-label sm:w-52">IFSC Code / IBAN <span
-                                class="text-theme-6">*</span></label>
-                        <div class="sm:w-5/6">
-                            <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
-                                type="text" class="form-control" required="required">
-                            @error('meta.iban_number')
-                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                            @enderror
+                    @if ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::IB)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bsb_number" class="form-label sm:w-52">BSB Code<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bsb_number" wire:model.defer="meta.bsb_number" name="bsb_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.bsb_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-
-                    @if ($receiving_country == 'UK')
-                        <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BIA)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bic_number" class="form-label sm:w-52">BIC/SWIFT<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.bic_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BAP)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bsb_number" class="form-label sm:w-52">BSB Code<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bsb_number" wire:model.defer="meta.bsb_number" name="bsb_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.bsb_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::AASP)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="aba_number" class="form-label sm:w-52">ABA Code <span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="aba_number" wire:model.defer="meta.aba_number" name="aba_number"
+                                    type="text" class="form-control" required="required">
+                                @error('meta.aba_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BBSP)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bank_code" class="form-label sm:w-52">Bank Code <span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
+                                    type="text" class="form-control" required="required">
+                                @error('meta.bank_code')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::I)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="iban_number" class="form-label sm:w-52">IFSC Code / IBAN <span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.iban_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BASP)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bic_number" class="form-label sm:w-52">BIC/SWIFT<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.bic_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BA)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bank_code" class="form-label sm:w-52">Bank Code <span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
+                                    type="text" class="form-control" required="required">
+                                @error('meta.bank_code')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BCSP)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bic_number" class="form-label sm:w-52">BIC<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
+                                    type="text" class="form-control" required="required">
+                                @error('meta.bic_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::AI)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="iban_number" class="form-label sm:w-52">IFSC Code / IBAN <span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="iban_number" wire:model.defer="meta.iban_number" name="iban_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.iban_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::BBA)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bank_code" class="form-label sm:w-52">Bank Code <span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bank_code" wire:model.defer="meta.bank_code" name="bank_code"
+                                    type="text" class="form-control" required="required">
+                                @error('meta.bank_code')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::CB)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="cnaps_number" class="form-label sm:w-52">CNAPS<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="cnaps_number" wire:model.defer="meta.cnaps_number" name="cnaps_number"
+                                    type="text" class="form-control" required="required">
+                                @error('meta.cnaps_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @elseif ($receiving_country == \Kanexy\InternationalTransfer\Enums\ShortCode::SA)
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
                             <label for="bank_code" class="form-label sm:w-52">Sort Code <span
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
@@ -241,8 +373,20 @@
                                 @enderror
                             </div>
                         </div>
+                        else
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="ach_routing_number" class="form-label sm:w-52">ACH Routing<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="ach_routing_number" wire:model.defer="meta.ach_routing_number"
+                                    name="ach_routing_number" type="text" class="form-control"
+                                    required="required">
+                                @error('meta.ach_routing_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     @endif
-
 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="avatar" class="form-label sm:w-52">Avatar</label>
