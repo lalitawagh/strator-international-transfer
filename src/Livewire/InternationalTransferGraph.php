@@ -24,7 +24,7 @@ class InternationalTransferGraph extends Component
         $this->selectedYear = date('Y');
         $this->selectYear($this->selectedYear);
     }
-
+    
     public function selectYear($year)
     {
         $this->selectedYear = $year;

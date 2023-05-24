@@ -36,10 +36,10 @@
     <canvas id="chartLine" class="h-full w-full"></canvas>
 </div>
 
-<script>
+<!-- <script>
     document.addEventListener('livewire:load', function() {
         Livewire.on('closeDropdown', function() {
             $("#year-dropdown").dropdown("hide");
         });
     });
-</script>
+</script> -->
