@@ -235,7 +235,7 @@ class MyselfBeneficiary extends Component
             ->first();
         }
 
-
+        
         if(!is_null($contactExist))
         {
             $this->addError('meta.bank_account_number', 'The beneficiary with this account number has already been created.');
