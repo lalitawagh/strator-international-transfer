@@ -8,7 +8,6 @@ use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
-use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
 use Kanexy\InternationalTransfer\Enums\ShortCode;
@@ -85,7 +84,6 @@ class MyselfBeneficiary extends Component
     public $bic_number;
 
     public $cnaps_number;
-
 
     protected function rules()
     {
@@ -278,7 +276,6 @@ class MyselfBeneficiary extends Component
             /** @var \App\Models\User $user */
             $user = auth()->user();
             $this->contact = $contact;
-
             $transactionOtpService = Setting::getValue('transaction_otp_service');
 
             if($transactionOtpService == 'email')

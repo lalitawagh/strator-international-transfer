@@ -25,7 +25,7 @@
                                     <div class="flex sm:flex-col sm:flex-row mt-0">
                                         <div class="form-check mr-2">
                                             <input id="type-personal" class="form-check-input contact-type" type="radio"
-                                                name="type" value="personal"
+                                                name="type" value="personal" onclick='window.location.reload(true)'
                                                 @if (old('type', $beneficiary->type) == 'personal') checked @endif>
                                             <label class="form-check-label" for="type-personal">Personal</label>
                                         </div>
@@ -283,6 +283,7 @@
 
 @push('scripts')
     <script>
+
         function contactTypeChange(val) {
             if (val == "{{ \Kanexy\PartnerFoundation\Cxrm\Enums\ContactType::COMPANY }}") {
                 $(".contact-company").removeClass('hidden hiddenform');
@@ -311,6 +312,7 @@
         $(".contact-type").each(function() {
             if ($(this).is(':checked')) {
                 contactTypeChange($(this).val());
+                ("#first_name, #middle_name, #last_name").val('')
             }
         });
 

@@ -388,7 +388,6 @@
                     </div>
                     @endif
                     
-
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="avatar" class="form-label sm:w-40">Avatar</label>
                         <div class="sm:w-5/6">
