@@ -10,30 +10,30 @@ class ShortCode extends Enum
     public const BIA = 'Bia';
     public const BAP = 'Bap';
     public const AASP = 'Aasp';
-    public const BBSP = 'BBSP';
+    public const BBSP = 'Bbsp';
     public const I = 'I';
     public const BASP = 'Basp';
     public const BA = 'Ba';
-    public const BCSP = 'BCSP';
+    public const BCSP = 'Bcsp';
     public const AI = 'Ai';
-    public const BBA = 'BBA';
+    public const BBA = 'Bba';
     public const CB = 'Cb';
     public const SA = 'Sa';
 
     public const SHORT_CODE = [
-        self::IB => 'Ib',
-        self::BIA => 'Bia',
-        self::BAP => 'Bap',
-        self::AASP => 'Aasp',
-        self::BBSP => 'Bbsp',
-        self::I => 'I',
-        self::BASP => 'Basp',
-        self::BA => 'Ba',
-        self::AI => 'Ai',
-        self::BCSP => 'Bcsp',
-        self::BBA => 'Bba',
-        self::CB => 'Cb',
-        self::SA => 'Sa'
+        self::IB => ['AE','CH','CZ','IL','PL','SA','BG','BH','QA','TR','PK','LI'],
+        self::BIA => ['SG','TH','ZA','NZ','OM','UG','ID','JP','PH',],
+        self::BAP => ['AU'],
+        self::AASP => ['US'],
+        self::BBSP => ['CA'],
+        self::I => ['RO','CZ','AD','HU'],
+        self::BASP => ['US'],
+        self::BA => ['DK','KE','KW','NO','SE','SG'],
+        self::BCSP => ['MX'],
+        self::AI => ['IN'],
+        self::BBA => ['HK'],
+        self::CB => ['CN'],
+        self::SA => ['GB'],
     ];
 
 }
