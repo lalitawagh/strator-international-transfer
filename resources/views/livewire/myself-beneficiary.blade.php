@@ -217,7 +217,6 @@
                         </div>
                     </div>
 
-                    
                     @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::IB]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="iban_number" class="form-label sm:w-40">IBAN <span
@@ -290,6 +289,7 @@
                             @enderror
                         </div>
                     </div>
+                    
                     @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BASP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bic_number" class="form-label sm:w-40">BIC / SWIFT<span
