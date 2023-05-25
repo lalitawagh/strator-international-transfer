@@ -900,4 +900,16 @@ class MoneyTransferController extends Controller
             'message' => 'The money transfer request declined .',
         ]);
     }
+
+    public function archivedTransactions(Request $request)
+    {
+        $user = Auth::user();
+        $workspace = null;
+
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        }
+
+        return view('international-transfer::money-transfer.archived-transactions', compact('user','workspace'));
+    }
 }
