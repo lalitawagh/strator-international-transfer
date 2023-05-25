@@ -66,9 +66,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource('agent', AgentController::class);
                 Route::get('agent-detail/{id}', [AgentController::class, 'agentDetail'])->name('agent-detail');
                 Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
-                
-                
-        
+                Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

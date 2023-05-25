@@ -8,6 +8,10 @@
                     <h2 class="font-medium text-base mr-auto">
                         Money Transfer
                     </h2>
+                    @if(auth()->user()->isSuperAdmin())
+                    <a id="assetClassCreateNew" href="{{ route('dashboard.international-transfer.archivedTransactions')}}"
+                    class="btn btn-sm btn-primary shadow-md">Archived Money Transfer Transactions</a> 
+                    @endif
                     @if ($user->isSubscriber())
                         @can(\Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy::CREATE,
                             \Kanexy\InternationalTransfer\Contracts\MoneyTransfer::class)
