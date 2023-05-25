@@ -35,6 +35,16 @@ class MoneyTransfer extends Transaction
         return true;
     }
 
+    public static function setArchived()
+    {
+        return false;
+    }
+
+    public static function setUnArchived()
+    {
+        return false;
+    }
+
     public static function setRecordsToDownload($records, $type)
     {
         $list = collect();
