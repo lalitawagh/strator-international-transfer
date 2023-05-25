@@ -71,7 +71,7 @@ class InitialProcess extends Component
 
         $this->currency_to =  Country::whereCode('IN')->first()->id;
 
-        $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
+        $this->countryCurrency = Country::whereIn('currency',['AUD','CAD','CZK','DKK','EUR','GBP','USD','HUF','INR','NOK','RON','SEK'])->get();
 
         $this->getDetails();
 
