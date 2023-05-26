@@ -205,6 +205,20 @@
                             @enderror
                         </div>
                     </div>
+
+                    @if($receiving_country == 'CA')
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="branch_code" class="form-label sm:w-40">Branch Code <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="branch_code" wire:model.defer="meta.branch_code" name="branch_code"
+                                type="text" class="form-control" required="required" value="">
+                            @error('meta.branch_code')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @endif
                     
                     <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
                     @unless (in_array($receiving_country, ['AD', 'HU', 'RO']))
@@ -291,8 +305,7 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    
+                    </div>                  
                     @elseif (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BASP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="bic_number" class="form-label sm:w-40">BIC / SWIFT<span
@@ -401,7 +414,9 @@
                             @enderror
                         </div>
                     </div>
+
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        @unless (in_array($receiving_country, ['CA']))
                         <label for="benficiary_address" class="form-label sm:w-52">Address <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
@@ -411,8 +426,39 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
+                        @endunless
                     </div>
+
+                    @if ($receiving_country == 'CA')
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="post_code" class="form-label sm:w-40">Post Code <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="post_code" wire:model.defer="meta.post_code" name="post_code"
+                                type="text" class="form-control" required="required" value="">
+                            @error('meta.post_code')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @endif
+
+                    @if($receiving_country == 'CA')
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="benficiary_state" class="form-label sm:w-52">State/Privence <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="benficiary_state" wire:model.defer="meta.benficiary_state"
+                                name="benficiary_state" type="text" class="form-control">
+                            @error('meta.benficiary_state')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        @unless (in_array($receiving_country, ['CA']))
                         <label for="benficiary_city" class="form-label sm:w-52">City <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
@@ -422,7 +468,9 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
+                        @endunless
                     </div>
+
                     <div class="col-span-12 md:col-span-6 form-inline mt-2" style="align-items: initial;">
                         <label for="note" class="form-label sm:w-52">Notes </label>
                         <div class="sm:w-5/6">
