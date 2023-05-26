@@ -105,11 +105,11 @@ class MyselfBeneficiary extends Component
             'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits_between:8,16'],
             'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
-            'meta.ach_routing_number' => ['string', 'numeric'],
-            'meta.bsb_number' => ['string', 'numeric'],
-            'meta.aba_number' => ['string', 'numeric'],
-            'meta.bic_number' => ['string', 'numeric'],
-            'meta.cnaps_number' => ['string', 'numeric'],
+            'meta.ach_routing_number' => ['required', 'numeric'],
+            'meta.bsb_number' => ['required', 'numeric'],
+            'meta.aba_number' => ['required', 'numeric'],
+            'meta.bic_number' => ['required', 'numeric'],
+            'meta.cnaps_number' => ['required', 'numeric'],
         ];
     }
 
