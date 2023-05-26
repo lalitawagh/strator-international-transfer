@@ -205,9 +205,10 @@
                             @enderror
                         </div>
                     </div>
+                    
                     <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                        <label for="bank_account_number" class="form-label sm:w-52">Account No <span
-                                class="text-theme-6">*</span></label>
+                    @unless (in_array($receiving_country, ['AD', 'HU', 'RO']))
+                        <label for="bank_account_number" class="form-label sm:w-52">Account No <span class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bank_account_number" wire:model.defer="meta.bank_account_number"
                                 name="bank_account_number" type="text" class="form-control" required="required">
@@ -215,7 +216,9 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
+                    @endunless
                     </div>
+                    
 
                     @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::IB]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
@@ -374,7 +377,7 @@
                             @enderror
                         </div>
                     </div>
-                    @else
+                    <!-- @else
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="ach_routing_number" class="form-label sm:w-40">ACH Routing<span
                                 class="text-theme-6">*</span></label>
@@ -385,7 +388,7 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         <div>
-                    </div>
+                    </div> -->
                     @endif
                     
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">

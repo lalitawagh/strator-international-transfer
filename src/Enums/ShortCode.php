@@ -24,7 +24,7 @@ class ShortCode extends Enum
         self::IB => ['AE','CH','CZ','IL','PL','SA','BG','BH','QA','TR','PK','LI'],
         self::BIA => ['SG','TH','ZA','NZ','OM','UG','ID','JP','PH',],
         self::BAP => ['AU'],
-        self::AASP => ['US'],
+        self::AASP => ['US','AS'],
         self::BBSP => ['CA'],
         self::I => ['RO','CZ','AD','HU'],
         self::BASP => ['US'],
