@@ -206,7 +206,7 @@
                         </div>
                     </div>
 
-                    @if($receiving_country == 'CA')
+                    @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBSP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="branch_code" class="form-label sm:w-40">Branch Code <span
                                 class="text-theme-6">*</span></label>
@@ -390,18 +390,6 @@
                             @enderror
                         </div>
                     </div>
-                    <!-- @else
-                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        <label for="ach_routing_number" class="form-label sm:w-40">ACH Routing<span
-                                class="text-theme-6">*</span></label>
-                        <div class="sm:w-5/6">
-                            <input id="ach_routing_number" wire:model.defer="meta.ach_routing_number" name="ach_routing_number"
-                                type="text" class="form-control" required="required" value="">
-                            @error('meta.ach_routing_number')
-                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                            @enderror
-                        <div>
-                    </div> -->
                     @endif
                     
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
@@ -429,7 +417,7 @@
                         @endunless
                     </div>
 
-                    @if ($receiving_country == 'CA')
+                    @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BAP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="post_code" class="form-label sm:w-40">Post Code <span
                                 class="text-theme-6">*</span></label>
@@ -443,7 +431,49 @@
                     </div>
                     @endif
 
-                    @if($receiving_country == 'CA')
+                    @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::AASP]))
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="post_code" class="form-label sm:w-40">Post Code <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="post_code" wire:model.defer="meta.post_code" name="post_code"
+                                type="text" class="form-control" required="required" value="">
+                            @error('meta.post_code')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @endif
+
+                    @if(in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::AASP]))
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="benficiary_state" class="form-label sm:w-52">State/Privence <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="benficiary_state" wire:model.defer="meta.benficiary_state"
+                                name="benficiary_state" type="text" class="form-control">
+                            @error('meta.benficiary_state')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @endif
+
+                    @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBSP]))
+                    <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <label for="post_code" class="form-label sm:w-40">Post Code <span
+                                class="text-theme-6">*</span></label>
+                        <div class="sm:w-5/6">
+                            <input id="post_code" wire:model.defer="meta.post_code" name="post_code"
+                                type="text" class="form-control" required="required" value="">
+                            @error('meta.post_code')
+                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    @endif
+
+                    @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBSP]))
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
                         <label for="benficiary_state" class="form-label sm:w-52">State/Privence <span
                                 class="text-theme-6">*</span></label>
