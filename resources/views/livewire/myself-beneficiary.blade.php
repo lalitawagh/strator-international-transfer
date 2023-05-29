@@ -221,7 +221,6 @@
                     @endif
                     
                     <div class="col-span-12 md:col-span-6 form-inline mt-2 contact-personal visible">
-                    @unless (in_array($receiving_country, ['AD', 'HU', 'RO']))
                         <label for="bank_account_number" class="form-label sm:w-52">Account No <span class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
                             <input id="bank_account_number" wire:model.defer="meta.bank_account_number"
@@ -230,7 +229,6 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
-                    @endunless
                     </div>
                     
 
@@ -404,7 +402,6 @@
                     </div>
 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        @unless (in_array($receiving_country, ['CA']))
                         <label for="benficiary_address" class="form-label sm:w-52">Address <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
@@ -414,7 +411,6 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
-                        @endunless
                     </div>
 
                     @if (in_array($receiving_country, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BAP]))
@@ -488,7 +484,6 @@
                     @endif
 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                        @unless (in_array($receiving_country, ['CA']))
                         <label for="benficiary_city" class="form-label sm:w-52">City <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
@@ -498,7 +493,6 @@
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
-                        @endunless
                     </div>
 
                     <div class="col-span-12 md:col-span-6 form-inline mt-2" style="align-items: initial;">
