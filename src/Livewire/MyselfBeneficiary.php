@@ -109,10 +109,10 @@ class MyselfBeneficiary extends Component
             'meta.branch_code' => ['required','nullable', 'string', 'numeric'],
             'meta.post_code' => ['required','nullable', 'string', 'numeric'],
             'meta.ach_routing_number' => ['required', 'numeric'],
-            'meta.bsb_number' => ['required', 'numeric'],
-            'meta.aba_number' => ['required', 'numeric'],
-            'meta.bic_number' => ['required', 'numeric'],
-            'meta.cnaps_number' => ['required', 'numeric'],
+            'meta.bsb_number' => ['required', 'nullable', 'numeric'],
+            'meta.aba_number' => ['required', 'nullable', 'numeric'],
+            'meta.bic_number' => ['required', 'nullable', 'numeric'],
+            'meta.cnaps_number' => ['required', 'nullable', 'numeric'],
         ];
     }
 
