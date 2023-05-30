@@ -10,7 +10,7 @@
         @enderror
     </div>
 </div>
-<div class="form-inline mb-2" x-show="open" @click.outside="open = false">
+<div class="form-inline mb-2" x-show="open" >
     <label for="agent_name" class="form-label sm:w-30"> Agent Name <span class="text-theme-6">*</span> </label>
     <div class="sm:w-3/5">
         <input id="agent_name" name="agent_name" value="{{ old('agent_name') }}" type="text"
