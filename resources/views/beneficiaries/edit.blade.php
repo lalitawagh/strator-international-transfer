@@ -215,7 +215,7 @@
                                         value="{{ old('avatar') }}">
 
                                     @error('avatar')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                        <span class="block text-theme-6 mt-2"></span>
                                     @enderror
                                 </div>
                             </div>
@@ -300,5 +300,7 @@
         $(".contact-type").click(function() {
             contactTypeChange($(this).val());
         });
+
     </script>
 @endpush
+
