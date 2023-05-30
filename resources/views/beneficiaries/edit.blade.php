@@ -215,7 +215,7 @@
                                         value="{{ old('avatar') }}">
 
                                     @error('avatar')
-                                        <span class="block text-theme-6 mt-2"></span>
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
