@@ -7,9 +7,9 @@
         @if (Session::has('error'))
             <span class="block text-theme-6">{{ Session::get('error') }}</span>
         @endif
-        @error('alreadyexists')
+        <!-- @error('alreadyexists')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
-        @enderror
+        @enderror -->
         <form action="{{ route('dashboard.international-transfer.transfer-type-fee.update', $transfer_type_fee['id']) }}"
             method="POST">
             @csrf
@@ -60,7 +60,7 @@
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                 <div
                     class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2 paymentType @if (old('type', $transfer_type_fee['type']) == 'payment_type') active @else hidden @endif ">
-                    <label for="payment_type" class="form-label sm:w-30">Payment Type <span
+                    <label for="payment_type" class="form-label sm:w-30">Payment Method <span
                             class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="payment_type" id="payment_type" class="form-control"

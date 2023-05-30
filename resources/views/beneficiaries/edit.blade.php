@@ -300,5 +300,7 @@
         $(".contact-type").click(function() {
             contactTypeChange($(this).val());
         });
+
     </script>
 @endpush
+

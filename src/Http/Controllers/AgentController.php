@@ -4,6 +4,7 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\Role as EnumsRole;
 use Kanexy\Cms\I18N\Models\Country;
@@ -57,6 +58,13 @@ class AgentController extends Controller
 
     public function agentUsers(Request $request,$id)
     {
+        if(!auth()->user()->isSuperAdmin())
+        {
+            if (! Gate::allows('agent-users', $id)) {
+                abort(403);
+            }
+        }
+
         $user_id = $id;
         return view("international-transfer::agents.agent-users", compact('user_id'));
     }
