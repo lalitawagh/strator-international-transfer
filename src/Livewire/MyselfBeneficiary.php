@@ -103,7 +103,7 @@ class MyselfBeneficiary extends Component
             'meta.benficiary_city' => ['required',new AlphaSpaces,'max:40'],
             'meta.iban_number' => ['required_if:country_code,' . ShortCode::AI . ',' . ShortCode::I],
             'meta.bank_account_name' => ['required', new AlphaSpaces,'max:40'],
-            'meta.bank_account_number' => ['required', 'string', 'numeric'],
+            'meta.bank_account_number' => ['required_if:country_code,==,' . ShortCode::AI, 'string', 'numeric'],
             'meta.bank_code' => ['required_if:country_code,==,' . ShortCode::BBSP. ',' . ShortCode::SA, 'nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
             'meta.branch_code' => ['required_if:country_code,==,' . ShortCode::BBSP, 'nullable', 'string', 'numeric', 'digits:6'],
@@ -208,7 +208,6 @@ class MyselfBeneficiary extends Component
         }elseif (isset($data['meta']['iban_number'])){
             $contactExist = Contact::beneficiaries()->verified()
             ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
             ->where('meta->iban_number', $data['meta']['iban_number'])
             ->first();
         }elseif (isset($data['meta']['bsb_number'])){
