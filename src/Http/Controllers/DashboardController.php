@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Models\UserSetting;
+use Kanexy\InternationalTransfer\Models\CcAccount;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Helper;
@@ -45,7 +46,9 @@ class DashboardController extends Controller
 
         $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->latest()->take(15)->get();
         $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
+        $subAccountInfo = CcAccount::where(['holder_id' => $workspace->getKey()])->first();
+        //dd($subAccountInfo);
 
-        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'recentTransactions', 'user','yotiLog', 'check_document_results', 'recentUserTransactions', 'kycSkip'));
+        return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'recentTransactions', 'user','yotiLog', 'check_document_results', 'recentUserTransactions', 'kycSkip','subAccountInfo'));
     }
 }
