@@ -2,7 +2,7 @@
     <div class="p-0" x-data="{ selectedDiv: 'personal' }">
 
         <form>
-            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0 lg:mb-0">
+            <div class="grid grid-cols-12 md:gap-3 lg:gap-3 xl:gap-6 mt-0 lg:mb-0">
                 <div class="col-span-12 md:col-span-8 lg:col-span-6 form-inline lg:mt-0">
                     <label class="form-label sm:w-52">Contact Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 sm:pt-1">
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-0 lg:gap-10 mt-0 ihphone-scroll-height-inr">
+            <div class="grid grid-cols-12 md:gap-3 lg:gap-6 mt-0 ihphone-scroll-height-inr">
 
                 <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-0">
 
