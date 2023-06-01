@@ -85,7 +85,7 @@ class MyselfBeneficiary extends Component
 
     public $cnaps_number;
 
-    public $receiving_countrys;
+    public $receivedCountry;
 
     protected function rules()
     {
@@ -171,8 +171,7 @@ class MyselfBeneficiary extends Component
         $this->beneficiaryType = $beneficiaryType;
         $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;
         $this->receiving_country = Country::find(session('money_transfer_request.currency_code_to'))->code;
-        $this->receiving_countrys = Country::find(session('money_transfer_request.currency_code_to'))->name;
-        //dd($this->receiving_countrys);
+        $this->receivedCountry = Country::find(session('money_transfer_request.currency_code_to'))->name;
         $this->type = ($beneficiaryType == Beneficiary::MYSELF || $beneficiaryType == Beneficiary::SOMEONE_ELSE) ? 'personal': 'business';
         if(($beneficiaryType == Beneficiary::MYSELF))
         {

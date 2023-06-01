@@ -45,7 +45,7 @@
                                 @endforeach
                             </select> --}}
                             <input id="bank_country" name="bank_country" type="text"
-                                class="form-control" value="{{ $receiving_countrys }}" disabled>
+                                class="form-control" value="{{ $receivedCountry }}" disabled>
                             @error('meta.bank_country')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
