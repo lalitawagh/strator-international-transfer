@@ -37,13 +37,15 @@
                         <label for="bank_country" class="form-label sm:w-52"> Country <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
-                            <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true"
+                            {{-- <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true"
                                 wire:change="changeCountry($event.target.value)" class="w-full">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->id }}"
                                         @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <input id="bank_country" name="bank_country" type="text"
+                                class="form-control" value="{{ $receivedCountry }}" disabled>
                             @error('meta.bank_country')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror

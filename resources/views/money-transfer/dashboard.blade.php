@@ -177,7 +177,30 @@
                     </div>
                 </div>
             @endif
-            <!--Static Code-->
+            @if ($user->isSubscriber())
+                <div class="intro-y col-span-12 md:col-span-4 lg:col-span-6 intro-y h-full">
+                    <div class="box shadow-lg p-3">
+                        <div class="text-lg font-medium mr-auto mt-2">Sub Account</div>
+                        <ul class="mt-1">
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-2/4">Account ID </span>
+                                <p class="w-2/3 text-sm break-all">{{ @$subAccountInfo->meta['account_id'] }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-2/4">Name</span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->name) }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-2/4">Country</span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->meta['country']) }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-2/4">Type </span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->meta['legal_entity_type']) }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-2/4">Short Reference </span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->meta['short_reference']) }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
     <div class="intro-y col-span-12 lg:col-span-12 mt-5">
