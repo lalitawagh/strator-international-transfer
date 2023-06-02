@@ -99,9 +99,9 @@ class MoneyTransfer extends Transaction
             $transactions->push(Transaction::find($record));
         }
 
-        $account = auth()->user()->workspaces()->first()?->account()->first();
+        // $account = auth()->user()->workspaces()->first()?->account()->first();
         $user = Auth::user();
-        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','account','user'))
+        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','user'))
             ->setPaper(array(0, 0, 1000, 800), 'landscape')
             ->output();
 

@@ -85,6 +85,8 @@ class MyselfBeneficiary extends Component
 
     public $cnaps_number;
 
+    public $receivedCountry;
+
     protected function rules()
     {
         return  [
@@ -113,7 +115,7 @@ class MyselfBeneficiary extends Component
             'meta.aba_number' => ['required_if:country_code,==,' . ShortCode::AASP],
             'meta.bic_number' => ['required_if:country_code,==,' . ShortCode::BCSP],
             'meta.cnaps_number' => ['required_if:country_code,==,' . ShortCode::CB],
-            
+
         ];
     }
 
@@ -169,6 +171,7 @@ class MyselfBeneficiary extends Component
         $this->beneficiaryType = $beneficiaryType;
         $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;
         $this->receiving_country = Country::find(session('money_transfer_request.currency_code_to'))->code;
+        $this->receivedCountry = Country::find(session('money_transfer_request.currency_code_to'))->name;
         $this->type = ($beneficiaryType == Beneficiary::MYSELF || $beneficiaryType == Beneficiary::SOMEONE_ELSE) ? 'personal': 'business';
         if(($beneficiaryType == Beneficiary::MYSELF))
         {
@@ -197,7 +200,7 @@ class MyselfBeneficiary extends Component
     {
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $data =  $this->validate();
-        
+
         if(isset($data['meta']['bank_code']))
         {
             $contactExist = Contact::beneficiaries()->verified()
@@ -322,4 +325,3 @@ class MyselfBeneficiary extends Component
         return view('international-transfer::livewire.myself-beneficiary');
     }
 }
- 
