@@ -254,6 +254,7 @@ class MoneyTransferController extends Controller
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
                 'status' => TransactionStatus::DRAFT,
+                'archived' => 0,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $workspace->id,
@@ -372,6 +373,7 @@ class MoneyTransferController extends Controller
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
                 'status' => TransactionStatus::DRAFT,
+                'archived' => 0,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $workspace->id,
@@ -413,6 +415,7 @@ class MoneyTransferController extends Controller
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
                 'status' => TransactionStatus::DRAFT,
+                'archived' => 0,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $workspace->id,
