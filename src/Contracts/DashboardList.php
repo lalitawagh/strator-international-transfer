@@ -25,6 +25,16 @@ class DashboardList extends Transaction
         return false;
     }
 
+    public static function setArchived()
+    {
+        return false;
+    }
+
+    public static function setUnArchived()
+    {
+        return false;
+    }
+
     public static function setBuilder($workspace_id,$type): Builder
     {
         if (!$workspace_id) {

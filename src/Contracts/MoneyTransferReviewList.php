@@ -35,6 +35,16 @@ class MoneyTransferReviewList extends Transaction
         return true;
     }
 
+    public static function setArchived()
+    {
+        return false;
+    }
+
+    public static function setUnArchived()
+    {
+        return false;
+    }
+
     public static function downloadPdf($records)
     {
         $transactions = collect();
