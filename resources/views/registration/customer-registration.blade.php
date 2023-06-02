@@ -1,4 +1,4 @@
-{{-- 
+<!-- 
 <div x-data="{ open: false }">
 <div class="form-inline mb-2">
     <label for="register_as_agent" class="form-label sm:w-30"> Register As Agent
@@ -23,5 +23,4 @@
     </div>
 </div>
 <input type="hidden" name="agentName" value="{{ request()?->agent }}">
-</div>
---}}
+</div> -->
