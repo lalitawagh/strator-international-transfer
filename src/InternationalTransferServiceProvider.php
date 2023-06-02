@@ -12,6 +12,7 @@ use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\RiskMgmtQueConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
+use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
 use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
@@ -33,6 +34,7 @@ use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
+use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
 use Kanexy\InternationalTransfer\Setting\GeneralSettingForm;
 use Kanexy\InternationalTransfer\Registration\CustomerRegistrationForm;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
@@ -60,6 +62,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         FeeConfiguration::class => FeePolicy::class,
         MoneyTransfer::class => MoneyTransferPolicy::class,
         RiskMgmtQueConfiguration::class => RiskMgmtQuePolicy::class,
+        ExchangeRateConfiguration::class => ExchangeRatePolicy::class,
     ];
 
     public function registerDefaultPolicies()

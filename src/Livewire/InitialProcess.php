@@ -9,6 +9,7 @@ use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
 use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
+use Kanexy\InternationalTransfer\Model\CcExchangeRate;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
@@ -70,6 +71,7 @@ class InitialProcess extends Component
         $this->currency_from = Country::whereCode('UK')->first()->id;
 
         $this->currency_to =  Country::whereCode('IN')->first()->id;
+       // dd($this->currency_to);
 
         $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
 
@@ -204,11 +206,22 @@ class InitialProcess extends Component
             $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
             $percentage = Setting::getValue('cc_percentage',[]);
 
+            $exchangeRate_to = CcExchangeRate::where('exchange_to',$this->currency_to)->first();
+            //dd($exchangeRate_to);
+
             if(is_null($exchangeRates))
             {
-                if($rate_type == 'cc_customize_rate')
+                if(@$exchangeRate_to->rate_type == 'customize_rate')
                 {
-                    $exchangeRate = $customized_rate;
+                    if($exchangeRate_to->exchange_from && $exchangeRate_to->exchange_to)
+                    {
+                        $exchangeRate = $exchangeRate_to->customized_rate;
+                    }
+                    else
+                    {
+                        $exchangeRate = $exchangeRate;
+                    }
+
                 }
                 else
                 {
