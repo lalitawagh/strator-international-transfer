@@ -19,7 +19,7 @@ class AgentMenu extends Item
         /** @var \App\Models\User $user */
         $user = Auth::user();
        
-        if (!$user->isSubscriber()) {
+        if (!$user->isSubscriber() && !$user->hasRole('agent')) {
             return true;
         }
 

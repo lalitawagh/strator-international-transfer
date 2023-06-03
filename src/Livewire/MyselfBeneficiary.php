@@ -10,6 +10,8 @@ use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
+use Kanexy\InternationalTransfer\Enums\ShortCode;
+use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -51,6 +53,8 @@ class MyselfBeneficiary extends Component
 
     public $sort_no;
 
+    public $ach_routing_number;
+
     public $note;
 
     public $avatar;
@@ -73,6 +77,15 @@ class MyselfBeneficiary extends Component
 
     public $receiving_country;
 
+    public $bsb_number;
+
+    public $aba_number;
+
+    public $bic_number;
+
+    public $cnaps_number;
+
+    public $receivedCountry;
 
     protected function rules()
     {
@@ -88,12 +101,21 @@ class MyselfBeneficiary extends Component
             'note' => ['nullable'],
             'meta' => ['required', 'array'],
             'meta.benficiary_address' => ['required','max:40'],
+            'meta.benficiary_state' => ['required_if:country_code,==,' . ShortCode::BBSP . ',' . ShortCode::AASP,],
             'meta.benficiary_city' => ['required',new AlphaSpaces,'max:40'],
-            'meta.iban_number' => ['required'],
+            'meta.iban_number' => ['required_if:country_code,' . ShortCode::AI . ',' . ShortCode::I],
             'meta.bank_account_name' => ['required', new AlphaSpaces,'max:40'],
-            'meta.bank_account_number' => ['required', 'string', 'numeric', 'digits_between:8,16'],
-            'meta.bank_code' => ['required_if:receiving_country,==,UK','nullable', 'string', 'numeric', 'digits:6'],
+            'meta.bank_account_number' => ['required_if:country_code,==,' . ShortCode::AI, 'string', 'numeric'],
+            'meta.bank_code' => ['required_if:country_code,==,' . ShortCode::BBSP. ',' . ShortCode::SA, 'nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
+            'meta.branch_code' => ['required_if:country_code,==,' . ShortCode::BBSP, 'nullable', 'string', 'numeric', 'digits:6'],
+            'meta.post_code' => ['required_if:country_code,==,' . ShortCode::BBSP . ',' . ShortCode::BAP ,'nullable', 'string', 'numeric', 'digits:6'],
+            'meta.ach_routing_number' => ['required_if:country_code,==,' . ShortCode::AI],
+            'meta.bsb_number' => ['required_if:country_code,==,' . ShortCode::BAP],
+            'meta.aba_number' => ['required_if:country_code,==,' . ShortCode::AASP],
+            'meta.bic_number' => ['required_if:country_code,==,' . ShortCode::BCSP],
+            'meta.cnaps_number' => ['required_if:country_code,==,' . ShortCode::CB],
+
         ];
     }
 
@@ -111,7 +133,15 @@ class MyselfBeneficiary extends Component
         'meta.iban_number' => 'IBAN Number',
         'meta.bank_country' => 'country',
         'meta.benficiary_address' => 'Address',
+        'meta.benficiary_state' => 'State',
         'meta.benficiary_city' => 'City',
+        'meta.branch_code' => 'Branch',
+        'meta.post_code' => 'Post',
+        'meta.ach_routing_number' => 'ACH Routing Number',
+        'meta.bsb_number' => 'BSB Number',
+        'meta.aba_number' => 'ABA Number',
+        'meta.bic_number' => 'BIC Number',
+        'meta.cnaps_number' => 'CNAPS Number',
     ];
 
     protected function messages()
@@ -120,10 +150,17 @@ class MyselfBeneficiary extends Component
             'meta.bank_code.required_if' => 'The sort code field is required.',
             'meta.iban_number.required' => 'The IFSC code/ IBAN field is required.',
             'meta.bank_account_name.regex' =>'Account Name contains Letters and Spaces Only',
-            'meta.beneficiary_address.required' => 'The address field is required'
+            'meta.beneficiary_address.required' => 'The address field is required',
+            'meta.benficiary_state' => 'The State field is required',
+            'meta.ach_routing_number' => 'The ACH Routing Number field is required',
+            'meta.branch_code' => 'The Branch Code is required',
+            'meta.post_code' => 'The Post Code is required',
+            'meta.bsb_number' => 'The BSB Number field is required',
+            'meta.aba_number' => 'The ABA Number field is required',
+            'meta.bic_number' => 'The BIC Number field is required',
+            'meta.cnaps_number' => 'The CNAPS Number field is required',
         ];
     }
-
 
     public function mount($countries, $defaultCountry, $user, $workspace, $beneficiaryType)
     {
@@ -134,6 +171,7 @@ class MyselfBeneficiary extends Component
         $this->beneficiaryType = $beneficiaryType;
         $this->sending_country = Country::find(session('money_transfer_request.currency_code_from'))->code;
         $this->receiving_country = Country::find(session('money_transfer_request.currency_code_to'))->code;
+        $this->receivedCountry = Country::find(session('money_transfer_request.currency_code_to'))->name;
         $this->type = ($beneficiaryType == Beneficiary::MYSELF || $beneficiaryType == Beneficiary::SOMEONE_ELSE) ? 'personal': 'business';
         if(($beneficiaryType == Beneficiary::MYSELF))
         {
@@ -170,14 +208,42 @@ class MyselfBeneficiary extends Component
             ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
             ->where('meta->bank_code', $data['meta']['bank_code'])
             ->first();
+        }elseif (isset($data['meta']['iban_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->iban_number', $data['meta']['iban_number'])
+            ->first();
+        }elseif (isset($data['meta']['bsb_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->bsb_number', $data['meta']['bsb_number'])
+            ->first();
+        }elseif (isset($data['meta']['aba_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->aba_number', $data['meta']['aba_number'])
+            ->first();
+        }elseif (isset($data['meta']['bic_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->bic_number', $data['meta']['bic_number'])
+            ->first();
+        }elseif (isset($data['meta']['cnaps_number'])){
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->cnaps_number', $data['meta']['cnaps_number'])
+            ->first();
         }else{
             $contactExist = Contact::beneficiaries()->verified()
             ->where("workspace_id", $this->workspace_id)
             ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->iban_number', $data['meta']['iban_number'])
+            ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
             ->first();
         }
-
 
         if(!is_null($contactExist))
         {

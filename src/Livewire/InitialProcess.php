@@ -72,7 +72,7 @@ class InitialProcess extends Component
 
         $this->currency_to =  Country::whereCode('IN')->first()->id;
 
-        $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
+        $this->countryCurrency = Country::whereIn('currency',['AUD','CAD','CZK','DKK','EUR','GBP','USD','HUF','INR','NOK','RON','SEK'])->get();
 
         $this->getDetails();
 
@@ -200,7 +200,14 @@ class InitialProcess extends Component
         {
             $membershipExchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
+<<<<<<< HEAD
             $globalExchangeRate = CcExchangeRate::where('exchange_to',$this->currency_to)->first();
+=======
+            $rate_type = Setting::getValue('cc_rate_type');
+            $customized_rate = Setting::getValue('cc_customized_rate');
+            $percentage_rate = Setting::getValue('cc_percentage_rate');
+            $percentage = Setting::getValue('cc_percentage');
+>>>>>>> fbe2efeee4aed925c4e4b3807ab7a204b5b293bf
 
             if(!is_null($globalExchangeRate))
             {

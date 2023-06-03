@@ -254,6 +254,7 @@ class MoneyTransferController extends Controller
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
                 'status' => TransactionStatus::DRAFT,
+                'archived' => 0,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $workspace->id,
@@ -264,10 +265,10 @@ class MoneyTransferController extends Controller
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
                     'second_beneficiary_name' => Helper::removeExtraSpace($secondBeneficiary?->meta['bank_account_name']),
-                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
-                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
-                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
-                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'second_beneficiary_bank_code' => @$secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => @$secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => @$secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => @$secondBeneficiary?->meta['iban_number'],
                     'reason' =>  $data['transfer_reason'],
                     'transaction_type' => 'money_transfer',
                     'delivery_method'=>$data['delivery_method']
@@ -372,6 +373,7 @@ class MoneyTransferController extends Controller
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
                 'status' => TransactionStatus::DRAFT,
+                'archived' => 0,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $workspace->id,
@@ -381,11 +383,11 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
-                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
-                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
-                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
-                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'second_beneficiary_name' => @$secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => @$secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => @$secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => @$secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => @$secondBeneficiary?->meta['iban_number'],
                     'transaction_type' => 'money_transfer',
                     'reason' =>  $transferDetails['transfer_reason'],
                 ],
@@ -413,6 +415,7 @@ class MoneyTransferController extends Controller
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $transferDetails['fee_charge'],
                 'status' => TransactionStatus::DRAFT,
+                'archived' => 0,
                 'meta' => [
                     'reference_no' => MoneyTransfer::generateUrn(),
                     'sender_id' => $workspace->id,
@@ -422,11 +425,11 @@ class MoneyTransferController extends Controller
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
                     'recipient_amount' => $transferDetails['recipient_amount'],
-                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
-                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
-                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
-                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'second_beneficiary_name' => @$secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => @$secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => @$secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => @$secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => @$secondBeneficiary?->meta['iban_number'],
                     'reason' =>  $transferDetails['transfer_reason'],
                     'transaction_type' => 'money_transfer',
                     'delivery_method'=>'Total_Processing'
@@ -465,11 +468,11 @@ class MoneyTransferController extends Controller
 
                 $metaDetails = [
                     'second_beneficiary_id' => $secondBeneficiary?->id,
-                    'second_beneficiary_name' => $secondBeneficiary?->meta['bank_account_name'],
-                    'second_beneficiary_bank_code' => $secondBeneficiary?->meta['bank_code'] ?? null,
-                    'second_beneficiary_bank_code_type' => $secondBeneficiary?->meta['bank_code_type'],
-                    'second_beneficiary_bank_account_number' => $secondBeneficiary?->meta['bank_account_number'],
-                    'second_beneficiary_bank_iban' => $secondBeneficiary?->meta['iban_number'],
+                    'second_beneficiary_name' => @$secondBeneficiary?->meta['bank_account_name'],
+                    'second_beneficiary_bank_code' => @$secondBeneficiary?->meta['bank_code'] ?? null,
+                    'second_beneficiary_bank_code_type' => @$secondBeneficiary?->meta['bank_code_type'],
+                    'second_beneficiary_bank_account_number' => @$secondBeneficiary?->meta['bank_account_number'],
+                    'second_beneficiary_bank_iban' => @$secondBeneficiary?->meta['iban_number'],
                     'exchange_rate' => $transferDetails['guaranteed_rate'],
                     'base_currency' => $sender['currency'],
                     'exchange_currency' => $receiver['currency'],
@@ -899,5 +902,17 @@ class MoneyTransferController extends Controller
             'status' => 'success',
             'message' => 'The money transfer request declined .',
         ]);
+    }
+
+    public function archivedTransactions(Request $request)
+    {
+        $user = Auth::user();
+        $workspace = null;
+
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        }
+
+        return view('international-transfer::money-transfer.archived-transactions', compact('user','workspace'));
     }
 }

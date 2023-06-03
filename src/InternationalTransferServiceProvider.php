@@ -5,6 +5,7 @@ namespace Kanexy\InternationalTransfer;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
+use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
@@ -26,8 +27,12 @@ use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
 use Kanexy\InternationalTransfer\Membership\MembershipComponent;
+use Kanexy\InternationalTransfer\Menu\BeneficiariesMenu;
 use Kanexy\InternationalTransfer\Menu\AgentMenu;
+use Kanexy\InternationalTransfer\Menu\AgentUser;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
+use Kanexy\InternationalTransfer\Menu\MoneyTransferMenu;
+use Kanexy\InternationalTransfer\Menu\TransactionMenu;
 use Kanexy\InternationalTransfer\Policies\FeePolicy;
 use Kanexy\InternationalTransfer\Policies\MasterAccountPolicy;
 use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
@@ -109,9 +114,15 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new InternationalTransferMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new MoneyTransferMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new BeneficiariesMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
 
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
+        
+        
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
         Livewire::component('otp-verification-component', OtpVerification::class);
@@ -140,6 +151,12 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
             } else if ((!$user->isSubscriber()) && (config('services.disable_banking') == true)) {
                 return route('dashboard.international-transfer.money-transfer-dashboard');
             }
+        });
+
+
+        Gate::define('agent-users', function (User $user, $id) {
+           
+            return $user->id ==  $id;
         });
     }
 }
