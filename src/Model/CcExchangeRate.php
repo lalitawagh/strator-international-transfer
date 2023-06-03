@@ -51,48 +51,6 @@ class CcExchangeRate extends Model
         return false;
     }
 
-    // public static function setRecordsToDownload($records, $type)
-    // {
-    //     $list = collect();
-
-    //     foreach ($records as $record) {
-    //         $workspace = Workspace::find($record);
-
-    //         $columnDetail = [
-    //             $workspace->name,
-    //             $workspace->email,
-    //             @$workspace->phone,
-    //             @$workspace->status,
-    //         ];
-
-    //         $list->push($columnDetail);
-    //     }
-
-    //     $columnsHeading = [
-    //         'NAME',
-    //         'EMAIL',
-    //         'PHONE',
-    //         'STATUS',
-    //     ];
-
-    //     return Excel::download(new Export($list, $columnsHeading), 'workspace.' . $type . '');
-    // }
-
-    // public static function downloadPdf($records)
-    // {
-    //     $workspaces = collect();
-    //     foreach ($records as $record) {
-    //         $workspaces->push(Workspace::find($record));
-    //     }
-
-    //     $user = Auth::user();
-    //     $view = PDF::loadView('partner-foundation::workspace.workspacepdf', compact('workspaces','user'))
-    //         ->setPaper(array(0, 0, 700, 600), 'landscape')
-    //         ->output();
-
-    //     return response()->streamDownload(fn () => print($view), "workspace.pdf");
-    // }
-
     public static function setBuilder($type): Builder
     {
         return CcExchangeRate::query()->latest();
@@ -104,11 +62,9 @@ class CcExchangeRate extends Model
         return [
             Column::make("Id", "id")->hideIf(true),
 
-            //Column::make("AdminId", "admin_id")->hideIf(true),
-
             Column::make("Exchange From", "exchange_from")->format(function ($value) {
                 $country = Country::find($value);
-                return ucfirst($country->name);
+                return $country ? ucfirst($country->name) : null;
             })
                 ->sortable()
                 ->searchable()
@@ -116,7 +72,8 @@ class CcExchangeRate extends Model
 
                 Column::make("Exchange To", "exchange_to")->format(function ($value) {
                     $country = Country::find($value);
-                return ucfirst($country->name);
+
+                    return $country ? ucfirst($country->name) : null;
                 })
                     ->sortable()
                     ->searchable()
@@ -145,9 +102,6 @@ class CcExchangeRate extends Model
             Column::make('Actions','id')->format(function($value, $model, $row) {
                 $actions = [];
                 $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="edit-2" data-lucide="edit-2" class="lucide lucide-edit-2 w-4 h-4 mr-2"><path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>','isOverlay' => '0','method' => 'GET','route' => route('dashboard.international-transfer.exchange-rate.edit',$value),'action' => 'Edit'];
-                // if(is_null($model->admin_id)){
-                //     $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="plus" data-lucide="plus" class="lucide lucide-plus w-4 h-4 mr-2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>','isOverlay' => 'true','method' => 'GET','action' => 'Workspace User','route' => "Livewire.emit('showWorkspaceUserDetail', $model->id);"];
-                // }
                 $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="trash" data-lucide="trash" class="lucide lucide-trash w-4 h-4 mr-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>','isOverlay' => 'true','method' => 'GET','action' => "Delete",
                 'route' => "Livewire.emit('showModal','".route('dashboard.international-transfer.exchange-rate.destroy',$model->id)."','DELETE','x-circle','Delete')"];
 

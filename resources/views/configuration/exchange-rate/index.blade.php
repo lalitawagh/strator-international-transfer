@@ -3,11 +3,11 @@
 @section('title', 'Exchange Rate')
 
 @section('create-button')
-        @can(\Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy::CREATE,
-            \Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration::class)
-            <a id="CreateNew" href="{{ route('dashboard.international-transfer.exchange-rate.create') }}"
-                class="btn btn-sm btn-primary shadow-md">Create New</a>
-        @endcan
+    @can(\Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy::CREATE,
+        \Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration::class)
+        <a id="CreateNew" href="{{ route('dashboard.international-transfer.exchange-rate.create') }}"
+            class="btn btn-sm btn-primary shadow-md">Create New</a>
+    @endcan
 @endsection
 
 @section('config-content')
@@ -19,7 +19,8 @@
 
                 </div>
                 <div class="datatable-select Livewire-datatable-modal pb-3" attr="datatable-select">
-                     <livewire:data-table model='Kanexy\InternationalTransfer\Model\CcExchangeRate' params="" type="exchange-rate" />
+                    <livewire:data-table model='Kanexy\InternationalTransfer\Model\CcExchangeRate' params=""
+                        type="exchange-rate" />
                 </div>
             </div>
         </div>

@@ -71,7 +71,6 @@ class InitialProcess extends Component
         $this->currency_from = Country::whereCode('UK')->first()->id;
 
         $this->currency_to =  Country::whereCode('IN')->first()->id;
-       // dd($this->currency_to);
 
         $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
 
@@ -199,53 +198,44 @@ class InitialProcess extends Component
 
         if (config('services.registration_changed') == true)
         {
-            $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+            $membershipExchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
-            $rate_type = Setting::getValue('cc_rate_type',[]);
-            $customized_rate = Setting::getValue('cc_customized_rate',[]);
-            $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
-            $percentage = Setting::getValue('cc_percentage',[]);
+            $globalExchangeRate = CcExchangeRate::where('exchange_to',$this->currency_to)->first();
 
-            $exchangeRate_to = CcExchangeRate::where('exchange_to',$this->currency_to)->first();
-            //dd($exchangeRate_to);
-
-            if(is_null($exchangeRates))
+            if(!is_null($globalExchangeRate))
             {
-                if(@$exchangeRate_to->rate_type == 'customize_rate')
+                if(@$globalExchangeRate->rate_type == 'customize_rate')
                 {
-                    if($exchangeRate_to->exchange_from && $exchangeRate_to->exchange_to)
-                    {
-                        $exchangeRate = $exchangeRate_to->customized_rate;
-                    }
-                    else
-                    {
-                        $exchangeRate = $exchangeRate;
-                    }
+                    $exchangeRate = $globalExchangeRate->customized_rate;
 
-                }
-                else
-                {
-                    $percentage = $percentage;
+                }elseif(@$globalExchangeRate->rate_type == 'currency_cloud_rate'){
+
+                    $percentage = @$globalExchangeRate->percentage;
+
                     $percent = $percentage / 100  * $exchangeRate;
-                    if( @$percentage_rate == 'plus')
+
+                    if( @$globalExchangeRate->plus_minus == 'plus')
                     {
                         $exchangeRate = $exchangeRate + $percent;
-                    }else
-                    {
+                    }else{
                         $exchangeRate = $exchangeRate - $percent;
                     }
                 }
+
             }
             else{
-                if(@$exchangeRates->value['rate_type'] == 'customize_rate')
+                if(@$membershipExchangeRates->value['rate_type'] == 'customize_rate')
                 {
-                    $exchangeRate = @$exchangeRates->value['customized_rate'];
+                    $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
+
                 }
                 else
                 {
-                    $percentage = @$exchangeRates->value['percentage'];
+                    $percentage = @$membershipExchangeRates->value['percentage'];
+
                     $percent = $percentage / 100  * $exchangeRate;
-                    if( @$exchangeRates->value['percentage_rate'] == 'plus')
+
+                    if( @$membershipExchangeRates->value['percentage_rate'] == 'plus')
                     {
                         $exchangeRate = $exchangeRate + $percent;
                     }else{
@@ -257,7 +247,7 @@ class InitialProcess extends Component
         }
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;
-        $this->guaranteed_rate = number_format((float) $this->guaranteed_rate, 2, '.', '');
+        $this->guaranteed_rate =number_format((float) $this->guaranteed_rate, 2, '.', '');
 
         $this->initial_fee = collect(Setting::getValue('money_transfer_type_fees', []))
         ->where('currency', $this->currency_from)

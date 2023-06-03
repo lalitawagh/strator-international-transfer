@@ -15,8 +15,6 @@ class ExchangeRateController extends Controller
     {
 
         $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRateConfiguration::class);
-
-        //$exchange_rates = ExchangeRate::with('ledger')->orderBy('id', 'desc')->paginate(7);
         return view("international-transfer::configuration.exchange-rate.index");
     }
 
@@ -33,32 +31,22 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
-       // $ExchangeRate = collect(cc_exchange_rate::getValue('exchange_from','exchange_to','rate_type','customized_rate','plus_mins','percentage',[]));
-        //cc_exchange_rate::updateOrCreate(['key' => 'money_transfer_type_fees'], ['value' => $ExchangeRate]);
-
-            $ExchangeRate= New CcExchangeRate();
-            $ExchangeRate->fill($request->post())->save();
-
-            return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
-                'status' => 'success',
-                'message' => 'Exchange Rate created successfully.',
-            ]);
+        $ExchangeRate= New CcExchangeRate();
+        $ExchangeRate->fill($request->post())->save();
+        return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
+            'status' => 'success',
+            'message' => 'Exchange Rate created successfully.',
+        ]);
 
     }
 
     public function edit($value)
     {
-        //dd($value);
-        $ExchangeRate = CcExchangeRate::where('id',$value)->first();
-        //dd($ExchangeRate);
 
+        $ExchangeRate = CcExchangeRate::where('id',$value)->first();
         $countries = Country::orderBy("name")->pluck("name", "id");
-        //dd($countries);
-        //$this->authorize(ExchangeRatePolicy::EDIT, ExchangeRateConfiguration::class);
-        // $statuses = Status::toArray();
-        // $transfer_type_fee = collect(CcExchangeRate::getValue('money_transfer_type_fees',[]))->firstWhere('id', $id);
-        // $countries = Country::get();
-        //$fee_types = Fee::toArray();
+
+        $this->authorize(ExchangeRatePolicy::EDIT, ExchangeRateConfiguration::class);
 
         return view("international-transfer::configuration.exchange-rate.edit",compact('countries','ExchangeRate'));
 
@@ -70,15 +58,6 @@ class ExchangeRateController extends Controller
         $validated_data = $request->validated();
         $exchange_rate->fill($validated_data)->save();
 
-        // $data['amount'] = ($data['fee_type'] == 'amount') ? $data['amount'] : 0;
-        // $data['percentage'] = ($data['fee_type'] == 'percentage') ? $data['percentage'] : 0;
-        // $settings = collect(Setting::getValue('money_transfer_type_fees'))->map(function ($item) use ($id,$data) {
-        //     if ($item['id'] == $id) {
-        //         return $data;
-        //     }
-
-        //     return $item;
-        // });
         return redirect()->route("dashboard.international-transfer.exchange-rate.index")->with([
             'status' => 'success',
             'message' => 'Exchange Rate updated successfully.',
@@ -87,16 +66,6 @@ class ExchangeRateController extends Controller
 
    public function destroy($id)
    {
-        // $exchange_rate = collect(CcExchangeRate::where('id', $request->id)->get())->filter(function ($item) use ($id) {
-
-        //     if ($item['id'] != $id) {
-        //         return true;
-        //     }
-        //     return false;
-        // });
-        // $exchange_rate->each(function ($item) use ($id) {
-        //     $item->delete();
-        // });
 
         $Exchange_Rate = CcExchangeRate::find($id);
         $Exchange_Rate->delete();
