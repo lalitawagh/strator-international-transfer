@@ -10,7 +10,7 @@
                     </h2>
                 </div>
 
-                <div class="Livewire-datatable-modal pb-3">
+                <div class="datatable-select Livewire-datatable-modal pb-3" attr="datatable-select">
                     <livewire:data-table model='Kanexy\InternationalTransfer\Contracts\AgentRequest'
                         params="" type='agent-request' />
                 </div>
