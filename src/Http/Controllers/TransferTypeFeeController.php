@@ -38,6 +38,12 @@ class TransferTypeFeeController extends Controller
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
 
+        $existTransfertype = collect(Setting::getValue('money_transfer_type_fees', []))->where('currency', $request->input('currency'))->where('type', $request->input('type'))->where('min_amount', $request->input('min_amount'))->where('max_amount',$request->input('max_amount'))->first();
+        if(!is_null($existTransfertype))
+        {
+            return back()->withError("Transfer Type fee already exists");
+        }
+
         $settings = collect(Setting::getValue('money_transfer_type_fees',[]))->push($data);
 
         Setting::updateOrCreate(['key' => 'money_transfer_type_fees'], ['value' => $settings]);
@@ -63,6 +69,17 @@ class TransferTypeFeeController extends Controller
     public function update(StoreTransferTypeFeeRequest $request,$id)
     {
         $data = $request->validated();
+
+
+        $existTransfertype = collect(Setting::getValue('money_transfer_type_fees', []))->where('currency', $request->input('currency'))->where('type', $request->input('type'))->where('min_amount', $request->input('min_amount'))->where('max_amount',$request->input('max_amount'))->first();
+
+
+        if(!is_null($existTransfertype) && $id != $existTransfertype['id'])
+        {
+            return back()->withError("Transfer Type fee already exists");
+        }
+
+
         $data['id'] = $id;
         $data['amount'] = ($data['fee_type'] == 'amount') ? $data['amount'] : 0;
         $data['percentage'] = ($data['fee_type'] == 'percentage') ? $data['percentage'] : 0;
