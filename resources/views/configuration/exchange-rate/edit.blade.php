@@ -23,8 +23,6 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <select id="exchange_from" name="exchange_from" data-search="true" class="w-full">
-                                        <option value="" @if (old('exchange_to') === null) selected @endif> -- Select
-                                            Country -- </option>
                                         @foreach ($countries as $key => $value)
                                             <option value="{{ $key }}"
                                                 @if ($key == $ExchangeRate->exchange_from) selected @endif>

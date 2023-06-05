@@ -31,8 +31,10 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
-        $ExchangeRate= New CcExchangeRate();
+        
+        $ExchangeRate = New CcExchangeRate();
         $ExchangeRate->fill($request->post())->save();
+
         return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
             'status' => 'success',
             'message' => 'Exchange Rate created successfully.',
