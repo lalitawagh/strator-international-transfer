@@ -14,6 +14,7 @@ use Kanexy\InternationalTransfer\Http\Controllers\RiskManagementController;
 use Kanexy\InternationalTransfer\Http\Controllers\RiskMgmtQuestionController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferReasonController;
 use Kanexy\InternationalTransfer\Http\Controllers\TransferTypeFeeController;
+use Kanexy\InternationalTransfer\Http\Controllers\ExchangeRateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource("transfer-reason", TransferReasonController::class);
                 Route::resource("master-account", MasterAccountController::class)->only(['index', 'store', 'create', 'edit', 'update', 'destroy']);
                 Route::resource("transfer-type-fee", TransferTypeFeeController::class);
+                Route::resource("exchange-rate", ExchangeRateController::class);
                 Route::resource("fee", FeeController::class);
                 Route::resource("money-transfer", MoneyTransferController::class)->only(['index', 'store', 'create']);
                 Route::get("money-transfer-review", [MoneyTransferController::class, 'review'])->name('money-transfer-review');
