@@ -116,7 +116,7 @@
                                 </h3>
                                 <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a id="Share2" target="_blank"
-                                        href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject={{ $payment }} transfer Account Details&body= Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} %0D%0A Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }} %0D%0A @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset
+                                        href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject={{ $payment }} transfer Account Details&body= Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} %0D%0A Recipient Account Number :- {{ @$secondBeneficiary?->meta['bank_account_number'] }} %0D%0A @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset
                                             %0D%0A Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }} %0D%0A Payment Method :- {{ $transferDetails['payment_method'] }} %0D%0A Transfer Reason :- {{ @$transferReason['reason'] }}  ">
                                         <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
@@ -124,7 +124,7 @@
                                         onclick="get_pdf('{{ $payment }}')"><i data-lucide="download"
                                             class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a id="AccountDetailsRecipient" onclick="copyData(this)"
-                                        data-copy="{{ $payment }} transfer Account Details- Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }}  Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }}  @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number'])Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }}  Payment Method :- {{ $payment }}  Transfer Reason :- {{ @$transferReason['reason'] }} "
+                                        data-copy="{{ $payment }} transfer Account Details- Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }}  Recipient Account Number :- {{ @$secondBeneficiary?->meta['bank_account_number'] }}  @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number:- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number'])Recipient IFSC Code / IBAN:- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset Amount To Send:- {{ $transferDetails['amount'] }} {{ $sender->currency }}  Payment Method :- {{ $payment }}  Transfer Reason :- {{ @$transferReason['reason'] }} "
                                         href="javascript:void(0);">
                                         <i data-lucide="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
@@ -149,7 +149,7 @@
                                                 Account Number </div>
                                             <div
                                                 class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                                {{ $secondBeneficiary?->meta['bank_account_number'] }}</div>
+                                                {{ @$secondBeneficiary?->meta['bank_account_number'] }}</div>
                                         </div>
                                         @isset($secondBeneficiary?->meta['bank_code'])
                                             <div
@@ -241,7 +241,7 @@
                 doc.save('manual-transfer-bank-detail.pdf');
             } else {
                 doc.fromHTML(
-                    '<h2>'+type+' Transfer Account Details</h2><div><div class="text-lg font-medium text-theme-1 dark:text-theme-10 mt-2"> Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} </br></div><div class="mt-1">Recipient Account Number :- {{ $secondBeneficiary?->meta['bank_account_number'] }} </br></div><div class="mt-1"> @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number :- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN :- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset</br></div><div class="mt-1">Amount To Send :- {{ $transferDetails['amount'] }} {{ $sender->currency }} </br></div><div class="mt-1">Payment Method :- {{ $payment }} </br></div><div class="mt-1">Transfer Reason :- {{ @$transferReason['reason'] }} </br></div></div>',
+                    '<h2>'+type+' Transfer Account Details</h2><div><div class="text-lg font-medium text-theme-1 dark:text-theme-10 mt-2"> Recipient Name :- {{ $secondBeneficiary?->meta['bank_account_name'] }} </br></div><div class="mt-1">Recipient Account Number :- {{ @$secondBeneficiary?->meta['bank_account_number'] }} </br></div><div class="mt-1"> @isset($secondBeneficiary?->meta['bank_code']) Recipient Sort Number :- {{ @$secondBeneficiary?->meta['bank_code'] }} @endisset @isset($secondBeneficiary?->meta['iban_number']) Recipient IFSC Code / IBAN :- {{ @$secondBeneficiary?->meta['iban_number'] }} @endisset</br></div><div class="mt-1">Amount To Send :- {{ $transferDetails['amount'] }} {{ $sender->currency }} </br></div><div class="mt-1">Payment Method :- {{ $payment }} </br></div><div class="mt-1">Transfer Reason :- {{ @$transferReason['reason'] }} </br></div></div>',
                     15, 15, {
                         'width': 170,
                         'elementHandlers': specialElementHandlers

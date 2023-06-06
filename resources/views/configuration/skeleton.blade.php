@@ -56,6 +56,16 @@
                                     </a>
                                 </li>
                             @endcan
+                            {{-- @can(\Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy::VIEW,
+                                 \Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration::class) --}}
+                            <li>
+                                <a id="ExchangeRate" href="{{ route('dashboard.international-transfer.exchange-rate.index') }}"
+                                    class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title">Exchange Rate </div>
+                                </a>
+                            </li>
+                            {{-- @endcan --}}
                             <li>
                                 <a id="Notifications" href="javascript:void(0);" class="side-menu">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>

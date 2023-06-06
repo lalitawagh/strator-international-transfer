@@ -9,7 +9,7 @@
                         Money Transfer
                     </h2>
                     @if(auth()->user()->isSuperAdmin())
-                    <a id="assetClassCreateNew" href="{{ route('dashboard.memberships.index')}}"
+                    <a id="assetClassCreateNew" href="{{ route('dashboard.international-transfer.money-transfer.index', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]])}}"
                     class="btn btn-sm btn-primary shadow-md"> Money Transfer Transactions</a> 
                     @endif
                     @if (auth()->user()->isSubscriber())
