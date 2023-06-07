@@ -13,8 +13,8 @@ class ExchangeRateController extends Controller
 {
     public function index()
     {
-
         $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRateConfiguration::class);
+        
         return view("international-transfer::configuration.exchange-rate.index");
     }
 
@@ -31,11 +31,6 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
-
-        if($data['rate_type'] == 'default_rate')
-        {
-             $data['customized_rate'] = 0;
-        }
 
         $ExchangeRate = New CcExchangeRate();
         $ExchangeRate->fill($request->post())->save();
@@ -75,9 +70,8 @@ class ExchangeRateController extends Controller
         ]);
     }
 
-   public function destroy($id)
-   {
-
+    public function destroy($id)
+    {
         $Exchange_Rate = CcExchangeRate::find($id);
         $Exchange_Rate->delete();
 
@@ -86,6 +80,6 @@ class ExchangeRateController extends Controller
             'message' => 'Exchange rate deleted successfully.',
         ]);
 
-  }
+    }
 
 }

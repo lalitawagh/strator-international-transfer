@@ -1,6 +1,6 @@
 @extends('international-transfer::configuration.skeleton')
 
-@section('title', 'Create exchage Rate')
+@section('title', 'Create Exchage Rate')
 
 @section('config-content')
     <div class="configuration-container w-screen">
@@ -54,8 +54,8 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-12 xl:col-span-10 form-inline mt-2"
-                                @if (old('rate_type', @$rate_type) == 'customize_rate') x-data="{ selected: '1' }"
-                                    @elseif (old('rate_type', @$rate_type) == 'currency_cloud_rate') x-data="{ selected: '0' }"
+                                @if (old('rate_type', @$rate_type) == 'customized_rate') x-data="{ selected: '1' }"
+                                    @elseif (old('rate_type', @$rate_type) == 'default_rate') x-data="{ selected: '0' }"
                                     @else x-data="{ selected: '3' }" @endif>
                                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                                     <label for="rate_type_info" class="form-label sm:w-30">Rate Type <span
@@ -63,18 +63,18 @@
                                     <div class="sm:w-5/6 sm:pt-3">
                                         <div class="form-check mr-2">
                                             <input id="radio-switch-1" class="form-check-input" type="radio"
-                                                x-on:click="selected = '1'" name="rate_type" value="customize_rate"
-                                                @if (old('rate_type', @$rate_type) == 'customize_rate') checked @endif>
+                                                x-on:click="selected = '1'" name="rate_type" value="customized_rate"
+                                                @if (old('rate_type', @$rate_type) == 'customized_rate') checked @endif>
                                             <label class="form-check-label" for="radio-switch-1">
                                                 <h4 href="javascript:;" class="font-medium truncate mr-5 ">
                                                     <h4>Customized Rate</h4>
                                             </label>
                                             <input id="radio-switch-2" class="form-check-input ml-3" type="radio"
-                                                x-on:click="selected = '0'" name="rate_type" value="currency_cloud_rate"
-                                                @if (old('rate_type', @$rate_type) == 'currency_cloud_rate') checked @endif>
+                                                x-on:click="selected = '0'" name="rate_type" value="default_rate"
+                                                @if (old('rate_type', @$rate_type) == 'default_rate') checked @endif>
                                             <label class="form-check-label" for="radio-switch-2">
                                                 <h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                    <h4>Currency Cloud Rate </h4>
+                                                    <h4> Default Rate </h4>
                                             </label>
                                         </div>
                                         @error('rate_type')
@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-2 lg:gap-3 xl:gap-10 mt-0">
+                                <div class="grid grid-cols-2 lg:gap-3 xl:gap-10 ml-8">
 
                                     <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
                                         x-show="selected == '1'">
@@ -120,7 +120,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline sm:-mt-8 ml-1"
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline sm:-mt-6 ml-1"
                                         x-show="selected == '0'">
                                         <label for="percentage" class="form-label sm:w-30">Percentage</label>
                                         <div class="sm:w-5/6">
@@ -136,10 +136,7 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                 </div>
-
-
                             </div>
                         </div>
                         <div class="text-right mt-5">

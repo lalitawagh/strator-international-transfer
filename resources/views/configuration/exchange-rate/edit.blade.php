@@ -54,49 +54,51 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
-                                <div class="col-span-12 md:col-span-12 xl:col-span-10 form-inline mt-2"
-                                    @if (old('rate_type', $ExchangeRate) == 'customized_rate') x-data="{ selected: '1' }"
-                                    @elseif (old('rate_type', $ExchangeRate) == 'default_rate') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
-                                    <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
-                                        <label for="rate_type_info" class="form-label sm:w-30">Rate Type <span
-                                                class="text-theme-6">*</span></label>
-                                        <div class="sm:w-5/6 sm:pt-3">
-                                            <div class="form-check mr-2">
-                                                <input id="radio-switch-1" class="form-check-input" type="radio"
-                                                    x-on:click="selected = '1'" name="rate_type" value="customized_rate"
-                                                    @if (old('rate_type', $ExchangeRate) == 'customized_rate') checked @endif>
-                                                <label class="form-check-label" for="radio-switch-1">
-                                                    <h4 href="javascript:;" class="font-medium truncate mr-5 ">
-                                                        <h4>Customized Rate</h4>
-                                                </label>
-                                                <input id="radio-switch-2" class="form-check-input ml-3" type="radio"
-                                                    x-on:click="selected = '0'" name="rate_type" value="default_rate"
-                                                    @if (old('rate_type', $ExchangeRate) == 'default_rate') checked @endif>
-                                                <label class="form-check-label" for="radio-switch-2">
-                                                    <h4 href="javascript:;" class="font-medium truncate mr-5">
-                                                        <h4>Default Rate </h4>
-                                                </label>
+                        </div>
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-12 xl:col-span-10 form-inline mt-2"
+                                @if (old('rate_type', $ExchangeRate) == 'customized_rate') x-data="{ selected: '1' }"
+                                @elseif (old('rate_type', $ExchangeRate) == 'default_rate') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
+                                <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                                    <label for="rate_type_info" class="form-label sm:w-30">Rate Type <span
+                                            class="text-theme-6">*</span></label>
+                                    <div class="sm:w-5/6 sm:pt-3">
+                                        <div class="form-check mr-2">
+                                            <input id="radio-switch-1" class="form-check-input" type="radio"
+                                                x-on:click="selected = '1'" name="rate_type" value="customized_rate"
+                                                @if (old('rate_type', $ExchangeRate) == 'customized_rate') checked @endif>
+                                            <label class="form-check-label" for="radio-switch-1">
+                                                <h4 href="javascript:;" class="font-medium truncate mr-5 ">
+                                                    <h4>Customized Rate</h4>
+                                            </label>
+                                            <input id="radio-switch-2" class="form-check-input ml-3" type="radio"
+                                                x-on:click="selected = '0'" name="rate_type" value="default_rate"
+                                                @if (old('rate_type', $ExchangeRate) == 'default_rate') checked @endif>
+                                            <label class="form-check-label" for="radio-switch-2">
+                                                <h4 href="javascript:;" class="font-medium truncate mr-5">
+                                                    <h4> Default Rate </h4>
+                                            </label>
 
-                                            </div>
-                                            @error('rate_type')
+                                        </div>
+                                        @error('rate_type')
+                                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 lg:gap-3 xl:gap-10 ml-8">
+
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
+                                        x-show="selected == '1'">
+                                        <label for="customized_rate" class="form-label sm:w-30">Customized Rate </label>
+                                        <div class="sm:w-5/6">
+                                            <input id="customized_rate" name="customized_rate" type="text"
+                                                class="form-control @error('customized_rate') border-theme-6 @enderror customized_rate"
+                                                value="{{ old('customized_rate', $ExchangeRate->customized_rate) }}">
+
+                                            @error('customized_rate')
                                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                             @enderror
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2 lg:gap-3 xl:gap-10 mt-0">
-                                        <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
-                                            x-show="selected == '1'">
-                                            <label for="customized_rate" class="form-label sm:w-30">Customized Rate </label>
-                                            <div class="sm:w-5/6">
-                                                <input id="customized_rate" name="customized_rate" type="text"
-                                                    class="form-control @error('customized_rate') border-theme-6 @enderror customized_rate"
-                                                    value="{{ old('customized_rate', $ExchangeRate->customized_rate) }}">
-
-                                                @error('customized_rate')
-                                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                                @enderror
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
@@ -121,9 +123,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline sm:-mt-8 ml-1"
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline sm:-mt-6 ml-1"
                                         x-show="selected == '0'">
-                                        <label for="percentage" class="form-label sm:w-15">Percentage</label>
+                                        <label for="percentage" class="form-label sm:w-30">Percentage</label>
                                         <div class="sm:w-5/6">
                                             <div class="input-group">
                                                 <input id="percentage" name="percentage" type="text"
@@ -139,13 +141,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-right mt-5">
-                                <a id="exchangeRateEditCancel"
-                                    href="{{ route('dashboard.international-transfer.exchange-rate.index') }}"
-                                    class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                                <button id="exchangeRateUpdate" type="submit"
-                                    class="btn btn-primary w-24">Update</button>
-                            </div>
+                        </div>
+                        <div class="text-right mt-5">
+                            <a id="exchangeRateEditCancel"
+                                href="{{ route('dashboard.international-transfer.exchange-rate.index') }}"
+                                class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <button id="exchangeRateUpdate" type="submit" class="btn btn-primary w-24">Update</button>
+                        </div>
                     </form>
                 </div>
             </div>
