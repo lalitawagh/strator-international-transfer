@@ -19,8 +19,8 @@ class StoreCountryRequest extends FormRequest
     {
         return [
 
-            'sending_currency.required'   => 'The Sending_currency field is required.',
-            'receiving_currency.required' => 'The Receiving_currency field is required.',
+            'sending_currency.required'   => 'The Sending Currency field is required.',
+            'receiving_currency.required' => 'The Receiving Currency field is required.',
 
         ];
     }

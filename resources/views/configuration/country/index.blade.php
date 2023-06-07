@@ -12,7 +12,7 @@
             @csrf
             <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
-                    <label for="sending_currency" class="form-label sm:w-33">Sending Currency <span class="text-theme-6">*</span></label>
+                    <label for="sending_currency" class="form-label sm:w-40">Sending Currency <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="sending_currency[]" id="sending_currency" data-search="true"
                             class="w-full @error('sending_currency') border-theme-6 @enderror" multiple>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
-                    <label for="receiving_currency" class="form-label sm:w-33">Receiving Currency <span class="text-theme-6">*</span></label>
+                    <label for="receiving_currency" class="form-label sm:w-40">Receiving Currency <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <select name="receiving_currency[]" id="receiving_currency" data-search="true"
                             class="w-full @error('receiving_currency') border-theme-6 @enderror" multiple>
