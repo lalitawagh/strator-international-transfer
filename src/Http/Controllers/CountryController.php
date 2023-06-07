@@ -2,7 +2,6 @@
 
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
@@ -13,20 +12,22 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::get();
+        $sendingCurrency = Setting::getValue('international-transfer_sending_currency',[]);
+        $receivingCurrency = Setting::getValue('international-transfer_receiving_currency', []);
 
-        return view("international-transfer::configuration.country.index",compact('countries'));
+        return view("international-transfer::configuration.country.index",compact('countries','sendingCurrency','receivingCurrency'));
     }
 
     public function store(StoreCountryRequest $request)
     {
         $data = $request->validated();
-        $data['id'] = now()->format('dmYHis');
-        $settings = collect(Setting::getValue('international-transfer_country_currency',[]))->push($data);
-        Setting::updateOrCreate(['key' => 'international-transfer_country_currency'], ['value' => $settings]);
+
+        Setting::updateOrCreate(['key' => 'international-transfer_sending_currency'], ['value' => $data['sending_currency']]);
+        Setting::updateOrCreate(['key' => 'international-transfer_receiving_currency'], ['value' => $data['receiving_currency']]);
 
         return redirect()->route('dashboard.international-transfer.country.index')->with([
             'status' => 'success',
-            'message' => 'Country Currency updated successfully.',
+            'message' => 'International-Transfer Countries Currency is updated successfully.',
         ]);
     }
 

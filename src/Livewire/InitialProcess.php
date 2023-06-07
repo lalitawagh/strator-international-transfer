@@ -49,6 +49,14 @@ class InitialProcess extends Component
 
     public $countryCurrency;
 
+    public $sendingCurrency;
+
+    public $receivingCurrency;
+
+    public $sendingcountriesinfo;
+
+    public $receivingcountriesinfo;
+
     protected $listeners = [
         'changeToMethod',
     ];
@@ -72,6 +80,14 @@ class InitialProcess extends Component
         $this->currency_to =  Country::whereCode('IN')->first()->id;
 
         $this->countryCurrency = Country::whereIn('currency',['AUD','CAD','CZK','DKK','EUR','GBP','USD','HUF','INR','NOK','RON','SEK'])->get();
+
+        $this->sendingCurrency = Setting::getValue('international-transfer_sending_currency',[]);
+
+        $this->receivingCurrency = Setting::getValue('international-transfer_receiving_currency', []);
+
+        $this->sendingcountriesinfo = Country::whereIn('id',$this->sendingCurrency)->get();
+
+        $this->receivingcountriesinfo = Country::whereIn('id',$this->receivingCurrency)->get();
 
         $this->getDetails();
 
