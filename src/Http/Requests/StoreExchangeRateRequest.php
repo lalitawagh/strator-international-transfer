@@ -23,12 +23,12 @@ class StoreExchangeRateRequest extends FormRequest
     public function rules()
     {
         return [
-            'exchange_from'      =>    'required_if:rate_type,==,customize_rate',
-            'exchange_to'        =>    'required_if:rate_type,==,customize_rate',
+            'exchange_from'      =>    'required_if:rate_type,==,customized_rate',
+            'exchange_to'        =>    'required_if:rate_type,==,customized_rate',
             'rate_type'          =>    'required',
-            'customized_rate'    =>    'required_if:rate_type,==,customize_rate',
-            'plus_minus'         =>    'required_if:rate_type,==,currency_cloud_rate',
-            'percentage'         =>    'required_if:rate_type,==,currency_cloud_rate',
+            'customized_rate'    =>    'required_if:rate_type,==,customized_rate',
+            'plus_minus'         =>    'required_if:rate_type,==,default_rate',
+            'percentage'         =>    'required_if:rate_type,==,default_rate',
 
         ];
     }

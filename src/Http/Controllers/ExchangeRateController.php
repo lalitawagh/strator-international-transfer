@@ -32,6 +32,11 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
 
+        if($data['rate_type'] == 'default_rate')
+        {
+             $data['customized_rate'] = 0;
+        }
+
         $ExchangeRate = New CcExchangeRate();
         $ExchangeRate->fill($request->post())->save();
 
@@ -58,9 +63,8 @@ class ExchangeRateController extends Controller
     {
         $exchange_rate = CcExchangeRate::findOrFail($exchange_rate_id);
         $validated_data = $request->validated();
-        if($validated_data['rate_type'] == 'currency_cloud_rate')
+        if($validated_data['rate_type'] == 'default_rate')
         {
-
             $validated_data['customized_rate'] = 0;
         }
         $exchange_rate->fill($validated_data)->save();

@@ -1,6 +1,6 @@
 @extends('international-transfer::configuration.skeleton')
 
-@section('title', 'Create Transfer Type Fee')
+@section('title', 'Create exchage Rate')
 
 @section('config-content')
     <div class="configuration-container w-screen">
@@ -11,7 +11,7 @@
                         <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
                     @error('alreadyexists')
-                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
                     <form action="{{ route('dashboard.international-transfer.exchange-rate.store') }}" method="POST"
                         enctype="multipart/form-data">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-14 xl:col-span-10 form-inline mt-2"
+                            <div class="col-span-12 md:col-span-12 xl:col-span-10 form-inline mt-2"
                                 @if (old('rate_type', @$rate_type) == 'customize_rate') x-data="{ selected: '1' }"
                                     @elseif (old('rate_type', @$rate_type) == 'currency_cloud_rate') x-data="{ selected: '0' }"
                                     @else x-data="{ selected: '3' }" @endif>
@@ -83,21 +83,21 @@
                                     </div>
                                 </div>
 
+                                <div class="grid grid-cols-2 lg:gap-3 xl:gap-10 mt-0">
 
-                                <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                                     <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
-                                    x-show="selected == '1'">
-                                    <label for="customized_rate" class="form-label sm:w-32">Customized Rate </label>
-                                    <div class="sm:w-5/6">
-                                        <input id="customized_rate" name="customized_rate" type="number"
-                                            class="form-control @error('customized_rate') border-theme-6 @enderror customized_rate"
-                                            value="{{ old('customized_rate') }}">
+                                        x-show="selected == '1'">
+                                        <label for="customized_rate" class="form-label sm:w-30">Customized Rate </label>
+                                        <div class="sm:w-5/6">
+                                            <input id="customized_rate" name="customized_rate" type="number"
+                                                class="form-control @error('customized_rate') border-theme-6 @enderror customized_rate"
+                                                value="{{ old('customized_rate') }}">
 
-                                        @error('customized_rate')
-                                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                        @enderror
+                                            @error('customized_rate')
+                                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
                                     <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
                                         x-show="selected == '0'">
                                         <label for="plus_minus_info" class="form-label sm:w-30">Plus / Minus</label>
@@ -106,9 +106,11 @@
                                                 <select name="plus_minus" id="plus_minus" class="form-control"
                                                     data-search="true">
                                                     <option value=""></option>
-                                                    <option value="plus" @if (old('plus_minus') == 'plus') selected @endif> +
+                                                    <option value="plus"
+                                                        @if (old('plus_minus') == 'plus') selected @endif> +
                                                     </option>
-                                                    <option value="minus" @if (old('plus_minus') == 'minus') selected @endif> -
+                                                    <option value="minus"
+                                                        @if (old('plus_minus') == 'minus') selected @endif> -
                                                     </option>
                                                 </select>
                                             </div>
@@ -118,7 +120,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline -mt-8 ml-1"
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline sm:-mt-8 ml-1"
                                         x-show="selected == '0'">
                                         <label for="percentage" class="form-label sm:w-30">Percentage</label>
                                         <div class="sm:w-5/6">
@@ -134,6 +136,7 @@
                                             @enderror
                                         </div>
                                     </div>
+
                                 </div>
 
 
