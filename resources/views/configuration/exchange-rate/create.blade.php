@@ -82,7 +82,10 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2"
+
+
+                                <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
                                     x-show="selected == '1'">
                                     <label for="customized_rate" class="form-label sm:w-32">Customized Rate </label>
                                     <div class="sm:w-5/6">
@@ -95,42 +98,45 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2"
-                                    x-show="selected == '0'">
-                                    <label for="plus_minus_info" class="form-label sm:w-30">Plus / Minus</label>
-                                    <div class="sm:w-5/6">
-                                        <div class="input-group">
-                                            <select name="plus_minus" id="plus_minus" class="form-control"
-                                                data-search="true">
-                                                <option value=""></option>
-                                                <option value="plus" @if (old('plus_minus') == 'plus') selected @endif> +
-                                                </option>
-                                                <option value="minus" @if (old('plus_minus') == 'minus') selected @endif> -
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline mt-2"
+                                        x-show="selected == '0'">
+                                        <label for="plus_minus_info" class="form-label sm:w-30">Plus / Minus</label>
+                                        <div class="sm:w-5/6">
+                                            <div class="input-group">
+                                                <select name="plus_minus" id="plus_minus" class="form-control"
+                                                    data-search="true">
+                                                    <option value=""></option>
+                                                    <option value="plus" @if (old('plus_minus') == 'plus') selected @endif> +
+                                                    </option>
+                                                    <option value="minus" @if (old('plus_minus') == 'minus') selected @endif> -
+                                                    </option>
+                                                </select>
+                                            </div>
 
-                                        @error('plus_minus')
-                                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                        @enderror
+                                            @error('plus_minus')
+                                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 md:col-span-12 xl:col-span-12 form-inline -mt-8 ml-1"
+                                        x-show="selected == '0'">
+                                        <label for="percentage" class="form-label sm:w-30">Percentage</label>
+                                        <div class="sm:w-5/6">
+                                            <div class="input-group">
+                                                <input id="percentage" name="percentage" type="number"
+                                                    class="form-control @error('percentage') border-theme-6 @enderror percentage"
+                                                    value="{{ old('percentage') }}">
+                                                <div id="input-group-percentage" class="input-group-text">%</div>
+                                            </div>
+
+                                            @error('percentage')
+                                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2 ml-1"
-                                    x-show="selected == '0'">
-                                    <label for="percentage" class="form-label sm:w-15">Percentage</label>
-                                    <div class="sm:w-5/6">
-                                        <div class="input-group">
-                                            <input id="percentage" name="percentage" type="number"
-                                                class="form-control @error('percentage') border-theme-6 @enderror percentage"
-                                                value="{{ old('percentage') }}">
-                                            <div id="input-group-percentage" class="input-group-text">%</div>
-                                        </div>
 
-                                        @error('percentage')
-                                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div class="text-right mt-5">
