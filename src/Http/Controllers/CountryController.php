@@ -27,7 +27,7 @@ class CountryController extends Controller
 
         return redirect()->route('dashboard.international-transfer.country.index')->with([
             'status' => 'success',
-            'message' => 'International-Transfer Countries Currency is updated successfully.',
+            'message' => 'Countries Currency is updated successfully.',
         ]);
     }
 

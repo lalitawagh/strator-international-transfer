@@ -75,9 +75,12 @@ class InitialProcess extends Component
 
         $this->amount = old('amount') ? old('amount') : 1000;
 
-        $this->currency_from = Country::whereCode('UK')->first()->id;
+        $from = @Setting::getValue('international-transfer_sending_currency',[])[0] ? @Setting::getValue('international-transfer_sending_currency',[])[0] :  231;
+        $to = @Setting::getValue('international-transfer_receiving_currency',[])[0] ? @Setting::getValue('international-transfer_receiving_currency',[])[0] : 105;
 
-        $this->currency_to =  Country::whereCode('IN')->first()->id;
+        $this->currency_from = Country::whereId($from)->first()?->id;
+
+        $this->currency_to =  Country::whereId($to)->first()?->id;
 
         $this->countryCurrency = Country::whereIn('currency',['AUD','CAD','CZK','DKK','EUR','GBP','USD','HUF','INR','NOK','RON','SEK'])->get();
 
