@@ -23,12 +23,12 @@ class StoreExchangeRateRequest extends FormRequest
     public function rules()
     {
         return [
-            'exchange_from'      =>    'required_if:rate_type,==,customize_rate',
-            'exchange_to'        =>    'required_if:rate_type,==,customize_rate',
+            'exchange_from'      =>    'required_if:rate_type,==,customized_rate',
+            'exchange_to'        =>    'required_if:rate_type,==,customized_rate',
             'rate_type'          =>    'required',
-            'customized_rate'    =>    'required_if:rate_type,==,customize_rate',
-            'plus_minus'         =>    'required_if:rate_type,==,currency_cloud_rate',
-            'percentage'         =>    'required_if:rate_type,==,currency_cloud_rate',
+            'customized_rate'    =>    'required_if:rate_type,==,customized_rate',
+            'plus_minus'         =>    'required_if:rate_type,==,default_rate',
+            'percentage'         =>    'required_if:rate_type,==,default_rate',
 
         ];
     }
@@ -37,10 +37,10 @@ class StoreExchangeRateRequest extends FormRequest
     {
         return [
             'customized_rate.required_if' => 'the customized rate is required if rate type is customized rate',
-            'exchange_from.required_if' => 'the exchange_from is required if rate type is customized rate',
-            'exchange_to.required_if' => 'the exchange_to is required if rate type is customized rate',
-            'percentage_rate.required_if' => 'the plus_minus is required if rate type is currency_cloud_rate',
-            'percentage.required_if'      => 'the percentage is required if rate type is currency_clud_rate',
+            'exchange_from.required_if'   => 'the exchange_from is required if rate type is customized rate',
+            'exchange_to.required_if'     => 'the exchange_to is required if rate type is customized rate',
+            'percentage_rate.required_if' => 'the plus_minus is required if rate type is default rate',
+            'percentage.required_if'      => 'the percentage is required if rate type is default rate',
         ];
     }
 
@@ -48,8 +48,6 @@ class StoreExchangeRateRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $exchange_from = CcExchangeRate::where('exchange_from', $this->input('exchange_from'))->first();
-
-            //dd($exchange_from );
             if(!is_null($exchange_from))
             {
                 if($exchange_from['exchange_from'] != $this->input('exchange_from'))
@@ -57,8 +55,8 @@ class StoreExchangeRateRequest extends FormRequest
                     $validator->errors()->add('exchange_from', "This Exchange From field has already been selected.");
                 }
             }
-            $existExchangeRate = CcExchangeRate::where('exchange_from', $this->input('exchange_from'))->where('exchange_to', $this->input('exchange_to'))->where('customized_rate', $this->input('customized_rate'))->first();
 
+            $existExchangeRate = CcExchangeRate::where('exchange_from', $this->input('exchange_from'))->where('exchange_to', $this->input('exchange_to'))->where('customized_rate', $this->input('customized_rate'))->first();
             if(!is_null($existExchangeRate))
             {
                 $validator->errors()->add('alreadyexists', "This customized Rate is already exists");
