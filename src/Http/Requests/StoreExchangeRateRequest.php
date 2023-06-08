@@ -39,8 +39,8 @@ class StoreExchangeRateRequest extends FormRequest
             'customized_rate.required_if' => 'the customized rate is required if rate type is customized rate',
             'exchange_from.required_if'   => 'the exchange_from is required if rate type is customized rate',
             'exchange_to.required_if'     => 'the exchange_to is required if rate type is customized rate',
-            'percentage_rate.required_if' => 'the plus_minus is required if rate type is default_rate',
-            'percentage.required_if'      => 'the percentage is required if rate type is default_rate',
+            'percentage_rate.required_if' => 'the plus_minus is required if rate type is default rate',
+            'percentage.required_if'      => 'the percentage is required if rate type is default rate',
         ];
     }
 
