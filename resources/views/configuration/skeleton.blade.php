@@ -67,9 +67,17 @@
                             </li>
                             {{-- @endcan --}}
                             <li>
-                                <a id="Notifications" href="javascript:void(0);" class="side-menu">
+                                <a id="Notifications" href="{{ route('dashboard.international-transfer.master-account.index') }}"
+                                    class="side-menu">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> Notifications </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="country" href="{{ route('dashboard.international-transfer.country.index') }}"
+                                     class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title"> Country </div>
                                 </a>
                             </li>
                         </ul>

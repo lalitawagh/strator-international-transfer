@@ -5,10 +5,9 @@
             name="amount" onpaste="return false;" onkeypress="preventNonNumericalInput(event,this)" autofocus>
         <label
             class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Sending</label>
-
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
             <span id="fromCountry">
-                @foreach ($countries as $country)
+                @foreach ($sendingcountriesinfo as $country)
                     @isset($currency_from)
                         @if ($country->id == $currency_from)
                             <img src="{{ $country->flag }}">
@@ -22,7 +21,7 @@
             </span>
             <select class="tail-select w-full" id='tabcuntery-selection1' style='width: 210px;'
                 wire:change="changeFromCurrency($event.target.value)" class="" name="currency_code_from">
-                @foreach ($countries as $country)
+                @foreach ($sendingcountriesinfo as $country)
                     @if(config('services.registration_changed') == true && $country->code == 'UK')
                         <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                             @isset($currency_from) @if ($country->id == $currency_from)
@@ -176,10 +175,9 @@
             name="recipient_amount" onkeypress="preventNonNumericalInput(event)" readonly autofocus>
         <label
             class="label absolute mb-0 -mt-0 pt-0 pl-3 leading-tighter text-gray-400 text-base mt-0 cursor-text">Receiving</label>
-
         <div id="input-group-email" class="input-group-text form-inline cuntery-in flex gap-2">
             <span id="toCountry">
-                @foreach ($countries as $country)
+                @foreach ($receivingcountriesinfo as $country)
                     @isset($currency_to)
                         @if ($country->id == $currency_to)
                             <img src="{{ $country->flag }}">
@@ -194,7 +192,7 @@
             <select class="tail-select w-full" id='tabcuntery-selection2'
                 wire:change="changeToCurrency($event.target.value)" name="currency_code_to">
                 @if(config('services.registration_changed') == true)
-                    @foreach ($countryCurrency as $country)
+                    @foreach ($receivingcountriesinfo as $country)
                         @if ($country?->risk_score != 3)
                             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                 @isset($currency_to)
