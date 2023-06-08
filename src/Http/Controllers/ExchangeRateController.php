@@ -31,18 +31,19 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
-       // dd($data);
-       if($data['rate_type'] == 'default_rate')
-        {
-            $data['customized_rate'] = 0;
-        }
-        else
-        {
-            $data['plus_minus'] = 0;
-            $data['percentage'] = 0;
-        }
+
+        if($data['rate_type'] == 'default_rate')
+            {
+                $data['customized_rate'] = 0;
+            }
+            else
+            {
+                $data['plus_minus'] = 0;
+                $data['percentage'] = 0;
+            }
+
         $ExchangeRate = New CcExchangeRate();
-        $ExchangeRate->fill($request->post())->save();
+        $ExchangeRate->fill($data)->save();
 
         return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
             'status' => 'success',
