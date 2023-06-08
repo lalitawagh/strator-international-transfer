@@ -14,7 +14,7 @@ class ExchangeRateController extends Controller
     public function index()
     {
         $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRateConfiguration::class);
-        
+
         return view("international-transfer::configuration.exchange-rate.index");
     }
 
@@ -31,7 +31,16 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
-
+       // dd($data);
+       if($data['rate_type'] == 'default_rate')
+        {
+            $data['customized_rate'] = 0;
+        }
+        else
+        {
+            $data['plus_minus'] = 0;
+            $data['percentage'] = 0;
+        }
         $ExchangeRate = New CcExchangeRate();
         $ExchangeRate->fill($request->post())->save();
 
@@ -61,6 +70,11 @@ class ExchangeRateController extends Controller
         if($validated_data['rate_type'] == 'default_rate')
         {
             $validated_data['customized_rate'] = 0;
+        }
+        else
+        {
+            $validated_data['plus_minus'] = 0;
+            $validated_data['percentage'] = 0;
         }
         $exchange_rate->fill($validated_data)->save();
 
