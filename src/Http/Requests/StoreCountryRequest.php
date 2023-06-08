@@ -10,8 +10,8 @@ class StoreCountryRequest extends FormRequest
     public function rules()
     {
         return [
-            'sending_currency'       =>    ['required'],
-            'receiving_currency'     =>    ['required'],
+            'sending_currency'       =>    'required',
+            'receiving_currency'     =>    'required|different:sending_currency',
         ];
     }
 
@@ -21,6 +21,7 @@ class StoreCountryRequest extends FormRequest
 
             'sending_currency.required'   => 'The Sending Currency field is required.',
             'receiving_currency.required' => 'The Receiving Currency field is required.',
+            'receiving_currency.different' => 'The receiving currency must be different from the sending currency.',
 
         ];
     }
