@@ -27,7 +27,7 @@ class StoreMasterAccountRequest extends FormRequest
             'status'                =>    ['required'],
             'account_holder_name'   =>    ['required','string', new AlphaSpaces(), 'max:20'],
             'account_branch'        =>    ['required','string','max:20'],
-            'account_number'        =>    ['required','numeric','max:20'],
+            'account_number'        =>    ['required','numeric'],
             'sort_code'             =>    [Rule::requiredIf(request()->get('country') == 231),'nullable','numeric','digits:6'],
             'ifsc_code'             =>    [Rule::requiredIf(request()->get('country') != 231),'nullable'],
         ];

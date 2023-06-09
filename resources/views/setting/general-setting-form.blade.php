@@ -1,4 +1,4 @@
-<div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-3 mt-0"
+<div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0"
     @if (old('cc_rate_type', @$rate_type) == 'cc_customize_rate') x-data="{ selected: '1' }" @elseif (old('cc_rate_type', @$rate_type) == 'currency_cloud_rate') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
     <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
         <label for="rate_type_info" class="form-label sm:w-52">Rate Type </label>
@@ -10,9 +10,8 @@
                     <h4 href="javascript:;" class="font-medium truncate mr-5 ">
                         <h4>Customized Rate</h4>
                 </label>
-                <input id="radio-switch-2" class="form-check-input ml-3" type="radio"
-                    x-on:click="selected = '0'" name="cc_rate_type" value="currency_cloud_rate"
-                    @if (old('cc_rate_type', @$rate_type) == 'currency_cloud_rate') checked @endif>
+                <input id="radio-switch-2" class="form-check-input ml-3" type="radio" x-on:click="selected = '0'"
+                    name="cc_rate_type" value="currency_cloud_rate" @if (old('cc_rate_type', @$rate_type) == 'currency_cloud_rate') checked @endif>
                 <label class="form-check-label" for="radio-switch-2">
                     <h4 href="javascript:;" class="font-medium truncate mr-5">
                         <h4>Currency Cloud Rate </h4>
@@ -36,15 +35,14 @@
             @enderror
         </div>
     </div>
-    <div class="col-span-6 lg:col-span-6 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+    <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
         <label for="percentage" class="form-label sm:w-52">Plus / Minus</label>
         <div class="sm:w-5/6">
             <div class="input-group">
-                <select name="cc_percentage_rate" id="percentage_rate" class="form-control"
-                    data-search="true">
+                <select name="cc_percentage_rate" id="percentage_rate" class="form-control" data-search="true">
                     <option value=""></option>
-                    <option value="plus" @if (old('cc_percentage_rate',  @$percentage_rate) == 'plus') selected @endif> + </option>
-                    <option value="minus" @if (old('cc_percentage_rate',  @$percentage_rate) == 'minus') selected @endif> - </option>
+                    <option value="plus" @if (old('cc_percentage_rate', @$percentage_rate) == 'plus') selected @endif> + </option>
+                    <option value="minus" @if (old('cc_percentage_rate', @$percentage_rate) == 'minus') selected @endif> - </option>
                 </select>
             </div>
 
@@ -53,7 +51,7 @@
             @enderror
         </div>
     </div>
-    <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+    <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline -mt-5" x-show="selected == '0'">
         <label for="percentage" class="form-label sm:w-52">Percentage</label>
         <div class="sm:w-5/6">
             <div class="input-group">
