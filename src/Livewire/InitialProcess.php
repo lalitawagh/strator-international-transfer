@@ -223,7 +223,7 @@ class InitialProcess extends Component
 
             if(!is_null($globalExchangeRate))
             {
-                if(@$globalExchangeRate->rate_type == 'customize_rate')
+                if(@$globalExchangeRate->rate_type == 'customized_rate')
                 {
                     $exchangeRate = $globalExchangeRate->customized_rate;
 
@@ -243,7 +243,7 @@ class InitialProcess extends Component
 
             }
             else{
-                if(@$membershipExchangeRates->value['rate_type'] == 'customize_rate')
+                if(@$membershipExchangeRates->value['rate_type'] == 'customized_rate')
                 {
                     $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
 
