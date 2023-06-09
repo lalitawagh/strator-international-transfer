@@ -70,7 +70,7 @@
                                     </div>
                                     <div
                                         class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                        {{ $masterAccount['account_holder_name'] }}</div>
+                                        {{ @$subAccounts->meta['account_holder_name'] }}</div>
                                 </div>
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
@@ -78,24 +78,20 @@
                                         Number </div>
                                     <div
                                         class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                        {{ $masterAccount['account_number'] }}</div>
+                                        {{ @$subAccounts->meta['account_number'] }}</div>
                                 </div>
                                 <div
                                     class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
                                     <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                        @if ($masterAccount['country'] == 231)
+                                        @if (@$subAccounts->meta['routing_code_type'] == 'sort_code')
                                             Sort
                                         @else
-                                            IFSC
+                                            BIC Swift
                                         @endif Code
                                     </div>
                                     <div
                                         class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                        @if ($masterAccount['country'] == 231)
-                                            {{ $masterAccount['sort_code'] }}
-                                        @else
-                                            {{ $masterAccount['ifsc_code'] }}
-                                        @endif
+                                        {{ @$subAccounts->meta['routing_code'] }}
                                     </div>
                                 </div>
                             </div>

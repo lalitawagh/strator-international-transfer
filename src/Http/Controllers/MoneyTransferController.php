@@ -36,6 +36,7 @@ use Kanexy\PartnerFoundation\Core\Models\UserMeta;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\DB;
+use Kanexy\InternationalTransfer\Models\CcAccount;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Stripe;
 use PDF;
@@ -272,6 +273,7 @@ class MoneyTransferController extends Controller
                     'transaction_type' => 'money_transfer',
                     'delivery_method'=>$data['delivery_method']
                 ],
+                'archived' => 0,
             ]);
             $transferDetails['transaction'] = $transaction;
 
@@ -336,9 +338,9 @@ class MoneyTransferController extends Controller
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', $sender->id);
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transferReason = collect(Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transferDetails['transfer_reason']);
+        $subAccounts = CcAccount::where(['holder_id' => $workspace?->id])->first();
 
-
-        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver'));
+        return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver','subAccounts'));
     }
 
     public function finalizeTransfer(Request $request)
@@ -389,6 +391,7 @@ class MoneyTransferController extends Controller
                     'transaction_type' => 'money_transfer',
                     'reason' =>  $transferDetails['transfer_reason'],
                 ],
+                'archived' => 0,
             ]);
 
             $transferDetails['transaction'] = $transaction;
@@ -431,6 +434,7 @@ class MoneyTransferController extends Controller
                     'transaction_type' => 'money_transfer',
                     'delivery_method'=>'Total_Processing'
                 ],
+                'archived' => 0,
             ]);
 
             $transferDetails['transaction'] = $transaction;
