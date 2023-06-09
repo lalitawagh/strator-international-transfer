@@ -78,7 +78,6 @@ class InitialProcess extends Component
 
     }
 
-
     public function hydrate()
     {
         $this->dispatchBrowserEvent('transfer-on-process');
