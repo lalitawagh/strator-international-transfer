@@ -227,7 +227,7 @@ class InitialProcess extends Component
                 {
                     $exchangeRate = $globalExchangeRate->customized_rate;
 
-                }elseif(@$globalExchangeRate->rate_type == 'currency_cloud_rate'){
+                }elseif(@$globalExchangeRate->rate_type == 'default_rate'){
 
                     $percentage = @$globalExchangeRate->percentage;
 

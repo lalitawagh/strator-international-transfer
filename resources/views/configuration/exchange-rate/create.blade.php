@@ -21,14 +21,18 @@
                                 <label for="exchange_from_info" class="form-label sm:w-30">Exchange From <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select id="exchange_from" name="exchange_from" data-search="true" class="w-full">
-                                        @foreach ($countries as $key => $value)
-                                            <option value="{{ $key }}"
-                                                @if ($key == old('exchange_from')) selected @endif>
-                                                {{ $value }}
+                                    <select name="exchange_from" id="exchange_from" data-search="true"
+                                        class="w-full @error('exchange_from') border-theme-6 @enderror" required>
+                                        @foreach ($countries as $country)
+                                            @php
+                                                $selected = old('exchange_from') == $country->id || (isset($ExchangeRate) && $ExchangeRate->exchange_from == $country->id);
+                                            @endphp
+                                            <option value="{{ $country->id }}" {{ $selected ? 'selected' : '' }}>
+                                                {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
                                             </option>
                                         @endforeach
                                     </select>
+
                                     @error('exchange_from')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -38,14 +42,18 @@
                                 <label for="exchange_to_info" class="form-label sm:w-30">Exchange To <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select id="exchange_to" name="exchange_to" data-search="true" class="w-full">
-                                        @foreach ($countries as $key => $value)
-                                            <option value="{{ $key }}"
-                                                @if ($key == old('exchange_to')) selected @endif>
-                                                {{ $value }}
+                                    <select name="exchange_to" id="exchange_to" data-search="true"
+                                        class="w-full @error('exchange_to') border-theme-6 @enderror" required>
+                                        @foreach ($countries as $country)
+                                            @php
+                                                $selected = old('exchange_to') == $country->id || (isset($ExchangeRate) && $ExchangeRate->exchange_to == $country->id);
+                                            @endphp
+                                            <option value="{{ $country->id }}" {{ $selected ? 'selected' : '' }}>
+                                                {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
                                             </option>
                                         @endforeach
                                     </select>
+
                                     @error('exchange_to')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror

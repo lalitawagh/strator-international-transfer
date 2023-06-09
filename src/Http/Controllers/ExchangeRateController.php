@@ -14,7 +14,7 @@ class ExchangeRateController extends Controller
     public function index()
     {
         $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRateConfiguration::class);
-        
+
         return view("international-transfer::configuration.exchange-rate.index");
     }
 
@@ -22,7 +22,7 @@ class ExchangeRateController extends Controller
     {
         $this->authorize(ExchangeRatePolicy::CREATE, ExchangeRateConfiguration::class);
 
-        $countries = Country::orderBy("name")->pluck("name", "id");
+        $countries = Country::get();
 
         return view("international-transfer::configuration.exchange-rate.create",compact('countries'));
     }
@@ -32,8 +32,18 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
 
-        $ExchangeRate = New CcExchangeRate();
-        $ExchangeRate->fill($request->post())->save();
+        if($data['rate_type'] == 'default_rate')
+            {
+                $data['customized_rate'] = 0;
+            }
+            else
+            {
+                $data['plus_minus'] = 0;
+                $data['percentage'] = 0;
+            }
+
+        $exchange_Rate = New CcExchangeRate();
+        $exchange_Rate->fill($data)->save();
 
         return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
             'status' => 'success',
@@ -46,7 +56,7 @@ class ExchangeRateController extends Controller
     {
 
         $ExchangeRate = CcExchangeRate::where('id',$value)->first();
-        $countries = Country::orderBy("name")->pluck("name", "id");
+        $countries = Country::get();
 
         $this->authorize(ExchangeRatePolicy::EDIT, ExchangeRateConfiguration::class);
 
@@ -56,12 +66,20 @@ class ExchangeRateController extends Controller
 
     public function update(StoreExchangeRateRequest $request, $exchange_rate_id)
     {
+
         $exchange_rate = CcExchangeRate::findOrFail($exchange_rate_id);
         $validated_data = $request->validated();
+
         if($validated_data['rate_type'] == 'default_rate')
         {
             $validated_data['customized_rate'] = 0;
         }
+        else
+        {
+            $validated_data['plus_minus'] = 0;
+            $validated_data['percentage'] = 0;
+        }
+
         $exchange_rate->fill($validated_data)->save();
 
         return redirect()->route("dashboard.international-transfer.exchange-rate.index")->with([

@@ -3,7 +3,6 @@
 namespace Kanexy\InternationalTransfer\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Kanexy\InternationalTransfer\Model\CcExchangeRate;
 use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
@@ -56,10 +55,10 @@ class StoreExchangeRateRequest extends FormRequest
                 }
             }
 
-            $existExchangeRate = CcExchangeRate::where('exchange_from', $this->input('exchange_from'))->where('exchange_to', $this->input('exchange_to'))->where('customized_rate', $this->input('customized_rate'))->first();
+            $existExchangeRate = CcExchangeRate::where('customized_rate', $this->input('customized_rate'))->where('plus_minus', $this->input('plus_minus'))->where('percentage', $this->input('percentage'))->first();
             if(!is_null($existExchangeRate))
             {
-                $validator->errors()->add('alreadyexists', "This customized Rate is already exists");
+                $validator->errors()->add('alreadyexists', "This Exchange Rate is already exists");
             }
         });
     }
