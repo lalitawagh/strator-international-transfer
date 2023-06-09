@@ -63,42 +63,77 @@
                                 class="dark:bg-darkmode-400 dark:border-darkmode-400 p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Account Details For Manual Transfer</h3>
                             </div>
-                            <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
-                                <div
-                                    class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                    <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name
+                            @if (config('services.registration_changed') == true)
+                                <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                    <div
+                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name
+                                        </div>
+                                        <div
+                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                            {{ @$subAccounts->meta['account_holder_name'] }}</div>
                                     </div>
                                     <div
-                                        class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                        {{ $masterAccount['account_holder_name'] }}</div>
-                                </div>
-                                <div
-                                    class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                    <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                        Number </div>
-                                    <div
-                                        class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                        {{ $masterAccount['account_number'] }}</div>
-                                </div>
-                                <div
-                                    class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                    <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                        @if ($masterAccount['country'] == 231)
-                                            Sort
-                                        @else
-                                            IFSC
-                                        @endif Code
+                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
+                                            Number </div>
+                                        <div
+                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                            {{ @$subAccounts->meta['account_number'] }}</div>
                                     </div>
                                     <div
-                                        class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                        @if ($masterAccount['country'] == 231)
-                                            {{ $masterAccount['sort_code'] }}
-                                        @else
-                                            {{ $masterAccount['ifsc_code'] }}
-                                        @endif
+                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
+                                            @if (@$subAccounts->meta['routing_code_type'] == 'sort_code')
+                                                Sort
+                                            @else
+                                                BIC Swift
+                                            @endif Code
+                                        </div>
+                                        <div
+                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                            {{ @$subAccounts->meta['routing_code'] }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                    <div
+                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name
+                                        </div>
+                                        <div
+                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                            {{ $masterAccount['account_holder_name'] }}</div>
+                                    </div>
+                                    <div
+                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
+                                            Number </div>
+                                        <div
+                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                            {{ $masterAccount['account_number'] }}</div>
+                                    </div>
+                                    <div
+                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
+                                            @if ($masterAccount['country'] == 231)
+                                                Sort
+                                            @else
+                                                IFSC
+                                            @endif Code
+                                        </div>
+                                        <div
+                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                            @if ($masterAccount['country'] == 231)
+                                                {{ $masterAccount['sort_code'] }}
+                                            @else
+                                                {{ $masterAccount['ifsc_code'] }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         @else
                             @if ($transferDetails['payment_method'] == 'bank_account')
                                 @php
