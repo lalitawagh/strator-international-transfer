@@ -129,12 +129,12 @@ class MoneyTransferReviewList extends Transaction
                 ->searchable()
                 ->secondaryHeaderFilter('payment_method'),
 
-            Column::make("Purpose of Transfer", "reasons")->format(function ($value) {
-                return ucfirst($value);
-            })
-                ->searchable()
-                ->sortable()
-                ->secondaryHeaderFilter('reasons'),
+            // Column::make("Purpose of Transfer", "reasons")->format(function ($value) {
+            //     return ucfirst($value);
+            // })
+            //     ->searchable()
+            //     ->sortable()
+            //     ->secondaryHeaderFilter('reasons'),
             
             Column::make("Reference", "meta->reference")->format(function ($value) {
                 return ucfirst($value);

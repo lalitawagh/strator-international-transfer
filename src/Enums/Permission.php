@@ -4,6 +4,11 @@ namespace Kanexy\InternationalTransfer\Enums;
 
 class Permission
 {
+    public const EXCHANGE_RATE_VIEW   = 'international-transfer::exchange_rate.view';
+    public const EXCHANGE_RATE_CREATE = 'international-transfer::exchange_rate.create';
+    public const EXCHANGE_RATE_EDIT   = 'international-transfer::exchange_rate.edit';
+    public const EXCHANGE_RATE_DELETE = 'international-transfer::exchange_rate.delete';
+
     public const TRANSFER_TYPE_FEE_VIEW   = 'international-transfer::transfer_type_fee.view';
     public const TRANSFER_TYPE_FEE_CREATE = 'international-transfer::transfer_type_fee.create';
     public const TRANSFER_TYPE_FEE_EDIT   = 'international-transfer::transfer_type_fee.edit';

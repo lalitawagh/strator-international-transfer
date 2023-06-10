@@ -2,7 +2,7 @@
     <div class="p-0" x-data="{ selectedDiv: 'personal' }">
 
         <form>
-            <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0 lg:mb-0">
+            <div class="grid grid-cols-12 md:gap-3 lg:gap-3 xl:gap-6 mt-0 lg:mb-0">
                 <div class="col-span-12 md:col-span-8 lg:col-span-6 form-inline lg:mt-0">
                     <label class="form-label sm:w-52">Contact Type <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6 sm:pt-1">
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 md:gap-0 lg:gap-10 mt-0 ihphone-scroll-height-inr">
+            <div class="grid grid-cols-12 md:gap-3 lg:gap-6 mt-0 ihphone-scroll-height-inr">
 
                 <div class="col-span-12 md:col-span-8 lg:col-span-6 lg:mt-0">
 
@@ -37,13 +37,15 @@
                         <label for="bank_country" class="form-label sm:w-52"> Country <span
                                 class="text-theme-6">*</span></label>
                         <div class="sm:w-5/6">
-                            <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true"
+                            {{-- <select id="{{ $beneficiaryType }}_country_id" name="bank_country" data-search="true"
                                 wire:change="changeCountry($event.target.value)" class="w-full">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->id }}"
                                         @if ($country->code == $receiving_country) selected @endif>{{ $country->name }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <input id="bank_country" name="bank_country" type="text"
+                                class="form-control" value="{{ $receivedCountry }}" disabled>
                             @error('meta.bank_country')
                                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                             @enderror
@@ -286,7 +288,7 @@
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="aba_number" wire:model.defer="meta.aba_number" name="aba_number"
-                                    type="text" class="form-control" required="required">
+                                    type="number" class="form-control" required="required">
                                 @error('meta.aba_number')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                 @enderror
@@ -451,7 +453,7 @@
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="post_code" wire:model.defer="meta.post_code" name="post_code"
-                                    type="text" class="form-control" required="required" value="">
+                                    type="number" class="form-control" required="required" value="" onKeyPress="if(this.value.length==6) return false;return onlyNumberKey(event);">
                                 @error('meta.post_code')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                 @enderror
@@ -467,7 +469,7 @@
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="post_code" wire:model.defer="meta.post_code" name="post_code"
-                                    type="text" class="form-control" required="required" value="">
+                                    type="number" class="form-control" required="required" value="" onKeyPress="if(this.value.length==6) return false;return onlyNumberKey(event);">
                                 @error('meta.post_code')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                 @enderror
@@ -499,7 +501,7 @@
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="post_code" wire:model.defer="meta.post_code" name="post_code"
-                                    type="text" class="form-control" required="required" value="">
+                                    type="number" class="form-control" required="required" value="" onKeyPress="if(this.value.length==6) return false;return onlyNumberKey(event);">
                                 @error('meta.post_code')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                 @enderror
