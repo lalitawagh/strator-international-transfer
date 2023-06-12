@@ -5,6 +5,7 @@ namespace Kanexy\InternationalTransfer;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
+use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\InternationalTransfer\Contracts\FeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\MasterAccountConfiguration;
@@ -12,6 +13,7 @@ use Kanexy\InternationalTransfer\Contracts\MoneyTransfer;
 use Kanexy\InternationalTransfer\Contracts\TransferReasonConfiguration;
 use Kanexy\InternationalTransfer\Contracts\RiskMgmtQueConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
+use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
 use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
@@ -28,6 +30,7 @@ use Kanexy\InternationalTransfer\Membership\MembershipComponent;
 use Kanexy\InternationalTransfer\Menu\BeneficiariesMenu;
 use Kanexy\InternationalTransfer\Menu\AgentMenu;
 use Kanexy\InternationalTransfer\Menu\CurrencyCloudPartner;
+use Kanexy\InternationalTransfer\Menu\AgentUser;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Menu\MoneyTransferMenu;
 use Kanexy\InternationalTransfer\Menu\TransactionMenu;
@@ -37,6 +40,7 @@ use Kanexy\InternationalTransfer\Policies\MoneyTransferPolicy;
 use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
+use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
 use Kanexy\InternationalTransfer\Setting\GeneralSettingForm;
 use Kanexy\InternationalTransfer\Registration\CustomerRegistrationForm;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
@@ -64,6 +68,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         FeeConfiguration::class => FeePolicy::class,
         MoneyTransfer::class => MoneyTransferPolicy::class,
         RiskMgmtQueConfiguration::class => RiskMgmtQuePolicy::class,
+        ExchangeRateConfiguration::class => ExchangeRatePolicy::class,
     ];
 
     public function registerDefaultPolicies()
@@ -115,8 +120,11 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
 
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
+        
+        
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
         Livewire::component('otp-verification-component', OtpVerification::class);
@@ -145,6 +153,12 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
             } else if ((!$user->isSubscriber()) && (config('services.disable_banking') == true)) {
                 return route('dashboard.international-transfer.money-transfer-dashboard');
             }
+        });
+
+
+        Gate::define('agent-users', function (User $user, $id) {
+           
+            return $user->id ==  $id;
         });
     }
 }

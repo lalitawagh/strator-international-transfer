@@ -14,12 +14,12 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 use PDF;
 
-class MoneyTransfer extends Transaction
+class ArchivedMoneyTransfer extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
          if (!$workspace_id) {
-            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->latest();
+            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived',1)->latest();
          }
 
          return Transaction::query()->where("meta->transaction_type", 'money_transfer')->whereWorkspaceId($workspace_id)->latest();
@@ -37,25 +37,24 @@ class MoneyTransfer extends Transaction
 
     public static function setArchived()
     {
-        return true;
+        return false;
     }
 
     public static function setUnArchived()
     {
-        return false;
+        return true;
     }
 
-    public static function archived($records)
+    public static function unarchived($records)
     {
         foreach ($records as $record) {
             $transaction = Transaction::find($record);
-            $transaction->archived = 1;
+            $transaction->archived = 0;
             $transaction->update();
         }
 
         return ;
     }
-
 
     public static function setRecordsToDownload($records, $type)
     {
@@ -99,9 +98,9 @@ class MoneyTransfer extends Transaction
             $transactions->push(Transaction::find($record));
         }
 
-        // $account = auth()->user()->workspaces()->first()?->account()->first();
+        $account = auth()->user()->workspaces()->first()?->account()->first();
         $user = Auth::user();
-        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','user'))
+        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','account','user'))
             ->setPaper(array(0, 0, 1000, 800), 'landscape')
             ->output();
 

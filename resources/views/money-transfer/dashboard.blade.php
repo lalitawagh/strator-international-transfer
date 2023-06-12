@@ -177,7 +177,30 @@
                     </div>
                 </div>
             @endif
-            <!--Static Code-->
+            @if ($user->isSubscriber())
+                <div class="intro-y col-span-12 md:col-span-4 lg:col-span-4 intro-y h-full">
+                    <div class="box shadow-lg p-3">
+                        <div class="text-lg font-medium mr-auto mt-2">Sub Account</div>
+                        <ul class="mt-1">
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-3/4">Account Holder Name </span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->meta['account_holder_name']) }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-3/4">Account Number</span>
+                                <p class="w-2/3 text-sm break-all">{{ @$subAccountInfo->meta['account_number'] }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-3/4">Sort Code</span>
+                                <p class="w-2/3 text-sm break-all">{{ @$subAccountInfo->meta['routing_code'] }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-3/4">Currency </span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->meta['currency']) }}</p>
+                            </li>
+                            <li class="w-full flex justify-between my-3"><span class="font-medium w-3/4">Type </span>
+                                <p class="w-2/3 text-sm break-all">{{ ucwords(@$subAccountInfo->meta['legal_entity_type']) }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
     <div class="intro-y col-span-12 lg:col-span-12 mt-5">

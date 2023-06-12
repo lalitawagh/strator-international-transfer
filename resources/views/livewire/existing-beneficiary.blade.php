@@ -92,7 +92,7 @@
                                                 <span
                                                     class="font-medium w-2/3 text-sm break-all">{{ @$beneficiaryDetail->meta['bank_account_number'] }}</span>
                                             </div>
-
+                                            
                                             <div class="flex items-start text-left mt-4">
 
                                                 <span class="font-medium w-2/4 truncate">IFSC Code / IBAN</span>

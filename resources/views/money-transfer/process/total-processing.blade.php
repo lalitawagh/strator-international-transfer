@@ -42,9 +42,10 @@
 
         function validateHolder(e) {
             var holder = $('.wpwl-control-cardHolder').val();
-            if (holder.trim().length < 2) {
+            if (holder.trim().length < 2 || holder.trim().length > 40) {
                 $('.wpwl-control-cardHolder').addClass('wpwl-has-error').after(
-                    '<div class="wpwl-hint wpwl-hint-cardHolderError">Please enter card holder</div>');
+                    '<div class="wpwl-hint wpwl-hint-cardHolderError">Please enter a card holder name between 2 and 40 characters</div>'
+                );
                 return false;
             }
             return true;
