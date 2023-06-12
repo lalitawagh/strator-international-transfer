@@ -98,7 +98,7 @@
                                         x-show="selected == '1'">
                                         <label for="customized_rate" class="form-label sm:w-30">Customized Rate </label>
                                         <div class="sm:w-5/6">
-                                            <input id="customized_rate" name="customized_rate" type="text"
+                                            <input id="customized_rate" name="customized_rate" type="number" step="0.01"
                                                 class="form-control @error('customized_rate') border-theme-6 @enderror customized_rate"
                                                 value="{{ old('customized_rate', $ExchangeRate->customized_rate) }}">
 
@@ -134,7 +134,7 @@
                                         <label for="percentage" class="form-label sm:w-30">Percentage</label>
                                         <div class="sm:w-5/6">
                                             <div class="input-group">
-                                                <input id="percentage" name="percentage" type="text"
+                                                <input id="percentage" name="percentage" type="number" step="0.01"
                                                     class="form-control @error('percentage') border-theme-6 @enderror percentage"
                                                     value="{{ old('percentage', $ExchangeRate->percentage) }}">
                                                 <div id="input-group-percentage" class="input-group-text">%</div>
