@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\InternationalTransfer\Models;
+namespace Kanexy\InternationalTransfer\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
