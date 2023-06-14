@@ -23,7 +23,7 @@ class MembershipComponentController extends Controller
     {
         $data = $request->validate([
             'rate_type' => 'nullable',
-            'customized_rate' => 'nullable|numeric',
+            'customized_rate' => 'nullable|numeric|min:1',
             'percentage_rate' => 'nullable',
             'percentage' => 'nullable|numeric'
         ]);
