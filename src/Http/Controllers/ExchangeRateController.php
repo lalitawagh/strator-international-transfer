@@ -5,9 +5,9 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\InternationalTransfer\Http\Requests\StoreExchangeRateRequest;
-use Kanexy\InternationalTransfer\Model\CcExchangeRate;
 use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
 use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
+use Kanexy\InternationalTransfer\Models\CcExchangeRate;
 
 class ExchangeRateController extends Controller
 {

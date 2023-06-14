@@ -9,7 +9,7 @@ use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
 use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
-use Kanexy\InternationalTransfer\Model\CcExchangeRate;
+use Kanexy\InternationalTransfer\Models\CcExchangeRate;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
