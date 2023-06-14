@@ -91,7 +91,8 @@
                         @enderror
                     </div>
                 </div>
-                <div id="sort_code" class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+
+                <div id="sort_code" class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2" @if(!is_null(old('country'))) @if(old('country') != 231) style="display:none;" @endif @endif>
                     <label for="sort_code" class="form-label sm:w-60">Sort Code <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="sort_code" name="sort_code" type="text"
@@ -104,7 +105,7 @@
                     </div>
                 </div>
                 <div id="ifsc_code" class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2"
-                    style="display: none;">
+                @if(!is_null(old('country'))) @if(old('country') == 231) style="display:none;"  @endif @elseif(is_null(old('country')))  style="display:none;" @endif >
                     <label for="ifsc_code" class="form-label sm:w-60">IFSC Code <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="ifsc_code" name="ifsc_code" type="text"
