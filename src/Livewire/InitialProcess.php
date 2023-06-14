@@ -247,20 +247,25 @@ class InitialProcess extends Component
 
                     if(@$membershipExchangeRates->value['rate_type'] == 'customized_rate')
                     {
-                        $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
+                        if(!is_null(@$membershipExchangeRates->value['customized_rate']))
+                        {
+                            $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
+                        }
+
 
                     }
                     else
                     {
-                        $percentage = @$membershipExchangeRates->value['percentage'];
+                        if(!is_null(@$membershipExchangeRates->value['percentage'])) {
+                            $percentage = @$membershipExchangeRates->value['percentage'];
 
-                        $percent = $percentage / 100  * $exchangeRate;
+                            $percent = $percentage / 100  * $exchangeRate;
 
-                        if( @$membershipExchangeRates->value['percentage_rate'] == 'plus')
-                        {
-                            $exchangeRate = $exchangeRate + $percent;        
-                        }else{
-                            $exchangeRate = $exchangeRate - $percent;
+                            if(@$membershipExchangeRates->value['percentage_rate'] == 'plus') {
+                                $exchangeRate = $exchangeRate + $percent;
+                            } else {
+                                $exchangeRate = $exchangeRate - $percent;
+                            }
                         }
                     }
 
