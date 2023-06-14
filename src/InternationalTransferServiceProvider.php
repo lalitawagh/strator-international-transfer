@@ -116,8 +116,8 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new MoneyTransferMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new BeneficiariesMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
-        // \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
-        // \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
 
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
 
