@@ -41,7 +41,6 @@ use Kanexy\InternationalTransfer\Policies\TransferReasonPolicy;
 use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
-use Kanexy\InternationalTransfer\Setting\GeneralSettingForm;
 use Kanexy\InternationalTransfer\Registration\CustomerRegistrationForm;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
 use Livewire\Livewire;
@@ -123,8 +122,8 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
 
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
-        
-        
+
+
         Livewire::component('initial-process', InitialProcess::class);
         Livewire::component('myself-beneficiary', MyselfBeneficiary::class);
         Livewire::component('otp-verification-component', OtpVerification::class);
@@ -142,7 +141,6 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
-        \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
 
@@ -157,7 +155,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
 
         Gate::define('agent-users', function (User $user, $id) {
-           
+
             return $user->id ==  $id;
         });
     }
