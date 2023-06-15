@@ -23,7 +23,7 @@ class CurrencyCloudPartnerController extends Controller
         $fee_types = Fee::toArray();
         $fees = Helper::paginate(collect(Setting::getValue('money_transfer_fees',[]))->reverse());
 
-        return view("international-transfer::partners.fee.index", compact('fees', 'fee_types'));
+        return view("international-transfer::configuration.fee.index", compact('fees', 'fee_types'));
     }
 
     public function create()

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
+use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
 use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
 use Kanexy\InternationalTransfer\Http\Controllers\CountryController;
 use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
@@ -73,6 +74,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
                 Route::resource('cc-partners', CurrencyCloudPartnerController::class);
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
+                Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

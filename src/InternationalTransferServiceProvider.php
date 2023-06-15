@@ -15,6 +15,7 @@ use Kanexy\InternationalTransfer\Contracts\RiskMgmtQueConfiguration;
 use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
+use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
 use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
@@ -42,6 +43,8 @@ use Kanexy\InternationalTransfer\Policies\RiskMgmtQuePolicy;
 use Kanexy\InternationalTransfer\Policies\TransferTypeFeePolicy;
 use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
 use Kanexy\InternationalTransfer\Registration\CustomerRegistrationForm;
+use Kanexy\InternationalTransfer\Setting\CcAccountSettingContent;
+use Kanexy\InternationalTransfer\Setting\CcAccountSettingTab;
 use Kanexy\InternationalTransfer\Transfer\BankingProcessSelectionTransferComponent;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -143,7 +146,8 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
-
+        \Kanexy\Cms\Facades\SettingContent::addItem(CcAccountSettingContent::class);
+        \Kanexy\Cms\Facades\SettingTab::addItem(CcAccountSettingTab::class);
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
             if ($user->is_banking_user == 2 && config('services.disable_banking') == true) {
