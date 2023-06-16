@@ -13,9 +13,9 @@
                 </div>
                
                 <div class="p-5">
-                    <form action="{{ route('dashboard.international-transfer.cc-partners.update', $partner->getKey()) }}" method="POST">
+                    <form action="{{ route('dashboard.international-transfer.cc-partners-update', $partner->getKey()) }}" method="POST">
                         @csrf
-                        @method('put')
+                        @method('POST')
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
@@ -169,14 +169,14 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="client_id" class="form-label sm:w-40">Client ID <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input id="client_id" name="client_id" type="text" class="form-control w-full" value="{{ $client->id }}" disabled>
+                                    <input id="client_id" name="client_id" type="text" class="form-control w-full" value="{{ $client?->id }}" disabled>
                                 </div>
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="client_secret" class="form-label sm:w-40">Client Secret</label>
                                 <div class="sm:w-5/6">
-                                    <input id="client_secret" name="client_secret" type="text" class="form-control w-full" value="{{ $client->secret }}" disabled>
+                                    <input id="client_secret" name="client_secret" type="text" class="form-control w-full" value="{{ $client?->secret }}" disabled>
                                 </div>
                             </div>
                         </div>
