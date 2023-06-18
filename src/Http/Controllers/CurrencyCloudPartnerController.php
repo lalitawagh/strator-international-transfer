@@ -29,7 +29,7 @@ class CurrencyCloudPartnerController extends Controller
     {
         $data = $request->validated();
         $data['status'] = isset($data['status']) ? 'active' : 'inactive';
-        $data['password'] = $data['password'];
+        $data['password'] = Hash::make($data['password']);
 
         $partner = Partner::create($data);
 
