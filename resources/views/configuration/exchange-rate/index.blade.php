@@ -19,7 +19,7 @@
 
                 </div>
                 <div class="datatable-select Livewire-datatable-modal pb-3" attr="datatable-select">
-                    <livewire:data-table model='Kanexy\InternationalTransfer\Model\CcExchangeRate' params=""
+                    <livewire:data-table model='Kanexy\InternationalTransfer\Models\CcExchangeRate' params=""
                         type="exchange-rate" />
                 </div>
             </div>

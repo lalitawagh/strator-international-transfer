@@ -9,7 +9,7 @@ use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
 use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
-use Kanexy\InternationalTransfer\Model\CcExchangeRate;
+use Kanexy\InternationalTransfer\Models\CcExchangeRate;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
@@ -242,23 +242,33 @@ class InitialProcess extends Component
 
             }
             else{
-                if(@$membershipExchangeRates->value['rate_type'] == 'customized_rate')
-                {
-                    $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
 
-                }
-                else
-                {
-                    $percentage = @$membershipExchangeRates->value['percentage'];
+                if (!empty($membershipExchangeRates) && $membershipExchangeRates !== null) {
 
-                    $percent = $percentage / 100  * $exchangeRate;
-
-                    if( @$membershipExchangeRates->value['percentage_rate'] == 'plus')
+                    if(@$membershipExchangeRates->value['rate_type'] == 'customized_rate')
                     {
-                        $exchangeRate = $exchangeRate + $percent;
-                    }else{
-                        $exchangeRate = $exchangeRate - $percent;
+                        if(!is_null(@$membershipExchangeRates->value['customized_rate']))
+                        {
+                            $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
+                        }
+
+
                     }
+                    else
+                    {
+                        if(!is_null(@$membershipExchangeRates->value['percentage'])) {
+                            $percentage = @$membershipExchangeRates->value['percentage'];
+
+                            $percent = $percentage / 100  * $exchangeRate;
+
+                            if(@$membershipExchangeRates->value['percentage_rate'] == 'plus') {
+                                $exchangeRate = $exchangeRate + $percent;
+                            } else {
+                                $exchangeRate = $exchangeRate - $percent;
+                            }
+                        }
+                    }
+
                 }
             }
 

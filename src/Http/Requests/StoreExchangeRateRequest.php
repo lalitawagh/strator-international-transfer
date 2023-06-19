@@ -3,7 +3,7 @@
 namespace Kanexy\InternationalTransfer\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Kanexy\InternationalTransfer\Model\CcExchangeRate;
+use Kanexy\InternationalTransfer\Models\CcExchangeRate;
 use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy;
 
