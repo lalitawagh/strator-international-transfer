@@ -9,6 +9,8 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\LandlineNumber;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\CurrencyCloud\Dtos\ValidateBeneficiaryDto;
+use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Beneficiary;
 use Kanexy\InternationalTransfer\Enums\ShortCode;
 use Kanexy\PartnerFoundation\Core\Rules\BeneficiaryUnique;
@@ -231,152 +233,162 @@ class MyselfBeneficiary extends Component
 
     public function benficiaryCreate($data)
     {
-        $routing_type = 'sort_code';
+            $routing_type = 'sort_code';
 
-        if(isset($data['meta']['bank_code']))
-        {
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->bank_code', $data['meta']['bank_code'])
-            ->first();
+            if(isset($data['meta']['bank_code']))
+            {
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                ->where('meta->bank_code', $data['meta']['bank_code'])
+                ->first();
 
-            $routing_type = ($this->receiving_country == 'IN') ? 'ifsc' : 'sort_code';
-            $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['bank_code'];
+                $routing_type = ($this->receiving_country == 'IN') ? 'ifsc' : 'sort_code';
+                $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['bank_code'];
 
-        }elseif (isset($data['meta']['iban_number'])){
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->iban_number', $data['meta']['iban_number'])
-            ->first();
+            }elseif (isset($data['meta']['iban_number'])){
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->iban_number', $data['meta']['iban_number'])
+                ->first();
 
-            $routing_type = 'ifsc';
-            $routing_code_value =  $data['meta']['iban_number'];
+                $routing_type = 'ifsc';
+                $routing_code_value =  $data['meta']['iban_number'];
 
-        }elseif (isset($data['meta']['bsb_number'])){
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->bsb_number', $data['meta']['bsb_number'])
-            ->first();
+            }elseif (isset($data['meta']['bsb_number'])){
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                ->where('meta->bsb_number', $data['meta']['bsb_number'])
+                ->first();
 
-            $routing_type = 'bsb_code';
-            $routing_code_value =  $data['meta']['bsb_number'];
+                $routing_type = 'bsb_code';
+                $routing_code_value =  $data['meta']['bsb_number'];
 
-        }elseif (isset($data['meta']['aba_number'])){
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->aba_number', $data['meta']['aba_number'])
-            ->first();
+            }elseif (isset($data['meta']['aba_number'])){
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                ->where('meta->aba_number', $data['meta']['aba_number'])
+                ->first();
 
-            $routing_type = 'aba';
-            $routing_code_value =  $data['meta']['aba_number'];
+                $routing_type = 'aba';
+                $routing_code_value =  $data['meta']['aba_number'];
 
-        }elseif (isset($data['meta']['bic_number'])){
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->bic_number', $data['meta']['bic_number'])
-            ->first();
+            }elseif (isset($data['meta']['bic_number'])){
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                ->where('meta->bic_number', $data['meta']['bic_number'])
+                ->first();
 
-            $routing_type = 'bank_code';
-            $routing_code_value =  $data['meta']['bic_number'];
+                $routing_type = 'bank_code';
+                $routing_code_value =  $data['meta']['bic_number'];
 
-        }elseif (isset($data['meta']['cnaps_number'])){
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->cnaps_number', $data['meta']['cnaps_number'])
-            ->first();
+            }elseif (isset($data['meta']['cnaps_number'])){
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                ->where('meta->cnaps_number', $data['meta']['cnaps_number'])
+                ->first();
 
-            $routing_type = 'cnaps';
-            $routing_code_value =  $data['meta']['cnaps_number'];
+                $routing_type = 'cnaps';
+                $routing_code_value =  $data['meta']['cnaps_number'];
 
-        }else{
-            $contactExist = Contact::beneficiaries()->verified()
-            ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-            ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
-            ->first();
-
-            $routing_type = 'bank_code';
-            $routing_code_value =  $data['meta']['ach_routing_number'];
-        }
-
-        if(!is_null($contactExist))
-        {
-            $this->addError('meta.bank_account_number', 'The beneficiary with this account number has already been created.');
-        }else{
-
-            if($data['type'] == 'business'){
-                $data['display_name'] = Helper::removeExtraSpace($data['company_name']);
-                $data['type'] = 'company';
             }else{
-                $data['display_name'] = Helper::removeExtraSpace(implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]));
+                $contactExist = Contact::beneficiaries()->verified()
+                ->where("workspace_id", $this->workspace_id)
+                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
+                ->first();
+
+                $routing_type = 'bank_code';
+                $routing_code_value =  $data['meta']['ach_routing_number'];
             }
 
-            if(! is_null($this->avatar))
+            if(!is_null($contactExist))
             {
-                $data['avatar'] = $this->avatar->store('Images', 'azure');
-            }
+                $this->addError('meta.bank_account_number', 'The beneficiary with this account number has already been created.');
+            }else{
 
-            $currencyDetails = [
-                'sending_currency' => session('money_transfer_request.currency_code_from'),
-                'receiving_currency' => session('money_transfer_request.currency_code_to'),
-                'bank_code_type' => $routing_type,
-                'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
-                'cc_routing_code_value' => $routing_code_value,
-            ];
-
-            if(! is_null($data['mobile']))
-            {
-                $data['mobile'] = Helper::normalizePhone($data['mobile']);
-            }
-
-            $data['workspace_id'] = $this->workspace_id;
-            $data['ref_type'] = 'money_transfer';
-            $data['classification'] = $this->classification;
-            $data['meta'] = array_merge($data['meta'],$currencyDetails);
-            $data['status'] = 'active';
-
-             /** @var Contact $contact */
-            $contact = Contact::create($data);
-
-            event(new ContactCreated($contact));
-
-            /** @var \App\Models\User $user */
-            $user = auth()->user();
-            $this->contact = $contact;
-            $transactionOtpService = Setting::getValue('transaction_otp_service');
-
-            if($transactionOtpService == 'email')
-            {
-                if (config('services.disable_email_service') == false) {
-                    $contact->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
-                }else
-                {
-                    $contact->generateOtp("email");
+                if($data['type'] == 'business'){
+                    $data['display_name'] = Helper::removeExtraSpace($data['company_name']);
+                    $data['type'] = 'company';
+                }else{
+                    $data['display_name'] = Helper::removeExtraSpace(implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]));
                 }
-            }else
-            {
-                if (config('services.disable_sms_service') == false) {
-                    $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-                }else
+
+                if(! is_null($this->avatar))
                 {
-                    $contact->generateOtp("sms");
+                    $data['avatar'] = $this->avatar->store('Images', 'azure');
+                }
+
+                $currencyDetails = [
+                    'sending_currency' => session('money_transfer_request.currency_code_from'),
+                    'receiving_currency' => session('money_transfer_request.currency_code_to'),
+                    'bank_code_type' => $routing_type,
+                    'bank_country' => session('money_transfer_request.currency_code_to') ? session('money_transfer_request.currency_code_to')  : $this->country,
+                    'cc_routing_code_value' => $routing_code_value,
+                ];
+
+                if(! is_null($data['mobile']))
+                {
+                    $data['mobile'] = Helper::normalizePhone($data['mobile']);
+                }
+
+                $data['workspace_id'] = $this->workspace_id;
+                $data['ref_type'] = 'money_transfer';
+                $data['classification'] = $this->classification;
+                $data['meta'] = array_merge($data['meta'],$currencyDetails);
+                $data['status'] = 'active';
+
+                $service = new CurrencyCloudApiService;
+                $validateBeneficiary = $service->validateBeneficaries(new ValidateBeneficiaryDto($data));
+                if ($validateBeneficiary['code'] == 200)
+                {
+                    /** @var Contact $contact */
+                    $contact = Contact::create($data);
+
+                    event(new ContactCreated($contact));
+
+                    /** @var \App\Models\User $user */
+                    $user = auth()->user();
+                    $this->contact = $contact;
+                    $transactionOtpService = Setting::getValue('transaction_otp_service');
+
+                    if($transactionOtpService == 'email')
+                    {
+                        if (config('services.disable_email_service') == false) {
+                            $contact->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
+                        }else
+                        {
+                            $contact->generateOtp("email");
+                        }
+                    }else
+                    {
+                        if (config('services.disable_sms_service') == false) {
+                            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                        }else
+                        {
+                            $contact->generateOtp("sms");
+                        }
+                    }
+
+                    $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+
+                    session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
+
+                    //$user->generateOtp("sms");
+                    $this->beneficiary_created = true;
+
+
+                    $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
+                }
+                else {
+                    return redirect()->route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])->with(['status' => 'failed', 'message' => $validateBeneficiary['message']]);
                 }
             }
 
-            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-
-            session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
-
-            //$user->generateOtp("sms");
-            $this->beneficiary_created = true;
-
-            $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
-        }
     }
 
     public function render()
