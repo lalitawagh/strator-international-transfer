@@ -4,19 +4,17 @@ namespace Kanexy\InternationalTransfer\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Models\UserSetting;
 use Kanexy\InternationalTransfer\Models\CcAccount;
-use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\InternationalTransfer\Services\CurrencyCloudService;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
-use Kanexy\PartnerFoundation\Core\Helper;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request,CurrencyCloudService $service)
     {
         $user = Auth::user();
         $workspace = null;
@@ -43,6 +41,7 @@ class DashboardController extends Controller
                 }
             }
         }
+
 
         $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->latest()->take(15)->get();
         $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where("workspace_id", $workspace?->id)->latest()->take(15)->get();

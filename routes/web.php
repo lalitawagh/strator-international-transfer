@@ -76,6 +76,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::post('cc-partners-update/{id}', [CurrencyCloudPartnerController::class,'update'])->name('cc-partners-update');
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
                 Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);
+                Route::post('cc-payout', [MoneyTransferController::class,'ccPayout'])->name('cc-payout');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

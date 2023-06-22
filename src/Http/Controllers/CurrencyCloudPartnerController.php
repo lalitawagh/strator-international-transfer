@@ -2,6 +2,7 @@
 
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Models\Title;
