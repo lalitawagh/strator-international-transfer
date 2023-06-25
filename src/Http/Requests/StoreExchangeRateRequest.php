@@ -43,24 +43,5 @@ class StoreExchangeRateRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $exchange_from = CcExchangeRate::where('exchange_from', $this->input('exchange_from'))->first();
-            if(!is_null($exchange_from))
-            {
-                if($exchange_from['exchange_from'] != $this->input('exchange_from'))
-                {
-                    $validator->errors()->add('exchange_from', "This Exchange From field has already been selected.");
-                }
-            }
-
-            $existExchangeRate = CcExchangeRate::where('customized_rate', $this->input('customized_rate'))->where('plus_minus', $this->input('plus_minus'))->where('percentage', $this->input('percentage'))->first();
-            if(!is_null($existExchangeRate))
-            {
-                $validator->errors()->add('alreadyexists', "This Exchange Rate is already exists");
-            }
-        });
-    }
 
 }
