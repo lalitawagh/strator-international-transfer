@@ -36,9 +36,16 @@ class CurrencyCloudService
 
     public function payout($data)
     {
-       dd($data);
         return Http::withToken($this->token)
             ->post($this->apiUrl . 'currency-cloud-payout/', $data)
+            ->throw()
+            ->json();
+    }
+
+    public function ccAccount($data)
+    {
+        return Http::withToken($this->token)
+            ->post($this->apiUrl . 'currency-cloud-account/', $data)
             ->throw()
             ->json();
     }
