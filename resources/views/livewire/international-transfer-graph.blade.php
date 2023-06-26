@@ -33,7 +33,7 @@
             </div> --}}
         </div>
     </div>
-    <canvas id="chartLine" class="h-full w-full"></canvas>
+    <canvas id="chartLine" class="h-full w-full" style="display: block; box-sizing: border-box; height: 295px; width: 591px;" width="591" height="284"></canvas>
 </div>
 
 <!-- <script>
