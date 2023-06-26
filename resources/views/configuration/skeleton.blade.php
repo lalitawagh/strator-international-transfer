@@ -67,7 +67,7 @@
                             </li>
                             {{-- @endcan --}}
                             <li>
-                                <a id="Notifications" href="{{ route('dashboard.international-transfer.master-account.index') }}"
+                                <a id="Notifications" href="#"
                                     class="side-menu">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> Notifications </div>
