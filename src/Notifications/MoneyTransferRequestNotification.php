@@ -6,7 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\InternationalTransfer\Models\CcAccount;
 
 class MoneyTransferRequestNotification extends Notification
 {
@@ -17,10 +19,11 @@ class MoneyTransferRequestNotification extends Notification
      *
      * @return void
      */
-    public function __construct($user,$workpsace)
+    public function __construct($user,$workpsace,$transaction)
     {
         $this->user = $user;
         $this->workspace = $workpsace;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -44,9 +47,14 @@ class MoneyTransferRequestNotification extends Notification
     {
         $senderMail = Setting::getValue('sender_mail',[]);
 
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
+        $account = CcAccount::where(['holder_id' => $workspace?->id])->first();
+
         return (new MailMessage)->subject('Deposit Money in Sub Account')
                     ->from($senderMail, config('mail.from.name'))
-                    ->markdown('international-transfer::notification.money-transfer-request-notification', ['user' => $this->user, 'workspace' => $this->workspace]);
+                    ->markdown('international-transfer::notification.money-transfer-request-notification', ['user' => $this->user, 'workspace' => $this->workspace, 'account' => $account, 'transaction' => $this->transaction]);
     }
 
     /**
