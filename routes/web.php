@@ -87,3 +87,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
 
         });
 });
+
+Route::group(['middleware' => ['web']], function () {
+Route::post('webhooks/fxmaster', 'Kanexy\InternationalTransfer\Webhooks\FxmasterCcWebhook')->name('webhooks.fxmaster');
+});
