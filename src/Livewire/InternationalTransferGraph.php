@@ -39,9 +39,6 @@ class InternationalTransferGraph extends Component
 
         $currentWorkspaceId = app('activeWorkspaceId');
 
-        // $agentRole = Role::whereName(EnumsRole::AGENT)->first();
-        // $role->role_id = $agentRole->id;
-
         if($currentWorkspaceId = app('activeWorkspaceId'))
         {
             $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->where('status','completed')->get();
