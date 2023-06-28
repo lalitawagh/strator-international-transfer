@@ -254,63 +254,144 @@
 
 @push('scripts')
     <!-- Chart line -->
+    
     <script>
+
+        var chartLine = null;
+
         window.addEventListener('UpdateTransactionChart', event => {
+
             transactionChart();
+
+
+
+
         });
 
-        function transactionChart(){
+
+
+
+        function transactionChart() {
+
             const labels = [
+
                 'January',
+
                 'February',
+
                 'March',
+
                 'April',
+
                 'May',
+
                 'June',
+
                 'July',
+
                 'August',
+
                 'September',
+
                 'October',
+
                 'November',
+
                 'December'
+
             ];
 
-            //var creditChartTransaction = document.getElementById("updateCredit").innerHTML;
+
+
+
+            // var creditChartTransaction = document.getElementById("updateCredit").innerHTML;
+
             var debitChartTransaction = document.getElementById("updateDebit").innerHTML;
 
+
+
+
             const data = {
+
                 labels: labels,
+
                 datasets: [
-                //     {
-                //     label: 'PAID IN',
-                //     fill: false,
-                //     borderColor: '#002366', // Add custom color border (Line)
-                //     data: JSON.parse(creditChartTransaction),
-                // },
-                {
-                    label: 'PAID OUT',
-                    fill: false,
-                    backgroundColor: '#002366', // Add custom color border (Line)
-                    data: JSON.parse(debitChartTransaction),
-                    indexAxis:'y'
-                }]
+
+                    {
+
+                        label: 'PAID OUT',
+
+                        fill: false,
+
+                        backgroundColor: '#002366',
+
+                        // borderColor: '#4baef1', // Add custom color border (Line)
+
+                        indexAxis: 'y',
+
+                        data: JSON.parse(debitChartTransaction),
+
+                    }
+
+                ]
+
             };
+
+
+
 
             const configLineChart = {
+
                 type: 'bar',
-                data
+
+                data,
+
+
+
 
             };
 
+
+
+
             var report_line_chart_data = document.getElementById("chartLine").getContext('2d');
-            var chartLine = new Chart(
+
+
+
+
+            if (chartLine !== null) {
+
+                chartLine.destroy();
+
+            }
+
+
+
+
+            chartLine = new Chart(
+
                 report_line_chart_data,
+
                 configLineChart
+
             );
+
+
+
+
         }
 
+
+
+
         $(function() {
+
             transactionChart();
+
         });
+
+
+
+
     </script>
 @endpush
