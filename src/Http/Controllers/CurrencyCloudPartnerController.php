@@ -8,7 +8,9 @@ use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Models\Title;
 use Kanexy\InternationalTransfer\Http\Requests\StorePartnerRequest;
 use Kanexy\InternationalTransfer\Http\Requests\UpdatePartnerRequest;
+use Kanexy\InternationalTransfer\Models\CcAccount;
 use Kanexy\InternationalTransfer\Models\Partner;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Laravel\Passport\ClientRepository;
 
 class CurrencyCloudPartnerController extends Controller
@@ -77,4 +79,20 @@ class CurrencyCloudPartnerController extends Controller
             'message' => 'Partner deleted successfully.',
         ]);
     }
+
+    public function ccPartnerAccounts($id)
+    {
+        $accounts = CcAccount::where('meta->partner_holder_id',$id)->get();
+
+        return view('international-transfer::partners.account', compact('accounts'));
+    }
+
+    public function ccPartnerTransactions($id)
+    {
+        $transactions = Transaction::where('initiator_id',$id)->get();
+
+        return view('international-transfer::partners.transaction', compact('transactions'));
+    }
+
+    
 }

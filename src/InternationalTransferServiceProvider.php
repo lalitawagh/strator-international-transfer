@@ -121,8 +121,12 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new BeneficiariesMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
+
+        if(config('services.registration_changed') == true)
+        {
+            \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
+        }
 
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
 
