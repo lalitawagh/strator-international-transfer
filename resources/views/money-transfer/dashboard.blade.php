@@ -32,7 +32,7 @@
                     <div class="truncate sm:whitespace-normal font-medium text-lg">Welcome
                         {{ auth()->user()->getFullName() }}
                     </div>
-                    <div class="text-slate-500">A Stronger and Faster way to Send and Receive Money Globally.</div>
+                    <div class="text-slate-500">A stronger and faster way to send and receive money globally.</div>
                 </div>
                 @if (config('services.registration_changed') == true)
                     @if ($kycSkip?->value == 'true')
