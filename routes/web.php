@@ -7,6 +7,7 @@ use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
 use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
 use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
 use Kanexy\InternationalTransfer\Http\Controllers\CountryController;
+use Kanexy\InternationalTransfer\Http\Controllers\BalancesCountryController;
 use Kanexy\InternationalTransfer\Http\Controllers\DashboardController;
 use Kanexy\InternationalTransfer\Http\Controllers\FeeController;
 use Kanexy\InternationalTransfer\Http\Controllers\MasterAccountController;
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource("exchange-rate", ExchangeRateController::class);
                 Route::resource("fee", FeeController::class);
                 Route::resource("country",CountryController::class);
+                Route::resource("balances-country",BalancesCountryController::class);
                 Route::resource("money-transfer", MoneyTransferController::class)->only(['index', 'store', 'create']);
                 Route::get("money-transfer-review", [MoneyTransferController::class, 'review'])->name('money-transfer-review');
                 Route::get("money-transfer/beneficiary", [MoneyTransferController::class, 'showBeneficiary'])->name('money-transfer.beneficiary');
