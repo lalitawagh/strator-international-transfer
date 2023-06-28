@@ -44,8 +44,8 @@ class Partner extends Authenticatable
     {
         
         Log::info(json_encode(['data' => $data, 'partner' => $this->toArray()]));
-        $url = 'https://events.hookdeck.com/e/src_0ayzCad3MHBl';
-        //$url = $this->webhook_url;
+        //$url = 'https://events.hookdeck.com/e/src_0ayzCad3MHBl';
+        $url = $this->webhook_url;
         if (is_null($url)) { return; }
 
         try {
