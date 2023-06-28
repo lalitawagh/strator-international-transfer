@@ -35,11 +35,10 @@
     </div>
     <canvas id="chartLine" class="h-full w-full" style="display: block; box-sizing: border-box; height: 295px; width: 591px;" width="591" height="284"></canvas>
 </div>
-
-<script>
+{{-- <script>
     // document.addEventListener('livewire:load', function() {
     //     Livewire.on('closeDropdown', function() {
     //         $("#year-dropdown").dropdown("hide");
     //     });
     // });
-</script>
+</script> --}}
