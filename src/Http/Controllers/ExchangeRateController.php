@@ -32,25 +32,37 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['id'] = now()->format('dmYHis');
 
-        if($data['rate_type'] == 'default_rate')
-            {
+        $existExchangeRate = ['exchange_from' => $data['exchange_from'],'exchange_to' => $data['exchange_to']];
+
+        $model =  CcExchangeRate::firstOrNew($existExchangeRate);
+
+
+        if ($model->exists) {
+
+            return back()->withError("This Exchange Rate is already exists");
+
+        }else{
+
+            if($data['rate_type'] == 'default_rate') {
                 $data['customized_rate'] = 0;
-            }
-            else
-            {
+            } else {
                 $data['plus_minus'] = 0;
                 $data['percentage'] = 0;
             }
 
-        $exchange_Rate = New CcExchangeRate();
-        $exchange_Rate->fill($data)->save();
+            $exchange_Rate = new CcExchangeRate();
+            $exchange_Rate->fill($data)->save();
 
-        return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
-            'status' => 'success',
-            'message' => 'Exchange Rate created successfully.',
-        ]);
+            return redirect()->route('dashboard.international-transfer.exchange-rate.index')->with([
+                'status' => 'success',
+                'message' => 'Exchange Rate created successfully.',
+            ]);
+
+        }
 
     }
+
+
 
     public function edit($value)
     {
@@ -70,22 +82,33 @@ class ExchangeRateController extends Controller
         $exchange_rate = CcExchangeRate::findOrFail($exchange_rate_id);
         $validated_data = $request->validated();
 
-        if($validated_data['rate_type'] == 'default_rate')
-        {
-            $validated_data['customized_rate'] = 0;
-        }
-        else
-        {
-            $validated_data['plus_minus'] = 0;
-            $validated_data['percentage'] = 0;
-        }
+        $existExchangeRate = ['exchange_from' => $validated_data['exchange_from'],'exchange_to' => $validated_data['exchange_to']];
 
-        $exchange_rate->fill($validated_data)->save();
+        $model =  CcExchangeRate::firstOrNew($existExchangeRate);
 
-        return redirect()->route("dashboard.international-transfer.exchange-rate.index")->with([
-            'status' => 'success',
-            'message' => 'Exchange Rate updated successfully.',
-        ]);
+
+        if ($model->exists) {
+
+            return back()->withError("This Exchange Rate is already exists");
+
+        }else{
+
+            if($validated_data['rate_type'] == 'default_rate') {
+                $validated_data['customized_rate'] = 0;
+            } else {
+                $validated_data['plus_minus'] = 0;
+                $validated_data['percentage'] = 0;
+            }
+
+            $exchange_rate->fill($validated_data)->save();
+
+            return redirect()->route("dashboard.international-transfer.exchange-rate.index")->with([
+                'status' => 'success',
+                'message' => 'Exchange Rate updated successfully.',
+            ]);
+
+            }
+
     }
 
     public function destroy($id)
