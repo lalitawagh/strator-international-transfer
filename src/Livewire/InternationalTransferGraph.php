@@ -42,8 +42,17 @@ class InternationalTransferGraph extends Component
 
         if($currentWorkspaceId = app('activeWorkspaceId'))
         {
-            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->where('status','completed')->get();
-        }else
+            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->get(); 
+        }
+        elseif ($user->role == 'agent') {
+            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)
+                ->where('agent_id', $user->id)
+                ->groupBy(["label"])
+                ->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")
+                ->where('meta->transaction_type', 'money_transfer')
+                ->get();
+        }
+        else
         {
             $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->transaction_type','money_transfer')->where('status','completed')->get();
         }

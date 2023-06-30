@@ -74,7 +74,7 @@ class InitialProcess extends Component
         ->where('currency', $this->currency_from)
         ->all();
 
-        $this->amount = old('amount') ? old('amount') : 1000;
+        $this->amount = session('money_transfer_request.amount') ? session('money_transfer_request.amount') : 1000;
 
         $from = @Setting::getValue('international-transfer_sending_currency',[])[0] ? @Setting::getValue('international-transfer_sending_currency',[])[0] :  231;
         $to = @Setting::getValue('international-transfer_receiving_currency',[])[0] ? @Setting::getValue('international-transfer_receiving_currency',[])[0] : 105;
