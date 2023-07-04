@@ -185,7 +185,7 @@ class MyselfBeneficiary extends Component
             $rules['meta.iban_number'] = 'required';
         }
 
-        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::I]))
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BASP]))
         {
             $rules['meta.bic_number'] = 'required';
         }
