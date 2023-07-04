@@ -15,7 +15,7 @@ class BalancesCountryController extends Controller
     public function index()
     {
         $countries = Country::get();
-        $balance_country = Setting::getValue('international-transfer_balance_country',[]);
+        $balance_country = Setting::getValue('international_transfer_balance_country',[]);
 
         return view("international-transfer::configuration.balances-country.index",compact('countries','balance_country'));
     }
@@ -27,7 +27,7 @@ class BalancesCountryController extends Controller
         ]);
 
         Setting::updateOrCreate(
-            ['key' => 'international-transfer_balance_country'],
+            ['key' => 'international_transfer_balance_country'],
             ['value' => $data['balance_country']]
         );
 
