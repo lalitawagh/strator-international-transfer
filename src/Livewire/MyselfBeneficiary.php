@@ -156,6 +156,40 @@ class MyselfBeneficiary extends Component
             $rules['meta.cnaps_number'] = 'required';
         }
 
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BIA]))
+        {
+            $rules['meta.bic_number'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BBA]))
+        {
+            $rules['meta.bank_code'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::IB]))
+        {
+            $rules['meta.iban_number'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BA]))
+        {
+            $rules['meta.bank_code'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::I]))
+        {
+            $rules['meta.iban_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::I]))
+        {
+            $rules['meta.bic_number'] = 'required';
+        }
+
         return $rules;
     }
 
