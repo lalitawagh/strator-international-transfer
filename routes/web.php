@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
+use Kanexy\InternationalTransfer\Http\Controllers\BalanceController;
 use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
 use Kanexy\InternationalTransfer\Http\Controllers\ConversionController;
 use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
@@ -78,6 +79,10 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
                 Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);
                 Route::resource("conversion", ConversionController::class)->only(['index', 'store', 'create']);
+                Route::resource("balance", BalanceController::class)->only(['index', 'store', 'create']);
+                Route::get('add-balance', [BalanceController::class,'addBalance'])->name('add-balance');
+                Route::get('currency-details/{id}', [BalanceController::class,'currencyDetails'])->name('currency-details');
+                Route::post('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

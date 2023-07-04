@@ -4,7 +4,7 @@
     <div class="px-5 mt-3 sm:px-10 sm:mt-10 sm:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
             <form id="money-transfer-store-form" method="POST"
-                action="">
+                action="{{ route('dashboard.international-transfer.conversion-preview', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}">
                 @csrf
                 {{-- <input type="hidden" name="workspace_id" value="{{ $workspace->id }}"> --}}
                 <div class="intro-y mt-0 p-3">
@@ -20,13 +20,6 @@
                             You could save up to <strong>20.59 GBP</strong> vs tha average bank
                             should arrive in <strong>4 hours</strong>
                         </p> --}}
-                            @error('recipient_amount')
-                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                            @enderror
-
-                            @error('country')
-                                <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                            @enderror
 
                             <div class="text-right mt-5 py-4">
                                 {{-- <a data-tw-toggle="modal" data-tw-target="#large-slide-over-size-preview"

@@ -26,8 +26,8 @@ class CurrencyMenu extends Item
         return false;
     }
 
-    // public function getUrl(): string
-    // {
-    //     return route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
-    // }
+    public function getUrl(): string
+    {
+        return route('dashboard.international-transfer.balance.index', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+    }
 }

@@ -16,6 +16,7 @@ use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
 use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
+use Kanexy\InternationalTransfer\Livewire\BalanceAddCurrencyComponent;
 use Kanexy\InternationalTransfer\Livewire\ConversionInitialProcess;
 use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
@@ -148,6 +149,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('international-transfer-graph', InternationalTransferGraph::class);
         Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
         Livewire::component('conversion-initial-process', ConversionInitialProcess::class);
+        Livewire::component('balance-add-currency-component', BalanceAddCurrencyComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);

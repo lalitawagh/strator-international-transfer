@@ -21,4 +21,9 @@ class ConversionController extends Controller
         return view("international-transfer::conversion.process.create",compact('countries','defaultCountry'));
     }
 
+    public function conversionPreview()
+    {
+        return view("international-transfer::conversion.process.preview");
+    }
+
 }
