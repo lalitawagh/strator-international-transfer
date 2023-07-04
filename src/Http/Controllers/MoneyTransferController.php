@@ -713,7 +713,7 @@ class MoneyTransferController extends Controller
 
         $user->notify(new RiskAssessmentNotification($user));
 
-        $user->notify(new MoneyTransferRequestNotification($user,$workspace));
+        $user->notify(new MoneyTransferRequestNotification($user,$workspace,$transaction));
 
         return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
