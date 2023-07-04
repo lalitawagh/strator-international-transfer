@@ -80,6 +80,13 @@
                                     <div class="side-menu__title"> Country </div>
                                 </a>
                             </li>
+                            <li>
+                                <a id="country" href="{{ route('dashboard.international-transfer.balances-country.index') }}"
+                                     class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title">Balances Country </div>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
