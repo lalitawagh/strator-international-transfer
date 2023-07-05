@@ -129,13 +129,13 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::AI]))
         {
-            $rules['meta.iban_number'] = 'required';
+            $rules['meta.iban_number'] = 'required|string|numeric|';
             $rules['meta.bank_account_number'] = 'required';
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::SA]))
         {
-            $rules['meta.bank_code'] = 'required';
+            $rules['meta.bank_code'] = 'required|numeric|digits:6';
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BAP]))
