@@ -12,10 +12,5 @@
         <div class="font-medium text-theme-1 dark:text-theme-10 text-l">Account Balance</div>
         <div class="text-gray-600 break-all">£ {{ $account?->balance}} </div>
     </div>
-    <button class="btn btn-primary" id="ViewAll">View All</button>
+    <a href="{{ route('dashboard.international-transfer.balance.index') }}" class="btn btn-primary ">View All</a>
 </div>
-<script>
-document.getElementById('ViewAll').addEventListener('click', function() {
-  window.location.href = "{{ route('dashboard.international-transfer.balance.index') }}";
-});
-</script>

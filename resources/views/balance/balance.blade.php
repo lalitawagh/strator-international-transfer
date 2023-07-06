@@ -1,7 +1,6 @@
-@extends('international-transfer::configuration.skeleton')
+@extends('cms::dashboard.layouts.default')
 
-@section('title', 'Membership SubAccount Balance')
-@section('config-content')
+@section('content')
     <div class="grid grid-cols-12 gap-6">
         <div class="col-span-12">
             <div class="box">
