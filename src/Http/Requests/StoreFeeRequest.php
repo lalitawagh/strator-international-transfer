@@ -22,11 +22,11 @@ class StoreFeeRequest extends FormRequest
     {
         return [
             'type'           =>    ['required','string'],
-            'min_amount'     =>    ['required','numeric','min:0'],
-            'max_amount'     =>    ['required','numeric','gt:min_amount'],
+            'min_amount'     =>    ['required','numeric','not_in:-0','min:0'],
+            'max_amount'     =>    ['required','numeric','gt:min_amount','not_in:-0','min:0'],
             'fee_type'       =>    ['required'],
-            'amount'         =>    ['required_if:fee_type,==,amount','nullable','numeric','min:0'],
-            'percentage'     =>    ['required_if:fee_type,==,percentage','nullable','numeric','between:0,100','min:0'],
+            'amount'         =>    ['required_if:fee_type,==,amount','nullable','numeric','not_in:-0','min:0'],
+            'percentage'     =>    ['required_if:fee_type,==,percentage','nullable','numeric','between:0,100','not_in:-0','min:0'],
             'status'         =>    ['required','string'],
         ];
     }
@@ -38,7 +38,7 @@ class StoreFeeRequest extends FormRequest
             'max_amount.gt'         => 'The max amount must be greater than min amount.',
             'amount.min'            => 'The amount should not be a negative value.',
             'percentage.between'    => 'The percentage must be between 0 and 100.',
-            'amount.required_if' => 'The amount field is required.',
+            'amount.required_if'    => 'The amount field is required.',
             'percentage.required_if' => 'The percentage field is required.',
         ];
     }

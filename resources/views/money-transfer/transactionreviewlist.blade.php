@@ -135,5 +135,11 @@
             const myModal = tailwind.Modal.getInstance(document.querySelector("#subscription-modal"));
             myModal.show();
         });
+
+        window.addEventListener('show-transaction-track', event => {
+            const myModal = tailwind.Modal.getInstance(document.querySelector(
+                "#superlarge-slide-over-size-preview"));
+            myModal.show();
+        });
     </script>
 @endpush
