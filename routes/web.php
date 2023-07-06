@@ -82,7 +82,8 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource("balance", BalanceController::class)->only(['index', 'store', 'create']);
                 Route::get('add-balance', [BalanceController::class,'addBalance'])->name('add-balance');
                 Route::get('currency-details/{id}', [BalanceController::class,'currencyDetails'])->name('currency-details');
-                Route::post('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
+                Route::get('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
+                Route::get('conversion/final', [ConversionController::class,'showFinalizeConversion'])->name('conversion-final');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

@@ -46,51 +46,47 @@
 @endpush
 <div>
     <div class="intro-y col-span-12 sm:col-span-12">
-            <label for="regular-form-1" class="form-label">
-                <h5 class="text-lg font-medium mb-4">Sell</h5>
-            </label>
-            <div id="input-group-email" class="input-group-text form-inline country-in flex gap-2">
-                <span id="fromCountry">
-                    @foreach ($sendingcountriesinfo as $country)
-                        @isset($currency_from)
-                            @if ($country->id == $currency_from)
-                                <img src="{{ $country->flag }}">
-                            @endif
-                        @else
-                            @if ($country->id == $defaultCountry->id)
-                                <img src="{{ $country->flag }}">
-                            @endif
-                        @endisset
-                    @endforeach
-                </span>
-                <select class="tail-select w-full" id='tabcuntery-selection1' style=''
-                    wire:change="changeFromCurrency($event.target.value)" class="" name="currency_sell">
-                    @foreach ($sendingcountriesinfo as $country)
-                        @if(config('services.registration_changed') == true && $country->code == 'UK')
-                            <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                                @isset($currency_from) @if ($country->id == $currency_from)
-                                        selected @endif
-                            @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
-                                {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
-                            </option>
-                        @else
-                            <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                                @isset($currency_from) @if ($country->id == $currency_from)
-                                        selected @endif
-                            @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
-                                {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
-                            </option>
+        <label for="regular-form-1" class="form-label">
+            <h5 class="text-lg font-medium mb-4">Sell</h5>
+        </label>
+        <div id="input-group-email" class="input-group-text form-inline country-in flex gap-2">
+            <span id="fromCountry">
+                @foreach ($sendingcountriesinfo as $country)
+                    @isset($currency_from)
+                        @if ($country->id == $currency_from)
+                            <img src="{{ $country->flag }}">
                         @endif
-                    @endforeach
+                    @else
+                        @if ($country->id == $defaultCountry->id)
+                            <img src="{{ $country->flag }}">
+                        @endif
+                    @endisset
+                @endforeach
+            </span>
+            <select class="tail-select w-full" id='tabcuntery-selection1' style=''
+                wire:change="changeFromCurrency($event.target.value)" class="" name="currency_sell">
+                @foreach ($sendingcountriesinfo as $country)
+                    @if(config('services.registration_changed') == true && $country->code == 'UK')
+                        <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                            @isset($currency_from) @if ($country->id == $currency_from)
+                                    selected @endif
+                        @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
+                            {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                        </option>
+                    @else
+                        <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
+                            @isset($currency_from) @if ($country->id == $currency_from)
+                                    selected @endif
+                        @else @if ($country->id == $defaultCountry->id) selected @endif @endisset>
+                            {{ $country->currency }} ({{ $country->code }}) {{ $country->name }}
+                        </option>
+                    @endif
+                @endforeach
 
-                </select>
-            </div>
-
-
-
+            </select>
+        </div>
     </div>
-
-    @error('amount')
+    @error('currency_sell')
         <span class="block text-theme-6 mt-2 mb-2">{{ $message }}</span>
     @enderror
     <br>
@@ -149,26 +145,29 @@
             </select>
         </div>
     </div>
+    @error('currency_buy')
+        <span class="block text-theme-6 mt-2 mb-2">{{ $message }}</span>
+    @enderror
     <br>
 
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
         <div class="col-span-12 md:col-span-12 xl:col-span-10 form-inline mt-2"
-            @if (old('amount_to', @$amount_to) == 'customized_rate') x-data="{ selected: '1' }"
-                @elseif (old('amount_to', @$amount_to) == 'default_rate') x-data="{ selected: '0' }"
+            @if (old('amount_to', @$amount_to) == 'sell') x-data="{ selected: '1' }"
+                @elseif (old('amount_to', @$amount_to) == 'buy') x-data="{ selected: '0' }"
                 @else x-data="{ selected: '3' }" @endif>
             <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                 <label for="amount_to" class="form-label sm:w-30">Amount to </label>
                 <div class="sm:w-5/6 sm:pt-3">
                     <div class="form-check mr-2">
                         <input id="radio-switch-1" class="form-check-input" type="radio"
-                            x-on:click="selected = '1'" name="amount_to" value="customized_rate"
+                            x-on:click="selected = '1'" name="amount_to" value="sell"
                             @if (old('amount_to', @$amount_to) == 'sell') checked @endif>
                         <label class="form-check-label" for="radio-switch-1">
                             <h4 href="javascript:;" class="font-medium truncate mr-5 ">
                                 <h4>Sell</h4>
                         </label>
                         <input id="radio-switch-2" class="form-check-input ml-3" type="radio"
-                            x-on:click="selected = '0'" name="amount_to" value="default_rate"
+                            x-on:click="selected = '0'" name="amount_to" value="buy"
                             @if (old('amount_to', @$amount_to) == 'buy') checked @endif>
                         <label class="form-check-label" for="radio-switch-2">
                             <h4 href="javascript:;" class="font-medium truncate mr-5">

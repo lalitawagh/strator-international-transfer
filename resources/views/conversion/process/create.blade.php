@@ -4,9 +4,9 @@
     <div class="px-5 mt-3 sm:px-10 sm:mt-10 sm:pt-10 border-t border-gray-200">
         <div class="intro-y col-span-12 lg:col-span-12">
             <form id="money-transfer-store-form" method="POST"
-                action="{{ route('dashboard.international-transfer.conversion-preview', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}">
+                action="{{ route('dashboard.international-transfer.conversion.store') }}">
                 @csrf
-                {{-- <input type="hidden" name="workspace_id" value="{{ $workspace->id }}"> --}}
+                <input type="hidden" name="workspace_id" value="{{ $workspace->id }}">
                 <div class="intro-y mt-0 p-3">
                     <div class="grid grid-cols-12 rounded-lg m-auto p-0 ">
                         <div class="col-span-12 md:col-span-8 mony-transfer m-auto">
@@ -34,7 +34,7 @@
     </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
     <script>
         window.addEventListener('transfer-on-process', event => {
 
@@ -59,4 +59,4 @@
             }
         }
     </script>
-@endpush
+@endpush --}}
