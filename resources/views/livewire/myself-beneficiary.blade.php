@@ -400,7 +400,7 @@
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="cnaps_number" wire:model.defer="meta.cnaps_number" name="cnaps_number"
-                                    type="text" class="form-control" required="required" value="">
+                                    type="number" class="form-control" required="required" value="">
                                 @error('meta.cnaps_number')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                 @enderror
