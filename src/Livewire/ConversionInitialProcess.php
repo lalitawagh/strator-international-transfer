@@ -70,12 +70,6 @@ class ConversionInitialProcess extends Component
 
         $this->currency_from = $defaultCountry->id;
 
-        $this->fees = collect(Setting::getValue('money_transfer_type_fees', []))
-        ->where('currency', $this->currency_from)
-        ->all();
-
-        $this->amount = old('amount') ? old('amount') : 1000;
-
         $from = @Setting::getValue('international-transfer_sending_currency',[])[0] ? @Setting::getValue('international-transfer_sending_currency',[])[0] :  231;
         $to = @Setting::getValue('international-transfer_receiving_currency',[])[0] ? @Setting::getValue('international-transfer_receiving_currency',[])[0] : 105;
 
@@ -85,9 +79,9 @@ class ConversionInitialProcess extends Component
 
         $this->countryCurrency = Country::whereIn('currency',['AUD','CAD','CZK','DKK','EUR','GBP','USD','HUF','INR','NOK','RON','SEK'])->get();
 
-        $this->sendingCurrency = Setting::getValue('international-transfer_sending_currency',[]);
+        $this->sendingCurrency = Setting::getValue('international_transfer_balance_country',[]);
 
-        $this->receivingCurrency = Setting::getValue('international-transfer_receiving_currency', []);
+        $this->receivingCurrency = Setting::getValue('international_transfer_balance_country',[]);
 
         $this->sendingcountriesinfo = Country::whereIn('id',$this->sendingCurrency)->get();
 
@@ -97,29 +91,22 @@ class ConversionInitialProcess extends Component
 
     }
 
-    public function hydrate()
-    {
-        $this->dispatchBrowserEvent('transfer-on-process');
-    }
+    // public function hydrate()
+    // {
+    //     $this->dispatchBrowserEvent('transfer-on-process');
+    // }
 
 
-    public function dehydrate()
-    {
-        $this->dispatchBrowserEvent('can-transfer');
-    }
+    // public function dehydrate()
+    // {
+    //     $this->dispatchBrowserEvent('can-transfer');
+    // }
     public function changeFromCurrency($value)
     {
         $this->currency_from = $value;
 
-        // $this->getDetails();
-
-        $this->fees =  collect(Setting::getValue('money_transfer_type_fees', []))
-                        ->where('currency', $value)
-                        ->all();
-
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
 
-        $this->dispatchBrowserEvent('disabledSelectedCountry', ['currency' => $value]);
     }
 
     public function changeToCurrency($value)
@@ -131,16 +118,7 @@ class ConversionInitialProcess extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
-    public function changeToMethod($value)
-    {
-        $this->fee_charge = $value;
-        $this->fee_charge = number_format((float) $this->fee_charge, 2, '.', '');
-        $this->fee_deduction_amount = $this->amount - $this->fee_charge;
-        $this->recipient_amount = $this->fee_deduction_amount * $this->guaranteed_rate;
-        $this->recipient_amount = number_format((float) $this->recipient_amount, 2, '.', '');
 
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
-    }
 
     public function render()
     {

@@ -24,6 +24,7 @@
                                                 <img class="rounded-full" src="{{ $country->meta['flag'] }}">
                                             </div>
                                             <div class="ml-4 mr-auto">
+                                                <a href="" class="font-medium">{{ $country->balance }} {{ $country->currency }}</a>
                                                 <div class="text-slate-500 mr-5 sm:mr-5">{{ $country->currency }} ({{ $country->meta['code'] }}) {{ $country->meta['name'] }}</div>
                                             </div>
                                             <div class="font-medium text-slate-600 dark:text-slate-500"><svg

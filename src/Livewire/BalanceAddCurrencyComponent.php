@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\CurrencyCloud\Dtos\GetBalanceDto;
 use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
 use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
@@ -13,6 +14,7 @@ use Kanexy\InternationalTransfer\Http\Helper;
 use Kanexy\InternationalTransfer\Models\CcCurrencyConversion;
 use Kanexy\InternationalTransfer\Models\CcExchangeRate;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
+use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
 
@@ -26,9 +28,8 @@ class BalanceAddCurrencyComponent extends Component
 
     public function mount()
     {
-        $this->currencyList = ['AED','AUD','BGN','BHD','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF','IDR','ILS','INR',
-        'JPY','KES','KWD','MXN','MYR','NOK','NZD','OMR','PHP','PLN','QAR','RON','SAR','SEK','SGD','THB','TRY','UGX','USD','ZAR'];
-        $this->balanceCurrency = Country::whereIn('currency',$this->currencyList)->get();
+        $this->currencyList = Setting::getValue('international_transfer_balance_country',[]);
+        $this->balanceCurrency = Country::whereIn('id',$this->currencyList)->get();
     }
 
     public function addCurrency($id)
@@ -38,7 +39,7 @@ class BalanceAddCurrencyComponent extends Component
         $workspace = $user->workspaces()->first();
 
         $country = Country::where('id',$id)->first();
-        $addCuurency = CcCurrencyConversion::create([
+        $addCurrency = CcCurrencyConversion::updateOrCreate([
             'holder_type' => $workspace->getMorphClass(),
             'holder_id'   => $workspace->getKey(),
             'currency'    => $country->currency,
@@ -49,6 +50,11 @@ class BalanceAddCurrencyComponent extends Component
                 'flag' => $country->flag,
             ]
         ]);
+
+        $service = new CurrencyCloudApiService();
+        $balance = $service->getBalance(new GetBalanceDto($addCurrency));
+        $addCurrency->balance = $balance['amount'];
+        $addCurrency->update();
 
         return redirect()->route('dashboard.international-transfer.balance.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])->with(['status' => 'success', 'message' => 'Currency Added Successfully']);
     }
