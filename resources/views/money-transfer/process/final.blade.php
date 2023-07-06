@@ -17,7 +17,7 @@
                                     </div>
                                 </div>
                             @else
-                                @if(@$transaction?->status == 'pending')
+                                @if(@$transaction?->status != 'completed')
                                     <div class="pb-20 text-center">
                                         <i data-lucide="alert-circle" class="w-16 h-16 text-warning mx-auto mt-3"></i>
                                         <div class="text-3xl mt-5">
