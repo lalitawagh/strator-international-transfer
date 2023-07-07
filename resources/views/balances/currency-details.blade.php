@@ -20,11 +20,11 @@
                                         <img class="rounded-full" src="{{ $currencyDetails->meta['flag'] }}">
                                     </div>
                                     <div class="ml-4 mr-auto">
-                                        <a href="" class="text-2xl">99,659.19 {{ $currencyDetails->currency }}</a>
+                                        <a href="" class="text-2xl">{{ $currencyDetails->balance }} {{ $currencyDetails->currency }}</a>
                                         <div class="text-slate-500 mr-5 sm:mr-5">{{ $currencyDetails->meta['name'] }}</div>
                                     </div>
                                     <div class="flex items-center ml-auto gap-10 justify-content">
-                                        <a href="javascript:void(0);">
+                                        <a href="{{ route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}">
                                             <div class="mx-auto text-center">
                                                 <div class="flex-none bg-dark rounded-full mx-auto">
                                                     <i data-lucide="plus-circle"
@@ -35,7 +35,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="javascript:void(0);">
+                                        <a href="{{ route('dashboard.international-transfer.conversion.create', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]) }}">
                                             <div class="mx-auto text-center">
                                                 <div class="flex-none bg-dark rounded-full mx-auto">
                                                     <i data-lucide="refresh-ccw"
@@ -54,9 +54,9 @@
                                         <li class="breadcrumb-item"><a href="#">My {{ $currencyDetails->currency }} Account Details</a></li>
                                         <li class="breadcrumb-item active" aria-current="page"></li>
                                     </ol>
-                                    <div class="ml-0 mr-auto">
+                                    {{-- <div class="ml-0 mr-auto">
                                         <div class="text-lg font-medium truncate text-2xl">Activity</div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                             </div>

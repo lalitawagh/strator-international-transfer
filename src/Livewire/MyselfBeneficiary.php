@@ -298,8 +298,8 @@ class MyselfBeneficiary extends Component
         }else{
             $contactExist = Contact::beneficiaries()->verified()
             ->where("workspace_id", $this->workspace_id)
-            ->where('meta->bank_account_number', @$data['meta']['bank_account_number'])
-            ->where('meta->ach_routing_number', @$data['meta']['ach_routing_number'])
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
             ->first();
 
             $routing_type = 'bank_code';
@@ -407,7 +407,7 @@ class MyselfBeneficiary extends Component
                     return redirect()->route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])->with(['status' => 'failed', 'message' => $validateBeneficiary['message']]);
                 }
             }
-
+        }
     }
 
     public function render()
