@@ -12,5 +12,5 @@
         <div class="font-medium text-theme-1 dark:text-theme-10 text-l">Account Balance</div>
         <div class="text-gray-600 break-all">£ {{ $account?->balance}} </div>
     </div>
-    <a href="{{ route('dashboard.international-transfer.balance.index') }}" class="btn btn-primary ">View All</a>
+    <a href="{{ route('dashboard.international-transfer.balancecurrency.create') }}" class="btn btn-primary ">View All</a>
 </div>
