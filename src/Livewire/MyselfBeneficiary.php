@@ -331,16 +331,17 @@ class MyselfBeneficiary extends Component
                 $routing_type = 'cnaps';
                 $routing_code_value =  $data['meta']['cnaps_number'];
 
-            }else{
-                $contactExist = Contact::beneficiaries()->verified()
-                ->where("workspace_id", $this->workspace_id)
-                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-                ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
-                ->first();
+        }else{
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
+            ->first();
 
-                $routing_type = 'bank_code';
-                $routing_code_value =  $data['meta']['ach_routing_number'];
-            }
+            $routing_type = 'bank_code';
+            $routing_code_value =  $data['meta']['ach_routing_number'];
+        }
+
 
             if(!is_null($contactExist))
             {
@@ -424,7 +425,6 @@ class MyselfBeneficiary extends Component
                     return redirect()->route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])->with(['status' => 'failed', 'message' => $validateBeneficiary['message']]);
                 }
             }
-
     }
 
     public function render()

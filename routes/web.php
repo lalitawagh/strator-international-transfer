@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
+use Kanexy\InternationalTransfer\Http\Controllers\BalanceController;
 use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
+use Kanexy\InternationalTransfer\Http\Controllers\ConversionController;
 use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
 use Kanexy\InternationalTransfer\Http\Controllers\CountryController;
 use Kanexy\InternationalTransfer\Http\Controllers\BalancesCountryController;
@@ -78,6 +80,12 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::post('cc-partners-update/{id}', [CurrencyCloudPartnerController::class,'update'])->name('cc-partners-update');
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
                 Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);
+                Route::resource("conversion", ConversionController::class)->only(['index', 'store', 'create']);
+                Route::resource("balance", BalanceController::class)->only(['index', 'store', 'create']);
+                Route::get('add-balance', [BalanceController::class,'addBalance'])->name('add-balance');
+                Route::get('currency-details/{id}', [BalanceController::class,'currencyDetails'])->name('currency-details');
+                Route::get('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
+                Route::get('conversion/final', [ConversionController::class,'showFinalizeConversion'])->name('conversion-final');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
