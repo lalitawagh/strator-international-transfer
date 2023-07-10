@@ -109,6 +109,8 @@ class MyselfBeneficiary extends Component
             'meta.bank_code' => ['nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
             'meta.branch_code' => ['nullable', 'string', 'numeric', 'digits:6'],
+            'meta.iban_number' => ['regex:/^(?:[A-Z]{2}\d{2}[A-Z0-9]{1,30}|)$/i'],
+            'meta.post_code' => ['regex:/^(?:[A-Z]{2}\d{2}[A-Z0-9]{1,30}|)$/i'],
             //'meta.ach_routing_number' => ['required_if:receiving_country,==,' . ShortCode::SHORT_CODE[ShortCode::AI][0]],
         ];
 
@@ -129,13 +131,13 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::AI]))
         {
-            $rules['meta.iban_number'] = 'required';
+            $rules['meta.iban_number'] = 'required|string|numeric';
             $rules['meta.bank_account_number'] = 'required';
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::SA]))
         {
-            $rules['meta.bank_code'] = 'required';
+            $rules['meta.bank_code'] = 'required|numeric|digits:6';
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BAP]))
@@ -152,6 +154,40 @@ class MyselfBeneficiary extends Component
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::CB]))
         {
             $rules['meta.cnaps_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BIA]))
+        {
+            $rules['meta.bic_number'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BBA]))
+        {
+            $rules['meta.bank_code'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::IB]))
+        {
+            $rules['meta.iban_number'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BA]))
+        {
+            $rules['meta.bank_code'] = 'required';
+            $rules['meta.bank_account_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::I]))
+        {
+            $rules['meta.iban_number'] = 'required';
+        }
+
+        if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BASP]))
+        {
+            $rules['meta.bic_number'] = 'required';
         }
 
         return $rules;
