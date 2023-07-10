@@ -13,8 +13,7 @@ class CcPartnerAccount extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-        $id = request()->route('id');
-        return CcAccount::query()->where('meta->partner_holder_id',$id)->latest();
+        return CcAccount::query()->where('meta->partner_holder_id',$workspace_id)->latest();
     }
 
     public static function setBulkActions()
@@ -68,7 +67,7 @@ class CcPartnerAccount extends Transaction
     {
         return [
             TextFilter::make('name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-                $builder->where('meta->partner_holder_id',request()->route('id'))->where('name', 'like', '%' . $value . '%');
+                $builder->where('name', 'like', '%' . $value . '%');
             }),
 
             TextFilter::make('meta->account_number')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
@@ -83,7 +82,7 @@ class CcPartnerAccount extends Transaction
             ->options([
                 '' => 'All',
                 'enabled' => 'Active',
-                'disbaled' => 'Inactive',
+                'disabled' => 'Inactive',
             ])
             ->filter(function (Builder $builder, string $value) {
 

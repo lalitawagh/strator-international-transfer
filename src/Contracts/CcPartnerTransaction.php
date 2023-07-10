@@ -8,6 +8,7 @@ use Kanexy\InternationalTransfer\Models\CcAccount;
 use Kanexy\InternationalTransfer\Models\Partner;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
@@ -15,8 +16,7 @@ class CcPartnerTransaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-        $id = request()->route('id');
-        return Transaction::query()->where(['initiator_id' => $id,'initiator_type' => 'Kanexy\InternationalTransfer\Models\Partner','ref_type' => 'money_transfer'])->latest();
+        return Transaction::query()->where(['initiator_id' => $workspace_id,'initiator_type' => 'Kanexy\InternationalTransfer\Models\Partner','ref_type' => 'money_transfer'])->latest();
     }
 
     public static function setBulkActions()
@@ -145,29 +145,47 @@ class CcPartnerTransaction
     public static function setFilters()
     {
         return [
-        //     TextFilter::make('name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-        //         $builder->where('meta->partner_holder_id',request()->route('id'))->where('name', 'like', '%' . $value . '%');
-        //     }),
+            SelectFilter::make('Status')
+                ->options([
+                    '' => 'All',
+                    'draft' => 'Draft',
+                    'pending' => 'Pending',
+                    'accepted' => 'Accepted',
+                    'pending-confirmation' => 'Pending Confirmation',
+                ])
+                ->filter(function (Builder $builder, string $value) {
 
-        //     TextFilter::make('meta->account_number')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-        //         $builder->where('meta->account_number', 'like', '%' . $value . '%');
-        //     }),
+                    $builder->where('status', $value);
+                }),
 
-        //     TextFilter::make('meta->routing_code')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-        //         $builder->where('meta->routing_code', 'like', '%' . $value . '%');
-        //     }),
+            DateFilter::make('Created at')->filter(function (Builder $builder, string $value) {
+                $builder->whereDate('created_at', date('Y-m-d', strtotime($value)));
+            }),
 
-        //     SelectFilter::make('Status')
-        //     ->options([
-        //         '' => 'All',
-        //         'enabled' => 'Active',
-        //         'disbaled' => 'Inactive',
-        //     ])
-        //     ->filter(function (Builder $builder, string $value) {
+            TextFilter::make('urn')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.urn', 'like', '%' . $value . '%');
+            }),
+            TextFilter::make('payment_method')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.payment_method', 'like', '%' . $value . '%');
+            }),
+            TextFilter::make('meta->sender_name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.meta->sender_name', 'like', '%' . $value . '%');
+            }),
+            TextFilter::make('meta->beneficiary_name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.meta->beneficiary_name', 'like', '%' . $value . '%');
+            }),
+            TextFilter::make('meta->reference')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.meta->reference', 'like', '%' . $value . '%');
+            }),
+            TextFilter::make('amount')->hiddenFromAll()->config(['placeholder' => 'Search'])->filter(function (Builder $builder, string $value) {
+                    $builder->where('transactions.amount', '=',floatval($value));
+            }),
 
-        //         $builder->where('status', $value);
-        //     }),
+            TextFilter::make('workspace_id')->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.workspace_id', 'like', '%' . $value . '%');
+            }),
+
+
         ];
-
     }
 }

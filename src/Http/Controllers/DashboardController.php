@@ -19,13 +19,13 @@ class DashboardController extends Controller
         $user = Auth::user();
         $workspace = null;
 
-        $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
+        $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where('archived','!=',1)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
 
         if (app('activeWorkspaceId')) {
             $workspace = Workspace::findOrFail(app('activeWorkspaceId'));
-            $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
+            $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where('archived','!=',1)->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
         }
-        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->latest()->take(5)->get();
+        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->latest()->take(5)->get();
         $yotiLog = UserSetting::whereUserId($user?->id)->first();
         $kycSkip = WorkspaceMeta::where(['workspace_id' => $workspace?->id, 'key' => 'skip_kyc'])->first();
 
@@ -43,8 +43,8 @@ class DashboardController extends Controller
         }
 
 
-        $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->latest()->take(15)->get();
-        $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
+        $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->latest()->take(15)->get();
+        $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
 
         $subAccountInfo = CcAccount::where(['holder_id' => $workspace?->id])->first();
 

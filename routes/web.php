@@ -72,7 +72,10 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource('agent', AgentController::class);
                 Route::get('agent-detail/{id}', [AgentController::class, 'agentDetail'])->name('agent-detail');
                 Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
+                Route::get('agent-transactions/{id}', [AgentController::class, 'agentTransactions'])->name('agent-transactions');
                 Route::resource('cc-partners', CurrencyCloudPartnerController::class);
+                Route::get('cc-partners-approve/{id}', [CurrencyCloudPartnerController::class,'approve'])->name('cc-partners-approve');
+                Route::get('approve-partners', [CurrencyCloudPartnerController::class,'approvePartners'])->name('approve-partners');
                 Route::post('cc-partners-update/{id}', [CurrencyCloudPartnerController::class,'update'])->name('cc-partners-update');
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
                 Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);

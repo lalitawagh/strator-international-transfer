@@ -10,6 +10,7 @@ use Kanexy\InternationalTransfer\Http\Requests\StorePartnerRequest;
 use Kanexy\InternationalTransfer\Http\Requests\UpdatePartnerRequest;
 use Kanexy\InternationalTransfer\Models\CcAccount;
 use Kanexy\InternationalTransfer\Models\Partner;
+use Kanexy\InternationalTransfer\Notifications\PartnerApproveNotification;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Laravel\Passport\ClientRepository;
 
@@ -18,6 +19,11 @@ class CurrencyCloudPartnerController extends Controller
     public function index()
     {
         return view("international-transfer::partners.index");
+    }
+
+    public function approvePartners()
+    {
+        return view("international-transfer::partners.approved-partners");
     }
 
     public function create()
@@ -31,14 +37,11 @@ class CurrencyCloudPartnerController extends Controller
     public function store(StorePartnerRequest $request)
     {
         $data = $request->validated();
-        $data['status'] = isset($data['status']) ? 'active' : 'inactive';
+        $data['status'] = 'inactive';
         $data['password'] = Hash::make($data['password']);
 
         $partner = Partner::create($data);
 
-        $clientRepository = app()->make(ClientRepository::class);
-        $clientRepository->createPasswordGrantClient($partner->getKey(), $partner->full_name, 'https://wrappex-alpha-dev.azurewebsites.net/auth/callback', 'partners');
-      
         return redirect()->route('dashboard.international-transfer.cc-partners.index')->with([
             'status' => 'success',
             'message' => 'Partner created successfully.',
@@ -94,5 +97,23 @@ class CurrencyCloudPartnerController extends Controller
         return view('international-transfer::partners.transaction', compact('transactions'));
     }
 
+    public function approve($id)
+    {
+        $partner = Partner::find($id);
+        $partner->status = 'active';
+        $partner->update();
+
+        $clientRepository = app()->make(ClientRepository::class);
+        $clientRepository->createPasswordGrantClient($partner->getKey(), $partner->full_name, 'https://wrappex-alpha-dev.azurewebsites.net/auth/callback', 'partners');
+        $client = $partner->clients()->latest()->first();
+
+        $partner->notify(new PartnerApproveNotification($client));
+
+        return redirect()->route('dashboard.international-transfer.cc-partners.index')->with([
+            'status' => 'success',
+            'message' => 'Partner approved successfully.',
+        ]);
+    
+    }
     
 }

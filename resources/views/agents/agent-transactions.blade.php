@@ -6,17 +6,13 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        CC Partner Transactions
+                        Agent Transactions
                     </h2>
-                    @if(auth()->user()->isSuperAdmin())
-                        <a href="{{ route('dashboard.international-transfer.cc-partners.create') }}"
-                        class="btn btn-sm btn-primary shadow-md sm:ml-1 sm:-mt-2 sm:mb-0 mb-2 py-2">Create Partner</a>
-                    @endif
                 </div>
 
-                <div class="datatable-select Livewire-datatable-modal pb-3" attr="datatable-select">
-                    <livewire:data-table model='Kanexy\InternationalTransfer\Contracts\CcPartnerTransaction'
-                        params="{{ request()->route('id') }}" type='cc-partner-transaction' />
+                <div class="Livewire-datatable-modal pb-3">
+                    <livewire:data-table model='Kanexy\InternationalTransfer\Contracts\AgentTransactions'
+                        params="{{ $user_id }}" type='agent-transactions' />
                 </div>
             </div>
         </div>
