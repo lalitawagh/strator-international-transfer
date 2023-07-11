@@ -67,7 +67,7 @@ class CurrencyCloudPartnerController extends Controller
         $partner = Partner::find($id);
         $partner->fill($data)->save();
        
-        return redirect()->route('dashboard.international-transfer.cc-partners.index')->with([
+        return redirect()->route('dashboard.international-transfer.approve-partners')->with([
             'status' => 'success',
             'message' => 'Partner updated successfully.',
         ]);
@@ -77,7 +77,7 @@ class CurrencyCloudPartnerController extends Controller
     {
         Partner::find($id)->delete();
 
-        return redirect()->route('dashboard.international-transfer.cc-partners.index')->with([
+        return redirect()->route('dashboard.international-transfer.approve-partners')->with([
             'status' => 'success',
             'message' => 'Partner deleted successfully.',
         ]);
@@ -109,7 +109,7 @@ class CurrencyCloudPartnerController extends Controller
 
         $partner->notify(new PartnerApproveNotification($client));
 
-        return redirect()->route('dashboard.international-transfer.cc-partners.index')->with([
+        return redirect()->route('dashboard.international-transfer.approve-partners')->with([
             'status' => 'success',
             'message' => 'Partner approved successfully.',
         ]);
