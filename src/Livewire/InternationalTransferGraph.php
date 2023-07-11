@@ -19,14 +19,16 @@ class InternationalTransferGraph extends Component
 
     public function mount()
     {
-        $years = Transaction::groupBy("year")->orderBy("year", "DESC")->selectRaw("YEAR(created_at) as year")->get();
-        $this->years = $years->pluck("year")->toArray();
-        $this->selectedYear = date('Y');
-        $this->selectYear($this->selectedYear);
+      $years = Transaction::groupBy("year")->orderBy("year", "DESC")->selectRaw("YEAR(created_at) as year")->get();
+
+         $this->years = $years->pluck("year")->toArray();
+         $this->selectedYear = date('Y');
+         $this->selectYear($this->selectedYear);
     }
-    
+
     public function selectYear($year)
     {
+
         $this->selectedYear = $year;
 
         foreach (range(1, 12) as $m) {
@@ -40,12 +42,22 @@ class InternationalTransferGraph extends Component
 
         if($currentWorkspaceId = app('activeWorkspaceId'))
         {
-            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->get();
-        }else
-        {
-            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->get();
+            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->where('status','completed')->get();
         }
-
+        elseif ($user->role == 'agent') {
+            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)
+                ->where('agent_id', $user->id)
+                ->groupBy(["label"])
+                ->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")
+                ->where('meta->transaction_type', 'money_transfer')
+                ->where('archived','!=',1)
+                ->get();
+        }
+        else
+        {
+            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->where('status','completed')->get();
+        }
+    
         $debitTransactionGraphData = collect($this->months)->map(function ($month) use ($debitTransactionGraph) {
             $record = $debitTransactionGraph->where('label', $month)->first();
 
@@ -56,6 +68,7 @@ class InternationalTransferGraph extends Component
 
             return 0;
         });
+
 
         $this->debitTransactionGraphData = $debitTransactionGraphData;
 

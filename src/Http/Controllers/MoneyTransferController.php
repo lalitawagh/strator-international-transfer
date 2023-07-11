@@ -37,6 +37,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\DB;
 use Kanexy\InternationalTransfer\Models\CcAccount;
+use Kanexy\InternationalTransfer\Notifications\MoneyTransferRequestNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Stripe;
 use PDF;
@@ -302,7 +303,7 @@ class MoneyTransferController extends Controller
                 {
                     $transaction->status = 'pending-review';
                     $transaction->update();
-                    $user->notify(new RiskAssessmentNotification($user));
+
                 }
             }
 
@@ -635,6 +636,7 @@ class MoneyTransferController extends Controller
     {
         $this->authorize(MoneyTransferPolicy::CREATE, MoneyTransfer::class);
         $transaction = Transaction::find(session('transaction_id'));
+         /** @var \App\Models\User $user */
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
         $skipKycStatus = WorkspaceMeta::where(['workspace_id' => $workspace->id, 'key' => 'skip_kyc'])->first();
@@ -674,12 +676,12 @@ class MoneyTransferController extends Controller
             Notification::sendNow($admin, new ThresholdExceededNotification($transaction));
         }
         if($skipKycStatus?->value == 'true')
-            {
-                    $transaction->status = 'pending-kyc';
-                    $transaction->update();
+        {
+                $transaction->status = 'pending-kyc';
+                $transaction->update();
 
-            }
-        $user = Auth::user();
+        }
+        //$user = Auth::user();
         if (config('services.risk_management') == true) {
             if (!App::environment('local')) {
                 $country = Country::findOrFail($user->country_id);
@@ -709,6 +711,10 @@ class MoneyTransferController extends Controller
                 }
             }
         }
+
+        $user->notify(new RiskAssessmentNotification($user));
+
+        $user->notify(new MoneyTransferRequestNotification($user,$workspace,$transaction));
 
         return view('international-transfer::money-transfer.process.final', compact('transaction'));
     }
