@@ -65,7 +65,7 @@ class AgentController extends Controller
             ]);
         }else
         {
-            return redirect()->route('dashboard.international-transfer.agent.index')->with([
+            return redirect()->route('dashboard.international-transfer.agent-request')->with([
                 'status' => 'failed',
                 'message' => 'Agent is not completed registration steps.'
             ]);
