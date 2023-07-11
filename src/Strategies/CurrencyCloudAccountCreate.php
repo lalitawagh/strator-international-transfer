@@ -2,9 +2,12 @@
 
 namespace Kanexy\InternationalTransfer\Strategies;
 
+use App\Models\User;
 use Kanexy\InternationalTransfer\Models\CcAccount;
 use Kanexy\PartnerFoundation\Core\Interfaces\WebhookHandler;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
+use Kanexy\PartnerFoundation\Registration\Notifications\SubAccountDetailsNotification;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class CurrencyCloudAccountCreate implements WebhookHandler
 {
@@ -34,6 +37,12 @@ class CurrencyCloudAccountCreate implements WebhookHandler
             /** @var Contact $contact */
             $contact = Contact::create($body['contactinfo']);
         }
+
+        $subAccountInfo = CcAccount::where(['holder_id' => $body['account']['meta']['workspace_id']])->first();
+        $workspace = Workspace::find($body['account']['meta']['workspace_id']);
+        $user = User::find($workspace->admin_id);
+
+        $user->notify(new SubAccountDetailsNotification($user,$workspace,$subAccountInfo));
         
     }
 
