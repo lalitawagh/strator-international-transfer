@@ -9,8 +9,9 @@ use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\Role as EnumsRole;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Models\Role;
+use Kanexy\Cms\Models\UserLog;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
+use Kanexy\InternationalTransfer\Notifications\AgentApprovedNotification;
 
 class AgentController extends Controller
 {
@@ -43,17 +44,33 @@ class AgentController extends Controller
         $agentRole = Role::whereName(EnumsRole::AGENT)->first();
         $user = User::find($id);
         $workspace = $user->workspaces()->first();
-        $role =  $user->roles?->first()->pivot;
-        $role->role_id = $agentRole->id;
-        $role->update();
+        $userLog = UserLog::where('holder_id',$user->id)->get();
 
-        $user->status = 'approved';
-        $user->update();
+        if($userLog?->count() == 9 || $userLog->count() == 10)
+        {
+            $role =  $user->roles?->first()->pivot;
+            $role->role_id = $agentRole->id;
+            $role->update();
+    
+            $user->status = 'approved';
+            $user->update();
 
-        return redirect()->route('dashboard.international-transfer.agent.index')->with([
-            'status' => 'success',
-            'message' => 'Agent approve successfully'
-        ]);
+            $membership = $user->memberships()->first();
+            
+            $user->notify(new AgentApprovedNotification($membership));
+
+            return redirect()->route('dashboard.international-transfer.agent.index')->with([
+                'status' => 'success',
+                'message' => 'Agent approve successfully'
+            ]);
+        }else
+        {
+            return redirect()->route('dashboard.international-transfer.agent.index')->with([
+                'status' => 'failed',
+                'message' => 'Agent is not completed registration steps.'
+            ]);
+        }
+       
     }
 
     public function agentUsers(Request $request,$id)
@@ -67,5 +84,11 @@ class AgentController extends Controller
 
         $user_id = $id;
         return view("international-transfer::agents.agent-users", compact('user_id'));
+    }
+
+    public function agentTransactions(Request $request,$id)
+    {
+        $user_id = $id;
+        return view("international-transfer::agents.agent-transactions", compact('user_id'));
     }
 }

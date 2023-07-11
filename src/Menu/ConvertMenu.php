@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\InternationalTransfer\Enums\Permission;
 
-class MoneyTransferMenu extends Item
+class ConvertMenu extends Item
 {
     public int $priority = 9999;
 
-    protected string $label = 'Money Transfer';
+    protected string $label = 'Convert';
 
     protected string $icon = 'octagon';
 
@@ -20,9 +20,7 @@ class MoneyTransferMenu extends Item
         $user = Auth::user();
 
         if(config("services.menu_layout") == 'top' && !$user->isSuperAdmin()){
-            if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE)) {
                 return true;
-            }
         }
 
         return false;
@@ -30,11 +28,6 @@ class MoneyTransferMenu extends Item
 
     public function getUrl(): string
     {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-
-        $workspace = $user->workspaces()->first()->id;
-        
-        return route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => $workspace]]);
+        return route('dashboard.international-transfer.conversion.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
     }
 }

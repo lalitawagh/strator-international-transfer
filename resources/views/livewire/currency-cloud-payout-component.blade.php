@@ -2,7 +2,7 @@
 <div>
     @if(is_null(@$transaction?->meta['currency_cloud_payment_id']) || $transaction?->meta['currency_cloud_status'] == 'failed')
         <div class="py-5">
-            <form action="{{ route("currencycloudpayout.store")}}" method="POST">
+            <form action="{{ route('dashboard.international-transfer.cc-payout')}}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" value="{{ $transaction?->id }}" name="payment">
