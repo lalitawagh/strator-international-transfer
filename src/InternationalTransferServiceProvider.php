@@ -157,7 +157,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
-        \Kanexy\PartnerFoundation\Membership\Facades\MembershipSubAccountComponent::addItem(MembershipSubAccountComponent::class);
+        \Kanexy\PartnerFoundation\Membership\Facades\MembershipBankingComponent::addItem(MembershipSubAccountComponent::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
         \Kanexy\Cms\Facades\SettingContent::addItem(CcAccountSettingContent::class);
         \Kanexy\Cms\Facades\SettingTab::addItem(CcAccountSettingTab::class);
