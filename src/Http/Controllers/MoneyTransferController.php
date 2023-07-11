@@ -41,6 +41,7 @@ use Kanexy\InternationalTransfer\Notifications\MoneyTransferRequestNotification;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Stripe;
 use PDF;
+use Kanexy\InternationalTransfer\Services\CurrencyCloudService;
 
 class MoneyTransferController extends Controller
 {
@@ -944,5 +945,21 @@ class MoneyTransferController extends Controller
         }
 
         return view('international-transfer::money-transfer.archived-transactions', compact('user','workspace'));
+    }
+
+    public function ccPayout(Request $request,CurrencyCloudService $ccService)
+    {
+        $data['transaction'] = Transaction::find($request->payment)->toArray();
+        $beneficiaryid = $data['transaction']['meta']['beneficiary_id'];
+        $data['beneficairy'] = Contact::find($beneficiaryid)->toArray();
+
+        $response = $ccService->payout($data);
+        if($response['code'] = 200)
+        {
+            return redirect()->route('dashboard.international-transfer.money-transfer.index')->with(['status' => 'success', 'message' => $response['msg']]);
+        }else
+        {
+            return redirect()->route('dashboard.international-transfer.money-transfer.index')->with(['status' => 'failed', 'message' => $response['msg']]);
+        }
     }
 }

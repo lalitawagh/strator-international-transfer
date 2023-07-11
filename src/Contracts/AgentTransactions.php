@@ -2,32 +2,28 @@
 
 namespace Kanexy\InternationalTransfer\Contracts;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
-use Kanexy\PartnerFoundation\Core\Exports\Export;
-use Maatwebsite\Excel\Facades\Excel;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
-use PDF;
 
-class MoneyTransferReviewList extends Transaction
+class AgentTransactions extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-         if (!$workspace_id) {
-            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->latest();
-         }
-
-         return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereWorkspaceId($workspace_id)->latest();
+        $workspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace_id)->pluck('id');
+       
+        return Transaction::query()->whereIn('workspace_id',$workspace->toArray())->latest();
     }
 
     public static function setBulkActions()
     {
-        return true;
+        return false;
     }
 
     public static function setPagination()
@@ -45,25 +41,9 @@ class MoneyTransferReviewList extends Transaction
         return false;
     }
 
-    public static function downloadPdf($records)
-    {
-        $transactions = collect();
-        foreach ($records as $record) {
-            $transactions->push(Transaction::find($record));
-        }
-
-        $account = auth()->user()->workspaces()->first()?->account()->first();
-        $user = Auth::user();
-        $view = PDF::loadView('international-transfer::money-transfer.transactionpdf', compact('transactions','account','user'))
-            ->setPaper(array(0, 0, 1000, 800), 'landscape')
-            ->output();
-
-        return response()->streamDownload(fn () => print($view), "transactionslist.pdf");
-    }
-
     public static function columns()
     {
-
+        
         return [
             Column::make("Id", "id")->hideIf(true),
 
@@ -73,7 +53,7 @@ class MoneyTransferReviewList extends Transaction
                 })
                 ->searchable()
                 ->secondaryHeaderFilter('urn'),
-            
+
             Column::make("Date & Time", "created_at")->format(function($value){
                 return Carbon::parse($value)->format('d-m-Y  H:i');
             })
@@ -116,7 +96,7 @@ class MoneyTransferReviewList extends Transaction
                 ->secondaryHeaderFilter('meta->exchange_currency'),
 
             Column::make("Receiving Amount", "meta->recipient_amount")->format(function ($value, $model) {
-                return '<span class="px-6 py-4 whitespace-nowrap text-sm text-right text-right text-success">'.\Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($model?->amount, $model['meta->exchange_currency']).'</span>';
+                return '<span class="px-6 py-4 whitespace-nowrap text-sm text-right text-right text-success">'.\Kanexy\InternationalTransfer\Http\Helper::getExchangeRateAmount($model['meta->recipient_amount'], $model['meta->exchange_currency']).'</span>';
                 })
                     ->searchable()
                     ->sortable()
@@ -129,20 +109,6 @@ class MoneyTransferReviewList extends Transaction
                 ->searchable()
                 ->secondaryHeaderFilter('payment_method'),
 
-            // Column::make("Purpose of Transfer", "reasons")->format(function ($value) {
-            //     return ucfirst($value);
-            // })
-            //     ->searchable()
-            //     ->sortable()
-            //     ->secondaryHeaderFilter('reasons'),
-            
-            Column::make("Reference", "meta->reference")->format(function ($value) {
-                return ucfirst($value);
-            })
-                ->searchable()
-                ->sortable()
-                ->secondaryHeaderFilter('meta->reference'),
-            
             Column::make("Status", "status")->format(function ($value) {
                 return ucfirst($value);
             })
@@ -175,7 +141,6 @@ class MoneyTransferReviewList extends Transaction
 
                 return view('cms::livewire.datatable-actions', ['actions' => $actions])->withUser($row);
             }),
-
         ];
     }
 
@@ -186,10 +151,9 @@ class MoneyTransferReviewList extends Transaction
                 ->options([
                     '' => 'All',
                     'draft' => 'Draft',
-                    'cancelled' => 'Cancelled',
+                    'pending' => 'Pending',
                     'accepted' => 'Accepted',
-                    'completed' => 'Completed',
-                    'pending'   => 'Pending',
+                    'pending-confirmation' => 'Pending Confirmation',
                 ])
                 ->filter(function (Builder $builder, string $value) {
 
@@ -203,24 +167,27 @@ class MoneyTransferReviewList extends Transaction
             TextFilter::make('urn')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
                 $builder->where('transactions.urn', 'like', '%' . $value . '%');
             }),
+            TextFilter::make('payment_method')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.payment_method', 'like', '%' . $value . '%');
+            }),
             TextFilter::make('meta->sender_name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
                 $builder->where('transactions.meta->sender_name', 'like', '%' . $value . '%');
             }),
-            TextFilter::make('meta->base_currency')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-                $builder->where('transactions.meta->base_currency', 'like', '%' . $value . '%');
+            TextFilter::make('meta->beneficiary_name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.meta->beneficiary_name', 'like', '%' . $value . '%');
             }),
-            TextFilter::make('meta->second_beneficiary_name')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-                $builder->where('transactions.meta->second_beneficiary_name', 'like', '%' . $value . '%');
+            TextFilter::make('meta->reference')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.meta->reference', 'like', '%' . $value . '%');
             }),
-            TextFilter::make('meta->exchange_currency')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-                $builder->where('transactions.meta->exchange_currency', 'like', '%' . $value . '%');
+            TextFilter::make('amount')->hiddenFromAll()->config(['placeholder' => 'Search'])->filter(function (Builder $builder, string $value) {
+                    $builder->where('transactions.amount', '=',floatval($value));
             }),
-            TextFilter::make('payment_method')->hiddenFromAll()->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
-                $builder->where('transactions.payment_method', 'like', '%' . $value . '%');
+
+            TextFilter::make('workspace_id')->config(['placeholder' => 'Search', 'maxlength' => '25',])->filter(function (Builder $builder, string $value) {
+                $builder->where('transactions.workspace_id', 'like', '%' . $value . '%');
             }),
 
 
         ];
-
     }
 }
