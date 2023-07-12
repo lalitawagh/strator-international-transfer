@@ -2,12 +2,12 @@
 
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
+use Kanexy\Cms\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\Role as EnumsRole;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Models\Role;
@@ -16,6 +16,11 @@ use Kanexy\InternationalTransfer\Models\CcCurrencyConversion;
 
 class BalanceController extends Controller
 {
+    public function create()
+    {
+        return view("international-transfer::balance.balance");
+    }
+
     public function index()
     {
         /** @var \App\Models\User $user */

@@ -30,6 +30,11 @@ class MoneyTransferMenu extends Item
 
     public function getUrl(): string
     {
-        return route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $workspace = $user->workspaces()->first()->id;
+        
+        return route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => $workspace]]);
     }
 }

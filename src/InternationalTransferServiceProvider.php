@@ -30,6 +30,7 @@ use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
 use Kanexy\InternationalTransfer\Membership\MembershipComponent;
+use Kanexy\InternationalTransfer\Membership\MembershipSubAccountComponent;
 use Kanexy\InternationalTransfer\Menu\BeneficiariesMenu;
 use Kanexy\InternationalTransfer\Menu\AgentMenu;
 use Kanexy\InternationalTransfer\Menu\CurrencyCloudPartner;
@@ -124,9 +125,12 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new MoneyTransferMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new BeneficiariesMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
+
+        if(config('services.registration_changed') == true)
+        {
+            \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
+        }
+
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new ConvertMenu());
 
@@ -153,6 +157,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
+        \Kanexy\PartnerFoundation\Membership\Facades\MembershipBankingComponent::addItem(MembershipSubAccountComponent::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
         \Kanexy\Cms\Facades\SettingContent::addItem(CcAccountSettingContent::class);
         \Kanexy\Cms\Facades\SettingTab::addItem(CcAccountSettingTab::class);

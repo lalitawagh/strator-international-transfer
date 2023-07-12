@@ -44,6 +44,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource("fee", FeeController::class);
                 Route::resource("country",CountryController::class);
                 Route::resource("balances-country",BalancesCountryController::class);
+                Route::resource("balancecurrency",BalanceController::class)->only(['create']);
                 Route::resource("money-transfer", MoneyTransferController::class)->only(['index', 'store', 'create']);
                 Route::get("money-transfer-review", [MoneyTransferController::class, 'review'])->name('money-transfer-review');
                 Route::get("money-transfer/beneficiary", [MoneyTransferController::class, 'showBeneficiary'])->name('money-transfer.beneficiary');
@@ -76,10 +77,16 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource('agent', AgentController::class);
                 Route::get('agent-detail/{id}', [AgentController::class, 'agentDetail'])->name('agent-detail');
                 Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
+                Route::get('agent-transactions/{id}', [AgentController::class, 'agentTransactions'])->name('agent-transactions');
                 Route::resource('cc-partners', CurrencyCloudPartnerController::class);
+                Route::get('cc-partners-approve/{id}', [CurrencyCloudPartnerController::class,'approve'])->name('cc-partners-approve');
+                Route::get('approve-partners', [CurrencyCloudPartnerController::class,'approvePartners'])->name('approve-partners');
                 Route::post('cc-partners-update/{id}', [CurrencyCloudPartnerController::class,'update'])->name('cc-partners-update');
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
                 Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);
+                Route::post('cc-payout', [MoneyTransferController::class,'ccPayout'])->name('cc-payout');
+                Route::get('cc-partner-accounts/{id}', [CurrencyCloudPartnerController::class,'ccPartnerAccounts'])->name('cc-partner-accounts');
+                Route::get('cc-partner-transactions/{id}', [CurrencyCloudPartnerController::class,'ccPartnerTransactions'])->name('cc-partner-transactions');
                 Route::resource("conversion", ConversionController::class)->only(['index', 'store', 'create']);
                 Route::resource("balance", BalanceController::class)->only(['index', 'store', 'create']);
                 Route::get('add-balance', [BalanceController::class,'addBalance'])->name('add-balance');
@@ -96,4 +103,8 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
             Route::get('exchangerate-information', [MembershipComponentController::class, 'showExchangeRateInfo'])->name('membership-exchangerate-information');
 
         });
+});
+
+Route::group(['middleware' => ['web']], function () {
+Route::post('webhooks/fxmaster', 'Kanexy\InternationalTransfer\Webhooks\FxmasterCcWebhook')->name('webhooks.fxmaster');
 });
