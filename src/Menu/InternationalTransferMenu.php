@@ -52,6 +52,10 @@ class InternationalTransferMenu extends Item
                 $menus[] = new MenuItem('Transactions', 'activity', url: route('dashboard.international-transfer.money-transfer.index'));
             }
 
+            if (!$user->isSubscriber()) {
+                $menus[] = new MenuItem('Conversion', 'activity', url: route('dashboard.international-transfer.conversion-list'));
+            }
+
             if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_VIEW)  && !$user->isSubscriber()) {
                 $menus[] = new MenuItem('Compliance Alerts', 'activity', url: route('dashboard.international-transfer.money-transfer-review'));
             }

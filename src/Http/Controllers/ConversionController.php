@@ -137,4 +137,15 @@ class ConversionController extends Controller
         return view('international-transfer::conversion.process.final',compact('conversionInfo'));
     }
 
+    public function conversionList()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
+
+        $conversions = Contact::whereJsonContains('classification','cc_conversion')->latest()->paginate();
+        //dd($conversions);
+        return view('international-transfer::conversion.conversion-list',compact('conversions'));
+    }
+
 }
