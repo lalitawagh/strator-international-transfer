@@ -44,7 +44,6 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource("fee", FeeController::class);
                 Route::resource("country",CountryController::class);
                 Route::resource("balances-country",BalancesCountryController::class);
-                Route::resource("balancecurrency",BalanceController::class)->only(['create']);
                 Route::resource("money-transfer", MoneyTransferController::class)->only(['index', 'store', 'create']);
                 Route::get("money-transfer-review", [MoneyTransferController::class, 'review'])->name('money-transfer-review');
                 Route::get("money-transfer/beneficiary", [MoneyTransferController::class, 'showBeneficiary'])->name('money-transfer.beneficiary');
@@ -94,6 +93,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
                 Route::get('conversion/final', [ConversionController::class,'showFinalizeConversion'])->name('conversion-final');
                 Route::get('conversion-list', [ConversionController::class,'conversionList'])->name('conversion-list');
+                Route::get('balance-currency/{id}',[BalanceController::class,'balanceCurrency'])->name('balance-currency');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {

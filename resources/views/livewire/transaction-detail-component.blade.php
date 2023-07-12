@@ -18,8 +18,8 @@
         </div>
     @else
         <div class="flex float-right">
-            <a href="{{ route('dashboard.international-transfer.balance.index') }}" class="btn btn-primary">
-                Balance
+            <a href="{{ route('dashboard.international-transfer.balance-currency', $transaction->workspace_id) }}" class="btn btn-primary">
+                Balances
             </a>
             <a id="moneyTransferDetailEdit"
                 class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-dark ml-2 tooltip"
