@@ -86,6 +86,7 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::get('currency-details/{id}', [BalanceController::class,'currencyDetails'])->name('currency-details');
                 Route::get('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
                 Route::get('conversion/final', [ConversionController::class,'showFinalizeConversion'])->name('conversion-final');
+                Route::get('conversion-list', [ConversionController::class,'conversionList'])->name('conversion-list');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
