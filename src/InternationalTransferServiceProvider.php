@@ -30,6 +30,7 @@ use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
 use Kanexy\InternationalTransfer\Membership\MembershipComponent;
+use Kanexy\InternationalTransfer\Membership\MembershipSubAccountComponent;
 use Kanexy\InternationalTransfer\Menu\BeneficiariesMenu;
 use Kanexy\InternationalTransfer\Menu\AgentMenu;
 use Kanexy\InternationalTransfer\Menu\CurrencyCloudPartner;
@@ -156,6 +157,7 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
+        \Kanexy\PartnerFoundation\Membership\Facades\MembershipBankingComponent::addItem(MembershipSubAccountComponent::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
         \Kanexy\Cms\Facades\SettingContent::addItem(CcAccountSettingContent::class);
         \Kanexy\Cms\Facades\SettingTab::addItem(CcAccountSettingTab::class);
