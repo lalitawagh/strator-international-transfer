@@ -7,19 +7,19 @@
             </div>
         </div>
         <div class="dropdown ml-auto">
-             {{-- <button id="ChevronDown" class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
+             <button id="ChevronDown" class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
                 <span>{{ $selectedYear }}</span> <span wire:ignore><i data-lucide="chevron-down"
                         class="w-4 h-4 ml-2"></i></span>
-            </button> --}}
-            <select id="countryWithPhone" name="country_code" wire:click="selectYear($event.target.value)" data-search="true"
+            </button>
+            {{-- <select id="countryWithPhone" name="country_code" wire:click="selectYear($event.target.value)" data-search="true"
                 class="tail-select" autocomplete="off">
                 @foreach ($years as $year)
                     <option  value="{{ $year }}">
                         {{ $year }}
                     </option>
                 @endforeach
-            </select>
-            {{-- <div class="dropdown-menu w-40">
+            </select> --}}
+            <div class="dropdown-menu w-40">
                 <ul class="dropdown-content" id="year-dropdown">
                     <li>
                         @foreach ($years as $year)
@@ -30,16 +30,15 @@
                         @endforeach
                     </li>
                 </ul>
-            </div> --}}
+            </div>
         </div>
     </div>
-    <canvas id="chartLine" class="h-full w-full"></canvas>
+    <canvas id="chartLine" class="h-full w-full" style="display: block; box-sizing: border-box; height: 295px; width: 591px;" width="591" height="284"></canvas>
 </div>
-
-<!-- <script>
-    document.addEventListener('livewire:load', function() {
-        Livewire.on('closeDropdown', function() {
-            $("#year-dropdown").dropdown("hide");
-        });
-    });
-</script> -->
+{{-- <script>
+    // document.addEventListener('livewire:load', function() {
+    //     Livewire.on('closeDropdown', function() {
+    //         $("#year-dropdown").dropdown("hide");
+    //     });
+    // });
+</script> --}}
