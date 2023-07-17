@@ -88,7 +88,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="email" class="form-label sm:w-30">Email Address</label>
                                 <div class="sm:w-5/6">
@@ -102,7 +101,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0 contact-company hidden">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="company_name" class="form-label sm:w-30">Company Name <span
@@ -111,28 +109,13 @@
                                     <input id="company_name" name="company_name" type="text"
                                         class="form-control @error('company_name') border-theme-6 @enderror"
                                         value="{{ old('company_name', $beneficiary->display_name) }}">
-
                                     @error('company_name')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="email" class="form-label sm:w-30">Email Address</label>
-                                <div class="sm:w-5/6">
-                                    <input id="email" name="email" type="email"
-                                        class="form-control @error('email') border-theme-6 @enderror"
-                                        value="{{ old('email', $beneficiary->email) }}">
-
-                                    @error('email')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
-
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
+                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="landline" class="form-label sm:w-30">Landline No.</label>
                                 <div class="sm:w-5/6">
@@ -160,7 +143,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="bank_account_name" class="form-label sm:w-30"> Account Name <span
@@ -193,8 +175,135 @@
                             </div>
                         </div>
 
+                        @php $country_code = '' @endphp
+                        @foreach ($countries as $country)
+                            @if ($country->getKey() == @$beneficiary->meta['bank_country'])
+                                 @php $country_code = $country->code @endphp
+                            @endif
+                        @endforeach
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            @if (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BIA]))
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bic_number">
+                                <label for="bic_number" class="form-label sm:w-30"> BIC/SWIFT <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bic_number" name="meta[bic_number]" type="text"
+                                        class="form-control @error('meta.bic_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.bic_number', @$beneficiary->meta['bic_number']) }}" required
+                                        disabled>
+
+                                    @error('meta.bic_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::IB])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="iban_number">
+                                <label for="avatar" class="form-label sm:w-30">IBAN</label>
+                                <div class="sm:w-5/6">
+
+                                    <input id="iban_number" name="meta[iban_number]" type="text"
+                                        class="form-control @error('meta.iban_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.iban_number', @$beneficiary->meta['iban_number']) }}" required
+                                        disabled>
+
+                                    @error('iban_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BAP])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bsb_number">
+                                <label for="bsb_number" class="form-label sm:w-30"> BSB Code <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bsb_number" name="meta[bsb_number]" type="text"
+                                        class="form-control @error('meta.bsb_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.bsb_number', @$beneficiary->meta['bsb_number']) }}" required
+                                        disabled>
+
+                                    @error('meta.bsb_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::AASP])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="aba_number">
+                                <label for="aba_number" class="form-label sm:w-30"> ABA Code <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="aba_number" name="meta[aba_number]" type="text"
+                                        class="form-control @error('meta.aba_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.aba_number', @$beneficiary->meta['aba_number']) }}" required
+                                        disabled>
+
+                                    @error('meta.aba_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::CB])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="aba_number">
+                                <label for="cnaps_number" class="form-label sm:w-30"> CNAPS <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="cnaps_number" name="meta[cnaps_number]" type="text"
+                                        class="form-control @error('meta.cnaps_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.cnaps_number', @$beneficiary->meta['cnaps_number']) }}" required
+                                        disabled>
+
+                                    @error('meta.cnaps_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBSP])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bank_code">
+                                <label for="bank_code" class="form-label sm:w-30"> Bank Code <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bank_code" name="meta[bank_code]" type="text"
+                                        class="form-control @error('meta.bank_code') border-theme-6 @enderror"
+                                        value="{{ old('meta.bank_code', @$beneficiary->meta['bank_code']) }}" required
+                                        disabled>
+
+                                    @error('meta.bank_code')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BA])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bank_code">
+                                <label for="bank_code" class="form-label sm:w-30"> Bank Code <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bank_code" name="meta[bank_code]" type="text"
+                                        class="form-control @error('meta.bank_code') border-theme-6 @enderror"
+                                        value="{{ old('meta.bank_code', @$beneficiary->meta['bank_code']) }}" required
+                                        disabled>
+
+                                    @error('meta.bank_code')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BBA])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bank_code">
+                                <label for="bank_code" class="form-label sm:w-30"> Bank Code <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bank_code" name="meta[bank_code]" type="text"
+                                        class="form-control @error('meta.bank_code') border-theme-6 @enderror"
+                                        value="{{ old('meta.bank_code', @$beneficiary->meta['bank_code']) }}" required
+                                        disabled>
+
+                                    @error('meta.bank_code')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::SA])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bank_code">
                                 <label for="bank_code" class="form-label sm:w-30"> Sort Code <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -208,9 +317,9 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="avatar" class="form-label sm:w-30">IFSC Code / IBAN</label>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::I])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="iban_number">
+                                <label for="avatar" class="form-label sm:w-30">IBAN</label>
                                 <div class="sm:w-5/6">
 
                                     <input id="iban_number" name="meta[iban_number]" type="text"
@@ -223,9 +332,56 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BASP])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bic_number">
+                                <label for="bic_number" class="form-label sm:w-30"> BIC/SWIFT <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bic_number" name="meta[bic_number]" type="text"
+                                        class="form-control @error('meta.bic_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.bic_number', @$beneficiary->meta['bic_number']) }}" required
+                                        disabled>
 
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
+                                    @error('meta.bic_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BCSP])) 
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="bic_number">
+                                <label for="bic_number" class="form-label sm:w-30"> BIC/SWIFT <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="bic_number" name="meta[bic_number]" type="text"
+                                        class="form-control @error('meta.bic_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.bic_number', @$beneficiary->meta['bic_number']) }}" required
+                                        disabled>
+
+                                    @error('meta.bic_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            @elseif (in_array($country_code, \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::AI]))
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2" id="iban_number">
+                                <label for="avatar" class="form-label sm:w-30">IFSC Code/IBAN</label>
+                                <div class="sm:w-5/6">
+
+                                    <input id="iban_number" name="meta[iban_number]" type="text"
+                                        class="form-control @error('meta.iban_number') border-theme-6 @enderror"
+                                        value="{{ old('meta.iban_number', @$beneficiary->meta['iban_number']) }}" required
+                                        disabled>
+
+                                    @error('iban_number')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="avatar" class="form-label sm:w-30">Avatar</label>
                                 <div class="sm:w-5/6">
@@ -256,7 +412,7 @@
                                             @php $country_name = $country->name @endphp
                                         @endif
                                     @endforeach
-
+                                    
                                     <input id="bank_country" name="meta[bank_country]" type="text"
                                         class="form-control @error('meta.bank_country') border-theme-6 @enderror"
                                         value="{{ $country_name }}" required disabled>
@@ -267,6 +423,7 @@
                                 </div>
                             </div>
                         </div>
+                           
 
                         <div class="text-right mt-5">
                             <a id="BeneficiaryEditeCancel"
@@ -319,5 +476,8 @@
         $(".contact-type").click(function() {
             contactTypeChange($(this).val());
         });
+
     </script>
+
 @endpush
+

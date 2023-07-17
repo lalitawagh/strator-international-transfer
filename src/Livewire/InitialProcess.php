@@ -9,6 +9,7 @@ use Kanexy\CurrencyCloud\Dtos\RateDetailedExchangeDto;
 use Kanexy\CurrencyCloud\Services\CurrencyCloudApiService;
 use Kanexy\InternationalTransfer\Enums\Status;
 use Kanexy\InternationalTransfer\Http\Helper;
+use Kanexy\InternationalTransfer\Models\CcExchangeRate;
 use Kanexy\PartnerFoundation\Core\Enums\ExchangeCurrencyEnum;
 use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Livewire\Component;
@@ -49,6 +50,14 @@ class InitialProcess extends Component
 
     public $countryCurrency;
 
+    public $sendingCurrency;
+
+    public $receivingCurrency;
+
+    public $sendingcountriesinfo;
+
+    public $receivingcountriesinfo;
+
     protected $listeners = [
         'changeToMethod',
     ];
@@ -65,18 +74,28 @@ class InitialProcess extends Component
         ->where('currency', $this->currency_from)
         ->all();
 
-        $this->amount = old('amount') ? old('amount') : 1000;
+        $this->amount = session('money_transfer_request.amount') ? session('money_transfer_request.amount') : 1000;
 
-        $this->currency_from = Country::whereCode('UK')->first()->id;
+        $from = @Setting::getValue('international-transfer_sending_currency',[])[0] ? @Setting::getValue('international-transfer_sending_currency',[])[0] :  231;
+        $to = @Setting::getValue('international-transfer_receiving_currency',[])[0] ? @Setting::getValue('international-transfer_receiving_currency',[])[0] : 105;
 
-        $this->currency_to =  Country::whereCode('IN')->first()->id;
+        $this->currency_from = Country::whereId($from)->first()?->id;
 
-        $this->countryCurrency = Country::whereIn('currency',['EUR','GBP','INR','PKR','USD'])->get();
+        $this->currency_to =  Country::whereId($to)->first()?->id;
+
+        $this->countryCurrency = Country::whereIn('currency',['AUD','CAD','CZK','DKK','EUR','GBP','USD','HUF','INR','NOK','RON','SEK'])->get();
+
+        $this->sendingCurrency = Setting::getValue('international-transfer_sending_currency',[]);
+
+        $this->receivingCurrency = Setting::getValue('international-transfer_receiving_currency', []);
+
+        $this->sendingcountriesinfo = Country::whereIn('id',$this->sendingCurrency)->get();
+
+        $this->receivingcountriesinfo = Country::whereIn('id',$this->receivingCurrency)->get();
 
         $this->getDetails();
 
     }
-
 
     public function hydrate()
     {
@@ -197,54 +216,66 @@ class InitialProcess extends Component
 
         if (config('services.registration_changed') == true)
         {
-            $exchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
+            $membershipExchangeRates = WorkspaceMeta::where(['key' => 'exchangerate_info','workspace_id' => app('activeWorkspaceId')])->first();
 
-            $rate_type = Setting::getValue('cc_rate_type',[]);
-            $customized_rate = Setting::getValue('cc_customized_rate',[]);
-            $percentage_rate = Setting::getValue('cc_percentage_rate',[]);
-            $percentage = Setting::getValue('cc_percentage',[]);
+            $globalExchangeRate = CcExchangeRate::where('exchange_to',$this->currency_to)->first();
 
-            if(is_null($exchangeRates))
+            if(!is_null($globalExchangeRate))
             {
-                if($rate_type == 'cc_customize_rate')
+                if(@$globalExchangeRate->rate_type == 'customized_rate')
                 {
-                    $exchangeRate = $customized_rate;
-                }
-                else
-                {
-                    $percentage = $percentage;
+                    $exchangeRate = $globalExchangeRate->customized_rate;
+
+                }elseif(@$globalExchangeRate->rate_type == 'default_rate'){
+
+                    $percentage = @$globalExchangeRate->percentage;
+
                     $percent = $percentage / 100  * $exchangeRate;
-                    if( @$percentage_rate == 'plus')
-                    {
-                        $exchangeRate = $exchangeRate + $percent;
-                    }else
-                    {
-                        $exchangeRate = $exchangeRate - $percent;
-                    }
-                }
-            }
-            else{
-                if(@$exchangeRates->value['rate_type'] == 'customize_rate')
-                {
-                    $exchangeRate = @$exchangeRates->value['customized_rate'];
-                }
-                else
-                {
-                    $percentage = @$exchangeRates->value['percentage'];
-                    $percent = $percentage / 100  * $exchangeRate;
-                    if( @$exchangeRates->value['percentage_rate'] == 'plus')
+
+                    if( @$globalExchangeRate->plus_minus == 'plus')
                     {
                         $exchangeRate = $exchangeRate + $percent;
                     }else{
                         $exchangeRate = $exchangeRate - $percent;
                     }
                 }
+
+            }
+            else{
+
+                if (!empty($membershipExchangeRates) && $membershipExchangeRates !== null) {
+
+                    if(@$membershipExchangeRates->value['rate_type'] == 'customized_rate')
+                    {
+                        if(!is_null(@$membershipExchangeRates->value['customized_rate']))
+                        {
+                            $exchangeRate = @$membershipExchangeRates->value['customized_rate'];
+                        }
+
+
+                    }
+                    else
+                    {
+                        if(!is_null(@$membershipExchangeRates->value['percentage'])) {
+                            $percentage = @$membershipExchangeRates->value['percentage'];
+
+                            $percent = $percentage / 100  * $exchangeRate;
+
+                            if(@$membershipExchangeRates->value['percentage_rate'] == 'plus') {
+                                $exchangeRate = $exchangeRate + $percent;
+                            } else {
+                                $exchangeRate = $exchangeRate - $percent;
+                            }
+                        }
+                    }
+
+                }
             }
 
         }
         $this->recipient_amount = $this->amount;
         $this->guaranteed_rate = $exchangeRate;
-        $this->guaranteed_rate = number_format((float) $this->guaranteed_rate, 2, '.', '');
+        $this->guaranteed_rate =number_format((float) $this->guaranteed_rate, 2, '.', '');
 
         $this->initial_fee = collect(Setting::getValue('money_transfer_type_fees', []))
         ->where('currency', $this->currency_from)

@@ -56,10 +56,35 @@
                                     </a>
                                 </li>
                             @endcan
+                            {{-- @can(\Kanexy\InternationalTransfer\Policies\ExchangeRatePolicy::VIEW,
+                                 \Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration::class) --}}
                             <li>
-                                <a id="Notifications" href="javascript:void(0);" class="side-menu">
+                                <a id="ExchangeRate" href="{{ route('dashboard.international-transfer.exchange-rate.index') }}"
+                                    class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title">Exchange Rate </div>
+                                </a>
+                            </li>
+                            {{-- @endcan --}}
+                            <li>
+                                <a id="Notifications" href="#"
+                                    class="side-menu">
                                     <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="side-menu__title"> Notifications </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="country" href="{{ route('dashboard.international-transfer.country.index') }}"
+                                     class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title"> Country </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="country" href="{{ route('dashboard.international-transfer.balances-country.index') }}"
+                                     class="side-menu">
+                                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="side-menu__title">Balances Country </div>
                                 </a>
                             </li>
                         </ul>

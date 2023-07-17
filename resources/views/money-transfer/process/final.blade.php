@@ -9,20 +9,29 @@
                 <div class="">
                     <div class="">
                         <div class="modal-body py-10">
-                            @if(@$transaction?->status == 'pending')
-                            <div class="pb-20 text-center">
-                                <i data-lucide="alert-circle" class="w-16 h-16 text-warning mx-auto mt-3"></i>
-                                <div class="text-3xl mt-5">
-                                    Money transfer request is in review process.
+                            @if (@$transaction?->status == 'pending-kyc')
+                                <div class="pb-20 text-center">
+                                    <i data-lucide="alert-circle" class="w-16 h-16 text-warning mx-auto mt-3"></i>
+                                    <div class="text-3xl mt-5">
+                                        Money transfer request is in pending review.
+                                    </div>
                                 </div>
-                            </div>
                             @else
-                            <div class="pb-20 text-center">
-                                <i data-lucide="check-circle" class="w-16 h-16 text-theme-9 mx-auto mt-3"></i>
-                                <div class="text-3xl mt-5">
-                                    Money Transfer Successful
-                                </div>
-                            </div>
+                                @if(@$transaction?->status != 'completed')
+                                    <div class="pb-20 text-center">
+                                        <i data-lucide="alert-circle" class="w-16 h-16 text-warning mx-auto mt-3"></i>
+                                        <div class="text-3xl mt-5">
+                                            Money transfer request is in review process.
+                                        </div>
+                                    </div>
+                                    @else
+                                    <div class="pb-20 text-center">
+                                        <i data-lucide="check-circle" class="w-16 h-16 text-theme-9 mx-auto mt-3"></i>
+                                        <div class="text-3xl mt-5">
+                                            Money Transfer Successful
+                                        </div>
+                                    </div>
+                                @endif
                             @endif
                         </div>
                     </div>
