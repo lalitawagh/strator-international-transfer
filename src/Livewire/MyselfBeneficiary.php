@@ -109,7 +109,7 @@ class MyselfBeneficiary extends Component
             'meta.bank_code' => ['nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
             'meta.branch_code' => ['nullable', 'string', 'numeric', 'digits:6'],
-            'meta.iban_number' => ['regex:/^(?:[A-Z]{2}\d{2}[A-Z0-9]{1,30}|)$/i'],
+            'meta.iban_number' => ['string'],
             'meta.post_code' => ['regex:/^(?:[A-Z]{2}\d{2}[A-Z0-9]{1,30}|)$/i'],
             //'meta.ach_routing_number' => ['required_if:receiving_country,==,' . ShortCode::SHORT_CODE[ShortCode::AI][0]],
         ];
@@ -131,7 +131,7 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::AI]))
         {
-            $rules['meta.iban_number'] = 'required|string|numeric';
+            $rules['meta.iban_number'] = 'required|string';
             $rules['meta.bank_account_number'] = 'required';
         }
 
