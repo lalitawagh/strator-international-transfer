@@ -1,7 +1,7 @@
 <div id="cc-account-settings" class="tab-pane grid grid-cols-12 gap-3 @if(session('tab') == 'cc-account-settings') active @endif" role="tabpanel" aria-labelledby="wrappex-settings-tab">
     <div class="col-span-12">
         <div class="box">
-
+           
             <div class="px-5 pb-3">
                 <form action="{{ route('dashboard.international-transfer.cc-account-settings.store') }}" method="POST"
                     enctype="multipart/form-data">

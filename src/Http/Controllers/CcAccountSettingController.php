@@ -12,11 +12,7 @@ class CcAccountSettingController extends Controller
     public function store(StoreCcAccountSettingRequest $request)
     {
         $data = $request->validated();
-        $baseUrl = config('currency-cloud.cc_account_dev_url');
-
-        if (Setting::getValue('cc_account_environment') === 'production') {
-            $baseUrl = config('currency-cloud.cc_account_prod_url');
-        }
+        $baseUrl = config('services.cc_account_url');
      
         $result = Http::asForm()->post($baseUrl . '/oauth/token', [
             "grant_type" => "password",
