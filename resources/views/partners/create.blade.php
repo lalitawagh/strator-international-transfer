@@ -108,7 +108,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="country_id" id="country_id" class="tail-select w-full" data-search="true">
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->getKey() }}">{{ $country->name }}</option>
+                                            <option value="{{ $country->getKey() }}" @if($defaultCountry->id == $country->getKey()) selected @endif>{{ $country->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -153,7 +153,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="country_code" id="country_code" class="tail-select w-full" data-search="true">
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->getKey() }}">{{ $country->name }} ({{ $country->phone }})</option>
+                                            <option value="{{ $country->getKey() }}" @if($defaultCountry->id == $country->getKey()) selected @endif >{{ $country->name }} ({{ $country->phone }})</option>
                                         @endforeach
                                     </select>
 
