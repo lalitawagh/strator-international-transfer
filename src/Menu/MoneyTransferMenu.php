@@ -19,7 +19,7 @@ class MoneyTransferMenu extends Item
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if(config("services.menu_layout") == 'top' && !$user->isSuperAdmin()){
+        if(config("services.menu_layout") == 'top' && $user->isSubscriber() || $user->type == 'agent'){
             if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE)) {
                 return true;
             }
