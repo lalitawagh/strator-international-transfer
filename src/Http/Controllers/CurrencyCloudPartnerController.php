@@ -13,6 +13,7 @@ use Kanexy\InternationalTransfer\Models\Partner;
 use Kanexy\InternationalTransfer\Notifications\PartnerApproveNotification;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Laravel\Passport\ClientRepository;
+use Kanexy\Cms\Setting\Models\Setting;
 
 class CurrencyCloudPartnerController extends Controller
 {
@@ -30,8 +31,9 @@ class CurrencyCloudPartnerController extends Controller
     {
         $titles = Title::get();
         $countries = Country::get();
+        $defaultCountry = Country::find(Setting::getValue("default_country"));
 
-        return view("international-transfer::partners.create", compact("titles", "countries"));
+        return view("international-transfer::partners.create", compact("titles", "countries", "defaultCountry"));
     }
 
     public function store(StorePartnerRequest $request)
