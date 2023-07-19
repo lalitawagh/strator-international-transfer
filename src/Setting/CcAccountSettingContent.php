@@ -9,7 +9,7 @@ class CcAccountSettingContent extends Component
 {
     public function render()
     {
-        $settings = Setting::get();
+        $settings = Setting::pluck('value', 'key');
         return view("international-transfer::setting.cc-account-setting-content", compact('settings'));
     }
 }
