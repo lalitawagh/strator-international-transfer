@@ -9,11 +9,25 @@ use Kanexy\Cms\Models\Title;
 use Kanexy\Cms\Setting\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\I18N\Models\Organization;
+use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 
 class CustomerRegistrationForm extends Item
 {
-    
+    public function validationRules(): array
+    {
+        return [
+            'register_as_agent' => ['nullable'],
+            'agent_name' => ['required_if:register_as_agent,on',new AlphaSpaces],
+        ];
+    }
+
+    public function validationMessages(): array
+    {
+        return [
+            'agent_name.required_if' => 'The agent name field is required.',
+        ];
+    }
 
     public function render()
     {
