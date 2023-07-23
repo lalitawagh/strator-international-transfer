@@ -299,10 +299,20 @@ class MyselfBeneficiary extends Component
                 $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['bank_code'];
 
             }elseif (isset($data['meta']['iban_number'])){
-                $contactExist = Contact::beneficiaries()->verified()
-                ->where("workspace_id", $this->workspace_id)
-                ->where('meta->iban_number', $data['meta']['iban_number'])
-                ->first();
+                if($this->receiving_country == 'IN')
+                {
+                    $contactExist = Contact::beneficiaries()->verified()
+                    ->where("workspace_id", $this->workspace_id)
+                    ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+                    ->where('meta->iban_number', $data['meta']['iban_number'])
+                    ->first();
+                }else
+                {
+                    $contactExist = Contact::beneficiaries()->verified()
+                    ->where("workspace_id", $this->workspace_id)
+                    ->where('meta->iban_number', $data['meta']['iban_number'])
+                    ->first();
+                }
 
                 $routing_type = ($this->receiving_country == 'IN') ? 'ifsc' : 'iban';
                 $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['iban_number'];
