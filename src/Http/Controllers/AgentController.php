@@ -75,7 +75,7 @@ class AgentController extends Controller
 
     public function agentUsers(Request $request,$id)
     {
-        if(!auth()->user()->isSuperAdmin())
+        if(auth()->user()->isSubscriber())
         {
             if (! Gate::allows('agent-users', $id)) {
                 abort(403);
