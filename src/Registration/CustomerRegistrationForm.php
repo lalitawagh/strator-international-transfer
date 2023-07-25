@@ -17,15 +17,15 @@ class CustomerRegistrationForm extends Item
     public function validationRules(): array
     {
         return [
-            'register_as_agent' => ['nullable'],
-            'agent_name' => ['required_if:register_as_agent,on',new AlphaSpaces],
+            // 'register_as_agent' => ['nullable'],
+            // 'agent_name' => ['required_if:register_as_agent,on',new AlphaSpaces],
         ];
     }
 
     public function validationMessages(): array
     {
         return [
-            'agent_name.required_if' => 'The agent name field is required.',
+            // 'agent_name.required_if' => 'The agent name field is required.',
         ];
     }
 
