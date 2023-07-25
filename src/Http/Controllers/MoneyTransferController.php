@@ -42,6 +42,7 @@ use Kanexy\PartnerFoundation\Workspace\Models\WorkspaceMeta;
 use Stripe;
 use PDF;
 use Kanexy\InternationalTransfer\Services\CurrencyCloudService;
+use Kanexy\Cms\Models\UserSetting;
 
 class MoneyTransferController extends Controller
 {
@@ -952,7 +953,9 @@ class MoneyTransferController extends Controller
         $data['transaction'] = Transaction::find($request->payment)->toArray();
         $beneficiaryid = $data['transaction']['meta']['beneficiary_id'];
         $data['beneficairy'] = Contact::find($beneficiaryid)->toArray();
-
+        $data['kyc'] = UserSetting::whereUserId(auth()->user()->id)->first();
+        $data['user'] = User::find(auth()->user()->id)->with('address');
+        
         $response = $ccService->payout($data);
         if($response['code'] = 200)
         {
