@@ -953,8 +953,10 @@ class MoneyTransferController extends Controller
         $data['transaction'] = Transaction::find($request->payment)->toArray();
         $beneficiaryid = $data['transaction']['meta']['beneficiary_id'];
         $data['beneficairy'] = Contact::find($beneficiaryid)->toArray();
-        $data['kyc'] = UserSetting::whereUserId(auth()->user()->id)->first();
-        $data['user'] = User::find(auth()->user()->id)->with('address');
+        $workspace = Workspace::find( $data['transaction']['workspace_id']);
+        $user = $workspace->users()->first();
+        $data['kyc'] = UserSetting::whereUserId($user->id)->first();
+        $data['user'] = $user;
         
         $response = $ccService->payout($data);
         if($response['code'] = 200)
