@@ -126,7 +126,6 @@ class MyselfBeneficiary extends Component
             $rules['meta.bank_code'] = 'required';
             $rules['meta.benficiary_state'] = 'required';
             $rules['meta.post_code'] = 'required';
-            $rules['meta.branch_code'] = 'required';
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::AI]))
@@ -294,8 +293,16 @@ class MyselfBeneficiary extends Component
                 ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
                 ->where('meta->bank_code', $data['meta']['bank_code'])
                 ->first();
-
-                $routing_type = ($this->receiving_country == 'IN') ? 'ifsc' : 'sort_code';
+                if($this->receiving_country == 'IN')
+                {
+                    $routing_type = 'ifsc';
+                }elseif($this->receiving_country == 'GB')
+                {
+                    $routing_type = 'sort_code';
+                }else{
+                    $routing_type = 'bank_code';
+                }
+                
                 $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['bank_code'];
 
             }elseif (isset($data['meta']['iban_number'])){
