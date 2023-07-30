@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\ColorModeMiddleware;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\InternationalTransfer\Http\Controllers\AgentController;
+use Kanexy\InternationalTransfer\Http\Controllers\BalanceController;
 use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
+use Kanexy\InternationalTransfer\Http\Controllers\ConversionController;
 use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
 use Kanexy\InternationalTransfer\Http\Controllers\CountryController;
 use Kanexy\InternationalTransfer\Http\Controllers\BalancesCountryController;
@@ -74,10 +76,24 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
                 Route::resource('agent', AgentController::class);
                 Route::get('agent-detail/{id}', [AgentController::class, 'agentDetail'])->name('agent-detail');
                 Route::get('agent-users/{id}', [AgentController::class, 'agentUsers'])->name('agent-users');
+                Route::get('agent-transactions/{id}', [AgentController::class, 'agentTransactions'])->name('agent-transactions');
                 Route::resource('cc-partners', CurrencyCloudPartnerController::class);
+                Route::get('cc-partners-approve/{id}', [CurrencyCloudPartnerController::class,'approve'])->name('cc-partners-approve');
+                Route::get('approve-partners', [CurrencyCloudPartnerController::class,'approvePartners'])->name('approve-partners');
                 Route::post('cc-partners-update/{id}', [CurrencyCloudPartnerController::class,'update'])->name('cc-partners-update');
                 Route::get('archived-transactions', [MoneyTransferController::class, 'archivedTransactions'])->name('archivedTransactions');
                 Route::resource('cc-account-settings', CcAccountSettingController::class)->only(['index', 'create', 'store', 'show']);
+                Route::post('cc-payout', [MoneyTransferController::class,'ccPayout'])->name('cc-payout');
+                Route::get('cc-partner-accounts/{id}', [CurrencyCloudPartnerController::class,'ccPartnerAccounts'])->name('cc-partner-accounts');
+                Route::get('cc-partner-transactions/{id}', [CurrencyCloudPartnerController::class,'ccPartnerTransactions'])->name('cc-partner-transactions');
+                Route::resource("conversion", ConversionController::class)->only(['index', 'store', 'create']);
+                Route::resource("balance", BalanceController::class)->only(['index', 'store', 'create']);
+                Route::get('add-balance', [BalanceController::class,'addBalance'])->name('add-balance');
+                Route::get('currency-details/{id}', [BalanceController::class,'currencyDetails'])->name('currency-details');
+                Route::get('conversion/preview', [ConversionController::class,'conversionPreview'])->name('conversion-preview');
+                Route::get('conversion/final', [ConversionController::class,'showFinalizeConversion'])->name('conversion-final');
+                Route::get('conversion-list', [ConversionController::class,'conversionList'])->name('conversion-list');
+                Route::get('balance-currency/{id}',[BalanceController::class,'balanceCurrency'])->name('balance-currency');
         });
 
         Route::group(['middleware' => ['auth', '\Kanexy\Cms\Middleware\ColorModeMiddleware', VerificationStepMiddleware::class], 'prefix' => 'dashboard/international-transfer', 'as' => 'dashboard.international-transfer.'], function () {
@@ -87,4 +103,8 @@ Route::group(['middleware' => ['web', 'auth', ColorModeMiddleware::class]], func
             Route::get('exchangerate-information', [MembershipComponentController::class, 'showExchangeRateInfo'])->name('membership-exchangerate-information');
 
         });
+});
+
+Route::group(['middleware' => ['web']], function () {
+Route::post('webhooks/fxmaster', 'Kanexy\InternationalTransfer\Webhooks\FxmasterCcWebhook')->name('webhooks.fxmaster');
 });

@@ -19,10 +19,10 @@ class MoneyTransferReviewList extends Transaction
     public static function setBuilder($workspace_id,$type): Builder
     {
          if (!$workspace_id) {
-            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->latest();
+            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->latest();
          }
 
-         return Transaction::query()->where("meta->transaction_type", 'money_transfer')->whereWorkspaceId($workspace_id)->latest();
+         return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereWorkspaceId($workspace_id)->latest();
     }
 
     public static function setBulkActions()

@@ -19,7 +19,7 @@ class MoneyTransferMenu extends Item
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if(config("services.menu_layout") == 'top' && !$user->isSuperAdmin()){
+        if(config("services.menu_layout") == 'top' && $user->isSubscriber() || $user->type == 'agent'){
             if ($user->hasPermissionTo(Permission::MONEY_TRANSFER_CREATE)) {
                 return true;
             }
@@ -30,6 +30,11 @@ class MoneyTransferMenu extends Item
 
     public function getUrl(): string
     {
-        return route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]);
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $workspace = $user->workspaces()->first()->id;
+        
+        return route('dashboard.international-transfer.money-transfer.create', ['filter' => ['workspace_id' => $workspace]]);
     }
 }

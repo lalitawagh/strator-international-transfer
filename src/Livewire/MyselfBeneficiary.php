@@ -109,7 +109,7 @@ class MyselfBeneficiary extends Component
             'meta.bank_code' => ['nullable', 'string', 'numeric', 'digits:6'],
             'company_name'   => ['required_if:type,business', 'nullable', new AlphaSpaces, 'string','max:40'],
             'meta.branch_code' => ['nullable', 'string', 'numeric', 'digits:6'],
-            'meta.iban_number' => ['regex:/^(?:[A-Z]{2}\d{2}[A-Z0-9]{1,30}|)$/i'],
+            'meta.iban_number' => ['string'],
             'meta.post_code' => ['regex:/^(?:[A-Z]{2}\d{2}[A-Z0-9]{1,30}|)$/i'],
             //'meta.ach_routing_number' => ['required_if:receiving_country,==,' . ShortCode::SHORT_CODE[ShortCode::AI][0]],
         ];
@@ -131,8 +131,13 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::AI]))
         {
-            $rules['meta.iban_number'] = 'required|string|numeric';
+            $rules['meta.iban_number'] = 'required|string';
             $rules['meta.bank_account_number'] = 'required';
+            if($this->receiving_country != 'IN')
+            {
+                $rules['meta.bic_number'] = 'required';
+            }
+            
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::SA]))
@@ -148,6 +153,7 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BCSP]))
         {
+          
             $rules['meta.bic_number'] = 'required';
         }
 
@@ -172,6 +178,10 @@ class MyselfBeneficiary extends Component
         {
             $rules['meta.iban_number'] = 'required';
             $rules['meta.bank_account_number'] = 'required';
+            if($this->receiving_country != 'IN')
+            {
+                $rules['meta.bic_number'] = 'required';
+            }
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BA]))
@@ -183,10 +193,15 @@ class MyselfBeneficiary extends Component
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::I]))
         {
             $rules['meta.iban_number'] = 'required';
+            if($this->receiving_country != 'IN')
+            {
+                $rules['meta.bic_number'] = 'required';
+            }
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BASP]))
         {
+          
             $rules['meta.bic_number'] = 'required';
         }
 
@@ -269,6 +284,7 @@ class MyselfBeneficiary extends Component
 
     public function benficiaryCreate($data)
     {
+      
             $routing_type = 'sort_code';
 
             if(isset($data['meta']['bank_code']))
@@ -288,8 +304,9 @@ class MyselfBeneficiary extends Component
                 ->where('meta->iban_number', $data['meta']['iban_number'])
                 ->first();
 
-                $routing_type = 'ifsc';
-                $routing_code_value =  $data['meta']['iban_number'];
+                $routing_type = ($this->receiving_country == 'IN') ? 'ifsc' : 'iban';
+                $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['iban_number'];
+
 
             }elseif (isset($data['meta']['bsb_number'])){
                 $contactExist = Contact::beneficiaries()->verified()
@@ -331,16 +348,17 @@ class MyselfBeneficiary extends Component
                 $routing_type = 'cnaps';
                 $routing_code_value =  $data['meta']['cnaps_number'];
 
-            }else{
-                $contactExist = Contact::beneficiaries()->verified()
-                ->where("workspace_id", $this->workspace_id)
-                ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
-                ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
-                ->first();
+        }else{
+            $contactExist = Contact::beneficiaries()->verified()
+            ->where("workspace_id", $this->workspace_id)
+            ->where('meta->bank_account_number', $data['meta']['bank_account_number'])
+            ->where('meta->ach_routing_number', $data['meta']['ach_routing_number'])
+            ->first();
 
-                $routing_type = 'bank_code';
-                $routing_code_value =  $data['meta']['ach_routing_number'];
-            }
+            $routing_type = 'bank_code';
+            $routing_code_value =  $data['meta']['ach_routing_number'];
+        }
+
 
             if(!is_null($contactExist))
             {
@@ -377,9 +395,10 @@ class MyselfBeneficiary extends Component
                 $data['classification'] = $this->classification;
                 $data['meta'] = array_merge($data['meta'],$currencyDetails);
                 $data['status'] = 'active';
-
+             
                 $service = new CurrencyCloudApiService;
                 $validateBeneficiary = $service->validateBeneficaries(new ValidateBeneficiaryDto($data));
+              
                 if ($validateBeneficiary['code'] == 200)
                 {
                     /** @var Contact $contact */
@@ -417,14 +436,13 @@ class MyselfBeneficiary extends Component
                     //$user->generateOtp("sms");
                     $this->beneficiary_created = true;
 
-
+                   
                     $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
                 }
                 else {
                     return redirect()->route('dashboard.international-transfer.money-transfer.beneficiary', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])->with(['status' => 'failed', 'message' => $validateBeneficiary['message']]);
                 }
             }
-
     }
 
     public function render()

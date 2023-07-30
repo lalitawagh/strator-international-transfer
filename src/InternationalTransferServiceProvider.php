@@ -16,6 +16,8 @@ use Kanexy\InternationalTransfer\Contracts\TransferTypeFeeConfiguration;
 use Kanexy\InternationalTransfer\Contracts\ExchangeRateConfiguration;
 use Kanexy\InternationalTransfer\Contracts\GeneralAmountSettingForm;
 use Kanexy\InternationalTransfer\Http\Controllers\CcAccountSettingController;
+use Kanexy\InternationalTransfer\Livewire\BalanceAddCurrencyComponent;
+use Kanexy\InternationalTransfer\Livewire\ConversionInitialProcess;
 use Kanexy\InternationalTransfer\Livewire\CurrencyCloudPayoutComponent;
 use Kanexy\InternationalTransfer\Livewire\ExistingBeneficiary;
 use Kanexy\InternationalTransfer\Livewire\InitialProcess;
@@ -28,10 +30,13 @@ use Kanexy\InternationalTransfer\Livewire\TransactionTrackComponent;
 use Kanexy\InternationalTransfer\Livewire\TransactionKycdetailsComponent;
 use Kanexy\InternationalTransfer\Livewire\InternationalTransferGraph;
 use Kanexy\InternationalTransfer\Membership\MembershipComponent;
+use Kanexy\InternationalTransfer\Membership\MembershipSubAccountComponent;
 use Kanexy\InternationalTransfer\Menu\BeneficiariesMenu;
 use Kanexy\InternationalTransfer\Menu\AgentMenu;
 use Kanexy\InternationalTransfer\Menu\CurrencyCloudPartner;
 use Kanexy\InternationalTransfer\Menu\AgentUser;
+use Kanexy\InternationalTransfer\Menu\ConvertMenu;
+use Kanexy\InternationalTransfer\Menu\CurrencyMenu;
 use Kanexy\InternationalTransfer\Menu\InternationalTransferMenu;
 use Kanexy\InternationalTransfer\Menu\MoneyTransferMenu;
 use Kanexy\InternationalTransfer\Menu\TransactionMenu;
@@ -120,9 +125,14 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new MoneyTransferMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new BeneficiariesMenu());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new TransactionMenu());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentMenu());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new AgentUser());
+
+        if(config('services.registration_changed') == true)
+        {
+            \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyCloudPartner());
+        }
+
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new CurrencyMenu());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new ConvertMenu());
 
         \Kanexy\PartnerFoundation\Core\Facades\BankingProcessSelectionComponent::addItem(new BankingProcessSelectionTransferComponent());
 
@@ -142,9 +152,12 @@ class InternationalTransferServiceProvider extends PackageServiceProvider
         Livewire::component('transaction-kycdetails-component', TransactionKycdetailsComponent::class);
         Livewire::component('international-transfer-graph', InternationalTransferGraph::class);
         Livewire::component('currency-cloud-payout-component', CurrencyCloudPayoutComponent::class);
+        Livewire::component('conversion-initial-process', ConversionInitialProcess::class);
+        Livewire::component('balance-add-currency-component', BalanceAddCurrencyComponent::class);
 
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralAmountSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
+        \Kanexy\PartnerFoundation\Membership\Facades\MembershipBankingComponent::addItem(MembershipSubAccountComponent::class);
         \Kanexy\PartnerFoundation\Membership\Facades\MembershipComponent::addItem(MembershipComponent::class);
         \Kanexy\Cms\Facades\SettingContent::addItem(CcAccountSettingContent::class);
         \Kanexy\Cms\Facades\SettingTab::addItem(CcAccountSettingTab::class);
