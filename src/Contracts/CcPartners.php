@@ -14,7 +14,7 @@ class CcPartners extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-        return Partner::query()->latest();
+        return Partner::query()->where('status','active')->latest();
     }
 
     public static function setBulkActions()
@@ -64,6 +64,8 @@ class CcPartners extends Transaction
                 $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="trash" data-lucide="trash" class="lucide lucide-trash w-4 h-4 mr-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>','isOverlay' => 'true','method' => 'GET','action' => "Delete",
                 'route' => "Livewire.emit('showModal','".route('dashboard.international-transfer.cc-partners.destroy',$model->id)."','DELETE','x-circle','Delete')"];
 
+                $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="user-check" data-lucide="user-check" class="lucide lucide-user-check w-4 h-4 mr-2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>','isOverlay' => '0','method' => 'GET','route' => route('dashboard.international-transfer.cc-partner-accounts', $value),'action' => 'Accounts'];
+                $actions[] = ['icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="send" data-lucide="send" class="lucide lucide-send w-4 h-4 mr-2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>','isOverlay' => '0','method' => 'GET','route' => route('dashboard.international-transfer.cc-partner-transactions', $value),'action' => 'Transactions'];
                 return view('cms::livewire.datatable-actions', ['actions' => $actions])->withUser($row);
             })
 

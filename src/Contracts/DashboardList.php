@@ -38,10 +38,10 @@ class DashboardList extends Transaction
     public static function setBuilder($workspace_id,$type): Builder
     {
         if (!$workspace_id) {
-            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->latest()->take(15);
+            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->latest()->take(15);
         }
 
-        return Transaction::query()->where("meta->transaction_type", 'money_transfer')->whereWorkspaceId($workspace_id)->latest()->take(15);
+        return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereWorkspaceId($workspace_id)->latest()->take(15);
     }
 
     public static function columns()

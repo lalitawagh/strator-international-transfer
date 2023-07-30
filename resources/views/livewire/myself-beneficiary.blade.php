@@ -252,6 +252,17 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <label for="bic_number" class="form-label sm:w-52">BIC/SWIFT<span
+                                    class="text-theme-6">*</span></label>
+                            <div class="sm:w-5/6">
+                                <input id="bic_number" wire:model.defer="meta.bic_number" name="bic_number"
+                                    type="text" class="form-control" required="required" value="">
+                                @error('meta.bic_number')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     @elseif (in_array(
                             $receiving_country,
                             \Kanexy\InternationalTransfer\Enums\ShortCode::SHORT_CODE[\Kanexy\InternationalTransfer\Enums\ShortCode::BIA]))

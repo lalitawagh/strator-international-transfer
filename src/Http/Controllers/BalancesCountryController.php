@@ -2,7 +2,6 @@
 
 namespace Kanexy\InternationalTransfer\Http\Controllers;
 
-
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
