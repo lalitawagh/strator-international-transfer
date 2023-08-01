@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Helper;
 use Livewire\Component;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class InternationalTransferGraph extends Component
 {
@@ -29,6 +30,7 @@ class InternationalTransferGraph extends Component
     public function selectYear($year)
     {
 
+        
         $this->selectedYear = $year;
 
         foreach (range(1, 12) as $m) {
@@ -37,21 +39,20 @@ class InternationalTransferGraph extends Component
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
+       
         $currentWorkspaceId = app('activeWorkspaceId');
 
-        if($currentWorkspaceId = app('activeWorkspaceId'))
+        if(!is_null($currentWorkspaceId))
         {
             $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('workspace_id', $currentWorkspaceId)->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->where('status','completed')->get();
-        }
-        elseif ($user->role == 'agent') {
-            $debitTransactionGraph = Transaction::whereYear("created_at", $this->selectedYear)
-                ->where('agent_id', $user->id)
-                ->groupBy(["label"])
-                ->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")
-                ->where('meta->transaction_type', 'money_transfer')
-                ->where('archived','!=',1)
-                ->get();
+            if($user->type === 'agent') {
+                $workspace = Workspace::where("ref_type", 'agent')->where("ref_id", $currentWorkspaceId)->pluck('id');
+                $debitTransactionGraph =  Transaction::query()->whereIn('workspace_id',$workspace->toArray())->orWhere('workspace_id',$currentWorkspaceId)->whereYear("created_at", $this->selectedYear)->groupBy(["label"])
+                        ->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")
+                        ->where('meta->transaction_type', 'money_transfer')
+                        ->where('archived','!=',1)->where('status','completed')
+                        ->get(); 
+            }
         }
         else
         {

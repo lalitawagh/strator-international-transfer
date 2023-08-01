@@ -159,7 +159,7 @@
                                         <div
                                             class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                             <span class="font-medium">
-                                                {{ @$masterAccount['account_holder_name'] }}
+                                                {{ @$subAccounts->meta['account_holder_name'] }}
                                             </span>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@
                                         <div
                                             class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                             <span class="font-medium">
-                                                {{ @$masterAccount['account_number'] }}
+                                                {{ @$subAccounts->meta['account_number'] }}
                                             </span>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@
                                             <div
                                                 class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                                 <span class="font-medium">
-                                                    {{ @$masterAccount['sort_code'] }}
+                                                    {{ @$subAccounts->meta['routing_code'] }}
                                                 </span>
                                             </div>
                                         </div>
@@ -202,7 +202,7 @@
                                             <div
                                                 class="sm:whitespace-normal items-center sm:text-right sm:w-3/2 sm:ml-auto">
                                                 <span class="font-medium">
-                                                    {{ @$masterAccount['ifsc_code'] }}
+                                                    {{ @$subAccounts->meta['routing_code'] }}
                                                 </span>
                                             </div>
                                         </div>

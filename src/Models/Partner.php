@@ -27,6 +27,7 @@ class Partner extends Authenticatable
         'country_id',
         'password',
         'webhook_url',
+        'kyc_url',
         'status'
     ];
 
