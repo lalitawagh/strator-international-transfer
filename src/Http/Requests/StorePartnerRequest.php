@@ -27,6 +27,7 @@ class StorePartnerRequest extends FormRequest
             'password'          => ['required', 'confirmed', 'string'],
             'webhook_url'       => ['required'],
             'status'            => ['nullable'],
+            'kyc_url'           => ['required']
         ];
     }
 }

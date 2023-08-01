@@ -15,3 +15,8 @@
 // Route::middleware('auth:api')->get('/ledgerfoundation', function (Request $request) {
 //     return $request->user();
 // });
+
+use Illuminate\Support\Facades\Route;
+use Kanexy\InternationalTransfer\Http\Controllers\CurrencyCloudPartnerController;
+
+Route::get('cc-partner-users-kyc/{id}',[CurrencyCloudPartnerController::class,'ccPartnerUsersKycDetails'])->name('cc-partner-users-kyc');

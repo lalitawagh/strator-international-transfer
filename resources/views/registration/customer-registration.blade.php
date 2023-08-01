@@ -1,10 +1,10 @@
-<div x-data="{ open: false }">
+<div @error('agent_name') x-data="{ open: true }"@else x-data="{ open: false }" @enderror >
     @if(is_null(request()?->agent))
         <div class="form-inline mb-2">
             <label for="register_as_agent" class="form-label sm:w-30"> Register As Agent
             </label>
             <div class="sm:w-3/5 form-check form-switch">
-                <input id="register_as_agent" name="register_as_agent" @click="open = ! open" type="checkbox" class="form-check-input">
+                <input id="register_as_agent" name="register_as_agent" @error('agent_name') checked @enderror @click="open = ! open" type="checkbox" class="form-check-input">
 
                 @error('register_as_agent')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
