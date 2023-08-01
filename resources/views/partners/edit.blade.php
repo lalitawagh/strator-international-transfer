@@ -139,7 +139,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="webhook_url" class="form-label sm:w-40">Webhook Url</label>
+                                <label for="webhook_url" class="form-label sm:w-40">Webhook Url <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="webhook_url" name="webhook_url" type="text"
                                         class="form-control @error('webhook_url') border-theme-6 @enderror"
@@ -153,6 +153,18 @@
                         </div>
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                                <label for="kyc_url" class="form-label sm:w-40">Kyc Url <span class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="kyc_url" name="kyc_url" type="text"
+                                        class="form-control @error('kyc_url') border-theme-6 @enderror"
+                                        value="{{ old('kyc_url',$partner->kyc_url) }}">
+
+                                    @error('kyc_url')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-40"> Status <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 form-check form-switch">

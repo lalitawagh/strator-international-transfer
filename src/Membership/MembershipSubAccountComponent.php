@@ -17,10 +17,10 @@ class MembershipSubAccountComponent extends Component
         $workspace = Workspace::find(request()->route('workspace'));
         $membership = $workspace?->memberships()->first();
         $user = $workspace?->users()->first();
-        $account = CcAccount::forHolder($workspace)->first();
+        $ccaccount = CcAccount::forHolder($workspace)->first();
         $balances = CcCurrencyConversion::where(['holder_id' => $workspace->id, 'currency' => 'GBP'])->first();
         //dd($balances);
 
-        return view("international-transfer::membership.membership-subaccount-component", compact('account','balances'));
+        return view("international-transfer::membership.membership-subaccount-component", compact('ccaccount','balances'));
     }
 }

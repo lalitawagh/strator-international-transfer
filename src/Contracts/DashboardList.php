@@ -12,6 +12,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use  Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class DashboardList extends Transaction
 {
@@ -38,10 +39,19 @@ class DashboardList extends Transaction
     public static function setBuilder($workspace_id,$type): Builder
     {
         if (!$workspace_id) {
+            
             return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->latest()->take(15);
         }
 
-        return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereWorkspaceId($workspace_id)->latest()->take(15);
+
+        if(auth()->user()->type == 'agent')
+        {
+            $agentWorkspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace_id)->pluck('id');
+            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereIn('workspace_id',$agentWorkspace->toArray())->orWhere('workspace_id',$workspace_id)->latest()->take(15);
+        }else
+        {
+            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereWorkspaceId($workspace_id)->latest()->take(15);
+        }
     }
 
     public static function columns()

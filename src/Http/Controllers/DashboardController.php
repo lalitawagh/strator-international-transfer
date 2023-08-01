@@ -23,9 +23,20 @@ class DashboardController extends Controller
 
         if (app('activeWorkspaceId')) {
             $workspace = Workspace::findOrFail(app('activeWorkspaceId'));
-            $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where('archived','!=',1)->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
+            
+            if(auth()->user()->type == 'agent')
+            {
+                $agentWorkspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace?->id)->pluck('id');
+                
+                $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where('archived','!=',1)->whereIn('workspace_id',$agentWorkspace->toArray())->orWhere('workspace_id',$workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
+              
+            }else
+            {
+                $pieChartTransactions = Transaction::where('meta->transaction_type','money_transfer')->where('archived','!=',1)->where("workspace_id", $workspace?->id)->groupBy("status")->selectRaw("count(*) as data,upper(status) as label")->get();
+            }
+        
         }
-        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->latest()->take(5)->get();
+        
         $yotiLog = UserSetting::whereUserId($user?->id)->first();
         $kycSkip = WorkspaceMeta::where(['workspace_id' => $workspace?->id, 'key' => 'skip_kyc'])->first();
 
@@ -42,8 +53,17 @@ class DashboardController extends Controller
             }
         }
 
-
-        $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->latest()->take(15)->get();
+        if(auth()->user()->type == 'agent')
+        {
+            $agentWorkspace = Workspace::where("ref_type", 'agent')->where("ref_id", $workspace?->id)->pluck('id');
+            $transactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->whereIn('workspace_id',$agentWorkspace->toArray())->orWhere('workspace_id',$workspace?->id)->latest()->take(5)->get();
+            $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->whereIn('workspace_id',$agentWorkspace->toArray())->orWhere('workspace_id',$workspace?->id)->latest()->take(15)->get();
+        }else
+        {
+            $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->transaction_type','money_transfer')->where('archived','!=',1)->latest()->take(5)->get();
+            $recentTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->latest()->take(15)->get();
+        }
+        
         $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
 
         $subAccountInfo = CcAccount::where(['holder_id' => $workspace?->id])->first();

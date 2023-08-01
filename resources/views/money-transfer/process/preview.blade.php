@@ -18,14 +18,14 @@
                                 <div class="text-xs text-right sm:ml-auto flex mb-0">
                                     <a id="MasterAccount" target="_blank"
                                         href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manual transfer Account Details&body= Beneficiary :- {{ $beneficiary->display_name }} %0D%0A Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
-                                            %0D%0A Bank Account Name:- {{ $masterAccount['account_holder_name'] }} %0D%0A Account Number :- {{ $masterAccount['account_number'] }} %0D%0A @if ($masterAccount['country'] == 231) Sort Code :- {{ $masterAccount['sort_code'] }} @else IFSC Code :- {{ $masterAccount['ifsc_code'] }} @endif   ">
+                                            %0D%0A Bank Account Name:- {{ @$subAccounts->meta['account_holder_name'] }} %0D%0A Account Number :- {{ @$subAccounts->meta['account_number'] }} %0D%0A Sort Code :- {{ @$subAccounts->meta['routing_code'] }}   ">
                                         <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
                                     <a id="GetPdf" href="javascript:void(0);" onclick="get_pdf('manual')"><i
                                             data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
                                     <a id="AccountHolder" onclick="copyData(this)"
                                         data-copy="Manual transfer Account Details- Beneficiary :- {{ $beneficiary->display_name }}  Payment reference :- {{ @$transferDetails['transaction']->meta['reference_no'] }}  Amount To Send:- {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }}
-                                            Bank Account Name:- {{ $masterAccount['account_holder_name'] }}  Account Number :- {{ $masterAccount['account_number'] }}  @if ($masterAccount['country'] == 231) Sort Code :- {{ $masterAccount['sort_code'] }} @else IFSC Code :- {{ $masterAccount['ifsc_code'] }} @endif  "
+                                            Bank Account Name:- {{ @$subAccounts->meta['account_holder_name'] }}  Account Number :- {{ @$subAccounts->meta['account_number'] }}  Sort Code :- {{ @$subAccounts->meta['routing_code'] }}  "
                                         href="javascript:void(0);">
                                         <i data-lucide="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
                                     </a>
@@ -63,77 +63,40 @@
                                 class="dark:bg-darkmode-400 dark:border-darkmode-400 p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mt-3">
                                 <h3 class="text-lg font-medium mr-auto mb-0">Bank Account Details For Manual Transfer</h3>
                             </div>
-                            @if (config('services.registration_changed') == true)
-                                <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
-                                    <div
-                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name
-                                        </div>
-                                        <div
-                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                            {{ @$subAccounts->meta['account_holder_name'] }}</div>
+                            
+                            <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
+                                <div
+                                    class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                    <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name
                                     </div>
                                     <div
-                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                            Number </div>
-                                        <div
-                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                            {{ @$subAccounts->meta['account_number'] }}</div>
+                                        class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                        {{ @$subAccounts->meta['account_holder_name'] }}</div>
+                                </div>
+                                <div
+                                    class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                    <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
+                                        Number </div>
+                                    <div
+                                        class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                        {{ @$subAccounts->meta['account_number'] }}</div>
+                                </div>
+                                <div
+                                    class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
+                                    <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
+                                        @if (@$subAccounts->meta['routing_code_type'] == 'sort_code')
+                                            Sort
+                                        @else
+                                            BIC Swift
+                                        @endif Code
                                     </div>
                                     <div
-                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                            @if (@$subAccounts->meta['routing_code_type'] == 'sort_code')
-                                                Sort
-                                            @else
-                                                BIC Swift
-                                            @endif Code
-                                        </div>
-                                        <div
-                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                            {{ @$subAccounts->meta['routing_code'] }}
-                                        </div>
+                                        class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
+                                        {{ @$subAccounts->meta['routing_code'] }}
                                     </div>
                                 </div>
-                            @else
-                                <div class="px-5 mt-5 sm:px-0 flex flex-col-reverse sm:flex-row grid grid-cols-12 gap-2">
-                                    <div
-                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account Name
-                                        </div>
-                                        <div
-                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                            {{ $masterAccount['account_holder_name'] }}</div>
-                                    </div>
-                                    <div
-                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                            Number </div>
-                                        <div
-                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                            {{ $masterAccount['account_number'] }}</div>
-                                    </div>
-                                    <div
-                                        class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6 sm:flex sm:px-4">
-                                        <div class="font-medium sm:w-3/4 text-base text-gray-600 mr-2 mr-auto">Bank Account
-                                            @if ($masterAccount['country'] == 231)
-                                                Sort
-                                            @else
-                                                IFSC
-                                            @endif Code
-                                        </div>
-                                        <div
-                                            class="text-base text-theme-1 dark:text-theme-10 font-medium mt-0 sm:w-2/3 text-sm text-left">
-                                            @if ($masterAccount['country'] == 231)
-                                                {{ $masterAccount['sort_code'] }}
-                                            @else
-                                                {{ $masterAccount['ifsc_code'] }}
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                            </div>
+                            
                         @else
                             @if ($transferDetails['payment_method'] == 'bank_account')
                                 @php
@@ -268,7 +231,7 @@
             };
             if (type == 'manual') {
                 doc.fromHTML(
-                    '<h2>Manually Transfer Account Details</h2><div><div class="text-lg font-medium text-theme-1 dark:text-theme-10 mt-2"> Beneficiary :- {{ $beneficiary?->display_name }} </br></div><div class="mt-1">Payment reference :- @isset($transferDetails['transaction']) {{ @$transferDetails['transaction']->meta['reference_no'] }} @endisset</br></div><div class="mt-1">Amount to send :- @isset($transferDetails['transaction']) {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }} @endisset </br></div><div class="mt-1">Bank Account Name :- {{ $masterAccount['account_holder_name'] }} </br></div><div class="mt-1">Bank Account Number :- {{ $masterAccount['account_number'] }} </br></div><div class="mt-1">Bank @if ($masterAccount['country'] == 231) Sort Code :- {{ $masterAccount['sort_code'] }} @else IFSC Code :- {{ $masterAccount['ifsc_code'] }} @endif </br></div></div>',
+                    '<h2>Manually Transfer Account Details</h2><div><div class="text-lg font-medium text-theme-1 dark:text-theme-10 mt-2"> Beneficiary :- {{ $beneficiary?->display_name }} </br></div><div class="mt-1">Payment reference :- @isset($transferDetails['transaction']) {{ @$transferDetails['transaction']->meta['reference_no'] }} @endisset</br></div><div class="mt-1">Amount to send :- @isset($transferDetails['transaction']) {{ $transferDetails['transaction']->amount }} {{ $transferDetails['transaction']->settled_currency }} @endisset </br></div><div class="mt-1">Bank Account Name :- {{ @$subAccounts->meta['account_holder_name'] }} </br></div><div class="mt-1">Bank Account Number :- {{ @$subAccounts->meta['account_number'] }} </br></div><div class="mt-1">Bank  Sort Code :- {{ @$subAccounts->meta['routing_code'] }} </br></div></div>',
                     15, 15, {
                         'width': 170,
                         'elementHandlers': specialElementHandlers

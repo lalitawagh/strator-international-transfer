@@ -26,6 +26,7 @@ class UpdatePartnerRequest extends FormRequest
             'country_code'      => ['required', 'exists:countries,phone'],
             'webhook_url'       => ['required'],
             'status'            => ['nullable'],
+            'kyc_url'           => ['required']
         ];
     }
 }

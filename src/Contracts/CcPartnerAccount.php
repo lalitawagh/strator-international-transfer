@@ -42,7 +42,11 @@ class CcPartnerAccount extends Transaction
         return [
             Column::make("Id", "id")->hideIf(true),
 
-            Column::make("Name", "name")
+            Column::make("Partner Holder Id", "meta->partner_holder_id")->hideIf(true),
+
+            Column::make("Name", "name")->format(function ($value, $model) {
+                return view('cms::livewire.link-datatable', ['user' => $value,'route' => route('dashboard.international-transfer.partner-users-kyc', ['partnerId' => $model['meta->partner_holder_id'], 'id' => $model->id])]);
+            })
                 ->searchable()
                 ->secondaryHeaderFilter('name'),
 
