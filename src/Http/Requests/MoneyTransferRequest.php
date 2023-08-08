@@ -42,13 +42,13 @@ class MoneyTransferRequest extends FormRequest
             $sender = Country::find($this->input('currency_code_from'));
             $receiver = Country::find($this->input('currency_code_to'));
 
-            if(config('services.registration_changed') == false)
-            {
-                if($sender->code != 'UK') {
-                    $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
-                }
+            // if(config('services.registration_changed') == false)
+            // {
+            //     if($sender->code != 'UK') {
+            //         $validator->errors()->add('country', 'Please send the amount in GBP(United Kingdom).');
+            //     }
 
-            }
+            // }
 
             if($sender->code == 'UK' && $receiver->code == 'UK')
             {
