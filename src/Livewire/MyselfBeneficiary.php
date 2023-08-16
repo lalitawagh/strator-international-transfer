@@ -131,12 +131,12 @@ class MyselfBeneficiary extends Component
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::AI]))
         {
             $rules['meta.iban_number'] = 'required|string';
-            $rules['meta.bank_account_number'] = 'required';
+            $rules['meta.bank_account_number'] = 'required|numeric';
             if($this->receiving_country != 'IN')
             {
                 $rules['meta.bic_number'] = 'required';
             }
-            
+
         }
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::SA]))
@@ -152,7 +152,7 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BCSP]))
         {
-          
+
             $rules['meta.bic_number'] = 'required';
         }
 
@@ -200,7 +200,7 @@ class MyselfBeneficiary extends Component
 
         if(in_array($this->receiving_country, ShortCode::SHORT_CODE[ShortCode::BASP]))
         {
-          
+
             $rules['meta.bic_number'] = 'required';
         }
 
@@ -283,7 +283,7 @@ class MyselfBeneficiary extends Component
 
     public function benficiaryCreate($data)
     {
-      
+
             $routing_type = 'sort_code';
 
             if(isset($data['meta']['bank_code']))
@@ -302,7 +302,7 @@ class MyselfBeneficiary extends Component
                 }else{
                     $routing_type = 'bank_code';
                 }
-                
+
                 $routing_code_value = ($this->receiving_country == 'IN') ? $data['meta']['iban_number'] : $data['meta']['bank_code'];
 
             }elseif (isset($data['meta']['iban_number'])){
@@ -412,10 +412,10 @@ class MyselfBeneficiary extends Component
                 $data['classification'] = $this->classification;
                 $data['meta'] = array_merge($data['meta'],$currencyDetails);
                 $data['status'] = 'active';
-             
+
                 $service = new CurrencyCloudApiService;
                 $validateBeneficiary = $service->validateBeneficaries(new ValidateBeneficiaryDto($data));
-              
+
                 if ($validateBeneficiary['code'] == 200)
                 {
                     /** @var Contact $contact */
@@ -453,7 +453,7 @@ class MyselfBeneficiary extends Component
                     //$user->generateOtp("sms");
                     $this->beneficiary_created = true;
 
-                   
+
                     $this->dispatchBrowserEvent('showOtpModel',['modalType' => $this->beneficiaryType]);
                 }
                 else {
