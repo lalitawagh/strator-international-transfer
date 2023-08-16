@@ -207,7 +207,7 @@
                         @endif
                     @endforeach
                 @else
-                    @foreach ($countries as $country)
+                    @foreach ($receivingcountriesinfo as $country)
                         @if ($country?->risk_score != 3)
                             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                 @isset($currency_to)
