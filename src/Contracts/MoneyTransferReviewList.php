@@ -57,7 +57,7 @@ class MoneyTransferReviewList extends Transaction
 
         $account = auth()->user()->workspaces()->first()?->account()->first();
         $user = Auth::user();
-        $view = PDF::loadView('international-transfer::money-transfer.transactionpdf', compact('transactions','account','user'))
+        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','account','user'))
             ->setPaper(array(0, 0, 1000, 800), 'landscape')
             ->output();
 
