@@ -5,6 +5,8 @@ namespace Kanexy\InternationalTransfer\Contracts;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\PartnerFoundation\Core\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Exports\Export;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,10 +20,11 @@ class MoneyTransferReviewList extends Transaction
 {
     public static function setBuilder($workspace_id,$type): Builder
     {
-         if (!$workspace_id) {
-            return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->latest();
-         }
+        $limit = Setting::getValue('transaction_threshold_amount', []);
 
+        if (!$workspace_id) {
+           return Transaction::query()->where('amount', '>', $limit)->where("meta->transaction_type", 'money_transfer')->whereIn('status', [TransactionStatus::DRAFT, TransactionStatus::PENDING])->where('archived','!=',1)->latest();
+        }
          return Transaction::query()->where("meta->transaction_type", 'money_transfer')->where('archived','!=',1)->whereWorkspaceId($workspace_id)->latest();
     }
 
@@ -54,7 +57,7 @@ class MoneyTransferReviewList extends Transaction
 
         $account = auth()->user()->workspaces()->first()?->account()->first();
         $user = Auth::user();
-        $view = PDF::loadView('international-transfer::money-transfer.transactionpdf', compact('transactions','account','user'))
+        $view = PDF::loadView('international-transfer::money-transfer.transactionlistpdf', compact('transactions','account','user'))
             ->setPaper(array(0, 0, 1000, 800), 'landscape')
             ->output();
 
@@ -73,7 +76,7 @@ class MoneyTransferReviewList extends Transaction
                 })
                 ->searchable()
                 ->secondaryHeaderFilter('urn'),
-            
+
             Column::make("Date & Time", "created_at")->format(function($value){
                 return Carbon::parse($value)->format('d-m-Y  H:i');
             })
@@ -135,14 +138,14 @@ class MoneyTransferReviewList extends Transaction
             //     ->searchable()
             //     ->sortable()
             //     ->secondaryHeaderFilter('reasons'),
-            
+
             Column::make("Reference", "meta->reference")->format(function ($value) {
                 return ucfirst($value);
             })
                 ->searchable()
                 ->sortable()
                 ->secondaryHeaderFilter('meta->reference'),
-            
+
             Column::make("Status", "status")->format(function ($value) {
                 return ucfirst($value);
             })
