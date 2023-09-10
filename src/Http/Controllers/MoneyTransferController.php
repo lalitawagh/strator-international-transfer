@@ -347,7 +347,7 @@ class MoneyTransferController extends Controller
         $masterAccount =  collect(Setting::getValue('money_transfer_master_account_details', []))->firstWhere('country', $sender->id);
         $workspace = Workspace::findOrFail(session()->get('money_transfer_request.workspace_id'));
         $transferReason = collect(Setting::getValue('money_transfer_reasons', []))->firstWhere('id', $transferDetails['transfer_reason']);
-        $subAccounts = CcAccount::where(['holder_id' => $workspace?->id])->first();
+        $subAccounts = CcAccount::where(['holder_id' => $workspace?->id,'ref_type' => 'currency_cloud'])->first();
 
         return view('international-transfer::money-transfer.process.preview', compact('user', 'transferDetails', 'beneficiary', 'masterAccount', 'workspace', 'transaction', 'transferReason', 'secondBeneficiary', 'sender', 'receiver','subAccounts'));
     }
