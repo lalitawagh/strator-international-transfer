@@ -66,7 +66,7 @@ class DashboardController extends Controller
         
         $recentUserTransactions = Transaction::where('meta->transaction_type', 'money_transfer')->where('archived','!=',1)->where("workspace_id", $workspace?->id)->latest()->take(15)->get();
 
-        $subAccountInfo = CcAccount::where(['holder_id' => $workspace?->id])->first();
+        $subAccountInfo = CcAccount::where(['holder_id' => $workspace?->id,'ref_type' => 'currency_cloud'])->first();
 
         return view("international-transfer::money-transfer.dashboard", compact('transactions', 'workspace', 'pieChartTransactions', 'recentTransactions', 'user','yotiLog', 'check_document_results', 'recentUserTransactions', 'kycSkip','subAccountInfo'));
     }
