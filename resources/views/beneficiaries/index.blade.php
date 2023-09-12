@@ -22,7 +22,7 @@
                                     href="{{ route('dashboard.banking.beneficiaries.create', ['workspace_id' => $workspace->id]) }}"
                                     class="btn btn-sm btn-primary shadow-md py-2 sm:ml-1 sm:-mt-2 sm:mb-0 mb-2 py-2">Create New
                                 </a>
-                            @endcan
+                            @endcan 
                         </div>
                     </div>
                     <div class="overflow-x-auto overflow-y-hidden">
