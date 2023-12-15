@@ -1,4 +1,4 @@
-{{-- <div @error('agent_name') x-data="{ open: true }"@else x-data="{ open: false }" @enderror >
+<div @error('agent_name') x-data="{ open: true }"@else x-data="{ open: false }" @enderror >
     @if(is_null(request()?->agent))
         <div class="form-inline mb-2">
             <label for="register_as_agent" class="form-label sm:w-30"> Register As Agent
@@ -24,4 +24,4 @@
         </div>
     @endif
     <input type="hidden" name="agentId" value="{{ request()?->agent }}">
-</div> --}}
+</div>
