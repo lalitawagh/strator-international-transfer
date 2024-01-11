@@ -61,7 +61,7 @@
                             class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="payment_type" id="payment_type" class="form-control"
-                            value="{{ old('payment_type') }}">
+                            value="{{ old('payment_type') }}" maxlength="40">
 
                         @error('payment_type')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -75,7 +75,7 @@
                             class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input type="text" name="transfer_type" id="transfer_type" class="form-control"
-                            value="{{ old('transfer_type') }}">
+                            value="{{ old('transfer_type') }}" maxlength="40">
 
                         @error('transfer_type')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -91,7 +91,7 @@
                     <div class="sm:w-5/6">
                         <input id="min_amount" name="min_amount" type="text"
                             class="form-control @error('min_amount') border-theme-6 @enderror"
-                            value="{{ old('min_amount') }}" required>
+                            value="{{ old('min_amount') }}" required maxlength="40">
 
                         @error('min_amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -104,7 +104,7 @@
                     <div class="sm:w-5/6">
                         <input id="max_amount" name="max_amount" type="text"
                             class="form-control @error('max_amount') border-theme-6 @enderror"
-                            value="{{ old('max_amount') }}" required>
+                            value="{{ old('max_amount') }}" required maxlength="40">
 
                         @error('max_amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -173,7 +173,7 @@
                     <div class="sm:w-5/6">
                         <input id="amount" name="amount" type="text"
                             class="form-control @error('amount') border-theme-6 @enderror amount"
-                            value="{{ old('amount') }}">
+                            value="{{ old('amount') }}" required maxlength="40">
 
                         @error('amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>

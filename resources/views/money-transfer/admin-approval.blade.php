@@ -7,7 +7,7 @@
 
 
 @section('content')
-    @if (Auth::user()->isSuperAdmin())
+    @if (!Auth::user()->isSubscriber())
         <div class="">
             @if (!isset($transaction))
                 <div class="mt-5">

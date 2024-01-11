@@ -16,7 +16,7 @@
                     <div class="sm:w-5/6">
                         <input id="reason" name="reason" type="text"
                             class="form-control @error('reason') border-theme-6 @enderror" value="{{ old('reason') }}"
-                            required>
+                            required maxlength="40" >
 
                         @error('reason')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>

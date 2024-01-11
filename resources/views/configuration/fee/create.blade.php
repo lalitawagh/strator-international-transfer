@@ -53,7 +53,7 @@
                     <div class="sm:w-5/6">
                         <input id="min_amount" name="min_amount" type="text"
                             class="form-control @error('min_amount') border-theme-6 @enderror"
-                            value="{{ old('min_amount') }}" required>
+                            value="{{ old('min_amount') }}" required maxlength="40">
 
                         @error('min_amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -66,7 +66,7 @@
                     <div class="sm:w-5/6">
                         <input id="max_amount" name="max_amount" type="text"
                             class="form-control @error('max_amount') border-theme-6 @enderror"
-                            value="{{ old('max_amount') }}" required>
+                            value="{{ old('max_amount') }}" required maxlength="40">
 
                         @error('max_amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -106,7 +106,7 @@
                     <div class="sm:w-5/6">
                         <input id="amount" name="amount" type="text"
                             class="form-control @error('amount') border-theme-6 @enderror amount"
-                            value="{{ old('amount') }}">
+                            value="{{ old('amount') }}" required maxlength="40">
 
                         @error('amount')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
